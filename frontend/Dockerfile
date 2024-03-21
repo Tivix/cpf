@@ -6,12 +6,8 @@ FROM base AS deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /code
 
-# Install dependencies
 COPY package.json yarn.lock* ./
-RUN \
-  if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
-  else echo "Lockfile not found." && exit 1; \
-  fi
+RUN yarn --frozen-lockfile
 
 # Development image, copy all the files and run next
 FROM deps AS development
@@ -38,10 +34,7 @@ COPY . .
 # disable telemetry during the build.
 ENV NEXT_TELEMETRY_DISABLED 1
 
-RUN \
-  if [ -f yarn.lock ]; then yarn run build; \
-  else echo "Lockfile not found." && exit 1; \
-  fi
+RUN then yarn run build
 
 # Production image, copy all the files and run next
 FROM base AS runner
