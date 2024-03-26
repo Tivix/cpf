@@ -1,53 +1,42 @@
-FROM node:18-alpine AS base
+FROM node:20.10.0-bullseye-slim AS base
 
-# Install dependencies only when needed
-FROM base AS deps
-# Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
-RUN apk add --no-cache libc6-compat
 WORKDIR /code
+
+# disable telemetry during runtime and buildtime.
+ENV NEXT_TELEMETRY_DISABLED 1
 
 COPY package.json yarn.lock* ./
 RUN yarn --frozen-lockfile
 
 # Development image, copy all the files and run next
-FROM deps AS development
+FROM base AS development
 WORKDIR /code
 
 ENV NODE_ENV development
-# disable telemetry during runtime.
-ENV NEXT_TELEMETRY_DISABLED 1
 
 COPY . .
 
 # Note: Don't expose ports here, Compose will handle that for us
-
 CMD ["yarn", "dev"]
 
 # Rebuild the source code only when needed
-FROM base AS builder
+FROM base AS build
 WORKDIR /code
-COPY --from=deps /code/node_modules ./node_modules
+COPY --from=base /code/node_modules ./node_modules
 COPY . .
 
-# Next.js collects completely anonymous telemetry data about general usage.
-# Learn more here: https://nextjs.org/telemetry
-# disable telemetry during the build.
-ENV NEXT_TELEMETRY_DISABLED 1
-
-RUN then yarn run build
+RUN yarn run build
 
 # Production image, copy all the files and run next
-FROM base AS runner
+FROM base AS server
 WORKDIR /code
 
 ENV NODE_ENV production
-# disable telemetry during runtime.
-ENV NEXT_TELEMETRY_DISABLED 1
 
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
-COPY --from=builder /code/public ./public
+COPY --from=build /code/public ./public
 
 # Set the correct permission for prerender cache
 RUN mkdir .next
@@ -55,8 +44,8 @@ RUN chown nextjs:nodejs .next
 
 # Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing
-COPY --from=builder --chown=nextjs:nodejs /code/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs /code/.next/static ./.next/static
+COPY --from=build --chown=nextjs:nodejs /code/.next/standalone ./
+COPY --from=build --chown=nextjs:nodejs /code/.next/static ./.next/static
 
 USER nextjs
 
