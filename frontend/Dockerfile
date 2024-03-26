@@ -28,7 +28,7 @@ COPY . .
 RUN yarn run build
 
 # Production image, copy all the files and run next
-FROM base AS server
+FROM build AS server
 WORKDIR /code
 
 ENV NODE_ENV production
@@ -39,7 +39,6 @@ RUN adduser --system --uid 1001 nextjs
 COPY --from=build /code/public ./public
 
 # Set the correct permission for prerender cache
-RUN mkdir .next
 RUN chown nextjs:nodejs .next
 
 # Automatically leverage output traces to reduce image size
