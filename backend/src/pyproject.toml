@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "cpf"
+version = "1.0.0"
+description = "Carrier Path Framework"
+authors = []
+license = "Apache-2.0"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+fastapi = "^0.108.0"
+pydantic = {extras = ["email"], version = "^2.5.3"}
+uvicorn = "^0.25.0"
+gunicorn = "^21.2.0"
+psycopg2 = "^2.9.9"
+psycopg = "^3.1.16"
+
+[tool.poetry.group.dev]
+optional = true
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.4.4"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
