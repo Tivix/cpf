@@ -1,8 +1,7 @@
 from datetime import date, datetime, time
 from typing import Annotated, Any, Literal, Optional, Type, Union
 
-from pydantic import (BaseModel, Field, HttpUrl, StringConstraints, conint,
-                      conlist)
+from pydantic import BaseModel, Field, HttpUrl, StringConstraints, conint, conlist
 
 
 class IonBaseModel(BaseModel):
@@ -52,12 +51,8 @@ class IonCollectionObject(IonValueObject):
 
 class IonLink(IonBaseModel):
     href: HttpUrl = Field(..., description="The URL of the linked resource")
-    name: str | None = Field(
-        default=None, description="The name of the link (Implicit relation)"
-    )
-    rel: list[str] | None = Field(
-        default=None, description="The explicit relationships of the link to the object"
-    )
+    name: str | None = Field(default=None, description="The name of the link (Implicit relation)")
+    rel: list[str] | None = Field(default=None, description="The explicit relationships of the link to the object")
 
 
 class IonFile(IonValueObject):
@@ -67,13 +62,9 @@ class IonFile(IonValueObject):
     )
     value: Annotated[
         str,
-        StringConstraints(
-            pattern=r"^(?:[A-Za-z0-9\-_]{4})*(?:[A-Za-z0-9\-_]{2}==|[A-Za-z0-9\-_]{3}=)?$"
-        ),
+        StringConstraints(pattern=r"^(?:[A-Za-z0-9\-_]{4})*(?:[A-Za-z0-9\-_]{2}==|[A-Za-z0-9\-_]{3}=)?$"),
     ] = Field(..., description="The base64Url-encoded octet sequence of the file")
-    type: Literal["file"] | None = Field(
-        default="file", description="The value object type must be 'file' if set"
-    )
+    type: Literal["file"] | None = Field(default="file", description="The value object type must be 'file' if set")
 
 
 class IonFormField(IonBaseModel):
@@ -82,78 +73,59 @@ class IonFormField(IonBaseModel):
 
     name: str = Field(..., description="The name of the field")
     desc: str | None = Field(default=None, description="The description of the field")
-    enabled: bool | None = Field(
-        default=None, description="Whether the field is enabled"
-    )
+    enabled: bool | None = Field(default=None, description="Whether the field is enabled")
     form: Optional["IonValueObject"] = Field(default=None, description="A nested form")
     label: str | None = Field(default=None, description="The label of the field")
     max: Union[int, float, str, datetime, date, time] | None = Field(
         default=None, description="The maximum value of the field"
     )
-    maxlength: conint(ge=0) | None = Field(
-        default=None, description="The maximum length of a string field"
-    )
-    maxsize: conint(ge=0) | None = Field(
-        default=None, description="The maximum size of and array or set field"
-    )
+    maxlength: conint(ge=0) | None = Field(default=None, description="The maximum length of a string field")
+    maxsize: conint(ge=0) | None = Field(default=None, description="The maximum size of and array or set field")
     min: Union[int, float, str, datetime, date, time] | None = Field(
         default=None, description="The minimum value of the field"
     )
-    minlength: conint(ge=0) | None = Field(
-        default=None, description="The minimum length of a string field"
-    )
-    minsize: conint(ge=0) | None = Field(
-        default=None, description="The minimum size of and array or set field"
-    )
-    mutable: bool | None = Field(
-        default=None, description="Whether the field is mutable"
-    )
-    options: Optional["IonCollectionObject"] = Field(
-        default=None, description="The options for the field"
-    )
+    minlength: conint(ge=0) | None = Field(default=None, description="The minimum length of a string field")
+    minsize: conint(ge=0) | None = Field(default=None, description="The minimum size of and array or set field")
+    mutable: bool | None = Field(default=None, description="Whether the field is mutable")
+    options: Optional["IonCollectionObject"] = Field(default=None, description="The options for the field")
     pattern: str | None = Field(default=None, description="The pattern for the field")
-    placeholder: str | None = Field(
-        default=None, description="The placeholder for the field"
-    )
-    required: bool | None = Field(
-        default=None, description="Whether the field is required"
-    )
+    placeholder: str | None = Field(default=None, description="The placeholder for the field")
+    required: bool | None = Field(default=None, description="Whether the field is required")
     secret: bool | None = Field(default=None, description="Whether the field is secret")
-    type: Literal[
-        "array",
-        "binary",
-        "boolean",
-        "date",
-        "datetime",
-        "decimal",
-        "duration",
-        "email",
-        "file",
-        "integer",
-        "iri",
-        "link",
-        "number",
-        "object",
-        "pdatetime",
-        "ptime",
-        "set",
-        "string",
-        "time",
-        "url",
-    ] | None = Field(default=None, description="The type of the field")
+    type: (
+        Literal[
+            "array",
+            "binary",
+            "boolean",
+            "date",
+            "datetime",
+            "decimal",
+            "duration",
+            "email",
+            "file",
+            "integer",
+            "iri",
+            "link",
+            "number",
+            "object",
+            "pdatetime",
+            "ptime",
+            "set",
+            "string",
+            "time",
+            "url",
+        ]
+        | None
+    ) = Field(default=None, description="The type of the field")
     value: Any | None = Field(default=None, description="The value of the field")
-    visible: bool | None = Field(
-        default=None, description="Whether the field is visible"
-    )
+    visible: bool | None = Field(default=None, description="Whether the field is visible")
 
 
 class IonForm(IonLink, IonCollectionObject):
     rel: list[Literal["form", "edit-form", "create-form", "query-form"]] = Field(
         default=["form"], description="The relationships of the href to the object"
     )
-    value: conlist(IonFormField, min_length=1) = Field(
-        ..., description="The form fields"
-    )
+    value: conlist(IonFormField, min_length=1) = Field(..., description="The form fields")
     method: Literal["GET", "POST", "PUT", "PATCH", "DELETE"] | None = Field(
         default="GET", description="The HTTP method of the form"
     )
@@ -163,15 +135,9 @@ def create_ion_form_fields(
     model_instance_or_class: type[BaseModel] | BaseModel,
 ) -> list["IonFormField"]:
     model_class = (
-        model_instance_or_class
-        if isinstance(model_instance_or_class, type)
-        else model_instance_or_class.__class__
+        model_instance_or_class if isinstance(model_instance_or_class, type) else model_instance_or_class.__class__
     )
-    model_instance = (
-        model_instance_or_class
-        if isinstance(model_instance_or_class, BaseModel)
-        else None
-    )
+    model_instance = model_instance_or_class if isinstance(model_instance_or_class, BaseModel) else None
     schema = model_class.model_json_schema()
     defs: dict[str, object] = schema.get("$defs", {})
     required: list[str] = schema.get("required", [])
@@ -285,9 +251,7 @@ def create_ion_form_fields(
                 if isinstance(prop_schema["labels"], list):
                     # make sure the labels are the same length as the enum
                     if len(prop_schema["enum"]) != len(prop_schema["labels"]):
-                        raise ValueError(
-                            "The length of the enum and labels must be the same"
-                        )
+                        raise ValueError("The length of the enum and labels must be the same")
                     # iterate over the enum and labels and create IonValueObjects
                     for enum, label in zip(prop_schema["enum"], prop_schema["labels"]):
                         options.append(IonValueObject(value=enum, label=label))
@@ -296,11 +260,7 @@ def create_ion_form_fields(
                     # if labels has a key for each enum add it to the value object, otherwise don't inclde a label
                     for enum in prop_schema["enum"]:
                         if enum in prop_schema["labels"]:
-                            options.append(
-                                IonValueObject(
-                                    value=enum, label=prop_schema["labels"][enum]
-                                )
-                            )
+                            options.append(IonValueObject(value=enum, label=prop_schema["labels"][enum]))
                         else:
                             options.append(IonValueObject(value=enum))
 
@@ -338,9 +298,7 @@ def create_ion_form_fields(
     return form_fields
 
 
-def create_ion_form(
-    method: str, href: str, request_model: Type[BaseModel], rel: list[str] = ["form"]
-) -> IonForm:
+def create_ion_form(method: str, href: str, request_model: Type[BaseModel], rel: list[str] = ["form"]) -> IonForm:
     return IonForm(
         method=method,
         href=href,

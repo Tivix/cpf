@@ -1,7 +1,7 @@
 from __future__ import annotations
-from typing import Any, Union
-from dataclasses import dataclass
 
+from dataclasses import dataclass
+from typing import Any, Union
 
 PrimitiveDict = dict[str, "PrimitiveType"]
 PrimitiveList = list["PrimitiveType"]
@@ -11,9 +11,7 @@ PrimitiveType = Union[str, int, float, bool, None, PrimitiveDict, PrimitiveList]
 class DomainEventMeta(type):
     _registry: dict[str, type] = {}
 
-    def __new__(
-        cls, name: str, bases: tuple, namespace: dict[str, Any]
-    ) -> "DomainEventMeta":
+    def __new__(cls, name: str, bases: tuple, namespace: dict[str, Any]) -> "DomainEventMeta":
         new_class = super().__new__(cls, name, bases, namespace)
         event_type = getattr(new_class, "event_type", None)
         key = name if event_type is None else event_type()

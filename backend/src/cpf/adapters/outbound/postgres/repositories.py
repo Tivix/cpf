@@ -9,8 +9,12 @@ from psycopg2.extensions import connection as Connection
 from psycopg2.extensions import cursor as Cursor
 from psycopg2.pool import SimpleConnectionPool
 
-from cpf.core.domain.aggregates.domain_event import DomainEvent, DomainEventMeta, PrimitiveDict
-from cpf.core.ports.required.writemodels import Repository, AR
+from cpf.core.domain.aggregates.domain_event import (
+    DomainEvent,
+    DomainEventMeta,
+    PrimitiveDict,
+)
+from cpf.core.ports.required.writemodels import AR, Repository
 
 
 class EventStoreRepository(Repository[AR]):
@@ -18,7 +22,7 @@ class EventStoreRepository(Repository[AR]):
         self,
         aggregate_root_type: type[AR],
         connection_pool: SimpleConnectionPool,
-        snapshot_policy: Callable[[AR], bool] | None = None # TODO: implement snapshot save/load
+        snapshot_policy: Callable[[AR], bool] | None = None,  # TODO: implement snapshot save/load
     ) -> None:
         self._aggregate_root_type = aggregate_root_type
         self._pool = connection_pool
@@ -96,9 +100,7 @@ class EventStoreRepository(Repository[AR]):
                     raise e
 
     @staticmethod
-    def data_to_domain_event(
-        type: str, data: PrimitiveDict | None
-    ) -> DomainEvent:
+    def data_to_domain_event(type: str, data: PrimitiveDict | None) -> DomainEvent:
         event_class = DomainEventMeta.get_event_type(type)
         if event_class is None:
             raise ValueError(f"No event class found for type '{type}'")
@@ -116,15 +118,15 @@ class EventStoreRepository(Repository[AR]):
         with self._get_connection() as conn:
             with conn.cursor() as cursor:
                 cursor.execute(
-                    "SELECT event_type, event_data FROM events WHERE aggregate_type = %s AND aggregate_id = %s ORDER BY event_id ASC",
+                    "SELECT event_type, event_data FROM events "
+                    "WHERE aggregate_type = %s AND aggregate_id = %s ORDER BY event_id ASC",
                     (self._aggregate_root_type.aggregate_type(), id),
                 )
                 events = cursor.fetchall()
                 if not events:
                     return None
                 domain_events = [
-                    self.data_to_domain_event(str(event_type), event_data)
-                    for event_type, event_data in events
+                    self.data_to_domain_event(str(event_type), event_data) for event_type, event_data in events
                 ]
                 aggregate = self._aggregate_root_type(id)
                 for domain_event in domain_events:
@@ -144,11 +146,11 @@ class EventStoreRepository(Repository[AR]):
 
 
 connection_pool = SimpleConnectionPool(
-        minconn=os.getenv("POSTGRES_MIN_CONNECTIONS", 1),
-        maxconn=os.getenv("POSTGRES_MAX_CONNECTIONS", 10),
-        host=os.getenv("POSTGRES_HOST"),
-        port=os.getenv("POSTGRES_PORT", 5432),
-        dbname=os.getenv("POSTGRES_DB"),
-        user=os.getenv("POSTGRES_USER"),
-        password=os.getenv("POSTGRES_PASSWORD"),
-    )
+    minconn=os.getenv("POSTGRES_MIN_CONNECTIONS", 1),
+    maxconn=os.getenv("POSTGRES_MAX_CONNECTIONS", 10),
+    host=os.getenv("POSTGRES_HOST"),
+    port=os.getenv("POSTGRES_PORT", 5432),
+    dbname=os.getenv("POSTGRES_DB"),
+    user=os.getenv("POSTGRES_USER"),
+    password=os.getenv("POSTGRES_PASSWORD"),
+)

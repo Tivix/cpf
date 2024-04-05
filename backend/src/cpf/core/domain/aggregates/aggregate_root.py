@@ -1,9 +1,11 @@
 from __future__ import annotations
+
 from abc import ABC, abstractmethod
 from collections.abc import Iterable as IterableCollection
 from functools import wraps
 from typing import Callable
 from typing import Iterable as IterableType
+
 from .domain_event import DomainEvent
 
 
@@ -88,5 +90,6 @@ class AggregateRoot(ABC):
 
     @abstractmethod
     def handle_event(self, event: DomainEvent) -> None:
-        """override this method to handle events that are not otherwise handled by methods decorated with @handles_events"""
+        """override this method to handle events that are not otherwise
+        handled by methods decorated with @handles_events"""
         pass
