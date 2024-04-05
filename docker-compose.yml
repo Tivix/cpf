@@ -10,10 +10,13 @@ services:
     restart: unless-stopped
     depends_on:
       - frontend
+      - fusionauth
+      - api-server
     ports:
       - "8080:80"
     environment:
-      - UPSTREAMS=/cpf/api:api-server:8000,/:frontend:3000
+      - UPSTREAMS=/api:fusionauth:9011,/cpf/api:api-server:8000,/:frontend:3000
+      - WEBSOCKETS=true
       
   frontend:
     restart: unless-stopped

@@ -31,6 +31,41 @@
           ]
         }
       }
+    },
+    {
+      "method": "PATCH",
+      "url": "/api/system-configuration",
+      "body": {
+        "systemConfiguration": {
+          "corsConfiguration": {
+            "enabled": true,
+            "allowedHeaders": [
+              "Accept",
+              "Access-Control-Request-Headers",
+              "Access-Control-Request-Method",
+              "Authorization",
+              "Content-Type",
+              "Last-Modified",
+              "Origin",
+              "X-FusionAuth-TenantId",
+              "X-Requested-With"
+            ],
+            "allowedMethods": [
+              "GET",
+              "POST",
+              "PUT",
+              "OPTIONS"
+            ],
+            "allowedOrigins": [
+              "*"
+            ],
+            "exposedHeaders": [
+              "Access-Control-Allow-Origin",
+              "Access-Control-Allow-Credentials"
+            ]
+          }
+        }
+      }
     }
   ]
 }
