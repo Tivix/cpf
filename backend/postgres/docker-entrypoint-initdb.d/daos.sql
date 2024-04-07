@@ -1,6 +1,6 @@
 CREATE TABLE ladders
 (
-    ladder_uuid varchar(255) PRIMARY KEY,
+    ladder_slug varchar(255) PRIMARY KEY,
     ladder_data jsonb,
     updated_at timestamp NOT NULL DEFAULT now()
 );
@@ -24,7 +24,7 @@ EXECUTE PROCEDURE update_edit_date();
 
 CREATE TABLE buckets
 (
-    bucket_uuid varchar(255) PRIMARY KEY,
+    bucket_slug varchar(255) PRIMARY KEY,
     bucket_data jsonb,
     updated_at timestamp NOT NULL DEFAULT now()
 );

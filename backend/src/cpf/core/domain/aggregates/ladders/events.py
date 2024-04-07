@@ -10,5 +10,12 @@ class LadderCreated(DomainEvent):
 
 @dataclass(frozen=True)
 class LadderBucketAdded(DomainEvent):
-    bucket_uuid: str
+    bucket_slug: str
     band: int
+
+
+@dataclass(frozen=True)
+class BandSet(DomainEvent):
+    threshold: int
+    salary_range: str
+    band_index: int

@@ -1,0 +1,46 @@
+{
+  "bucketSlug": "programming_language",
+  "bucketName": "Programming language",
+  "description": "Backend programming language skills are primarily focused on the developer's role in the selected language.",
+  "bucketType": "hard",
+  "advancement_levels": [
+    {
+      "advancement_level": 1,
+      "description": "Lorem ipsum dolores",
+      "example_projects": [
+        {
+          "title": "Project title: Building a Simple Library System",
+          "overview": "Lorem ipsum"
+        }
+      ],
+      "atomic_skills": [
+        {
+          "name": "Syntax Familiarity",
+          "category": "Common"
+        }
+      ]
+    },
+    {
+      "advancement_level": 2,
+      "description": "Lorem ipsum",
+      "example_projects": [],
+      "atomic_skills": [
+        {
+          "name": "Logging",
+          "category": "Common"
+        }
+      ]
+    },
+    {
+      "advancement_level": 3,
+      "description": "Lorem ipsum",
+      "example_projects": [],
+      "atomic_skills": [
+        {
+          "name": "Threads and processes",
+          "category": "Common"
+        }
+      ]
+    }
+  ]
+}

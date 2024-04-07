@@ -10,8 +10,31 @@ class BucketCreated(DomainEvent):
 
 
 @dataclass(frozen=True)
-class AtomicSkillSet(DomainEvent):
+class BucketUpdated(DomainEvent):
+    description: str
+
+
+@dataclass(frozen=True)
+class AdvancementLevelEvent:
+    advancement_level: int
+
+
+@dataclass(frozen=True)
+class AtomicSkillSet(DomainEvent, AdvancementLevelEvent):
+    uuid: str
     name: str
     category: str = field(default="Core")
-    advancement_level: int | None = None
+
+
+@dataclass(frozen=True)
+class AdvancementLevelUpdate(DomainEvent, AdvancementLevelEvent):
+    description: str
+
+
+@dataclass(frozen=True)
+class ExampleProjectSet(DomainEvent, AdvancementLevelEvent):
+    uuid: str
+    title: str
+    overview: str
+
 
