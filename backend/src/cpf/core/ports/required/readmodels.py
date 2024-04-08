@@ -4,6 +4,14 @@ from cpf.core.domain.enums import BucketType
 
 
 @dataclass(frozen=True)
+class UserReadModel:
+    username: str
+    email: str
+    first_name: str
+    last_name: str
+
+
+@dataclass(frozen=True)
 class BucketReadModel:
     @dataclass(frozen=True)
     class AdvancementLevel:

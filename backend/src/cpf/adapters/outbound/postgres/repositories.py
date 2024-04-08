@@ -16,6 +16,7 @@ from cpf.core.domain.aggregates.domain_event import (
     PrimitiveDict,
 )
 from cpf.core.domain.aggregates.ladders.aggregate import Ladder
+from cpf.core.domain.aggregates.users.aggregate import User
 from cpf.core.ports.required.writemodels import AR, Repository
 
 
@@ -164,3 +165,7 @@ def ladder_repository_factory() -> Repository[Ladder]:
 
 def bucket_repository_factory() -> Repository[Bucket]:
     return EventStoreRepository(Bucket, connection_pool)
+
+
+def user_repository_factory() -> Repository[User]:
+    return EventStoreRepository(User, connection_pool)

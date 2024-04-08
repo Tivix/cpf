@@ -1,12 +1,15 @@
 import json
+
+from cpf.core.ports.provided.services import ManageService, UserManagementService
 import os
 
 from cpf.core.ports.provided.services import ManageService
 
 manage_service: ManageService | None = None
+user_management_service: UserManagementService | None = None
 
 
-def set_manage_service(service: ManageService):
+def set_manage_service(service: ManageService) -> None:
     global manage_service
     manage_service = service
 
@@ -15,6 +18,17 @@ def get_manage_service() -> ManageService:
     if not manage_service:
         raise RuntimeError("Manage service not set")
     return manage_service
+
+
+def set_user_management_service(service: UserManagementService) -> None:
+    global user_management_service
+    user_management_service = service
+
+
+def get_user_management_service() -> UserManagementService:
+    if not user_management_service:
+        raise RuntimeError("User management service not set")
+    return user_management_service
 
 
 def start_data_upload() -> None:
@@ -38,3 +52,7 @@ def start_data_upload() -> None:
             ladder_data = json.loads(file.read())
             service.create_ladder(ladder_data=ladder_data)
             print(f"Ladder created from file {ladder_data_path}")
+ # Create admin account
+    user_service = get_user_management_service()
+    # TODO Create new service method for admin account creation when role management system will be ready
+    user_service.create_new_user(email="cpf@kellton.com", first_name="Cpf", last_name="Admin")

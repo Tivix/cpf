@@ -3,6 +3,16 @@ from typing import Callable, TypedDict
 from fastapi import FastAPI
 from starlette.routing import Route
 
+from cpf.core.ports.required.dtos import UserDTO
+
+
+def env_to_bool(value: str) -> bool:
+    return value.lower() in ("true", "1")
+
+
+def fake_user_factory() -> UserDTO:
+    return UserDTO(identifier="fake_user@mock.com", first_name="Mock", last_name="John")
+
 
 class EndpointInfo(TypedDict):
     method: str | None
