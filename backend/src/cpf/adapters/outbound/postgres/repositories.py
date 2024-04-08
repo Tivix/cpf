@@ -9,12 +9,10 @@ from psycopg2.extensions import connection as Connection
 from psycopg2.extensions import cursor as Cursor
 from psycopg2.pool import SimpleConnectionPool
 
-from cpf.core.domain.aggregates.domain_event import (
-    DomainEvent,
-    DomainEventMeta,
-    PrimitiveDict,
-)
-from cpf.core.ports.required.writemodels import AR, Repository
+from cpf.core.domain.aggregates.buckets.aggregate import Bucket
+from cpf.core.domain.aggregates.domain_event import DomainEvent, DomainEventMeta, PrimitiveDict
+from cpf.core.domain.aggregates.ladders.aggregate import Ladder
+from cpf.core.ports.required.writemodels import Repository, AR
 
 
 class EventStoreRepository(Repository[AR]):
@@ -154,3 +152,11 @@ connection_pool = SimpleConnectionPool(
     user=os.getenv("POSTGRES_USER"),
     password=os.getenv("POSTGRES_PASSWORD"),
 )
+
+
+def ladder_repository_factory() -> Repository[Ladder]:
+    return EventStoreRepository(Ladder, connection_pool)
+
+
+def bucket_repository_factory() -> Repository[Bucket]:
+    return EventStoreRepository(Bucket, connection_pool)

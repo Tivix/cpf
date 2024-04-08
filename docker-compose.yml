@@ -45,6 +45,19 @@ services:
     stdin_open: true
     tty: true
 
+  data_loader:
+    restart: no
+    build:
+      context: ./backend
+      target: dev
+    command: data-loader
+    env_file:
+      - .env
+    volumes:
+      - ./backend/src:/src
+    stdin_open: true
+    tty: true
+
   postgres:
     build:
       context: ./backend/postgres

@@ -13,6 +13,9 @@ elif [[ "${1}" == "api-server-dev" ]]; then
   fi
   echo "Running api-server-dev"
   exec uvicorn cpf.main:rest_api_app --factory --reload --host 0.0.0.0 --port 8000
+elif [[ "${1}" == "data-loader" ]]; then
+  export PYTHONPATH=/src:${PYTHONPATH}
+  exec python cpf/main.py data-loader
 else
   exec "${@}"
 fi
