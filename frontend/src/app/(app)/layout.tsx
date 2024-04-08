@@ -24,7 +24,7 @@ export default function RootLayout({
           <Sidebar />
           <div className="col-span-10">
             <Topbar />
-            <main className="flex min-h-screen flex-col items-center justify-between p-24">{children}</main>
+            <main className="min-h-screen p-8">{children}</main>
           </div>
         </div>
       </body>
