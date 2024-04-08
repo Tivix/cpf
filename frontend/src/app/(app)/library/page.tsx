@@ -21,7 +21,7 @@ export default async function LibraryPage() {
       <p className="text-navy-600 tracking-wide mb-6">Select a career path to view the details.</p>
       <div className="grid grid-cols-3 gap-6">
         {data.map((ladder: LadderCardInterface) => (
-          <LadderCard ladder={ladder} key={ladder.ladderSlug} />
+          <LadderCard key={ladder.ladderSlug} {...ladder} />
         ))}
       </div>
     </div>
