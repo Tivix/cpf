@@ -1,31 +1,7 @@
 import Image from 'next/image';
-import { HomeIcon } from '@app/static/icons/HomeIcon';
-import { PeopleIcon } from '@app/static/icons/PeopleIcon';
-import { LayoutIcon } from '@app/static/icons/LayoutIcon';
-import { DocumentIcon } from '@app/static/icons/DocumentIcon';
 import Link from 'next/link';
-
-const navigation = [
-  { name: 'My space', href: '#', current: false, icon: HomeIcon },
-  {
-    name: 'People',
-    href: '#',
-    current: false,
-    icon: PeopleIcon,
-  },
-  {
-    name: 'CPF Library',
-    href: 'library',
-    current: true,
-    icon: LayoutIcon,
-  },
-  {
-    name: 'Documentation',
-    href: '#',
-    current: false,
-    icon: DocumentIcon,
-  },
-];
+import { generateClassNames } from '@app/utils';
+import { navigation } from './utils';
 
 export const Sidebar = () => {
   return (
@@ -45,7 +21,10 @@ export const Sidebar = () => {
               <li key={item.name}>
                 <Link
                   href={item.href}
-                  className={`${item.current ? 'bg-blue-100 text-blue-900' : ''} flex items-center gap-x-3 rounded-md p-2 text-sm leading-6 font-medium text-navy-600 hover:bg-blue-100`}
+                  className={generateClassNames(
+                    { 'bg-blue-100 text-blue-900': item.current },
+                    'flex items-center gap-x-3 rounded-md p-2 text-sm leading-6 font-medium text-navy-600 hover:bg-blue-100',
+                  )}
                 >
                   <item.icon className={`w-5 h-5`} />
                   {item.name}
