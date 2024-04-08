@@ -22,8 +22,8 @@ export const Sidebar = () => {
                 <Link
                   href={item.href}
                   className={generateClassNames(
-                    { 'bg-blue-100 text-blue-900': item.current },
                     'flex items-center gap-x-3 rounded-md p-2 text-sm leading-6 font-medium text-navy-600 hover:bg-blue-100',
+                    { 'bg-blue-100 text-blue-900': item.current },
                   )}
                 >
                   <item.icon className={`w-5 h-5`} />
