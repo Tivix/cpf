@@ -1,0 +1,71 @@
+{
+  "variables": {
+    "apiKey": "00c24029-e66a-43f2-9000-544e90e8d46e",
+    "adminEmail": "admin@example.com",
+    "adminPassword": "password"
+  },
+  "apiKeys": [
+    {
+      "key": "#{apiKey}",
+      "description": "Dev API Key",
+      "keyManager": true
+    }
+  ],
+  "requests": [
+    {
+      "method": "POST",
+      "url": "/api/user/registration",
+      "body": {
+        "user": {
+          "email": "#{adminEmail}",
+          "password": "#{adminPassword}",
+          "data": {
+            "firstName": "Admin",
+            "lastName": "User"
+          }
+        },
+        "registration": {
+          "applicationId": "#{FUSIONAUTH_APPLICATION_ID}",
+          "roles": [
+            "admin"
+          ]
+        }
+      }
+    },
+    {
+      "method": "PATCH",
+      "url": "/api/system-configuration",
+      "body": {
+        "systemConfiguration": {
+          "corsConfiguration": {
+            "enabled": true,
+            "allowedHeaders": [
+              "Accept",
+              "Access-Control-Request-Headers",
+              "Access-Control-Request-Method",
+              "Authorization",
+              "Content-Type",
+              "Last-Modified",
+              "Origin",
+              "X-FusionAuth-TenantId",
+              "X-Requested-With"
+            ],
+            "allowedMethods": [
+              "GET",
+              "POST",
+              "PUT",
+              "OPTIONS"
+            ],
+            "allowedOrigins": [
+              "*"
+            ],
+            "exposedHeaders": [
+              "Access-Control-Allow-Origin",
+              "Access-Control-Allow-Credentials"
+            ]
+          }
+        }
+      }
+    }
+  ]
+}
