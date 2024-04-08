@@ -15,7 +15,7 @@ export const Topbar = () => {
         >
           <span className="absolute -inset-1.5" />
           <span className="sr-only">View notifications</span>
-          <NotificationIcon className="h-5 w-5 stroke-navy-600" aria-hidden="true" />
+          <NotificationIcon className="h-5 w-5 text-navy-600" aria-hidden="true" />
         </button>
 
         {/* Profile dropdown */}
