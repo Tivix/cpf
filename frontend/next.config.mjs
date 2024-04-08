@@ -1,6 +1,15 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'standalone',
+  // TODO: remove once we get the final logo
+  images: {
+    dangerouslyAllowSVG: true,
+    remotePatterns: [{
+      protocol: 'https',
+      hostname: 'tailwindui.com',
+      pathname: '/img/logos/mark.svg',
+    }],
+  }
 };
 
 export default nextConfig;
