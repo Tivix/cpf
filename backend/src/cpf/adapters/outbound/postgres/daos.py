@@ -116,8 +116,8 @@ class BucketReadModelDao(BaseBucketReadModelDao):
         with self._get_connection() as conn:
             with conn.cursor() as cursor:
                 cursor.execute(
-                    "SELECT * FROM buckets WHERE bucket_slug IN (%s)",
-                    (*slug_list, )
+                    "SELECT * FROM buckets WHERE bucket_slug IN %s",
+                    (tuple(slug_list), )
                 )
                 results = cursor.fetchall()
                 for result in results:
@@ -191,7 +191,6 @@ class LadderReadModelDao(BaseLadderReadModelDao):
                 )
                 results = cursor.fetchall()
                 for result in results:
-                    print(result)
                     ladder_slug, ladder_data, _ = result
                     ladders.append(LadderReadModel(
                         uuid=ladder_slug,
@@ -208,7 +207,6 @@ class LadderReadModelDao(BaseLadderReadModelDao):
                 )
                 result = cursor.fetchone()
                 ladder_slug, ladder_data, _ = result
-                print(ladder_data)
 
                 return LadderReadModel(
                     uuid=ladder_slug,
