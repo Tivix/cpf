@@ -38,7 +38,7 @@ def get_ladder_query_service() -> QueryService:
 def get_api_root() -> RootResponse:
     return RootResponse(
         get_ladders=IonLink(
-            href="/cpf/api/ladders"
+            href="http:/localhost:8080/cpf/api/ladders"
         )
     )
 
