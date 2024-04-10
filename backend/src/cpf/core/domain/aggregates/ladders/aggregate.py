@@ -1,9 +1,12 @@
-import uuid
 from dataclasses import dataclass, field
 
 from cpf.core.domain.aggregates.aggregate_root import AggregateRoot
 from cpf.core.domain.aggregates.domain_event import DomainEvent
-from cpf.core.domain.aggregates.ladders.events import LadderCreated, LadderBucketAdded, BandSet
+from cpf.core.domain.aggregates.ladders.events import (
+    BandSet,
+    LadderBucketAdded,
+    LadderCreated,
+)
 
 
 class Ladder(AggregateRoot):
@@ -20,12 +23,10 @@ class Ladder(AggregateRoot):
                 index: {
                     "threshold": band.threshold,
                     "salary_range": band.salary_range,
-                    "buckets": [{
-                        "bucket_slug": bucket.bucket_slug
-                    } for bucket in band.buckets]
+                    "buckets": [{"bucket_slug": bucket.bucket_slug} for bucket in band.buckets],
                 }
                 for index, band in self.bands.items()
-            }
+            },
         }
 
     @classmethod
@@ -35,47 +36,26 @@ class Ladder(AggregateRoot):
         return instance
 
     @AggregateRoot.produces_events
-    def add_new_bucket_to_band(
-        self,
-        bucket_slug: str,
-        band: int
-    ) -> LadderBucketAdded:
+    def add_new_bucket_to_band(self, bucket_slug: str, band: int) -> LadderBucketAdded:
         if band not in self.bands:
             raise ValueError("Band does not exists!")
 
-        return LadderBucketAdded(
-            bucket_slug=bucket_slug,
-            band=band
-        )
+        return LadderBucketAdded(bucket_slug=bucket_slug, band=band)
 
     @AggregateRoot.produces_events
-    def set_new_band(
-        self,
-        threshold: int,
-        salary_range: str,
-        band_index: int
-    ) -> BandSet:
+    def set_new_band(self, threshold: int, salary_range: str, band_index: int) -> BandSet:
         if band_index in self.bands:
             raise ValueError("Band already exists")
-        return BandSet(
-            threshold=threshold,
-            salary_range=salary_range,
-            band_index=band_index
-        )
+        return BandSet(threshold=threshold, salary_range=salary_range, band_index=band_index)
 
     # Handlers
     @AggregateRoot.handles_events(LadderBucketAdded)
     def _handle_bucket_added(self, event: LadderBucketAdded) -> None:
-        self.bands[event.band].buckets.append(LadderBucket(
-            bucket_slug=event.bucket_slug
-        ))
+        self.bands[event.band].buckets.append(LadderBucket(bucket_slug=event.bucket_slug))
 
     @AggregateRoot.handles_events(BandSet)
     def _handle_band_set(self, event: BandSet) -> None:
-        self.bands[event.band_index] = Band(
-            threshold=event.threshold,
-            salary_range=event.salary_range
-        )
+        self.bands[event.band_index] = Band(threshold=event.threshold, salary_range=event.salary_range)
 
     @AggregateRoot.handles_events(LadderCreated)
     def _handle_ladder_created(self, event: LadderCreated) -> None:
@@ -95,4 +75,3 @@ class Band:
     threshold: int
     salary_range: str
     buckets: list[LadderBucket] = field(default_factory=list)
-

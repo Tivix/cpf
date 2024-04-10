@@ -10,9 +10,13 @@ from psycopg2.extensions import cursor as Cursor
 from psycopg2.pool import SimpleConnectionPool
 
 from cpf.core.domain.aggregates.buckets.aggregate import Bucket
-from cpf.core.domain.aggregates.domain_event import DomainEvent, DomainEventMeta, PrimitiveDict
+from cpf.core.domain.aggregates.domain_event import (
+    DomainEvent,
+    DomainEventMeta,
+    PrimitiveDict,
+)
 from cpf.core.domain.aggregates.ladders.aggregate import Ladder
-from cpf.core.ports.required.writemodels import Repository, AR
+from cpf.core.ports.required.writemodels import AR, Repository
 
 
 class EventStoreRepository(Repository[AR]):

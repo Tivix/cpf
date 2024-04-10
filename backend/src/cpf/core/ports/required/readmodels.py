@@ -1,5 +1,7 @@
 from dataclasses import dataclass, field
 
+from cpf.core.domain.enums import BucketType
+
 
 @dataclass(frozen=True)
 class BucketReadModel:
@@ -25,6 +27,7 @@ class BucketReadModel:
     bucket_slug: str
     bucket_name: str
     description: str
+    bucket_type: BucketType
 
     advancement_levels: list[AdvancementLevel] | None = None
 
@@ -37,8 +40,6 @@ class LadderReadModel:
         salary_range: str
         buckets: list[str] = field(default_factory=list)
 
-    uuid: str
+    slug: str
     ladder_name: str
     bands: dict[int, BandReadModel] = field(default_factory=dict)
-
-
