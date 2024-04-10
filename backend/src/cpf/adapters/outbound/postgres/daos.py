@@ -98,10 +98,7 @@ class BucketReadModelDao(BaseBucketReadModelDao):
         buckets: list[BucketReadModel] = []
         with self._get_connection() as conn:
             with conn.cursor() as cursor:
-                cursor.execute(
-                    "SELECT * FROM buckets WHERE bucket_slug IN %s",
-                    (tuple(slug_list), )
-                )
+                cursor.execute("SELECT * FROM buckets WHERE bucket_slug IN %s", (tuple(slug_list),))
                 results = cursor.fetchall()
                 for result in results:
                     bucket_slug, bucket_data, _ = result

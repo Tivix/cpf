@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, FastAPI
+from fastapi import APIRouter, FastAPI
 
 from cpf.adapters.inbound.rest_api.ion import IonLink
 from cpf.adapters.inbound.rest_api.models.responses.core import RootResponse
@@ -35,18 +35,12 @@ def get_library_query_service() -> QueryService:
 
 @router.get(path="")
 def get_api_root() -> RootResponse:
-    return RootResponse(get_ladders=IonLink(href="/cpf/api/ladders"))
+    return RootResponse(get_ladders=IonLink(href="/cpf/api/library/ladders/"))
 
 
 @router.get(path="/health")
 def health_check():
     return "Ok!"
-
-
-@router.get(path="/buckets/{bucket_slug}")
-def get_bucket_details(bucket_slug: str, service: QueryService = Depends(get_library_query_service)):
-    bucket_detail = service.get_bucket(bucket_slug=bucket_slug)
-    return bucket_detail
 
 
 from cpf.adapters.inbound.rest_api.library.api import router as library_router  # noqa
