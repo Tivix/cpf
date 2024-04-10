@@ -36,5 +36,3 @@ class ExampleProjectSet(DomainEvent, AdvancementLevelEvent):
     uuid: str
     title: str
     overview: str
-
-

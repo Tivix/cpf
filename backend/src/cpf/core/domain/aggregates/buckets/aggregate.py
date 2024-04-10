@@ -2,8 +2,13 @@ import uuid
 from dataclasses import dataclass, field
 
 from cpf.core.domain.aggregates.aggregate_root import AggregateRoot
-from cpf.core.domain.aggregates.buckets.events import BucketCreated, AtomicSkillSet, AdvancementLevelUpdate, \
-    ExampleProjectSet, BucketUpdated
+from cpf.core.domain.aggregates.buckets.events import (
+    AdvancementLevelUpdate,
+    AtomicSkillSet,
+    BucketCreated,
+    BucketUpdated,
+    ExampleProjectSet,
+)
 from cpf.core.domain.aggregates.domain_event import DomainEvent
 from cpf.core.domain.enums import AdvancementLevel, BucketType
 
@@ -28,21 +33,15 @@ class Bucket(AggregateRoot):
                     "advancement_level": item.level.value,
                     "description": item.description,
                     "projects": [
-                        {
-                            "title": project.title,
-                            "overview": project.overview
-
-                        } for project in item.projects.values()
+                        {"title": project.title, "overview": project.overview} for project in item.projects.values()
                     ],
                     "atomic_skills": [
-                        {
-                            "uuid": skill.uuid,
-                            "name": skill.name,
-                            "category": skill.category
-                        } for skill in item.atomic_skills.values()
-                    ]
-                } for item in self.levels.values()
-            ]
+                        {"uuid": skill.uuid, "name": skill.name, "category": skill.category}
+                        for skill in item.atomic_skills.values()
+                    ],
+                }
+                for item in self.levels.values()
+            ],
         }
 
     @classmethod
@@ -52,13 +51,8 @@ class Bucket(AggregateRoot):
         return instance
 
     @AggregateRoot.produces_events
-    def update_bucket_information(
-        self,
-        description: str
-    ) -> BucketUpdated:
-        return BucketUpdated(
-            description=description
-        )
+    def update_bucket_information(self, description: str) -> BucketUpdated:
+        return BucketUpdated(description=description)
 
     @AggregateRoot.produces_events
     def set_atomic_skill(
@@ -80,39 +74,25 @@ class Bucket(AggregateRoot):
             uuid=skill_uuid,
             name=name,
             advancement_level=advancement_level.value if advancement_level else None,
-            category=category
+            category=category,
         )
 
     @AggregateRoot.produces_events
-    def update_advancement_level(
-        self,
-        advancement_level: AdvancementLevel,
-        description: str
-    ) -> AdvancementLevelUpdate:
+    def update_advancement_level(self, advancement_level: AdvancementLevel, description: str) -> AdvancementLevelUpdate:
         if advancement_level == AdvancementLevel.NO_LEVELS and self.bucket_type == BucketType.HARD_SKILL:
             raise ValueError("No level advancement is not set for hard skill bucket")
 
-        return AdvancementLevelUpdate(
-            advancement_level=advancement_level.value,
-            description=description
-        )
+        return AdvancementLevelUpdate(advancement_level=advancement_level.value, description=description)
 
     @AggregateRoot.produces_events
     def set_example_project(
-        self,
-        project_uuid: str | None,
-        advancement_level: AdvancementLevel,
-        title: str,
-        overview: str
+        self, project_uuid: str | None, advancement_level: AdvancementLevel, title: str, overview: str
     ) -> ExampleProjectSet:
         if not project_uuid:
             project_uuid = str(uuid.uuid4())
 
         return ExampleProjectSet(
-            advancement_level=advancement_level.value,
-            uuid=project_uuid,
-            title=title,
-            overview=overview
+            advancement_level=advancement_level.value, uuid=project_uuid, title=title, overview=overview
         )
 
     # TODO Implement delete existing projects and atomic skills
@@ -122,9 +102,7 @@ class Bucket(AggregateRoot):
     def _handle_example_project_set(self, event: ExampleProjectSet) -> None:
         level = AdvancementLevel(event.advancement_level)
         self.levels[level].projects[event.uuid] = ExampleProject(
-            uuid=event.uuid,
-            title=event.title,
-            overview=event.overview
+            uuid=event.uuid, title=event.title, overview=event.overview
         )
 
     @AggregateRoot.handles_events(BucketUpdated)
@@ -140,9 +118,7 @@ class Bucket(AggregateRoot):
     def _handle_atomic_skill_set(self, event: AtomicSkillSet) -> None:
         level = AdvancementLevel(event.advancement_level)
         self.levels[level].atomic_skills[event.uuid] = AtomicSkill(
-            uuid=event.uuid,
-            name=event.name,
-            category=event.category
+            uuid=event.uuid, name=event.name, category=event.category
         )
 
     @AggregateRoot.handles_events(BucketCreated)
@@ -156,9 +132,7 @@ class Bucket(AggregateRoot):
                     level=skill_level,
                 )
         else:
-            self.levels[AdvancementLevel.NO_LEVELS] = Advancement(
-                level=AdvancementLevel.NO_LEVELS
-            )
+            self.levels[AdvancementLevel.NO_LEVELS] = Advancement(level=AdvancementLevel.NO_LEVELS)
 
     def handle_event(self, event: DomainEvent) -> None:
         raise NotImplementedError(f"Event {event.event_type()} not handled")

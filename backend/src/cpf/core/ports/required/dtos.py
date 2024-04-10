@@ -5,17 +5,17 @@ from dataclasses import dataclass
 class LadderDetailDTO:
 
     @dataclass(frozen=True)
-    class Bucket:
+    class BucketDTO:
         bucket_slug: str
         bucket_name: str
         description: str
 
     @dataclass(frozen=True)
-    class Band:
+    class BandDTO:
         threshold: int
         salary_range: str
-        buckets: list["LadderDetailDTO.Bucket"]
+        hard_skill_buckets: list["LadderDetailDTO.BucketDTO"]
+        soft_skill_buckets: list["LadderDetailDTO.BucketDTO"]
 
     ladder_name: str
-    bands: dict[int, Band]
-
+    bands: dict[int, BandDTO]

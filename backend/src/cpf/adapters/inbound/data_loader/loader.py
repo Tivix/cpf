@@ -1,5 +1,6 @@
 import json
 import os
+
 from cpf.core.ports.provided.services import ManageService
 
 manage_service: ManageService | None = None
