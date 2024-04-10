@@ -2,7 +2,6 @@ import os
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, FastAPI
-from pydantic import HttpUrl
 from starlette.requests import Request
 
 from cpf.adapters.inbound.rest_api.ion import IonLink
@@ -89,9 +88,7 @@ def get_api_root(
             first_name=user.first_name,
             last_name=user.last_name,
         ),
-        get_ladders=IonLink(
-            href="http:/localhost:8080/cpf/api/ladders"
-        )
+        get_ladders=IonLink(href="http:/localhost:8080/cpf/api/ladders"),
     )
 
 
