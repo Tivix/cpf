@@ -7,6 +7,10 @@ from cpf.core.ports.required.readmodels import LadderReadModel, BucketReadModel
 class ManageService(ABC):
 
     @abstractmethod
+    def check_if_data_is_exists(self) -> bool:
+        pass
+
+    @abstractmethod
     def create_ladder(self, ladder_data: str) -> str:
         pass
 

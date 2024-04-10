@@ -16,6 +16,10 @@ class LadderManageService(ManageService):
         self._bucket_dao = bucket_dao
         self._ladder_dao = ladder_dao
 
+    def check_if_data_is_exists(self) -> bool:
+        ladders = self._ladder_dao.all()
+        return len(ladders) > 0
+
     def create_ladder(self, ladder_data: dict) -> str:
         aggregate: Ladder = Ladder.create_ladder(
             ladder_slug=ladder_data.get("ladderSlug"),

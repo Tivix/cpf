@@ -146,9 +146,6 @@ def create_ion_form_fields(
     form_fields = []
 
     for prop_name, prop_schema in properties.items():
-        if prop_name == "monthly_housing_payment":
-            print("monthly_housing_payment")
-            print(prop_schema)
         # Flatten anyOf references
         if "anyOf" in prop_schema:
             for any_of_item in prop_schema["anyOf"]:
