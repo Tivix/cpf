@@ -10,7 +10,6 @@ from cpf.adapters.inbound.rest_api.models.responses.core import (
     UnauthenticatedRootResponse,
     UserResponse,
 )
-from cpf.adapters.inbound.rest_api.permissions import check_permissions
 from cpf.adapters.inbound.rest_api.utils import env_to_bool, fake_user_factory
 from cpf.core.ports.provided.services import (
     ManageService,
@@ -80,7 +79,7 @@ def get_api_root(
     if not user:
         return UnauthenticatedRootResponse(
             # TODO Create social auth login redirect
-            login=IonLink(href="http://localhost:8080/api/login")
+            login=IonLink(href="/api/login")
         )
 
     return AuthenticatedRootResponse(
@@ -88,7 +87,7 @@ def get_api_root(
             first_name=user.first_name,
             last_name=user.last_name,
         ),
-        get_ladders=IonLink(href="http:/localhost:8080/cpf/api/ladders"),
+        get_ladders=IonLink(href="/cpf/api/library/ladders"),
     )
 
 
@@ -98,7 +97,6 @@ def health_check():
 
 
 from cpf.adapters.inbound.rest_api.library.api import router as library_router  # noqa
-
 from cpf.adapters.inbound.rest_api.users.api import router as users_router  # noqa
 
 app.include_router(router=router)

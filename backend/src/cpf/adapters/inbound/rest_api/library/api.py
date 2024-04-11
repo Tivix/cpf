@@ -1,4 +1,5 @@
 import os
+from typing import Annotated
 
 from fastapi import APIRouter, Depends
 
@@ -13,16 +14,19 @@ from cpf.adapters.inbound.rest_api.library.models.responses import (
     LadderDetailResponse,
     LadderResponse,
 )
-from cpf.adapters.inbound.rest_api.rest_api import get_library_query_service
+from cpf.adapters.inbound.rest_api.permissions import check_permissions
+from cpf.adapters.inbound.rest_api.rest_api import auth, get_library_query_service
 from cpf.core.ports.provided.services import QueryService
-from cpf.core.ports.required.dtos import LadderDetailDTO
+from cpf.core.ports.required.dtos import LadderDetailDTO, UserDTO
 from cpf.core.ports.required.readmodels import BucketReadModel, LadderReadModel
 
 router = APIRouter(prefix=f"{os.getenv('BASE_URL')}/library")
 
 
 @router.get(path="/ladders", response_model_exclude_none=True)
+@check_permissions(permission_classes=[])
 def get_ladders(
+    user: Annotated[UserDTO | None, Depends(auth)],
     service: QueryService = Depends(get_library_query_service),
 ) -> list[LadderResponse]:
     ladder_read_models: list[LadderReadModel] = service.get_all_ladders()
@@ -37,8 +41,11 @@ def get_ladders(
 
 
 @router.get(path="/ladders/{ladder_slug}", response_model_exclude_none=True)
+@check_permissions(permission_classes=[])
 def get_ladder_details(
-    ladder_slug: str, service: QueryService = Depends(get_library_query_service)
+    ladder_slug: str,
+    user: Annotated[UserDTO | None, Depends(auth)],
+    service: QueryService = Depends(get_library_query_service),
 ) -> LadderDetailResponse:
     ladder_detail: LadderDetailDTO = service.get_ladder(ladder_slug=ladder_slug)
 
@@ -64,8 +71,11 @@ def get_ladder_details(
 
 
 @router.get(path="/buckets/{bucket_slug}", response_model_exclude_none=True)
+@check_permissions(permission_classes=[])
 def get_bucket_details(
-    bucket_slug: str, service: QueryService = Depends(get_library_query_service)
+    bucket_slug: str,
+    user: Annotated[UserDTO | None, Depends(auth)],
+    service: QueryService = Depends(get_library_query_service),
 ) -> BucketDetailResponse:
     bucket_details: BucketReadModel = service.get_bucket(bucket_slug=bucket_slug)
     advancement_levels: list[AdvancementLevelResponse] = []
