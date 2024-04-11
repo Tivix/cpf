@@ -50,7 +50,7 @@ class BucketReadModelDao(BaseBucketReadModelDao):
                         serialize_data=serialize_data,
                     )
                 else:
-                    cursor = self._execute_update(cursor=cursor, ladder_slug=uuid, serialize_data=serialize_data)
+                    cursor = self._execute_update(cursor=cursor, bucket_slug=uuid, serialize_data=serialize_data)
                 conn.commit()
 
     def check_if_bucket_exists(self, bucket_slug: str) -> bool:

@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from cpf.core.ports.required.dtos import LadderDetailDTO
+from cpf.core.ports.required.dtos import LadderDetailDTO, UserDTO
 from cpf.core.ports.required.readmodels import BucketReadModel, LadderReadModel
 
 
@@ -35,4 +35,15 @@ class QueryService(ABC):
 
     @abstractmethod
     def get_bucket(self, bucket_slug: str) -> BucketReadModel:
+        pass
+
+
+class UserManagementService(ABC):
+
+    @abstractmethod
+    def get_user(self, access_token) -> UserDTO | None:
+        pass
+
+    @abstractmethod
+    def create_new_user(self, first_name: str, last_name: str, email: str) -> UserDTO:
         pass

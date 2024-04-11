@@ -2,10 +2,17 @@ from typing import Iterable
 
 from cpf.core.domain.aggregates.buckets.aggregate import Bucket
 from cpf.core.domain.aggregates.ladders.aggregate import Ladder
+from cpf.core.domain.aggregates.users.aggregate import User
 from cpf.core.domain.enums import AdvancementLevel, BucketType
-from cpf.core.ports.provided.services import ManageService, QueryService
+from cpf.core.domain.utils import get_username_from_email
+from cpf.core.ports.provided.services import (
+    ManageService,
+    QueryService,
+    UserManagementService,
+)
+from cpf.core.ports.required.clients import AuthenticationClient
 from cpf.core.ports.required.daos import BucketReadModelDao, LadderReadModelDao
-from cpf.core.ports.required.dtos import LadderDetailDTO
+from cpf.core.ports.required.dtos import LadderDetailDTO, UserDTO
 from cpf.core.ports.required.readmodels import BucketReadModel, LadderReadModel
 from cpf.core.ports.required.writemodels import Repository
 
@@ -143,3 +150,51 @@ class LibraryQueryService(QueryService):
 
     def get_bucket(self, bucket_slug: str) -> BucketReadModel:
         return self._bucket_dao.get_bucket(slug=bucket_slug)
+
+
+class FusionAuthUserManagementService(UserManagementService):
+
+    def __init__(
+        self,
+        client: AuthenticationClient,
+        repository: Repository[User],
+    ) -> None:
+        self._repository = repository
+        self._client = client
+
+    def get_user(self, access_token: str | None) -> UserDTO | None:
+        # Check if access token exists
+        if not access_token:
+            return None
+        # Check if user exists in authentication service
+        user_data = self._client.get_user_data(access_token=access_token)
+        if not user_data:
+            return None
+
+        # Check if user exists in CPF database
+        # TODO Rebuild to check UserQueryService to see if read model exists
+        aggregate = self._repository.load(user_data.username)
+        if not aggregate:
+            return None
+
+        user_dto = UserDTO(
+            username=user_data.username,
+            email=user_data.email,
+            first_name=user_data.first_name,
+            last_name=user_data.last_name,
+        )
+        return user_dto
+
+    def create_new_user(self, first_name: str, last_name: str, email: str) -> UserDTO:
+        username = get_username_from_email(email)
+        user_data = self._client.create_user(
+            first_name=first_name,
+            last_name=last_name,
+            email=email,
+            username=username,
+        )
+        aggregate = User.create_user(user_data.username)
+        aggregate.set_personal_information(email=email, first_name=first_name, last_name=last_name)
+        self._repository.save(aggregate)
+        # TODO Save readmodel to dao
+        return UserDTO(username=username, email=email, first_name=first_name, last_name=last_name)

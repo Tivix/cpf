@@ -2,6 +2,14 @@ from dataclasses import dataclass
 
 
 @dataclass(frozen=True)
+class UserDTO:
+    username: str
+    email: str
+    first_name: str
+    last_name: str
+
+
+@dataclass(frozen=True)
 class LadderDetailDTO:
 
     @dataclass(frozen=True)
