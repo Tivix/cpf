@@ -2,7 +2,7 @@ from enum import Enum
 
 
 class AdvancementLevel(Enum):
-    NO_LEVELS = 0
+    NO_LEVEL = 0
     LEVEL_1 = 1
     LEVEL_2 = 2
     LEVEL_3 = 3

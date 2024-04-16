@@ -1,16 +1,22 @@
 import json
 import os
 from contextlib import contextmanager
-from typing import Generator
+from typing import Any, Generator
 
 from psycopg2.extensions import connection as Connection
 from psycopg2.extensions import cursor as Cursor
 from psycopg2.pool import SimpleConnectionPool
 
+from cpf.core.domain.aggregates.users.aggregate import User
 from cpf.core.domain.enums import BucketType
 from cpf.core.ports.required.daos import BucketReadModelDao as BaseBucketReadModelDao
 from cpf.core.ports.required.daos import LadderReadModelDao as BaseLadderReadModelDao
-from cpf.core.ports.required.readmodels import BucketReadModel, LadderReadModel
+from cpf.core.ports.required.daos import ScorecardDao
+from cpf.core.ports.required.readmodels import (
+    BucketReadModel,
+    LadderReadModel,
+    UserReadModel,
+)
 
 
 class BucketReadModelDao(BaseBucketReadModelDao):
@@ -165,11 +171,13 @@ class LadderReadModelDao(BaseLadderReadModelDao):
                     ladders.append(LadderReadModel(slug=ladder_slug, ladder_name=ladder_data["ladder_name"]))
         return ladders
 
-    def get(self, uuid: str) -> LadderReadModel:
+    def get(self, slug: str) -> LadderReadModel | None:
         with self._get_connection() as conn:
             with conn.cursor() as cursor:
-                cursor.execute("SELECT * FROM ladders WHERE ladder_slug = %s", (uuid,))
+                cursor.execute("SELECT * FROM ladders WHERE ladder_slug = %s", (slug,))
                 result = cursor.fetchone()
+                if not result:
+                    return None
                 ladder_slug, ladder_data, _ = result
 
                 return LadderReadModel(
@@ -184,6 +192,83 @@ class LadderReadModelDao(BaseLadderReadModelDao):
                         for index, band in ladder_data["bands"].items()
                     },
                 )
+
+
+class UserScorecardDao(ScorecardDao):
+
+    def __init__(self, connection_pool: SimpleConnectionPool):
+        self._pool = connection_pool
+
+    @contextmanager
+    def _get_connection(self) -> Generator[Connection, None, None]:
+        conn = self._pool.getconn()
+        try:
+            yield conn
+        finally:
+            self._pool.putconn(conn)
+
+    @staticmethod
+    def _execute_create(
+        cursor: Cursor,
+        username: str,
+        first_name: str,
+        last_name: str,
+        email: str,
+        manager_identifier: str,
+    ) -> None:
+        cursor.execute(
+            "INSERT INTO users VALUES (%s, %s, %s, %s, %s)",
+            (username, first_name, last_name, email, manager_identifier),
+        )
+
+    @staticmethod
+    def _execute_update(cursor: Cursor, username: str, manager_identifier: str, activity: int) -> None:
+        cursor.execute(
+            "UPDATE users SET manager_identifier = %s, activity = %s WHERE username = %s",
+            (manager_identifier, activity, username),
+        )
+
+    @staticmethod
+    def _get_record_from_db(cursor: Cursor, username) -> tuple[Any] | None:
+        cursor.execute("SELECT * FROM users WHERE username = %s", (username,))
+        result = cursor.fetchone()
+        if not result:
+            return None
+        return result
+
+    def save(self, aggregate: User) -> None:
+        with self._get_connection() as conn:
+            with conn.cursor() as cursor:
+                if self._get_record_from_db(cursor, aggregate.aggregate_id):
+                    self._execute_update(
+                        cursor=cursor,
+                        username=aggregate.aggregate_id,
+                        manager_identifier="admin",
+                        activity=0,
+                    )
+                else:
+                    self._execute_create(
+                        cursor=cursor,
+                        username=aggregate.aggregate_id,
+                        first_name=aggregate.first_name,
+                        last_name=aggregate.last_name,
+                        email=aggregate.email,
+                        manager_identifier="admin",
+                    )
+                conn.commit()
+
+    def all_users(self) -> list[UserReadModel]:
+        with self._get_connection() as conn:
+            with conn.cursor() as cursor:
+                cursor.execute("SELECT * FROM users")
+                results = cursor.fetchall()
+                read_models: list[UserReadModel] = []
+                for result in results:
+                    username, first_name, last_name, email, manager_identifier, activity = result
+                    read_models.append(
+                        UserReadModel(username=username, first_name=first_name, last_name=last_name, email=email)
+                    )
+                return read_models
 
 
 connection_pool = SimpleConnectionPool(
@@ -203,3 +288,7 @@ def ladder_dao_factory() -> BaseLadderReadModelDao:
 
 def bucket_dao_factory() -> BaseBucketReadModelDao:
     return BucketReadModelDao(connection_pool=connection_pool)
+
+
+def user_dao_factory() -> UserScorecardDao:
+    return UserScorecardDao(connection_pool=connection_pool)

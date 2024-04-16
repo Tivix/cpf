@@ -36,3 +36,14 @@ CREATE TRIGGER update_user_task_updated_on
         buckets
     FOR EACH ROW
 EXECUTE PROCEDURE update_edit_date();
+
+--- Create read model for user scorecard
+CREATE TABLE users
+(
+    username varchar(255) PRIMARY KEY,
+    first_name varchar(255),
+    last_name varchar(255),
+    email varchar(255),
+    manager_identifier varchar(255),
+    activity integer DEFAULT 0
+);

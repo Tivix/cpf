@@ -79,7 +79,7 @@ class Bucket(AggregateRoot):
 
     @AggregateRoot.produces_events
     def update_advancement_level(self, advancement_level: AdvancementLevel, description: str) -> AdvancementLevelUpdate:
-        if advancement_level == AdvancementLevel.NO_LEVELS and self.bucket_type == BucketType.HARD_SKILL:
+        if advancement_level == AdvancementLevel.NO_LEVEL and self.bucket_type == BucketType.HARD_SKILL:
             raise ValueError("No level advancement is not set for hard skill bucket")
 
         return AdvancementLevelUpdate(advancement_level=advancement_level.value, description=description)
@@ -132,7 +132,7 @@ class Bucket(AggregateRoot):
                     level=skill_level,
                 )
         else:
-            self.levels[AdvancementLevel.NO_LEVELS] = Advancement(level=AdvancementLevel.NO_LEVELS)
+            self.levels[AdvancementLevel.NO_LEVEL] = Advancement(level=AdvancementLevel.NO_LEVEL)
 
     def handle_event(self, event: DomainEvent) -> None:
         raise NotImplementedError(f"Event {event.event_type()} not handled")

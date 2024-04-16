@@ -1,7 +1,25 @@
 from cpf.core.domain.enums import BucketType
-from cpf.core.ports.provided.services import QueryService
-from cpf.core.ports.required.dtos import LadderDetailDTO
-from cpf.core.ports.required.readmodels import BucketReadModel, LadderReadModel
+from cpf.core.ports.provided.services import QueryService, UserManagementService
+from cpf.core.ports.required.dtos import LadderDetailDTO, UserDTO
+from cpf.core.ports.required.readmodels import (
+    BucketReadModel,
+    LadderReadModel,
+    UserReadModel,
+)
+
+
+class MockUserManagementService(UserManagementService):
+
+    def get_user(self, access_token) -> UserDTO | None:
+        return UserDTO(first_name="John", last_name="Doe", email="john.doe@kellton.com", username="john.doe")
+
+    def create_new_user(self, first_name: str, last_name: str, email: str) -> UserDTO:
+        return UserDTO(first_name="John", last_name="Doe", email="john.doe@kellton.com", username="john.doe")
+
+    def get_users(self, manager_identifier: str | None = None) -> list[UserReadModel]:
+        return [
+            UserReadModel(first_name="John", last_name="Doe", email="john.doe@kellton.com", username="john.doe"),
+        ]
 
 
 class MockQueryService(QueryService):

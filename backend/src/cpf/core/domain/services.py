@@ -1,5 +1,6 @@
 from typing import Iterable
 
+from cpf.adapters.outbound.postgres.daos import UserScorecardDao
 from cpf.core.domain.aggregates.buckets.aggregate import Bucket
 from cpf.core.domain.aggregates.ladders.aggregate import Ladder
 from cpf.core.domain.aggregates.users.aggregate import User
@@ -8,12 +9,17 @@ from cpf.core.domain.utils import get_username_from_email
 from cpf.core.ports.provided.services import (
     ManageService,
     QueryService,
+    ScorecardManageService,
     UserManagementService,
 )
 from cpf.core.ports.required.clients import AuthenticationClient
 from cpf.core.ports.required.daos import BucketReadModelDao, LadderReadModelDao
-from cpf.core.ports.required.dtos import LadderDetailDTO, UserDTO
-from cpf.core.ports.required.readmodels import BucketReadModel, LadderReadModel
+from cpf.core.ports.required.dtos import LadderDetailDTO, UserDTO, UserScorecardDTO
+from cpf.core.ports.required.readmodels import (
+    BucketReadModel,
+    LadderReadModel,
+    UserReadModel,
+)
 from cpf.core.ports.required.writemodels import Repository
 
 
@@ -154,13 +160,10 @@ class LibraryQueryService(QueryService):
 
 class FusionAuthUserManagementService(UserManagementService):
 
-    def __init__(
-        self,
-        client: AuthenticationClient,
-        repository: Repository[User],
-    ) -> None:
+    def __init__(self, client: AuthenticationClient, repository: Repository[User], user_dao: UserScorecardDao) -> None:
         self._repository = repository
         self._client = client
+        self._user_dao = user_dao
 
     def get_user(self, access_token: str | None) -> UserDTO | None:
         # Check if access token exists
@@ -196,5 +199,71 @@ class FusionAuthUserManagementService(UserManagementService):
         aggregate = User.create_user(user_data.username)
         aggregate.set_personal_information(email=email, first_name=first_name, last_name=last_name)
         self._repository.save(aggregate)
-        # TODO Save readmodel to dao
+        self._user_dao.save(aggregate)
         return UserDTO(username=username, email=email, first_name=first_name, last_name=last_name)
+
+    def get_users(self, manager_identifier: str | None = None) -> list[UserReadModel]:
+        # TODO Show all users that are lower in structure than manager
+        return self._user_dao.all_users()
+
+
+class ScorecardService(ScorecardManageService):
+
+    def __init__(self, repository: Repository[User], ladders_dao: LadderReadModelDao, buckets_dao: BucketReadModelDao):
+        self._repository = repository
+        self._ladder_dao = ladders_dao
+        self._buckets_dao = buckets_dao
+
+    def get_user_scorecard(self, username: str) -> UserScorecardDTO:
+        aggregate = self._repository.load(username)
+        if not aggregate:
+            raise ValueError("Aggregate doesn't exists")
+        return UserScorecardDTO.from_aggregate(aggregate=aggregate)
+
+    def set_ladder(self, username: str, ladder_slug: str) -> UserScorecardDTO:
+        aggregate = self._repository.load(username)
+        if not aggregate:
+            raise ValueError("Aggregate doesn't exists")
+
+        selected_ladder: LadderReadModel = self._ladder_dao.get(slug=ladder_slug)
+        buckets: list[BucketReadModel] = self._buckets_dao.get_by_slugs(slug_list=selected_ladder.get_all_buckets())
+
+        aggregate.assign_new_ladder(
+            ladder_slug=ladder_slug,
+            main_ladder=not aggregate.has_main_ladder(),
+            hard_skill_buckets_slugs=[
+                bucket.bucket_slug for bucket in buckets if bucket.bucket_type == BucketType.HARD_SKILL
+            ],
+            soft_skill_buckets_slugs=[
+                bucket.bucket_slug for bucket in buckets if bucket.bucket_type == BucketType.SOFT_SKILL
+            ],
+        )
+        self._repository.save(aggregate)
+        return UserScorecardDTO.from_aggregate(aggregate=aggregate)
+
+    def update_user_progress(self, username: str, bucket_slug: str, atomic_skills: list[str]) -> UserScorecardDTO:
+        aggregate = self._repository.load(username)
+        if not aggregate:
+            raise ValueError("Aggregate doesn't exists")
+        bucket: BucketReadModel = self._buckets_dao.get_bucket(bucket_slug)
+        # Verify if atomic skills are part of selected bucket
+
+        # Calculate if new level has been archived
+        if bucket.bucket_type == BucketType.HARD_SKILL:
+            new_level_archived = aggregate.check_level_of_hard_skill_bucket(
+                bucket_reference=bucket, new_skills=atomic_skills
+            )
+        else:
+            new_level_archived = aggregate.check_if_soft_skill_bucket_completed(
+                bucket_reference=bucket, new_skills=atomic_skills
+            )
+
+        aggregate.update_progress(
+            bucket_slug=bucket_slug,
+            bucket_type=bucket.bucket_type,
+            atomic_skills=atomic_skills,
+            new_level_archived=int(new_level_archived),
+        )
+
+        self._repository.save(aggregate)
+        return UserScorecardDTO.from_aggregate(aggregate=aggregate)

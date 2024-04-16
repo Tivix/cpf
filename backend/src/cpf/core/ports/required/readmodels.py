@@ -51,3 +51,9 @@ class LadderReadModel:
     slug: str
     ladder_name: str
     bands: dict[int, BandReadModel] = field(default_factory=dict)
+
+    def get_all_buckets(self) -> list[str]:
+        buckets = []
+        for band in self.bands.values():
+            buckets.extend(band.buckets)
+        return buckets

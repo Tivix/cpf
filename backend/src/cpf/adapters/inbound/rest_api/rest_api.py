@@ -14,6 +14,7 @@ from cpf.adapters.inbound.rest_api.utils import env_to_bool, fake_user_factory
 from cpf.core.ports.provided.services import (
     ManageService,
     QueryService,
+    ScorecardManageService,
     UserManagementService,
 )
 from cpf.core.ports.required.dtos import UserDTO
@@ -24,6 +25,7 @@ app = FastAPI()
 library_manage_service: ManageService | None = None
 library_query_service: QueryService | None = None
 user_management_service: UserManagementService | None = None
+scorecard_service: ScorecardManageService | None = None
 
 
 def set_library_manage_service(service: ManageService):
@@ -57,6 +59,17 @@ def get_user_management_service() -> UserManagementService:
     if not user_management_service:
         raise RuntimeError("User management service not set")
     return user_management_service
+
+
+def set_scorecard_manage_service(service: ScorecardManageService) -> None:
+    global scorecard_service
+    scorecard_service = service
+
+
+def get_scorecard_manage_service() -> ScorecardManageService:
+    if not scorecard_service:
+        raise RuntimeError("Scorecard service not set")
+    return scorecard_service
 
 
 class FastAPIAuth:

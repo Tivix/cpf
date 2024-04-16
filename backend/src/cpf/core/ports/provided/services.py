@@ -1,7 +1,11 @@
 from abc import ABC, abstractmethod
 
-from cpf.core.ports.required.dtos import LadderDetailDTO, UserDTO
-from cpf.core.ports.required.readmodels import BucketReadModel, LadderReadModel
+from cpf.core.ports.required.dtos import LadderDetailDTO, UserDTO, UserScorecardDTO
+from cpf.core.ports.required.readmodels import (
+    BucketReadModel,
+    LadderReadModel,
+    UserReadModel,
+)
 
 
 class ManageService(ABC):
@@ -46,4 +50,28 @@ class UserManagementService(ABC):
 
     @abstractmethod
     def create_new_user(self, first_name: str, last_name: str, email: str) -> UserDTO:
+        pass
+
+    @abstractmethod
+    def get_users(self, manager_identifier: str | None = None) -> list[UserReadModel]:
+        pass
+
+
+class ScorecardManageService(ABC):
+
+    @abstractmethod
+    def get_user_scorecard(self, username: str) -> UserScorecardDTO:
+        pass
+
+    @abstractmethod
+    def set_ladder(self, username: str, ladder_slug: str) -> UserScorecardDTO:
+        pass
+
+    @abstractmethod
+    def update_user_progress(
+        self,
+        username: str,
+        bucket_slug: str,
+        atomic_skills: list[str],
+    ) -> UserScorecardDTO:
         pass
