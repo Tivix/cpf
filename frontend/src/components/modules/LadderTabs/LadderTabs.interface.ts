@@ -5,4 +5,5 @@ export interface LadderInterface {
 export interface LadderTabsProps {
   maximumLadders: number;
   activeLadder: number;
+  ladderOnClick?: (ladder: number) => void;
 }

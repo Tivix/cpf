@@ -1,5 +1,4 @@
 'use client';
-
 import { Fragment } from 'react';
 import Image from 'next/image';
 import { Menu, Transition } from '@headlessui/react';
@@ -7,7 +6,7 @@ import { NotificationIcon } from '@app/static/icons/NotificationIcon';
 
 export const Topbar = () => {
   return (
-    <div className="bg-white mx-auto max-w-full p-4 border-b border-navy-200">
+    <div className="bg-white mx-auto p-4 border-b border-navy-200 sticky top-0 z-40 shrink-0">
       <div className="flex justify-end items-center px-2">
         <button
           type="button"

@@ -19,12 +19,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-navy-50`}>
-        <div className="grid grid-cols-12 overflow-y-auto">
+      <body className={`${inter.className} bg-navy-50 h-full`}>
+        <div className="flex">
           <Sidebar />
-          <div className="col-span-10">
+          <div className="w-full pl-72">
             <Topbar />
-            <main className="min-h-screen p-8">{children}</main>
+            <main className="p-8">{children}</main>
           </div>
         </div>
       </body>

@@ -1,5 +1,5 @@
 import { Breadcrumbs } from '@app/components/modules/Breadcrumbs';
-import { LadderTabs } from '@app/components/modules/LadderTabs';
+import { LibraryDetailed } from '@app/components/modules/LibraryDetailed';
 import { mapKeysToCamelCase } from '@app/utils';
 
 async function getLadderDetails(slug: string) {
@@ -15,7 +15,7 @@ async function getLadderDetails(slug: string) {
 
 export default async function LadderDetailed({ params }: { params: { slug: string } }) {
   const data = await getLadderDetails(params.slug);
-  console.log('detailed', data.bands);
+
   return (
     <div>
       <Breadcrumbs
@@ -24,9 +24,7 @@ export default async function LadderDetailed({ params }: { params: { slug: strin
           { label: data.ladderName, href: `/library/${params.slug}`, current: true },
         ]}
       />
-      <section>
-        <LadderTabs activeLadder={1} maximumLadders={Object.keys(data.bands).length} />
-      </section>
+      {data && <LibraryDetailed data={data} />}
     </div>
   );
 }
