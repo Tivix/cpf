@@ -13,15 +13,15 @@ async function getLadderDetails(slug: string) {
   return mapKeysToCamelCase(data);
 }
 
-export default async function LadderDetailed({ params }: { params: { slug: string } }) {
-  const data = await getLadderDetails(params.slug);
+export default async function LadderDetailed({ params }: { params: { ladder: string } }) {
+  const data = await getLadderDetails(params.ladder);
 
   return (
     <div>
       <Breadcrumbs
         breadcrumbs={[
           { label: 'CPF Library', href: '/library', current: false },
-          { label: data.ladderName, href: `/library/${params.slug}`, current: true },
+          { label: data.ladderName, href: `/library/${params.ladder}`, current: true },
         ]}
       />
       {data && <LibraryDetailed data={data} />}

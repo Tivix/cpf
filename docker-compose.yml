@@ -46,7 +46,7 @@ services:
     tty: true
 
   data_loader:
-    restart: no
+    restart: "no"
     build:
       context: ./backend
       target: dev
