@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google';
 import { Sidebar } from '@app/components/modules/Sidebar';
 import { Topbar } from '@app/components/modules/Topbar';
 
+import 'react-tooltip/dist/react-tooltip.css';
 import '../globals.css';
 
 const inter = Inter({ subsets: ['latin'] });

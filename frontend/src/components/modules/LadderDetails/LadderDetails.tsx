@@ -1,3 +1,4 @@
+import { Tooltip } from 'react-tooltip';
 import {LadderDetailsProps} from "@app/components/modules/LadderDetails/LadderDetails.interface";
 import {InfoIcon} from "@app/static/icons/InfoIcon";
 import {Bucket} from "@app/types/common";
@@ -16,7 +17,13 @@ export const LadderDetails = ({ ladder, ladderName, band }: LadderDetailsProps) 
           <div className="rounded-xl border border-[#E5E6EA] p-4 flex flex-col items-center">
               <div className="flex gap-2 justify-between text-navy-600">
                   <p>Threshold</p>
-                  <InfoIcon className="text-navy-600" />
+                  <InfoIcon
+                      className="text-navy-600"
+                      data-tooltip-id="threshold-info-tooltip"
+                      data-tooltip-content="Min. points needed to complete band"
+                      data-tooltip-place="top"
+                  />
+                  <Tooltip id="threshold-info-tooltip" />
               </div>
               <p className="text-2xl font-bold">{ladder.threshold}</p>
           </div>
