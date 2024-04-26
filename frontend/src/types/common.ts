@@ -1,7 +1,14 @@
 export interface LadderBand {
-    buckets: Bucket[];
+    buckets: LadderBandBucket[];
     salaryRange: string;
     threshold: number;
+}
+
+export interface LadderBandBucket {
+    bucketName: string;
+    bucketSlug: string;
+    bucketType: BucketType;
+    description: string;
 }
 
 export interface Bucket {
