@@ -1,7 +1,7 @@
-import { AccordionCardProps } from './AccordionCard.interface';
-import {ChevronRightIcon} from "@app/static/icons/ChevronRightIcon";
 import {PropsWithChildren, useState} from "react";
+import {ChevronRightIcon} from "@app/static/icons/ChevronRightIcon";
 import {generateClassNames} from "@app/utils";
+import { AccordionCardProps } from './AccordionCard.interface';
 
 export const AccordionCard = ({title, children}: PropsWithChildren<AccordionCardProps>) => {
     const [isOpen, setOpen] = useState(false);
@@ -14,8 +14,8 @@ export const AccordionCard = ({title, children}: PropsWithChildren<AccordionCard
                    className={generateClassNames(
                        'flex items-center justify-between w-full p-6 border border-navy-200 rounded-2xl',
                        {
-                           'hover:bg-transparent rounded-b-none border-b-0 pb-0': isOpen,
                            'hover:bg-navy-100': !isOpen && children,
+                           'hover:bg-transparent rounded-b-none border-b-0 pb-0': isOpen,
                            'cursor-auto': !children,
                        },
                    )}
@@ -27,7 +27,7 @@ export const AccordionCard = ({title, children}: PropsWithChildren<AccordionCard
                            <ChevronRightIcon
                                className={generateClassNames(
                                    'rotate-90 text-navy-500',
-                                   { '-rotate-90': isOpen,},
+                                   { '-rotate-90': isOpen },
                                )}
                            />
                        </div>
@@ -38,7 +38,7 @@ export const AccordionCard = ({title, children}: PropsWithChildren<AccordionCard
                <div
                    className={generateClassNames(
                        'border border-navy-200 border-t-0 rounded-b-2xl p-6',
-                       { 'hidden': !isOpen,},
+                       { 'hidden': !isOpen },
                    )}
                >
                    {children}

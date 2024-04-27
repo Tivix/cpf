@@ -3,9 +3,21 @@ import {LadderDetailsProps} from "@app/components/modules/LadderDetails/LadderDe
 import {InfoIcon} from "@app/static/icons/InfoIcon";
 import {Bucket} from "@app/types/common";
 import {BucketCard} from "@app/components/common/BucketCard";
-import {Accordion} from "@app/components/common/Accordion";
+import {AccordionCard} from "@app/components/common/AccordionCard";
+import {AccordionList} from "@app/components/common/AccordionList";
 
 export const LadderDetails = ({ ladder, ladderName, band }: LadderDetailsProps) => {
+    // TODO: remove it
+    const softSkills = [
+        {
+            skillName: 'Wykazuje osobiste zaangażowanie w realizację celów i rozwiązywanie problemów',
+            skillDescription: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam aliquet, felis et tincidunt tempor, justo orci cursus ipsum, nec effici'
+        },
+        {
+            skillName: 'Postępuje zgodnie z obowiązującymi w firmie standardami jakości i dobrymi praktykami w swoim obszarze i poza nim.'
+        }
+    ]
+
   return (
     <div className="rounded-2xl bg-white px-20 py-12 flex flex-col gap-8">
       <div className="flex justify-between">
@@ -44,14 +56,14 @@ export const LadderDetails = ({ ladder, ladderName, band }: LadderDetailsProps) 
                 <p className="text-sm text-navy-600 uppercase tracking-wide">Soft skills</p>
                 { /* TODO: use soft skills from api instead of these mocked data */ }
                 <div className="flex flex-col gap-6">
-                    <Accordion title="Time management">
-                        <p className="mb-2 text-gray-500 dark:text-gray-400">Wykazuje osobiste zaangażowanie w realizację celów i rozwiązywanie problemów</p>
-                        <p className="text-gray-500 dark:text-gray-400">Postępuje zgodnie z obowiązującymi w firmie standardami jakości i dobrymi praktykami w swoim obszarze i poza nim.</p>
-                    </Accordion>
-                    <Accordion title="Responsibility">
-                        <p className="mb-2 text-gray-500 dark:text-gray-400">Wykazuje osobiste zaangażowanie w realizację celów i rozwiązywanie problemów</p>
-                        <p className="text-gray-500 dark:text-gray-400">Postępuje zgodnie z obowiązującymi w firmie standardami jakości i dobrymi praktykami w swoim obszarze i poza nim.</p>
-                    </Accordion>
+                    <AccordionCard title="Time management">
+                        <div className="flex flex-col gap-6">
+                            <AccordionList items={softSkills.map(({skillDescription, skillName}) => ({
+                                title: skillName,
+                                children: skillDescription ? <p>{skillDescription}</p> : undefined,
+                            }))} />
+                        </div>
+                     </AccordionCard>
                 </div>
             </div>
         </div>
