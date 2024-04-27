@@ -3,6 +3,7 @@ import {LadderDetailsProps} from "@app/components/modules/LadderDetails/LadderDe
 import {InfoIcon} from "@app/static/icons/InfoIcon";
 import {Bucket} from "@app/types/common";
 import {BucketCard} from "@app/components/common/BucketCard";
+import {Accordion} from "@app/components/common/Accordion";
 
 export const LadderDetails = ({ ladder, ladderName, band }: LadderDetailsProps) => {
   return (
@@ -41,12 +42,16 @@ export const LadderDetails = ({ ladder, ladderName, band }: LadderDetailsProps) 
             </div>
             <div className="flex flex-col gap-4">
                 <p className="text-sm text-navy-600 uppercase tracking-wide">Soft skills</p>
+                { /* TODO: use soft skills from api instead of these mocked data */ }
                 <div className="flex flex-col gap-6">
-                    { /* TODO: use only soft skills */ }
-                    {ladder.buckets.map((bucket: Bucket) => (
-                        /* TODO: use collapsible card */
-                        <BucketCard bucket={bucket} />
-                    ))}
+                    <Accordion title="Time management">
+                        <p className="mb-2 text-gray-500 dark:text-gray-400">Wykazuje osobiste zaangażowanie w realizację celów i rozwiązywanie problemów</p>
+                        <p className="text-gray-500 dark:text-gray-400">Postępuje zgodnie z obowiązującymi w firmie standardami jakości i dobrymi praktykami w swoim obszarze i poza nim.</p>
+                    </Accordion>
+                    <Accordion title="Responsibility">
+                        <p className="mb-2 text-gray-500 dark:text-gray-400">Wykazuje osobiste zaangażowanie w realizację celów i rozwiązywanie problemów</p>
+                        <p className="text-gray-500 dark:text-gray-400">Postępuje zgodnie z obowiązującymi w firmie standardami jakości i dobrymi praktykami w swoim obszarze i poza nim.</p>
+                    </Accordion>
                 </div>
             </div>
         </div>

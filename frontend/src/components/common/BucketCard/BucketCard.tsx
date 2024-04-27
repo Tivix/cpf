@@ -13,7 +13,7 @@ export const BucketCard = ({ bucket }: BucketCardProps) => {
             <div className="flex justify-between">
                 <h2 className="text-navy-900 text-xl font-semibold">{bucketName}</h2>
                 <div className="rounded-full bg-navy-50 w-8 h-8 flex justify-center items-center">
-                    <ChevronRightIcon />
+                    <ChevronRightIcon className="text-navy-500" />
                 </div>
             </div>
             <p className="text-navy-600 text-base">{description}</p>
