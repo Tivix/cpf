@@ -29,7 +29,7 @@ export const LadderDetails = ({ ladder, ladderName, band }: LadderDetailsProps) 
           </h2>
           <p className="text-navy-600 text-l font-medium">Salary range: {ladder.salaryRange}</p>
         </div>
-        <div className="rounded-xl border border-[#E5E6EA] p-4 flex flex-col items-center">
+        <div className="rounded-xl border border-navy-200 p-4 flex flex-col items-center">
           <div className="flex gap-2 justify-between text-navy-600">
             <p>Threshold</p>
             <InfoIcon
@@ -44,7 +44,7 @@ export const LadderDetails = ({ ladder, ladderName, band }: LadderDetailsProps) 
         </div>
       </div>
       <div className="flex flex-col gap-6">
-        <p className="text-m text-navy-600 tracking-wide">Buckets you need to complete to get on this band:</p>
+        <p className="text-base text-navy-600 tracking-wide">Buckets you need to complete to get on this band:</p>
         <div className="flex flex-col gap-4">
           <p className="text-sm text-navy-600 uppercase tracking-wide">Hard skills</p>
           <div className="flex flex-col gap-6">

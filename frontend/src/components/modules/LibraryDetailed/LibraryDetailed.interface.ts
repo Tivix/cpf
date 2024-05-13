@@ -1,16 +1,8 @@
-export interface BandInterface {
-  [band: string]: {
-    threshold: number;
-    salaryRange: string;
-    buckets: {
-      bucketSlug: string;
-    }[];
-  };
-}
+import {LadderBand} from "@app/types/common";
 
 export interface LibraryDetailedProps {
   data: {
     ladderName: string;
-    bands: Record<string, BandInterface[]>;
+    bands: Record<string, LadderBand>;
   };
 }

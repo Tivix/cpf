@@ -3,9 +3,9 @@ export const InfoIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
     <path
       d="M10.75 11H12L12 16.25M21.25 12C21.25 17.1086 17.1086 21.25 12 21.25C6.89137 21.25 2.75 17.1086 2.75 12C2.75 6.89137 6.89137 2.75 12 2.75C17.1086 2.75 21.25 6.89137 21.25 12Z"
       stroke="currentColor"
-      stroke-width="1.5"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
     <rect
       x="11.375"
@@ -15,7 +15,7 @@ export const InfoIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
       rx="0.625"
       fill="black"
       stroke="currentColor"
-      stroke-width="0.25"
+      strokeWidth="0.25"
     />
   </svg>
 );
