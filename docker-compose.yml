@@ -31,6 +31,7 @@ services:
       - '3000:3000'
 
   api-server:
+    image: cpf/backend-image
     restart: unless-stopped
     build:
       context: ./backend
@@ -46,6 +47,7 @@ services:
     tty: true
 
   data_loader:
+    image: cpf/backend-image
     restart: "no"
     build:
       context: ./backend
@@ -55,6 +57,9 @@ services:
       - .env
     volumes:
       - ./backend/src:/src
+    depends_on:
+      fusionauth:
+        condition: service_healthy
     stdin_open: true
     tty: true
 
@@ -95,6 +100,11 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+    healthcheck:
+      test: curl --silent --fail http://localhost:9011/api/status -o /dev/null -w "%{http_code}"
+      interval: 5s
+      timeout: 5s
+      retries: 5
     volumes:
       - fusionauth_config:/usr/local/fusionauth/config
       - ./fusionauth/kickstart:/usr/local/fusionauth/kickstart

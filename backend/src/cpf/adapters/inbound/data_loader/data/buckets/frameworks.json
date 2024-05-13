@@ -1,0 +1,46 @@
+{
+  "bucketSlug": "frameworks",
+  "bucketName": "Frameworks",
+  "description": "Backend programming language skills are primarily focused on the developer's role in the selected language.",
+  "bucketType": "hard",
+  "advancement_levels": [
+    {
+      "advancement_level": 1,
+      "description": "Lorem ipsum dolores",
+      "example_projects": [
+        {
+          "title": "Project title: Building a Simple Library System",
+          "overview": "Lorem ipsum"
+        }
+      ],
+      "atomic_skills": [
+        {
+          "name": "Routing and controllers",
+          "category": "Common"
+        }
+      ]
+    },
+    {
+      "advancement_level": 2,
+      "description": "Lorem ipsum",
+      "example_projects": [],
+      "atomic_skills": [
+        {
+          "name": "Authentication and Authorization",
+          "category": "Common"
+        }
+      ]
+    },
+    {
+      "advancement_level": 3,
+      "description": "Lorem ipsum",
+      "example_projects": [],
+      "atomic_skills": [
+        {
+          "name": "Security best practices",
+          "category": "Common"
+        }
+      ]
+    }
+  ]
+}

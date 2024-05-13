@@ -1,6 +1,7 @@
 {
   "variables": {
-    "apiKey": "00c24029-e66a-43f2-9000-544e90e8d46e",
+    "apiKey": "#{ENV.FUSIONAUTH_API_KEY}",
+    "applicationId": "#{ENV.FUSIONAUTH_APPLICATION_ID}",
     "adminEmail": "admin@example.com",
     "adminPassword": "password"
   },
@@ -29,6 +30,31 @@
           "roles": [
             "admin"
           ]
+        }
+      }
+    },
+    {
+      "method": "POST",
+      "url": "/api/application/#{applicationId}",
+      "body": {
+        "application": {
+          "name": "CPF",
+          "roles": [
+            {
+              "name": "admin"
+            },
+            {
+              "name": "manager"
+            },
+            {
+              "name": "user"
+            }
+          ],
+          "loginConfiguration": {
+            "requireAuthentication": false,
+            "generateRefreshTokens": true,
+            "allowTokenRefresh": true
+          }
         }
       }
     },

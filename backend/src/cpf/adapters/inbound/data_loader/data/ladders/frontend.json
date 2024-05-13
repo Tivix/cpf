@@ -1,0 +1,18 @@
+{
+  "ladderSlug": "frontend",
+  "ladderName": "Frontend Developer",
+  "bands": [
+    {
+      "threshold": 2,
+      "salary_range": "4000 - 8000 zł",
+      "buckets": [
+        {
+          "bucket_slug": "programming_language"
+        },
+        {
+          "bucket_slug": "ui_ux_development"
+        }
+      ]
+    }
+  ]
+}

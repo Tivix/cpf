@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from cpf.core.ports.required.readmodels import LadderReadModel, BucketReadModel
+from cpf.core.ports.required.readmodels import BucketReadModel, LadderReadModel
 
 
 class ReadModelDao(ABC):

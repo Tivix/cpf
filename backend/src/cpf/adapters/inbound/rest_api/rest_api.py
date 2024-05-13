@@ -1,45 +1,93 @@
-from fastapi import FastAPI, APIRouter, Depends
+import os
+from typing import Annotated
+
+from fastapi import APIRouter, Depends, FastAPI
+from starlette.requests import Request
 
 from cpf.adapters.inbound.rest_api.ion import IonLink
-from cpf.adapters.inbound.rest_api.models.responses.core import RootResponse
-from cpf.core.ports.provided.services import ManageService, QueryService
-
+from cpf.adapters.inbound.rest_api.models.responses.core import (
+    AuthenticatedRootResponse,
+    UnauthenticatedRootResponse,
+    UserResponse,
+)
+from cpf.adapters.inbound.rest_api.utils import env_to_bool, fake_user_factory
+from cpf.core.ports.provided.services import (
+    ManageService,
+    QueryService,
+    UserManagementService,
+)
+from cpf.core.ports.required.dtos import UserDTO
 
 router = APIRouter(prefix="/cpf/api")
 app = FastAPI()
 
-ladder_manage_service: ManageService | None = None
-ladder_query_service: QueryService | None = None
+library_manage_service: ManageService | None = None
+library_query_service: QueryService | None = None
+user_management_service: UserManagementService | None = None
 
 
-def set_ladder_manage_service(service: ManageService):
-    global ladder_manage_service
-    ladder_manage_service = service
+def set_library_manage_service(service: ManageService):
+    global library_manage_service
+    library_manage_service = service
 
 
-def get_ladder_manage_service() -> ManageService:
-    if not ladder_manage_service:
+def get_library_manage_service() -> ManageService:
+    if not library_manage_service:
         raise RuntimeError("Manage Service not set")
-    return ladder_manage_service
+    return library_manage_service
 
 
-def set_ladder_query_service(service: QueryService):
-    global ladder_query_service
-    ladder_query_service = service
+def set_library_query_service(service: QueryService):
+    global library_query_service
+    library_query_service = service
 
 
-def get_ladder_query_service() -> QueryService:
-    if not ladder_query_service:
+def get_library_query_service() -> QueryService:
+    if not library_query_service:
         raise RuntimeError("Query service not set")
-    return ladder_query_service
+    return library_query_service
 
 
-@router.get(path="")
-def get_api_root() -> RootResponse:
-    return RootResponse(
-        get_ladders=IonLink(
-            href="/cpf/api/ladders"
+def set_user_management_service(service: UserManagementService) -> None:
+    global user_management_service
+    user_management_service = service
+
+
+def get_user_management_service() -> UserManagementService:
+    if not user_management_service:
+        raise RuntimeError("User management service not set")
+    return user_management_service
+
+
+class FastAPIAuth:
+
+    def __call__(self, request: Request) -> UserDTO:
+        # TODO Remove after auth will be implemented on frontend
+        if env_to_bool(os.getenv("USE_MOCK_USER")):
+            return fake_user_factory()
+        service_instance: UserManagementService = get_user_management_service()
+        return service_instance.get_user(access_token=request.cookies.get("access_token"))
+
+
+auth = FastAPIAuth()
+
+
+@router.get(path="", response_model_exclude_none=True)
+def get_api_root(
+    user: Annotated[UserDTO | None, Depends(auth)]
+) -> AuthenticatedRootResponse | UnauthenticatedRootResponse:
+    if not user:
+        return UnauthenticatedRootResponse(
+            # TODO Create social auth login redirect
+            login=IonLink(href="/api/login")
         )
+
+    return AuthenticatedRootResponse(
+        user=UserResponse(
+            first_name=user.first_name,
+            last_name=user.last_name,
+        ),
+        get_ladders=IonLink(href="/cpf/api/library/ladders"),
     )
 
 
@@ -48,35 +96,9 @@ def health_check():
     return "Ok!"
 
 
-@router.get(path="/ladders")
-def get_ladders(
-    service: QueryService = Depends(get_ladder_query_service)
-):
-    ladders = service.get_all_ladders()
-    return [
-        {
-            "ladder_slug": ladder.uuid,
-            "ladder_name": ladder.ladder_name
-        } for ladder in ladders
-    ]
-
-
-@router.get(path="/ladders/{ladder_slug}")
-def get_ladder_details(
-    ladder_slug: str,
-    service: QueryService = Depends(get_ladder_query_service)
-):
-    ladder_detail = service.get_ladder(ladder_slug=ladder_slug)
-    return ladder_detail
-
-
-@router.get(path="/buckets/{bucket_slug}")
-def get_bucket_details(
-    bucket_slug: str,
-    service: QueryService = Depends(get_ladder_query_service)
-):
-    bucket_detail = service.get_bucket(bucket_slug=bucket_slug)
-    return bucket_detail
-
+from cpf.adapters.inbound.rest_api.library.api import router as library_router  # noqa
+from cpf.adapters.inbound.rest_api.users.api import router as users_router  # noqa
 
 app.include_router(router=router)
+app.include_router(router=library_router)
+app.include_router(router=users_router)

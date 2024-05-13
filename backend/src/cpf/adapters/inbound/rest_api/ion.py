@@ -1,7 +1,7 @@
 from datetime import date, datetime, time
 from typing import Annotated, Any, Literal, Optional, Type, Union
 
-from pydantic import BaseModel, Field, HttpUrl, StringConstraints, conint, conlist
+from pydantic import BaseModel, Field, StringConstraints, conint, conlist
 
 
 class IonBaseModel(BaseModel):
@@ -50,7 +50,7 @@ class IonCollectionObject(IonValueObject):
 
 
 class IonLink(IonBaseModel):
-    href: HttpUrl = Field(..., description="The URL of the linked resource")
+    href: str = Field(..., description="The URL of the linked resource")
     name: str | None = Field(default=None, description="The name of the link (Implicit relation)")
     rel: list[str] | None = Field(default=None, description="The explicit relationships of the link to the object")
 
@@ -146,9 +146,6 @@ def create_ion_form_fields(
     form_fields = []
 
     for prop_name, prop_schema in properties.items():
-        if prop_name == "monthly_housing_payment":
-            print("monthly_housing_payment")
-            print(prop_schema)
         # Flatten anyOf references
         if "anyOf" in prop_schema:
             for any_of_item in prop_schema["anyOf"]:

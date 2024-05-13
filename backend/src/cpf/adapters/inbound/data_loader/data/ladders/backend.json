@@ -1,6 +1,6 @@
 {
   "ladderSlug": "backend",
-  "ladderName": "Backend",
+  "ladderName": "Backend Developer",
   "bands": [
     {
       "threshold": 2,
@@ -8,6 +8,9 @@
       "buckets": [
         {
           "bucket_slug": "programming_language"
+        },
+        {
+          "bucket_slug": "frameworks"
         }
       ]
     },
