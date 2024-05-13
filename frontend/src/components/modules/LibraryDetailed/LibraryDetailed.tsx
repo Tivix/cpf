@@ -23,7 +23,7 @@ export const LibraryDetailed: React.FC<LibraryDetailedProps> = ({ data }) => {
     }
   }, [currentBand, maximumLadders, pathname, router]);
 
-  const chandleLadderChange = useCallback((ladder: number) => {
+  const handleLadderChange = useCallback((ladder: number) => {
     setCurrentBand(ladder);
   }, []);
 
