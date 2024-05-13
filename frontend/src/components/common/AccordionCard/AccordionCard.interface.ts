@@ -1,3 +1,3 @@
 export interface AccordionCardProps {
-    title: string;
+  title: string;
 }

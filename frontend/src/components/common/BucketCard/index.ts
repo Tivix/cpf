@@ -1,1 +1,1 @@
-export {BucketCard} from './BucketCard';
+export { BucketCard } from './BucketCard';

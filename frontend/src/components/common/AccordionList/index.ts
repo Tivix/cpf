@@ -1,1 +1,1 @@
-export {AccordionList} from './AccordionList';
+export { AccordionList } from './AccordionList';

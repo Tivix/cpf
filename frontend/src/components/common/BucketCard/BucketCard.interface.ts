@@ -1,5 +1,5 @@
-import {Bucket} from "@app/types/common";
+import { Bucket } from '@app/types/common';
 
 export interface BucketCardProps {
-    bucket: Bucket;
+  bucket: Bucket;
 }
