@@ -5,8 +5,10 @@ import { AccordionListItem } from './AccordionListItem';
 export const AccordionList = ({ items }: PropsWithChildren<AccordionListProps>) => {
   return (
     <div className="flex flex-col">
-      {items.map(({ title, children }) => (
-        <AccordionListItem title={title}>{children}</AccordionListItem>
+      {items.map(({ title, children, key }) => (
+        <AccordionListItem key={key} title={title}>
+          {children}
+        </AccordionListItem>
       ))}
     </div>
   );

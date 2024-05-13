@@ -50,7 +50,7 @@ export const LadderDetails = ({ ladder, ladderName, band }: LadderDetailsProps) 
           <div className="flex flex-col gap-6">
             {/* TODO: use only hard skills */}
             {ladder.buckets.map((bucket: Bucket) => (
-              <BucketCard bucket={bucket} />
+              <BucketCard bucket={bucket} key={bucket.bucketSlug} />
             ))}
           </div>
         </div>
@@ -62,6 +62,7 @@ export const LadderDetails = ({ ladder, ladderName, band }: LadderDetailsProps) 
               <div className="flex flex-col gap-6">
                 <AccordionList
                   items={softSkills.map(({ skillDescription, skillName }) => ({
+                    key: skillName,
                     title: skillName,
                     children: skillDescription ? <p>{skillDescription}</p> : undefined,
                   }))}
