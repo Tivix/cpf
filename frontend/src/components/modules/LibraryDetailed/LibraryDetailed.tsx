@@ -11,7 +11,7 @@ export const LibraryDetailed: React.FC<LibraryDetailedProps> = ({ data }) => {
   const searchParams = useSearchParams();
   const band = searchParams.get('band');
 
-  const [currentBand, setCurrentBand] = useState<number>(typeof band === 'string' ? parseInt(band, 10) : 1);
+  const [currentBand, setCurrentBand] = useState(typeof band === 'string' ? parseInt(band, 10) : 1);
   const maximumLadders = useMemo(() => Object.keys(data.bands).length, [data]);
   const tabsProps = useMemo(() => ({ activeLadder: currentBand, maximumLadders }), [currentBand, maximumLadders]);
 
