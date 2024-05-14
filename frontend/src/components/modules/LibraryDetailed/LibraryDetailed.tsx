@@ -38,7 +38,7 @@ export const LibraryDetailed: React.FC<LibraryDetailedProps> = ({ data }) => {
   return (
     <section className="py-16 grid grid-cols-10">
       <div className="col-span-2 mx-auto">
-        <LadderTabs {...tabsProps} ladderOnClick={chandleLadderChange} />
+        <LadderTabs {...tabsProps} ladderOnClick={handleLadderChange} />
       </div>
       <div className="col-span-7">
         <LadderDetails band={currentBand} ladder={data.bands[currentBand]} ladderName={data.ladderName} />
