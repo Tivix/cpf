@@ -1,7 +1,7 @@
 import { Tooltip } from 'react-tooltip';
 import { LadderDetailsProps } from '@app/components/modules/LadderDetails/LadderDetails.interface';
 import { InfoIcon } from '@app/static/icons/InfoIcon';
-import { Bucket } from '@app/types/common';
+import { LadderBandBucket } from '@app/types/common';
 import { BucketCard } from '@app/components/common/BucketCard';
 import { AccordionCard } from '@app/components/common/AccordionCard';
 import { AccordionList } from '@app/components/common/AccordionList';
@@ -49,7 +49,7 @@ export const LadderDetails = ({ ladder, ladderName, band }: LadderDetailsProps) 
           <p className="text-sm text-navy-600 uppercase tracking-wide">Hard skills</p>
           <div className="flex flex-col gap-6">
             {/* TODO: use only hard skills */}
-            {ladder.buckets.map((bucket: Bucket) => (
+            {ladder.buckets.map((bucket: LadderBandBucket) => (
               <BucketCard bucket={bucket} key={bucket.bucketSlug} />
             ))}
           </div>
