@@ -1,0 +1,7 @@
+FUSIONAUTH_ISSUER=http://localhost:9011
+FUSIONAUTH_CLIENT_ID="e9fdb985-9173-4e01-9d73-ac2d60d1dc8e"
+FUSIONAUTH_CLIENT_SECRET="super-secret-secret-that-should-be-regenerated-for-production"
+FUSIONAUTH_TENANT_ID=d7d09513-a3f5-401c-9685-34ab6c552453
+FUSIONAUTH_URL=http://localhost:9011
+
+NEXTAUTH_SECRET="5u3jisHy+T04jJGpoAUzkC2CKx/nbTCeoiOyg0d0p0o="
