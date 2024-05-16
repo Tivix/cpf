@@ -2,7 +2,7 @@ import { Breadcrumbs } from '@app/components/modules/Breadcrumbs';
 import { mapKeysToCamelCase } from '@app/utils';
 
 async function getBucketDetails(slug: string) {
-  const response = await fetch(`http://proxy/cpf/api/buckets/${slug}`);
+  const response = await fetch(`http://proxy/cpf/api/library/buckets/${slug}`);
 
   if (!response.ok) {
     throw new Error('Failed to fetch bucket details');

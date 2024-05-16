@@ -1,5 +1,6 @@
 export interface LadderBand {
-  buckets: LadderBandBucket[];
+  hardSkillBuckets: LadderBandBucket[];
+  softSkillBuckets: LadderBandBucket[];
   salaryRange: string;
   threshold: number;
 }

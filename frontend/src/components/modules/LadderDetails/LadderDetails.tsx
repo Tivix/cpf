@@ -7,19 +7,6 @@ import { AccordionCard } from '@app/components/common/AccordionCard';
 import { AccordionList } from '@app/components/common/AccordionList';
 
 export const LadderDetails = ({ ladder, ladderName, band }: LadderDetailsProps) => {
-  // TODO: remove it
-  const softSkills = [
-    {
-      skillName: 'Wykazuje osobiste zaangażowanie w realizację celów i rozwiązywanie problemów',
-      skillDescription:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam aliquet, felis et tincidunt tempor, justo orci cursus ipsum, nec effici',
-    },
-    {
-      skillName:
-        'Postępuje zgodnie z obowiązującymi w firmie standardami jakości i dobrymi praktykami w swoim obszarze i poza nim.',
-    },
-  ];
-
   return (
     <div className="rounded-2xl bg-white px-20 py-12 flex flex-col gap-8">
       <div className="flex justify-between">
@@ -48,23 +35,21 @@ export const LadderDetails = ({ ladder, ladderName, band }: LadderDetailsProps) 
         <div className="flex flex-col gap-4">
           <p className="text-sm text-navy-600 uppercase tracking-wide">Hard skills</p>
           <div className="flex flex-col gap-6">
-            {/* TODO: use only hard skills */}
-            {ladder.buckets.map((bucket: LadderBandBucket) => (
+            {ladder.hardSkillBuckets.map((bucket: LadderBandBucket) => (
               <BucketCard bucket={bucket} key={bucket.bucketSlug} />
             ))}
           </div>
         </div>
         <div className="flex flex-col gap-4">
           <p className="text-sm text-navy-600 uppercase tracking-wide">Soft skills</p>
-          {/* TODO: use soft skills from api instead of these mocked data */}
           <div className="flex flex-col gap-6">
             <AccordionCard title="Time management">
               <div className="flex flex-col gap-6">
                 <AccordionList
-                  items={softSkills.map(({ skillDescription, skillName }) => ({
-                    key: skillName,
-                    title: skillName,
-                    children: skillDescription ? <p>{skillDescription}</p> : undefined,
+                  items={ladder.softSkillBuckets.map(({ description, bucketName }) => ({
+                    key: bucketName,
+                    title: bucketName,
+                    children: description ? <p>{description}</p> : undefined,
                   }))}
                 />
               </div>
