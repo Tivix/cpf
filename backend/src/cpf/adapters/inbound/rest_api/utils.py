@@ -11,7 +11,7 @@ def env_to_bool(value: str) -> bool:
 
 
 def fake_user_factory() -> UserDTO:
-    return UserDTO(identifier="fake_user@mock.com", first_name="Mock", last_name="John")
+    return UserDTO(email="fake_user@mock.com", username="fake_user", first_name="Mock", last_name="John")
 
 
 class EndpointInfo(TypedDict):
