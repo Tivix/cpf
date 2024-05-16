@@ -4,26 +4,13 @@ export const generateBandGrouping = (
   totalNumberOfBands: number,
   bandsPerLevel = 3,
   positionNames = ['Junior', 'Mid', 'Senior'],
-) => {
-  let bandGrouping: LadderInterface = {};
+): LadderInterface => {
+  const bands = Array.from({ length: totalNumberOfBands }, (_, i) => i + 1);
 
-  let bandCounter = 1; // Initialize band counter
-
-  // Loop through position names
-  for (const position of positionNames) {
-    const bands = [];
-    // Calculate the starting band for the current position
-    const startBand = positionNames.indexOf(position) * bandsPerLevel + 1;
-    // Generate bands for the current position
-    for (let i = 0; i < bandsPerLevel && bandCounter <= totalNumberOfBands; i++) {
-      bands.push(startBand + i);
-      bandCounter++;
-    }
-    // Assign bands to position if bands were generated
-    if (bands.length > 0) {
-      bandGrouping[position] = bands;
-    }
-  }
-
-  return bandGrouping;
+  return Object.fromEntries(
+      positionNames.map((key, index) => {
+        const startIndex = index * bandsPerLevel;
+        return [key, bands.slice(startIndex, startIndex + bandsPerLevel)];
+      }),
+  );
 };
