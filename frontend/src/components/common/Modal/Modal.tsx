@@ -7,9 +7,9 @@ import { Inter } from 'next/font/google';
 
 const inter = Inter({ subsets: ['latin'] });
 
-export const Modal = ({ children, isOpen, setIsOpen, title }: ModalProps) => (
-  <Transition.Root show={isOpen} as={Fragment}>
-    <Dialog as="div" className={`${inter.className} relative z-50`} onClose={() => setIsOpen(false)}>
+export const Modal = ({ children, open, onClose, title }: ModalProps) => (
+  <Transition.Root show={open} as={Fragment}>
+    <Dialog as="div" className={`${inter.className} relative z-50`} onClose={onClose}>
       <Transition.Child
         as={Fragment}
         enter="ease-out duration-300"
@@ -38,7 +38,7 @@ export const Modal = ({ children, isOpen, setIsOpen, title }: ModalProps) => (
                 <Dialog.Title as="h3" className="text-xl font-medium text-navy-900">
                   {title}
                 </Dialog.Title>
-                <button onClick={() => setIsOpen(false)} type="button">
+                <button onClick={onClose} type="button">
                   <CloseIcon className="h-5 w-5 text-navy-600 hover:text-navy-900" aria-hidden="true" />
                 </button>
               </div>

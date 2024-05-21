@@ -1,7 +1,7 @@
 import { PropsWithChildren } from 'react';
 
 export interface ModalProps extends PropsWithChildren {
-  isOpen: boolean;
-  setIsOpen: (isOpen: boolean) => void;
+  open: boolean;
+  onClose: () => void;
   title: string;
 }
