@@ -3,7 +3,10 @@
     "apiKey": "#{ENV.FUSIONAUTH_API_KEY}",
     "applicationId": "#{ENV.FUSIONAUTH_APPLICATION_ID}",
     "adminEmail": "admin@example.com",
-    "adminPassword": "password"
+    "adminPassword": "password",
+    "rsaKeyId": "f0a55e7f-64de-4ffb-8be1-96602d1b91bb",
+    "jwtPublicKey": "#{ENV.FUSIONAUTH_JWT_SIGNING_KEY_PUBLIC}",
+    "jwtPrivateKey": "#{ENV.FUSIONAUTH_JWT_SIGNING_KEY_PRIVATE}"
   },
   "apiKeys": [
     {
@@ -89,6 +92,30 @@
               "Access-Control-Allow-Origin",
               "Access-Control-Allow-Credentials"
             ]
+          }
+        }
+      }
+    },
+    {
+      "method": "POST",
+      "url": "/api/key/import/#{rsaKeyId}",
+      "body": {
+        "key": {
+          "name": "Dev JWT Signing Key [Imported]",
+          "algorithm": "RS256",
+          "publicKey": "#{jwtPublicKey}",
+          "privateKey": "#{jwtPrivateKey}"
+        }
+      }
+    },
+    {
+      "method": "PATCH",
+      "url": "/api/tenant/#{FUSIONAUTH_TENANT_ID}",
+      "body": {
+        "tenant": {
+          "jwtConfiguration": {
+            "accessTokenKeyId": "#{rsaKeyId}",
+            "idTokenKeyId": "#{rsaKeyId}"
           }
         }
       }

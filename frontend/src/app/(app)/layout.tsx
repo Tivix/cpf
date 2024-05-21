@@ -5,8 +5,8 @@ import { Sidebar } from '@app/components/modules/Sidebar';
 import { Topbar } from '@app/components/modules/Topbar';
 
 import '../globals.css';
-import LoginButton from "@app/components/common/LoginButton";
-import {authOptions} from "@app/app/api/auth/[...nextauth]/route";
+import LoginButton from '@app/components/common/LoginButton';
+import { authOptions } from '@app/app/api/auth/[...nextauth]/route';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -22,6 +22,9 @@ export default async function RootLayout({
 }>) {
   const session = await getServerSession(authOptions);
 
+  console.log('session: ', session);
+  console.log('authOptions: ', authOptions);
+
   return (
     <html lang="en">
       <body className={`${inter.className} bg-navy-50`}>
@@ -31,8 +34,10 @@ export default async function RootLayout({
             <Topbar />
             <LoginButton session={session} />
             {session ? (
-                <main className="flex min-h-screen flex-col items-center justify-between p-24">{children}</main>
-            ): "you must log in"}
+              <main className="flex min-h-screen flex-col items-center justify-between p-24">{children}</main>
+            ) : (
+              'you must log in'
+            )}
           </div>
         </div>
       </body>
