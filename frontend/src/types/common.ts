@@ -8,22 +8,22 @@ export interface LadderBand {
 export interface LadderBandBucket {
   bucketName: string;
   bucketSlug: string;
-  bucketType: BucketType;
+  bucketType: typeof BucketType;
   description: string;
 }
 
 export interface Bucket {
   bucketName: string;
   bucketSlug: string;
-  bucketType: BucketType;
+  bucketType: typeof BucketType;
   description: string;
   advancementLevels: AdvancementLevel[];
 }
 
-export enum BucketType {
-  HARD = 'hard',
-  SOFT = 'soft',
-}
+export const BucketType = {
+  HARD: 'hard',
+  SOFT: 'soft',
+} as const;
 
 export interface AdvancementLevel {
   advancementLevel: number;

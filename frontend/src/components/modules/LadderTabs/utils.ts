@@ -8,9 +8,9 @@ export const generateBandGrouping = (
   const bands = Array.from({ length: totalNumberOfBands }, (_, i) => i + 1);
 
   return Object.fromEntries(
-      positionNames.map((key, index) => {
-        const startIndex = index * bandsPerLevel;
-        return [key, bands.slice(startIndex, startIndex + bandsPerLevel)];
-      }),
+    positionNames.map((key, index) => {
+      const startIndex = index * bandsPerLevel;
+      return [key, bands.slice(startIndex, startIndex + bandsPerLevel)];
+    }),
   );
 };
