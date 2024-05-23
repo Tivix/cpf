@@ -13,6 +13,78 @@
           "bucket_slug": "frameworks"
         }
       ]
+    },
+    {
+      "threshold": 6,
+      "salary_range": "6000 - 10000 zł",
+      "buckets": [
+        {
+          "bucket_slug": "programming_language"
+        }
+      ]
+    },
+    {
+      "threshold": 10,
+      "salary_range": "8000 - 12000 zł",
+      "buckets": [
+        {
+          "bucket_slug": "programming_language"
+        }
+      ]
+    },
+    {
+      "threshold": 14,
+      "salary_range": "10000 - 14000 zł",
+      "buckets": [
+        {
+          "bucket_slug": "programming_language"
+        }
+      ]
+    },
+    {
+      "threshold": 18,
+      "salary_range": "12000 - 16000 zł",
+      "buckets": [
+        {
+          "bucket_slug": "programming_language"
+        }
+      ]
+    },
+    {
+      "threshold": 22,
+      "salary_range": "14000 - 20000 zł",
+      "buckets": [
+        {
+          "bucket_slug": "programming_language"
+        }
+      ]
+    },
+    {
+      "threshold": 26,
+      "salary_range": "19000 - 24000 zł",
+      "buckets": [
+        {
+          "bucket_slug": "programming_language"
+        }
+      ]
+    },
+    {
+      "threshold": 30,
+      "salary_range": "21000 - 26000 zł",
+      "buckets": [
+        {
+          "bucket_slug": "programming_language"
+        }
+      ]
+    },
+    {
+      "threshold": 34,
+      "salary_range": "30000+ zł",
+      "buckets": [
+        {
+          "bucket_slug": "programming_language"
+        }
+      ]
     }
   ]
 }

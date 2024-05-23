@@ -5,7 +5,7 @@ import { navigation } from './utils';
 
 export const Sidebar = () => {
   return (
-    <nav className="flex col-span-2 flex-col bg-white px-3 border-r border-navy-200">
+    <nav className="w-72 z-50 fixed h-full flex flex-col bg-white px-3 border-r border-navy-200">
       <div className="flex h-16 shrink-0 items-center">
         <Image
           src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"

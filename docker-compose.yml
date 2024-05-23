@@ -48,7 +48,7 @@ services:
 
   data_loader:
     image: cpf/backend-image
-    restart: no
+    restart: "no"
     build:
       context: ./backend
       target: dev

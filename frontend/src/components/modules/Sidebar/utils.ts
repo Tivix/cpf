@@ -13,7 +13,7 @@ export const navigation = [
   },
   {
     name: 'CPF Library',
-    href: 'library',
+    href: '/library',
     current: true,
     icon: LayoutIcon,
   },
