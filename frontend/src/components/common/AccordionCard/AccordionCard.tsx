@@ -1,17 +1,21 @@
-import {PropsWithChildren, useEffect, useState} from 'react';
+import { PropsWithChildren, useEffect, useState } from 'react';
 import { ChevronRightIcon } from '@app/static/icons/ChevronRightIcon';
 import { generateClassNames } from '@app/utils';
 import { AccordionCardProps } from './AccordionCard.interface';
 
-export const AccordionCard = ({ title, children, className, expandedByDefault }
-: PropsWithChildren<AccordionCardProps>) => {
+export const AccordionCard = ({
+  title,
+  children,
+  className,
+  expandedByDefault,
+}: PropsWithChildren<AccordionCardProps>) => {
   const [isOpen, setOpen] = useState(false);
 
   useEffect(() => {
     if (expandedByDefault) {
       setOpen(true);
     }
-  }, [expandedByDefault])
+  }, [expandedByDefault]);
 
   return (
     <div className={className}>

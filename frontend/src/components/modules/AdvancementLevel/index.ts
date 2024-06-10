@@ -1,1 +1,1 @@
-export {AdvancementLevel} from './AdvancementLevel';
+export { AdvancementLevel } from './AdvancementLevel';

@@ -1,1 +1,1 @@
-export {BucketDetails} from './BucketDetails';
+export { BucketDetails } from './BucketDetails';

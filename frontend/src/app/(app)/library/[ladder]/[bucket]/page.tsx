@@ -1,6 +1,6 @@
 import { Breadcrumbs } from '@app/components/modules/Breadcrumbs';
 import { mapKeysToCamelCase } from '@app/utils';
-import {BucketDetails} from "@app/components/modules/BucketDetails";
+import { BucketDetails } from '@app/components/modules/BucketDetails';
 
 async function getBucketDetails(slug: string) {
   const response = await fetch(`http://proxy/cpf/api/library/buckets/${slug}`);
