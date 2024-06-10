@@ -28,8 +28,10 @@ export const BucketType = {
 export interface AdvancementLevel {
   advancementLevel: number;
   description: string;
-  exampleProjects: ExampleProject[];
-  atomicSkills: AtomicSkill[];
+  projects: ExampleProject[];
+  categories: {
+    [categoryGroup: string]: AtomicSkill[];
+  };
 }
 
 export interface ExampleProject {
@@ -39,5 +41,5 @@ export interface ExampleProject {
 
 export interface AtomicSkill {
   name: string;
-  category: string;
+  description?: string;
 }
