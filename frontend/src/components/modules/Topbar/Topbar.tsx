@@ -3,8 +3,37 @@ import { Fragment } from 'react';
 import Image from 'next/image';
 import { Menu, Transition } from '@headlessui/react';
 import { NotificationIcon } from '@app/static/icons/NotificationIcon';
+import { signIn, signOut, useSession } from 'next-auth/react';
 
 export const Topbar = () => {
+  const { data: session } = useSession();
+
+  function renderLoginStatus() {
+    if (session) {
+      return (
+        <>
+          <Menu.Item>
+            <div className="text-sm py-2 text-gray-700">
+              Hello <span className="font-bold">{session?.user?.email}</span>
+            </div>
+          </Menu.Item>
+          <Menu.Item>
+            <button className="block w-full text-left text-sm py-2 text-gray-700" onClick={() => signOut()}>
+              Log out
+            </button>
+          </Menu.Item>
+        </>
+      );
+    }
+    return (
+      <Menu.Item>
+        <button className="block w-full text-left text-sm py-2 text-gray-700" onClick={() => signIn()}>
+          Log in
+        </button>
+      </Menu.Item>
+    );
+  }
+
   return (
     <div className="bg-white mx-auto p-4 border-b border-navy-200 sticky top-0 z-40 shrink-0">
       <div className="flex justify-end items-center px-2">
@@ -40,14 +69,8 @@ export const Topbar = () => {
             leaveFrom="transform opacity-100 scale-100"
             leaveTo="transform opacity-0 scale-95"
           >
-            <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-              <Menu.Item>
-                {() => (
-                  <a href="#" className="block px-4 py-2 text-sm text-gray-700">
-                    Sign out
-                  </a>
-                )}
-              </Menu.Item>
+            <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none px-4">
+              {renderLoginStatus()}
             </Menu.Items>
           </Transition>
         </Menu>

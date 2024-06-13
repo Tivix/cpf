@@ -4,6 +4,7 @@ import { Sidebar } from '@app/components/modules/Sidebar';
 import { Topbar } from '@app/components/modules/Topbar';
 
 import '../globals.css';
+import { AuthContext } from '@app/context/AuthContext';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -18,16 +19,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${inter.className} bg-navy-50 h-full`}>
-        <div className="flex">
-          <Sidebar />
-          <div className="w-full pl-72">
-            <Topbar />
-            <main className="p-8">{children}</main>
+    <AuthContext>
+      <html lang="en">
+        <body className={`${inter.className} bg-navy-50 h-full`}>
+          <div className="flex">
+            <Sidebar />
+            <div className="w-full pl-72">
+              <Topbar />
+              <main className="p-8">{children}</main>
+            </div>
           </div>
-        </div>
-      </body>
-    </html>
+        </body>
+      </html>
+    </AuthContext>
   );
 }

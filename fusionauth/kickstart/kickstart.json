@@ -1,94 +1,98 @@
 {
   "variables": {
     "apiKey": "#{ENV.FUSIONAUTH_API_KEY}",
+    "asymmetricKeyId": "#{UUID()}",
     "applicationId": "#{ENV.FUSIONAUTH_APPLICATION_ID}",
+    "clientSecret": "secret-that-should-be-regenerated-for-production",
+    "defaultTenantId": "d7d09513-a3f5-401c-9685-34ab6c552453",
     "adminEmail": "admin@example.com",
-    "adminPassword": "password"
+    "adminPassword": "password",
+    "adminUserId": "00000000-0000-0000-0000-000000000001",
+    "userEmail": "richard@example.com",
+    "userPassword": "password",
+    "userUserId": "00000000-0000-0000-0000-111111111111"
   },
   "apiKeys": [
     {
       "key": "#{apiKey}",
-      "description": "Dev API Key",
-      "keyManager": true
+      "description": "Unrestricted API key"
     }
   ],
   "requests": [
     {
       "method": "POST",
-      "url": "/api/user/registration",
+      "url": "/api/key/generate/#{asymmetricKeyId}",
+      "tenantId": "#{defaultTenantId}",
       "body": {
-        "user": {
-          "email": "#{adminEmail}",
-          "password": "#{adminPassword}",
-          "data": {
-            "firstName": "Admin",
-            "lastName": "User"
-          }
-        },
-        "registration": {
-          "applicationId": "#{FUSIONAUTH_APPLICATION_ID}",
-          "roles": [
-            "admin"
-          ]
+        "key": {
+          "algorithm": "RS256",
+          "name": "For exampleapp",
+          "length": 2048
         }
       }
     },
     {
       "method": "POST",
       "url": "/api/application/#{applicationId}",
+      "tenantId": "#{defaultTenantId}",
       "body": {
         "application": {
-          "name": "CPF",
-          "roles": [
-            {
-              "name": "admin"
-            },
-            {
-              "name": "manager"
-            },
-            {
-              "name": "user"
-            }
-          ],
-          "loginConfiguration": {
-            "requireAuthentication": false,
+          "name": "CPF app",
+          "oauthConfiguration": {
+            "authorizedRedirectURLs": [
+              "http://localhost:3000/api/auth/callback/fusionauth"
+            ],
+            "logoutURL": "http://localhost:3000/api/auth/",
+            "clientSecret": "#{clientSecret}",
+            "enabledGrants": ["authorization_code", "refresh_token"],
             "generateRefreshTokens": true,
-            "allowTokenRefresh": true
+            "requireRegistration": true
+          },
+          "jwtConfiguration": {
+            "enabled": true,
+            "accessTokenKeyId": "#{asymmetricKeyId}",
+            "idTokenKeyId": "#{asymmetricKeyId}"
           }
         }
       }
     },
     {
-      "method": "PATCH",
-      "url": "/api/system-configuration",
+      "method": "POST",
+      "url": "/api/user/registration/#{adminUserId}",
       "body": {
-        "systemConfiguration": {
-          "corsConfiguration": {
-            "enabled": true,
-            "allowedHeaders": [
-              "Accept",
-              "Access-Control-Request-Headers",
-              "Access-Control-Request-Method",
-              "Authorization",
-              "Content-Type",
-              "Last-Modified",
-              "Origin",
-              "X-FusionAuth-TenantId",
-              "X-Requested-With"
-            ],
-            "allowedMethods": [
-              "GET",
-              "POST",
-              "PUT",
-              "OPTIONS"
-            ],
-            "allowedOrigins": [
-              "*"
-            ],
-            "exposedHeaders": [
-              "Access-Control-Allow-Origin",
-              "Access-Control-Allow-Credentials"
-            ]
+        "registration": {
+          "applicationId": "#{FUSIONAUTH_APPLICATION_ID}",
+          "roles": ["admin"]
+        },
+        "roles": ["admin"],
+        "skipRegistrationVerification": true,
+        "user": {
+          "birthDate": "1981-06-04",
+          "data": {
+            "favoriteColor": "chartreuse"
+          },
+          "email": "#{adminEmail}",
+          "firstName": "Dinesh",
+          "lastName": "Chugtai",
+          "password": "#{adminPassword}"
+        }
+      }
+    },
+    {
+      "method": "POST",
+      "url": "/api/user/registration/#{userUserId}",
+      "body": {
+        "user": {
+          "birthDate": "1985-11-23",
+          "email": "#{userEmail}",
+          "firstName": "Fred",
+          "lastName": "Flintstone",
+          "password": "#{userPassword}"
+        },
+        "registration": {
+          "applicationId": "#{applicationId}",
+          "data": {
+            "favoriteColor": "turquoise"
           }
         }
       }

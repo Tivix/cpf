@@ -1,8 +1,15 @@
-version: '3.9'
+version: "3.9"
+
+networks:
+  db_net:
+    driver: bridge
+  search_net:
+    driver: bridge
 
 volumes:
   postgres_data:
   fusionauth_config:
+  search_data:
 
 services:
   proxy:
@@ -17,7 +24,7 @@ services:
     environment:
       - UPSTREAMS=/api:fusionauth:9011,/cpf/api:api-server:8000,/:frontend:3000
       - WEBSOCKETS=true
-      
+
   frontend:
     restart: unless-stopped
     stdin_open: true
@@ -28,7 +35,7 @@ services:
       - ./frontend/src:/code/src
       - ./frontend/public:/code/public
     ports:
-      - '3000:3000'
+      - "3000:3000"
 
   api-server:
     image: cpf/backend-image
@@ -63,48 +70,95 @@ services:
     stdin_open: true
     tty: true
 
-  postgres:
-    build:
-      context: ./backend/postgres
-    restart: unless-stopped
-    env_file:
-      - .env
+  db:
+    image: postgres:16.0-bookworm
+    environment:
+      PGDATA: /var/lib/postgresql/data/pgdata
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d postgres" ]
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 5s
       timeout: 5s
       retries: 5
-    ports:
-      - "5432:5432"
+    networks:
+      - db_net
+    restart: unless-stopped
     volumes:
-      - postgres_data:/var/lib/postgresql/data/
+      - postgres_data:/var/lib/postgresql/data
+
+  # postgres:
+  #   build:
+  #     context: ./backend/postgres
+  #   restart: unless-stopped
+  #   env_file:
+  #     - .env
+  #   healthcheck:
+  #     test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d postgres"]
+  #     interval: 5s
+  #     timeout: 5s
+  #     retries: 5
+  #   ports:
+  #     - "5432:5432"
+  #   volumes:
+  #     - postgres_data:/var/lib/postgresql/data/
+
+  search:
+    image: opensearchproject/opensearch:2.11.0
+    environment:
+      cluster.name: fusionauth
+      discovery.type: single-node
+      node.name: search
+      plugins.security.disabled: true
+      bootstrap.memory_lock: true
+      OPENSEARCH_JAVA_OPTS: ${OPENSEARCH_JAVA_OPTS}
+    healthcheck:
+      interval: 10s
+      retries: 80
+      test: curl --write-out 'HTTP %{http_code}' --fail --silent --output /dev/null http://localhost:9200/
+    restart: unless-stopped
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    ports:
+      - 9200:9200 # REST API
+      - 9600:9600 # Performance Analyzer
+    volumes:
+      - search_data:/usr/share/opensearch/data
+    networks:
+      - search_net
 
   fusionauth:
-    image: fusionauth/fusionauth-app:1.48.3
-    ports:
-      - "9011:9011"
+    image: fusionauth/fusionauth-app:latest
     env_file:
       - .env
+    depends_on:
+      db:
+        condition: service_healthy
+      search:
+        condition: service_healthy
     environment:
-      DATABASE_URL: "jdbc:postgresql://postgres:5432/${FUSIONAUTH_POSTGRES_DB}"
+      DATABASE_URL: jdbc:postgresql://db:5432/fusionauth
       DATABASE_ROOT_USERNAME: ${POSTGRES_USER}
       DATABASE_ROOT_PASSWORD: ${POSTGRES_PASSWORD}
       DATABASE_USERNAME: ${FUSIONAUTH_POSTGRES_USER}
       DATABASE_PASSWORD: ${FUSIONAUTH_POSTGRES_PASSWORD}
-      FUSIONAUTH_APP_MEMORY: 512m
-      FUSIONAUTH_APP_RUNTIME_MODE: development
-      ES_JAVA_OPTS: "-Xms512m -Xmx512m"
+      FUSIONAUTH_APP_MEMORY: ${FUSIONAUTH_APP_MEMORY}
+      FUSIONAUTH_APP_RUNTIME_MODE: ${FUSIONAUTH_APP_RUNTIME_MODE}
       FUSIONAUTH_APP_URL: http://fusionauth:9011
-      FUSIONAUTH_APP_KICKSTART_FILE: /usr/local/fusionauth/kickstart/kickstart.json
+      SEARCH_SERVERS: http://search:9200
+      SEARCH_TYPE: elasticsearch
+      FUSIONAUTH_APP_KICKSTART_FILE: ${FUSIONAUTH_APP_KICKSTART_FILE}
+    networks:
+      - db_net
+      - search_net
     restart: unless-stopped
-    depends_on:
-      postgres:
-        condition: service_healthy
-    healthcheck:
-      test: curl --silent --fail http://localhost:9011/api/status -o /dev/null -w "%{http_code}"
-      interval: 5s
-      timeout: 5s
-      retries: 5
+    ports:
+      - 9011:9011
     volumes:
       - fusionauth_config:/usr/local/fusionauth/config
       - ./fusionauth/kickstart:/usr/local/fusionauth/kickstart
