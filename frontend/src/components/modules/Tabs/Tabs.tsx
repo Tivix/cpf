@@ -8,9 +8,9 @@ export const Tabs = ({ tabs, active, setActive, className }: TabsProps) => (
         <li key={index}>
           <div
             className={generateClassNames('flex flex-col pb-4  cursor-pointer', {
-              'border-b-2 border-blue-800 text-blue-800': tab.title === active.title,
+              'border-b-2 border-blue-800 text-blue-800': tab.title === active,
             })}
-            onClick={() => setActive(tab)}
+            onClick={() => setActive(tab.title)}
           >
             {tab.title} ({tab.employees})
           </div>

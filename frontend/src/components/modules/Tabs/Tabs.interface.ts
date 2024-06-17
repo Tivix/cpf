@@ -2,12 +2,12 @@ import { ComponentProps } from 'react';
 
 interface Tab {
   title: string;
-  employees: number;
+  employees?: number;
 }
 
 export interface TabsProps {
   tabs: Tab[];
-  active: Tab;
-  setActive: (active: Tab) => void;
+  active: string;
+  setActive: (active: string) => void;
   className?: ComponentProps<'nav'>['className'];
 }

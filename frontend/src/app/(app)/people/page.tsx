@@ -1,8 +1,5 @@
 'use client';
 
-import Image from 'next/image';
-import { DotsIcon } from '@app/static/icons/DotsIcon';
-import { CheckmarkIcon } from '@app/static/icons/CheckmarkIcon';
 import { SearchIcon } from '@app/static/icons/SearchIcon';
 import { Breadcrumbs } from '@app/components/modules/Breadcrumbs';
 import { Tabs } from '@app/components/modules/Tabs';
@@ -11,21 +8,6 @@ import { InputField } from '@app/components/common/InputField/InputField';
 import { useEffect, useState } from 'react';
 import { Employee } from '@app/types/common';
 import { EmployeeCard } from '@app/components/common/EmployeeCard';
-
-const TABS = [
-  {
-    title: 'Active',
-    employees: 28,
-  },
-  {
-    title: 'Drafts',
-    employees: 1,
-  },
-  {
-    title: 'Deactivated',
-    employees: 5,
-  },
-];
 
 const FILTERS = [
   { label: 'Current band', value: 'current_band', id: 1 },
@@ -53,9 +35,45 @@ const PEOPLE = [
     activeGoal: false,
     goalProgress: 0,
     latestActivity: 0,
+    active: false,
+    draft: false,
+    deactivated: true,
+  },
+  {
+    name: 'Jane Does',
+    title: 'QA, Senior',
+    ladder: 'Back End',
+    currentBand: 6,
+    activeGoal: false,
+    goalProgress: 0,
+    latestActivity: 0,
     active: true,
     draft: true,
     deactivated: false,
+  },
+  {
+    name: 'Tim Brooks',
+    title: 'DevOps, Senior',
+    ladder: 'Back End',
+    currentBand: 3,
+    activeGoal: false,
+    goalProgress: 0,
+    latestActivity: 0,
+    active: false,
+    draft: true,
+    deactivated: false,
+  },
+  {
+    name: 'Marvin Joe',
+    title: 'Engineering Manager, Senior',
+    ladder: 'Back End',
+    currentBand: 6,
+    activeGoal: false,
+    goalProgress: 0,
+    latestActivity: 0,
+    active: false,
+    draft: false,
+    deactivated: true,
   },
 ];
 
@@ -75,7 +93,7 @@ function getPeopleDetails() {
 export default function People() {
   const people = getPeopleDetails();
 
-  const [activeTab, setActiveTab] = useState(TABS[0]);
+  const [activeTab, setActiveTab] = useState('Active');
   const [search, setSearch] = useState('');
   const [selectedFilter, setSelectedFilter] = useState(FILTERS[0].value);
   const [activePeople, setActivePeople] = useState<Employee[]>();
@@ -83,6 +101,21 @@ export default function People() {
   const [deactivatedPeople, setDeactivatedPeople] = useState<Employee[]>();
 
   const selectedFilterLabel = FILTERS.find((option) => option.value === selectedFilter)?.label || '';
+
+  const TABS = [
+    {
+      title: 'Active',
+      employees: activePeople?.length,
+    },
+    {
+      title: 'Drafts',
+      employees: draftPeople?.length,
+    },
+    {
+      title: 'Deactivated',
+      employees: deactivatedPeople?.length,
+    },
+  ];
 
   useEffect(() => {
     const activePeople: Employee[] = [];
@@ -137,17 +170,18 @@ export default function People() {
           <tr className="mx-4 uppercase text-navy-500 font-normal">
             <th className="py-4 text-start pl-4">Employee</th>
             <th className="py-4">Ladder</th>
-            <th className="py-4">Current Band</th>
+            {/* <th className="py-4">Current Band</th> */}
+            <th></th>
             <th className="py-4">Active Goal</th>
             <th className="py-4 text-start">Goal Progress</th>
             <th className="py-4">Latest Activity</th>
-            <th className="py-4 " />
+            <th className="py-4" />
           </tr>
         </thead>
 
         <tbody>
           {people.map((employee: Employee, index) => (
-            <EmployeeCard employee={employee} key={index}/>
+            <EmployeeCard employee={employee} key={index} />
           ))}
         </tbody>
       </table>
