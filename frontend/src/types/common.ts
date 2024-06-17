@@ -41,3 +41,16 @@ export interface AtomicSkill {
   name: string;
   category: string;
 }
+
+export interface Employee {
+  name: string;
+  title: string;
+  ladder: string;
+  currentBand: number;
+  activeGoal: boolean;
+  goalProgress: number;
+  latestActivity: number;
+  active: boolean;
+  draft: boolean;
+  deactivated: boolean;
+}

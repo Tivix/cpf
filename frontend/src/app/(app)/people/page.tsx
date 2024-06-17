@@ -8,7 +8,9 @@ import { Breadcrumbs } from '@app/components/modules/Breadcrumbs';
 import { Tabs } from '@app/components/modules/Tabs';
 import { Dropdown } from '@app/components/common/Dropdown/Dropdown';
 import { InputField } from '@app/components/common/InputField/InputField';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { Employee } from '@app/types/common';
+import { EmployeeCard } from '@app/components/common/EmployeeCard';
 
 const TABS = [
   {
@@ -39,6 +41,9 @@ const PEOPLE = [
     activeGoal: true,
     goalProgress: 0.35,
     latestActivity: 5,
+    active: true,
+    draft: true,
+    deactivated: false,
   },
   {
     name: 'Jane Doe',
@@ -48,6 +53,9 @@ const PEOPLE = [
     activeGoal: false,
     goalProgress: 0,
     latestActivity: 0,
+    active: true,
+    draft: true,
+    deactivated: false,
   },
 ];
 
@@ -70,8 +78,31 @@ export default function People() {
   const [activeTab, setActiveTab] = useState(TABS[0]);
   const [search, setSearch] = useState('');
   const [selectedFilter, setSelectedFilter] = useState(FILTERS[0].value);
+  const [activePeople, setActivePeople] = useState<Employee[]>();
+  const [draftPeople, setDraftPeople] = useState<Employee[]>();
+  const [deactivatedPeople, setDeactivatedPeople] = useState<Employee[]>();
 
   const selectedFilterLabel = FILTERS.find((option) => option.value === selectedFilter)?.label || '';
+
+  useEffect(() => {
+    const activePeople: Employee[] = [];
+    const draftPeople: Employee[] = [];
+    const deactivatedPeople: Employee[] = [];
+
+    if (people) {
+      people.forEach((person: Employee) => {
+        // Update people data in DB when status changed with PUT request
+
+        if (person.active) return activePeople.push(person);
+        if (person.draft) return draftPeople.push(person);
+        if (person.deactivated) return deactivatedPeople.push(person);
+      });
+
+      setActivePeople(activePeople);
+      setDraftPeople(draftPeople);
+      setDeactivatedPeople(deactivatedPeople);
+    }
+  }, [people]);
 
   return (
     <div className="w-full">
@@ -115,53 +146,8 @@ export default function People() {
         </thead>
 
         <tbody>
-          {people.map((person) => (
-            <tr className="text-navy-700 text-sm w-full px-4 gap-2 p-10 border-t border-navy-200" key={person.name}>
-              <td className="p-4">
-                <div className="flex gap-4">
-                  <div className="w-8 h-8 overflow-hidden rounded-full relative">
-                    <Image
-                      width={256}
-                      height={256}
-                      alt=""
-                      src="/images/image.jpeg"
-                      className="overflow-hidden w-full h-auto"
-                    />
-                  </div>
-                  <div>
-                    <h3 className="text-navy-900 text-sm">{person.name}</h3>
-                    <p className="text-navy-600 text-sm">{person.title}</p>
-                  </div>
-                </div>
-              </td>
-              <td className="p-4 text-center">{person.ladder}</td>
-              <td className="p-4 text-end">{person.currentBand}</td>
-              <td className="text-navy-600 text-base p-4">
-                <div className="flex justify-end">{person.activeGoal ? <CheckmarkIcon /> : null}</div>
-              </td>
-              <td className="p-4 text-end">
-                {person.activeGoal && (
-                  <div className="flex items-center gap-4">
-                    <div className="w-full bg-gray-200 rounded-full h-2 bg-navy-300">
-                      <div className={`bg-blue-800 h-2 rounded-full w-[${person.goalProgress * 100}%]`} />
-                    </div>
-                    <p>{person.goalProgress * 100}%</p>
-                  </div>
-                )}
-              </td>
-              <td className="p-4 justify-center">
-                <div className="flex justify-center">
-                  <div className="bg-blue-800 p-2 rounded-full text-white w-7 h-7 font-semibold text-center items-center flex justify-center">
-                    {person.latestActivity}
-                  </div>
-                </div>
-              </td>
-              <td className="p-4">
-                <div className="bg-white cursor-pointer">
-                  <DotsIcon className="w-6 h-6 rounded-full bg-white" />
-                </div>
-              </td>
-            </tr>
+          {people.map((employee: Employee, index) => (
+            <EmployeeCard employee={employee} key={index}/>
           ))}
         </tbody>
       </table>

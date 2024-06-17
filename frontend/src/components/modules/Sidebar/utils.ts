@@ -7,7 +7,7 @@ export const navigation = [
   { name: 'My space', href: '#', current: false, icon: HomeIcon },
   {
     name: 'People',
-    href: '#',
+    href: '/people',
     current: false,
     icon: PeopleIcon,
   },
