@@ -18,7 +18,7 @@ const PEOPLE = [
   {
     name: 'John Doe',
     title: 'Front End Developer, Junior',
-    ladder: 'Front End',
+    ladder: ['Front End'],
     currentBand: 2,
     activeGoal: true,
     goalProgress: 0.35,
@@ -30,7 +30,7 @@ const PEOPLE = [
   {
     name: 'Jane Doe',
     title: 'Back End Developer, Senior',
-    ladder: 'Back End',
+    ladder: ['Back End'],
     currentBand: 6,
     activeGoal: false,
     goalProgress: 0,
@@ -42,7 +42,7 @@ const PEOPLE = [
   {
     name: 'Jane Does',
     title: 'QA, Senior',
-    ladder: 'Back End',
+    ladder: ['Back End', 'Manager'],
     currentBand: 6,
     activeGoal: false,
     goalProgress: 0,
@@ -54,7 +54,7 @@ const PEOPLE = [
   {
     name: 'Tim Brooks',
     title: 'DevOps, Senior',
-    ladder: 'Back End',
+    ladder: ['Back End'],
     currentBand: 3,
     activeGoal: false,
     goalProgress: 0,
@@ -66,7 +66,7 @@ const PEOPLE = [
   {
     name: 'Marvin Joe',
     title: 'Engineering Manager, Senior',
-    ladder: 'Back End',
+    ladder: ['Back End'],
     currentBand: 6,
     activeGoal: false,
     goalProgress: 0,

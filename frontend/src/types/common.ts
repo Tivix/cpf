@@ -45,7 +45,7 @@ export interface AtomicSkill {
 export interface Employee {
   name: string;
   title: string;
-  ladder: string;
+  ladder: string[];
   currentBand: number;
   activeGoal: boolean;
   goalProgress: number;
