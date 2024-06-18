@@ -16,7 +16,7 @@ services:
     image: tivix/docker-nginx:v17
     restart: unless-stopped
     depends_on:
-      - frontend
+      # - frontend
       - fusionauth
       - api-server
     ports:
@@ -25,17 +25,17 @@ services:
       - UPSTREAMS=/api:fusionauth:9011,/cpf/api:api-server:8000,/:frontend:3000
       - WEBSOCKETS=true
 
-  frontend:
-    restart: unless-stopped
-    stdin_open: true
-    build:
-      context: ./frontend
-      target: development
-    volumes:
-      - ./frontend/src:/code/src
-      - ./frontend/public:/code/public
-    ports:
-      - "3000:3000"
+  # frontend:
+  #   restart: unless-stopped
+  #   stdin_open: true
+  #   build:
+  #     context: ./frontend
+  #     target: development
+  #   volumes:
+  #     - ./frontend/src:/code/src
+  #     - ./frontend/public:/code/public
+  #   ports:
+  #     - "3000:3000"
 
   api-server:
     image: cpf/backend-image
@@ -70,38 +70,38 @@ services:
     stdin_open: true
     tty: true
 
-  db:
-    image: postgres:16.0-bookworm
-    environment:
-      PGDATA: /var/lib/postgresql/data/pgdata
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
-    networks:
-      - db_net
-    restart: unless-stopped
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-
-  # postgres:
-  #   build:
-  #     context: ./backend/postgres
-  #   restart: unless-stopped
-  #   env_file:
-  #     - .env
+  # db:
+  #   image: postgres:16.0-bookworm
+  #   environment:
+  #     PGDATA: /var/lib/postgresql/data/pgdata
+  #     POSTGRES_USER: ${POSTGRES_USER}
+  #     POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
   #   healthcheck:
-  #     test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d postgres"]
+  #     test: ["CMD-SHELL", "pg_isready -U postgres"]
   #     interval: 5s
   #     timeout: 5s
   #     retries: 5
-  #   ports:
-  #     - "5432:5432"
+  #   networks:
+  #     - db_net
+  #   restart: unless-stopped
   #   volumes:
-  #     - postgres_data:/var/lib/postgresql/data/
+  #     - postgres_data:/var/lib/postgresql/data
+
+  postgres:
+    build:
+      context: ./backend/postgres
+    restart: unless-stopped
+    env_file:
+      - .env
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
 
   search:
     image: opensearchproject/opensearch:2.11.0
@@ -137,12 +137,12 @@ services:
     env_file:
       - .env
     depends_on:
-      db:
+      postgres:
         condition: service_healthy
       search:
         condition: service_healthy
     environment:
-      DATABASE_URL: jdbc:postgresql://db:5432/fusionauth
+      DATABASE_URL: jdbc:postgresql://postgres:5432/${FUSIONAUTH_POSTGRES_DB}
       DATABASE_ROOT_USERNAME: ${POSTGRES_USER}
       DATABASE_ROOT_PASSWORD: ${POSTGRES_PASSWORD}
       DATABASE_USERNAME: ${FUSIONAUTH_POSTGRES_USER}

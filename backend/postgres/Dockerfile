@@ -1,4 +1,4 @@
-FROM postgres:14-alpine
+FROM postgres:16.0-bookworm
 
 COPY postgresql.conf.sample /usr/local/share/postgresql/postgresql.conf.sample
 COPY docker-entrypoint-initdb.d /docker-entrypoint-initdb.d
