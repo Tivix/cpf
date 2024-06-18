@@ -1,6 +1,6 @@
 'use client';
 import { AdvancementLevelProps } from './AdvancemetLevel.interface';
-import { ChevronTopIcon } from '@app/static/icons/ChevronTopIcon';
+import { ChevronRightIcon } from "@app/static/icons/ChevronRightIcon";
 import { useState } from 'react';
 import { AccordionCard } from '@app/components/common/AccordionCard';
 import { AccordionList } from '@app/components/common/AccordionList';
@@ -8,7 +8,7 @@ import { Modal } from '@app/components/common/Modal';
 
 export const AdvancementLevel: React.FC<AdvancementLevelProps> = ({ data, showVerticalLine }) => {
   const { advancementLevel, description, categories, projects } = data;
-  const [isOpen, setOpen] = useState(false);
+  const [open, setOpen] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
 
   const shouldBeExpandedByDefault = Object.keys(categories).length === 1;
@@ -26,19 +26,19 @@ export const AdvancementLevel: React.FC<AdvancementLevelProps> = ({ data, showVe
           className="mt-4 mb-2 bg-blue-800 rounded-full w-6 h-6 flex items-center justify-center hover:opacity-50"
           onClick={toggleOpen}
         >
-          <ChevronTopIcon className={`text-white w-3.5 h-3.5 ${!isOpen && 'rotate-180'}`} />
+          <ChevronRightIcon className={`text-white w-3.5 h-3.5 ${!open ? 'rotate-90' : '-rotate-90'}`} />
         </div>
         {showVerticalLine && (
-          <div className="w-[1.5px] bg-blue-800 absolute top-12 left-3" style={{ height: 'calc(100% - 40px)' }} />
+          <div className="w-[1.5px] bg-blue-800 absolute top-12 left-3 h-[calc(100%-40px)]" />
         )}
       </div>
       <div
-        className={`p-4 ml-2 flex flex-col gap-4 mb-4 w-full rounded-lg ${!isOpen && 'hover:bg-navy-50'}`}
-        onClick={isOpen ? undefined : toggleOpen}
+        className={`p-4 ml-2 flex flex-col gap-4 mb-4 w-full rounded-lg ${!open && 'hover:bg-navy-50'}`}
+        onClick={open ? undefined : toggleOpen}
       >
         <h3>Advancement level {advancementLevel}</h3>
         <p className="text-base text-navy-600 tracking-wide">{description}</p>
-        {isOpen && (
+        {open && (
           <>
             {projects.length > 0 && (
               <button
