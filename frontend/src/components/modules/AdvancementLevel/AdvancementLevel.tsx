@@ -1,10 +1,12 @@
 'use client';
-import { AdvancementLevelProps } from './AdvancemetLevel.interface';
-import { ChevronRightIcon } from "@app/static/icons/ChevronRightIcon";
 import { useState } from 'react';
+import Markdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import { ChevronRightIcon } from '@app/static/icons/ChevronRightIcon';
 import { AccordionCard } from '@app/components/common/AccordionCard';
 import { AccordionList } from '@app/components/common/AccordionList';
 import { Modal } from '@app/components/common/Modal';
+import { AdvancementLevelProps } from './AdvancemetLevel.interface';
 
 export const AdvancementLevel: React.FC<AdvancementLevelProps> = ({ data, showVerticalLine }) => {
   const { advancementLevel, description, categories, projects } = data;
@@ -28,9 +30,7 @@ export const AdvancementLevel: React.FC<AdvancementLevelProps> = ({ data, showVe
         >
           <ChevronRightIcon className={`text-white w-3.5 h-3.5 ${!open ? 'rotate-90' : '-rotate-90'}`} />
         </div>
-        {showVerticalLine && (
-          <div className="w-[1.5px] bg-blue-800 absolute top-12 left-3 h-[calc(100%-40px)]" />
-        )}
+        {showVerticalLine && <div className="w-[1.5px] bg-blue-800 absolute top-12 left-3 h-[calc(100%-40px)]" />}
       </div>
       <div
         className={`p-4 ml-2 flex flex-col gap-4 mb-4 w-full rounded-lg ${!open && 'hover:bg-navy-50'}`}
@@ -69,12 +69,11 @@ export const AdvancementLevel: React.FC<AdvancementLevelProps> = ({ data, showVe
       </div>
       <Modal open={isModalOpen} onClose={hideModal} title="An example way to pass level">
         {projects.map(({ title, overview }) => (
-          <div key={title} className="text-navy-600 text-base">
+          <div key={title} className="text-navy-600 text-base overflow-hidden">
             <p>{title}</p>
-            <div className="mt-5">
-              <p className="font-semibold">Project overview:</p>
-              <p>{overview}</p>
-            </div>
+            <article className="mt-5 prose">
+              <Markdown remarkPlugins={[remarkGfm]}>{overview}</Markdown>
+            </article>
           </div>
         ))}
       </Modal>

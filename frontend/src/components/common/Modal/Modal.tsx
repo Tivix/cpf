@@ -33,7 +33,7 @@ export const Modal = ({ children, open, onClose, title }: ModalProps) => (
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <Dialog.Panel className="overflow-y-auto relative h-full sm:max-h-[672px] text-left bg-white rounded-xl shadow-xl transition-all max-w-[80%] sm:max-w-2xl p-0 w-full">
+            <Dialog.Panel className="relative h-full sm:max-h-[672px] text-left bg-white rounded-xl shadow-xl transition-all max-w-[80%] sm:max-w-2xl p-0 w-full">
               <div className="flex justify-between p-8">
                 <Dialog.Title as="h3" className="text-xl font-medium text-navy-900">
                   {title}
@@ -43,7 +43,7 @@ export const Modal = ({ children, open, onClose, title }: ModalProps) => (
                 </button>
               </div>
 
-              <Dialog.Description className="py-5 px-8">{children}</Dialog.Description>
+              <Dialog.Description className="overflow-y-auto py-5 px-8 h-[calc(100%-6rem)]">{children}</Dialog.Description>
             </Dialog.Panel>
           </Transition.Child>
         </div>
