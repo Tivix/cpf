@@ -24,7 +24,7 @@ if (!fusionAuthTenantId) {
   throw Error('FUSIONAUTH_TENANT_ID' + missingError);
 }
 
-export const authOptions: AuthOptions = {
+const authOptions: AuthOptions = {
   providers: [
     FusionAuthProvider({
       issuer: fusionAuthIssuer,
