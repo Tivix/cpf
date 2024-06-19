@@ -43,7 +43,9 @@ export const Modal = ({ children, open, onClose, title }: ModalProps) => (
                 </button>
               </div>
 
-              <Dialog.Description className="overflow-y-auto py-5 px-8 h-[calc(100%-6rem)]">{children}</Dialog.Description>
+              <Dialog.Description className="overflow-y-auto py-5 px-8 h-[calc(100%-6rem)]">
+                {children}
+              </Dialog.Description>
             </Dialog.Panel>
           </Transition.Child>
         </div>
