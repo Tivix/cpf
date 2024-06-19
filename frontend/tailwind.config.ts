@@ -66,6 +66,7 @@ const config: Config = {
         'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
       fontSize: {
+        xs: ['0.750rem', '1rem'],       // Body XS
         l: ['1.125rem', '1.625rem'],    // Body L
       }
     },

@@ -18,11 +18,15 @@ const PEOPLE = [
   {
     name: 'John Doe',
     title: 'Front End Developer, Junior',
-    ladder: ['Front End'],
-    currentBand: 2,
-    activeGoal: true,
-    goalProgress: 0.35,
-    latestActivity: 5,
+    laddersDetails: [
+      {
+        ladderName: 'Front End',
+        currentBand: 2,
+        activeGoal: true,
+        goalProgress: 35,
+        latestActivity: 5,
+      } 
+    ],
     active: true,
     draft: true,
     deactivated: false,
@@ -30,11 +34,15 @@ const PEOPLE = [
   {
     name: 'Jane Doe',
     title: 'Back End Developer, Senior',
-    ladder: ['Back End'],
-    currentBand: 6,
-    activeGoal: false,
-    goalProgress: 0,
-    latestActivity: 0,
+    laddersDetails: [
+      {
+        ladderName: 'Back End',
+        currentBand: 6,
+        activeGoal: false,
+        goalProgress: 0,
+        latestActivity: 0,
+      } 
+    ],
     active: false,
     draft: false,
     deactivated: true,
@@ -42,11 +50,22 @@ const PEOPLE = [
   {
     name: 'Jane Does',
     title: 'QA, Senior',
-    ladder: ['Back End', 'Manager'],
-    currentBand: 6,
-    activeGoal: false,
-    goalProgress: 0,
-    latestActivity: 0,
+    laddersDetails: [
+      {
+        ladderName: 'Back End',
+        currentBand: 5,
+        activeGoal: true,
+        goalProgress: 80,
+        latestActivity: 2,
+      },
+      {
+        ladderName: 'Manager',
+        currentBand: 2,
+        activeGoal: true,
+        goalProgress: 65,
+        latestActivity: 4,
+      } 
+    ],
     active: true,
     draft: true,
     deactivated: false,
@@ -54,11 +73,15 @@ const PEOPLE = [
   {
     name: 'Tim Brooks',
     title: 'DevOps, Senior',
-    ladder: ['Back End'],
-    currentBand: 3,
-    activeGoal: false,
-    goalProgress: 0,
-    latestActivity: 0,
+    laddersDetails: [
+      {
+        ladderName: 'Back End',
+        currentBand: 4,
+        activeGoal: true,
+        goalProgress: 15,
+        latestActivity: 3,
+      } 
+    ],
     active: false,
     draft: true,
     deactivated: false,
@@ -66,11 +89,15 @@ const PEOPLE = [
   {
     name: 'Marvin Joe',
     title: 'Engineering Manager, Senior',
-    ladder: ['Back End'],
-    currentBand: 6,
-    activeGoal: false,
-    goalProgress: 0,
-    latestActivity: 0,
+    laddersDetails: [
+      {
+        ladderName: 'Front End',
+        currentBand: 1,
+        activeGoal: false,
+        goalProgress: 0,
+        latestActivity: 3,
+      } 
+    ],
     active: false,
     draft: false,
     deactivated: true,
@@ -123,12 +150,12 @@ export default function People() {
     const deactivatedPeople: Employee[] = [];
 
     if (people) {
-      people.forEach((person: Employee) => {
+      people.forEach((employee: Employee) => {
         // Update people data in DB when status changed with PUT request
 
-        if (person.active) return activePeople.push(person);
-        if (person.draft) return draftPeople.push(person);
-        if (person.deactivated) return deactivatedPeople.push(person);
+        if (employee.active) return activePeople.push(employee);
+        if (employee.draft) return draftPeople.push(employee);
+        if (employee.deactivated) return deactivatedPeople.push(employee);
       });
 
       setActivePeople(activePeople);
@@ -145,7 +172,7 @@ export default function People() {
       </div>
 
       <Tabs active={activeTab} setActive={setActiveTab} tabs={TABS} className="border-b border-navy-200" />
-
+      
       <table className="w-full text-sm table-auto bg-white rounded-2xl p-6 pb-2 mt-4">
         <thead>
           <tr>
@@ -167,15 +194,14 @@ export default function People() {
               </div>
             </td>
           </tr>
-          <tr className="mx-4 uppercase text-navy-500 font-normal">
-            <th className="py-4 text-start pl-4">Employee</th>
-            <th className="py-4">Ladder</th>
-            {/* <th className="py-4">Current Band</th> */}
-            <th></th>
-            <th className="py-4">Active Goal</th>
-            <th className="py-4 text-start">Goal Progress</th>
-            <th className="py-4">Latest Activity</th>
-            <th className="py-4" />
+          <tr className="h-[56px] mx-4 text-xs uppercase text-navy-500 *:px-4 *:font-medium *:text-start tracking-[1px]">
+            <th>Employee</th>
+            <th>Ladder</th>
+            <th className="[&]:text-end">Current Band</th>
+            <th className="[&]:text-end">Active Goal</th>
+            <th className="pr-4 [&]:pl-14">Goal Progress</th>
+            <th className="[&]:text-center">Latest Activity</th>
+            <th />
           </tr>
         </thead>
 
