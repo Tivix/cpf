@@ -25,7 +25,7 @@ const PEOPLE = [
         activeGoal: true,
         goalProgress: 35,
         latestActivity: 5,
-      } 
+      },
     ],
     active: true,
     draft: true,
@@ -41,7 +41,7 @@ const PEOPLE = [
         activeGoal: false,
         goalProgress: 0,
         latestActivity: 0,
-      } 
+      },
     ],
     active: false,
     draft: false,
@@ -64,7 +64,7 @@ const PEOPLE = [
         activeGoal: true,
         goalProgress: 65,
         latestActivity: 4,
-      } 
+      },
     ],
     active: true,
     draft: true,
@@ -80,7 +80,7 @@ const PEOPLE = [
         activeGoal: true,
         goalProgress: 15,
         latestActivity: 3,
-      } 
+      },
     ],
     active: false,
     draft: true,
@@ -96,7 +96,7 @@ const PEOPLE = [
         activeGoal: false,
         goalProgress: 0,
         latestActivity: 3,
-      } 
+      },
     ],
     active: false,
     draft: false,
@@ -165,52 +165,53 @@ export default function People() {
   }, [people]);
 
   return (
-    <div className="w-full">
+    <div className="flex flex-col gap-6">
       <div className="flex items-center justify-between">
         <Breadcrumbs breadcrumbs={[{ label: 'People', href: '/people', current: true }]} />
         <button className="py-2 px-5 text-white text-sm font-semibold bg-blue-800 rounded-full">+ Employee</button>
       </div>
 
       <Tabs active={activeTab} setActive={setActiveTab} tabs={TABS} className="border-b border-navy-200" />
-      
-      <table className="w-full text-sm table-auto bg-white rounded-2xl p-6 pb-2 mt-4">
-        <thead>
-          <tr>
-            <td className="w-1/3">
-              <div className="w-full flex gap-4 p-4 items-center justify-between">
-                <InputField
-                  value={search}
-                  name="people-search"
-                  placeholder="Search"
-                  icon={<SearchIcon />}
-                  onChange={(e) => setSearch(e.target.value)}
-                />
-                <Dropdown
-                  selectedOptionLabel={selectedFilterLabel}
-                  options={FILTERS}
-                  selectedOptionValue={selectedFilter}
-                  setSelectedOption={setSelectedFilter}
-                />
-              </div>
-            </td>
-          </tr>
-          <tr className="h-[56px] mx-4 text-xs uppercase text-navy-500 *:px-4 *:font-medium *:text-start tracking-[1px]">
-            <th>Employee</th>
-            <th>Ladder</th>
-            <th className="[&]:text-end">Current Band</th>
-            <th className="[&]:text-end">Active Goal</th>
-            <th className="pr-4 [&]:pl-14">Goal Progress</th>
-            <th className="[&]:text-center">Latest Activity</th>
-            <th />
-          </tr>
-        </thead>
 
-        <tbody>
-          {people.map((employee: Employee, index) => (
-            <EmployeeCard employee={employee} key={index} />
-          ))}
-        </tbody>
-      </table>
+      <div className="flex flex-col gap-2 bg-white rounded-2xl p-6 pb-2">
+        <div className="w-1/3">
+          <div className="w-full flex gap-4 items-center justify-between">
+            <InputField
+              value={search}
+              name="people-search"
+              placeholder="Search"
+              icon={<SearchIcon />}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            <Dropdown
+              selectedOptionLabel={selectedFilterLabel}
+              options={FILTERS}
+              selectedOptionValue={selectedFilter}
+              setSelectedOption={setSelectedFilter}
+            />
+          </div>
+        </div>
+
+        <table className="text-sm table-auto">
+          <thead>
+            <tr className="h-14 mx-4 text-xs uppercase text-navy-500 *:px-4 *:font-medium *:text-start tracking-[1px]">
+              <th>Employee</th>
+              <th>Ladder</th>
+              <th className="[&]:text-end">Current Band</th>
+              <th className="[&]:text-end">Active Goal</th>
+              <th className="pr-4 [&]:pl-14">Goal Progress</th>
+              <th className="[&]:text-center">Latest Activity</th>
+              <th />
+            </tr>
+          </thead>
+
+          <tbody>
+            {people.map((employee: Employee, index) => (
+              <EmployeeCard employee={employee} key={index} />
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }
