@@ -17,7 +17,6 @@ Instructions on how to install and set up the project.
 1. Copy variables to `.env` files.
     ```
     cp .envexample .env
-    cp frontend/.envexample frontend/.env
     ```
 2. Build and run the project
     ```
