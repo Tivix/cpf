@@ -6,19 +6,10 @@ import { AccordionCard } from '@app/components/common/AccordionCard';
 import { AccordionList } from '@app/components/common/AccordionList';
 import { Modal } from '@app/components/common/Modal';
 import { AdvancementLevelProps } from './AdvancemetLevel.interface';
-import {useAdvancementLevel} from "@app/components/modules/AdvancementLevel/AdvancementLevel.hooks";
+import { useAdvancementLevel } from '@app/components/modules/AdvancementLevel/AdvancementLevel.hooks';
 
-export const AdvancementLevel: React.FC<AdvancementLevelProps> = ({
-  showVerticalLine,
-  data,
-}) => {
-  const {
-    hideModal,
-    openModal,
-    toggleAccordionOpen,
-    modalOpen,
-    accordionOpen,
-  } = useAdvancementLevel();
+export const AdvancementLevel: React.FC<AdvancementLevelProps> = ({ showVerticalLine, data }) => {
+  const { hideModal, openModal, toggleAccordionOpen, modalOpen, accordionOpen } = useAdvancementLevel();
 
   const { advancementLevel, description, projects, categories } = data;
   const shouldBeExpandedByDefault = Object.keys(data.categories).length === 1;
