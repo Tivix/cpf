@@ -7,7 +7,7 @@ export const AccordionCard = ({
   title,
   children,
   expandedByDefault,
-  ...props
+  className,
 }: PropsWithChildren<AccordionCardProps>) => {
   const [isOpen, setOpen] = useState(false);
 
@@ -18,7 +18,7 @@ export const AccordionCard = ({
   }, [expandedByDefault]);
 
   return (
-    <div {...props}>
+    <div className={className}>
       <h2>
         <button
           type="button"
