@@ -20,17 +20,17 @@ export const AdvancementLevel: React.FC<AdvancementLevelProps> = ({ showVertical
           className="mt-4 mb-2 bg-blue-800 rounded-full w-6 h-6 flex items-center justify-center hover:opacity-50"
           onClick={toggleAccordionOpen}
         >
-          <ChevronRightIcon className={`text-white w-3.5 h-3.5 ${!open ? 'rotate-90' : '-rotate-90'}`} />
+          <ChevronRightIcon className={`text-white w-3.5 h-3.5 ${!accordionOpen ? 'rotate-90' : '-rotate-90'}`} />
         </div>
         {showVerticalLine && <div className="w-[1.5px] bg-blue-800 absolute top-12 left-3 h-[calc(100%-40px)]" />}
       </div>
       <div
-        className={`p-4 ml-2 flex flex-col gap-4 mb-4 w-full rounded-lg ${!open && 'hover:bg-navy-50'}`}
+        className={`p-4 ml-2 flex flex-col gap-4 mb-4 w-full rounded-lg ${!accordionOpen && 'hover:bg-navy-50'}`}
         onClick={accordionOpen ? undefined : toggleAccordionOpen}
       >
         <h3>Advancement level {advancementLevel}</h3>
         <p className="text-base text-navy-600 tracking-wide">{description}</p>
-        {open && (
+        {accordionOpen && (
           <>
             {projects.length > 0 && (
               <button
