@@ -1,6 +1,6 @@
-import {useState} from "react";
-import {AdvancementLevel} from "@app/types/common";
-import {AdvancementLevelHooks} from "./AdvancemetLevel.interface";
+import { useState } from 'react';
+import { AdvancementLevel } from '@app/types/common';
+import { AdvancementLevelHooks } from './AdvancemetLevel.interface';
 
 export const useAdvancementLevel = (data: AdvancementLevel): AdvancementLevelHooks => {
   const [accordionOpen, setAccordionOpen] = useState(false);
@@ -21,5 +21,5 @@ export const useAdvancementLevel = (data: AdvancementLevel): AdvancementLevelHoo
     modalOpen,
     accordionOpen,
     shouldBeExpandedByDefault,
-  }
-}
+  };
+};
