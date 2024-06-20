@@ -3,7 +3,7 @@ import { LibraryDetailed } from '@app/components/modules/LibraryDetailed';
 import { mapKeysToCamelCase } from '@app/utils';
 
 async function getLadderDetails(slug: string) {
-  const response = await fetch(`http://proxy/cpf/api/library/ladders/${slug}`);
+  const response = await fetch(`https://proxy/cpf/api/library/ladders/${slug}`);
 
   if (!response.ok) {
     throw new Error('Failed to fetch ladder details');
