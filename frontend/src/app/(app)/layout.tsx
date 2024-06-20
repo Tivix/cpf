@@ -22,7 +22,7 @@ export default function RootLayout({
       <body className={`${inter.className} bg-navy-50 h-full`}>
         <div className="flex">
           <Sidebar />
-          <div className="w-full pl-72">
+          <div className="w-full">
             <Topbar />
             <main className="p-8">{children}</main>
           </div>
