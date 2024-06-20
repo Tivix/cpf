@@ -1,9 +1,10 @@
 import { Breadcrumbs } from '@app/components/modules/Breadcrumbs';
 import { mapKeysToCamelCase } from '@app/utils';
 import { BucketDetails } from '@app/components/modules/BucketDetails';
+import { API_URLS } from '@app/api';
 
 async function getBucketDetails(slug: string) {
-  const response = await fetch(`https://proxy/cpf/api/library/buckets/${slug}`);
+  const response = await fetch(`${API_URLS.library.buckets}/${slug}`);
 
   if (!response.ok) {
     throw new Error('Failed to fetch bucket details');
@@ -14,7 +15,7 @@ async function getBucketDetails(slug: string) {
 }
 
 async function getLadderName(slug: string) {
-  const response = await fetch(`http://proxy/cpf/api/library/ladders/${slug}`);
+  const response = await fetch(`${API_URLS.library.ladders}/${slug}`);
 
   if (!response.ok) {
     throw new Error('Failed to fetch ladder details');

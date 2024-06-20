@@ -1,8 +1,9 @@
 import { mapKeysToCamelCase } from '@app/utils';
 import { LadderCard, LadderCardInterface } from '@app/components/common/LadderCard';
+import { API_URLS } from '@app/api';
 
 async function getLadders() {
-  const response = await fetch('https://proxy/cpf/api/library/ladders');
+  const response = await fetch(API_URLS.library.ladders);
 
   if (!response.ok) {
     throw new Error('Failed to fetch ladders');
