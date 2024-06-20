@@ -14,6 +14,22 @@ Kellton Europe CPF app is an innovative web-based platform – a seamless soluti
 # Installation
 Instructions on how to install and set up the project.
 
+1. Copy variables to `.env` files.
+    ```
+    cp .envexample .env
+    cp frontend/.envexample frontend/.env
+    ```
+2. Build and run the project
+    ```
+   docker compose build
+   docker compose up
+   ```
+   or just
+    ```
+    docker compose up --build
+    ```
+3. Open http://0.0.0.0:8080/ with your browser to see the result.
+
 # Usage
 Instructions on how to use the project.
 
