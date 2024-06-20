@@ -1,4 +1,3 @@
-'use client';
 import { BucketDetailsProps } from './BucketDetails.interface';
 import { AdvancementLevel } from '@app/components/modules/AdvancementLevel';
 
