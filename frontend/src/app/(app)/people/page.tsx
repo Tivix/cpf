@@ -167,12 +167,10 @@ export default function People() {
 
   const filterPeople = (people: Employee[]) => {
     if (selectedFilter === filters[0].value) return people;
-    
-    const filteredPeople = people.filter((employee: Employee) => 
-      employee.laddersDetails.find((ladder) =>
-        ladder.currentBand === +selectedFilter.split('_')[1]));
-    
-    return filteredPeople;
+
+    return people.filter((employee: Employee) =>
+      employee.laddersDetails.find((ladder) => ladder.currentBand === +selectedFilter.split('_')[1]),
+    );
   };
 
   return (
