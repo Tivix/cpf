@@ -5,7 +5,7 @@ import { Breadcrumbs } from '@app/components/modules/Breadcrumbs';
 import { Tabs } from '@app/components/modules/Tabs';
 import { Dropdown } from '@app/components/common/Dropdown/Dropdown';
 import { InputField } from '@app/components/common/InputField/InputField';
-import { MouseEvent, useEffect, useState } from 'react';
+import { MouseEvent, useEffect, useMemo, useState } from 'react';
 import { Employee } from '@app/types/common';
 import { EmployeeCard } from '@app/components/common/EmployeeCard';
 import { filters } from '@app/const/peopleDropdownFilterOptions';
@@ -24,7 +24,7 @@ const PEOPLE = [
       },
     ],
     active: true,
-    draft: true,
+    draft: false,
     deactivated: false,
   },
   {
@@ -33,7 +33,7 @@ const PEOPLE = [
     laddersDetails: [
       {
         ladderName: 'Back End',
-        currentBand: 6,
+        currentBand: 5,
         activeGoal: false,
         goalProgress: 0,
         latestActivity: 0,
@@ -62,7 +62,7 @@ const PEOPLE = [
         latestActivity: 4,
       },
     ],
-    active: true,
+    active: false,
     draft: true,
     deactivated: false,
   },
@@ -78,8 +78,8 @@ const PEOPLE = [
         latestActivity: 3,
       },
     ],
-    active: false,
-    draft: true,
+    active: true,
+    draft: false,
     deactivated: false,
   },
   {
@@ -119,58 +119,57 @@ export default function People() {
   const [activeTab, setActiveTab] = useState('Active');
   const [search, setSearch] = useState('');
   const [selectedFilter, setSelectedFilter] = useState(filters[0].value);
-  const [activePeople, setActivePeople] = useState<Employee[]>();
-  const [draftPeople, setDraftPeople] = useState<Employee[]>();
-  const [deactivatedPeople, setDeactivatedPeople] = useState<Employee[]>();
+  const [selectedTabPeople, setSelectedTabPeople] = useState<Employee[]>();
 
   const selectedFilterLabel = filters.find((option) => option.value === selectedFilter)?.label || '';
+
+  const activePeopleAmount = useMemo(() => people.filter((employee) => employee.active).length, [people]);
+  const draftPeopleAmount = useMemo(() => people.filter((employee) => employee.draft).length, [people]);
+  const deactivatedPeopleAmount = useMemo(() => people.filter((employee) => employee.deactivated).length, [people]);
 
   const TABS = [
     {
       title: 'Active',
-      employees: activePeople?.length,
+      employees: activePeopleAmount,
     },
     {
       title: 'Drafts',
-      employees: draftPeople?.length,
+      employees: draftPeopleAmount,
     },
     {
       title: 'Deactivated',
-      employees: deactivatedPeople?.length,
+      employees: deactivatedPeopleAmount,
     },
   ];
 
   useEffect(() => {
-    const activePeople: Employee[] = [];
-    const draftPeople: Employee[] = [];
-    const deactivatedPeople: Employee[] = [];
-
     if (people) {
-      people.forEach((employee: Employee) => {
-        // Update people data in DB when status changed with PUT request
-
-        if (employee.active) return activePeople.push(employee);
-        if (employee.draft) return draftPeople.push(employee);
-        if (employee.deactivated) return deactivatedPeople.push(employee);
-      });
-
-      setActivePeople(activePeople);
-      setDraftPeople(draftPeople);
-      setDeactivatedPeople(deactivatedPeople);
+      if (activeTab === TABS[0].title) {
+        setSelectedTabPeople(people.filter((employee) => employee.active));
+      } else if (activeTab === TABS[1].title) {
+        setSelectedTabPeople(people.filter((employee) => employee.draft));
+      } else {
+        setSelectedTabPeople(people.filter((employee) => employee.deactivated));
+      }
     }
-  }, [people]);
+  }, [people, activeTab]);
 
   const resetFilterHandler = (event: MouseEvent<HTMLDivElement, globalThis.MouseEvent>) => {
     event.stopPropagation();
     setSelectedFilter(filters[0].value);
   };
 
-  const filterPeople = (people: Employee[]) => {
+  const filterPeople = (people?: Employee[]) => {
     if (selectedFilter === filters[0].value) return people;
 
-    return people.filter((employee: Employee) =>
+    return people?.filter((employee: Employee) =>
       employee.laddersDetails.find((ladder) => ladder.currentBand === +selectedFilter.split('_')[1]),
     );
+  };
+
+  const setActiveTabHandler = (tab: string) => {
+    setActiveTab(tab);
+    setSelectedFilter(filters[0].value);
   };
 
   return (
@@ -180,7 +179,12 @@ export default function People() {
         <button className="py-2 px-5 text-white text-sm font-semibold bg-blue-800 rounded-full">+ Employee</button>
       </div>
 
-      <Tabs active={activeTab} setActive={setActiveTab} tabs={TABS} className="border-b border-navy-200" />
+      <Tabs
+        active={activeTab}
+        setActive={(tab) => setActiveTabHandler(tab)}
+        tabs={TABS}
+        className="border-b border-navy-200"
+      />
 
       <div className="flex flex-col gap-2 bg-white rounded-2xl p-6 pb-2">
         <div className="w-1/3">
@@ -216,7 +220,7 @@ export default function People() {
           </thead>
 
           <tbody>
-            {filterPeople(people).map((employee: Employee, index) => (
+            {filterPeople(selectedTabPeople)?.map((employee: Employee, index) => (
               <EmployeeCard employee={employee} key={index} />
             ))}
           </tbody>
