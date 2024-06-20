@@ -7,8 +7,8 @@ export const AccordionCard = ({
   title,
   children,
   expandedByDefault,
-    ...props
-                              }: PropsWithChildren<AccordionCardProps>) => {
+  ...props
+}: PropsWithChildren<AccordionCardProps>) => {
   const [isOpen, setOpen] = useState(false);
 
   useEffect(() => {
