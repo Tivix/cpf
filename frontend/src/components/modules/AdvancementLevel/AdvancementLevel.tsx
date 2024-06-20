@@ -5,19 +5,23 @@ import { ChevronRightIcon } from '@app/static/icons/ChevronRightIcon';
 import { AccordionCard } from '@app/components/common/AccordionCard';
 import { AccordionList } from '@app/components/common/AccordionList';
 import { Modal } from '@app/components/common/Modal';
-import { AdvancementLevelComponentProps } from './AdvancemetLevel.interface';
+import { AdvancementLevelProps } from './AdvancemetLevel.interface';
+import {useAdvancementLevel} from "@app/components/modules/AdvancementLevel/AdvancementLevel.hooks";
 
-export const AdvancementLevelComponent: React.FC<AdvancementLevelComponentProps> = ({
+export const AdvancementLevel: React.FC<AdvancementLevelProps> = ({
   showVerticalLine,
-  hideModal,
-  openModal,
-  toggleAccordionOpen,
-  modalOpen,
-  accordionOpen,
-  shouldBeExpandedByDefault,
   data,
 }) => {
+  const {
+    hideModal,
+    openModal,
+    toggleAccordionOpen,
+    modalOpen,
+    accordionOpen,
+  } = useAdvancementLevel();
+
   const { advancementLevel, description, projects, categories } = data;
+  const shouldBeExpandedByDefault = Object.keys(data.categories).length === 1;
 
   return (
     <div className="flex flex-row">

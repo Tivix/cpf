@@ -11,7 +11,4 @@ export interface AdvancementLevelHooks {
   toggleAccordionOpen: () => void;
   modalOpen: boolean;
   accordionOpen: boolean;
-  shouldBeExpandedByDefault: boolean;
 }
-
-export interface AdvancementLevelComponentProps extends AdvancementLevelHooks, AdvancementLevelProps {}
