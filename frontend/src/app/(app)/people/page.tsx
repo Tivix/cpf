@@ -189,7 +189,7 @@ export default function People() {
               options={filters}
               selectedOptionValue={selectedFilter}
               setSelectedOption={setSelectedFilter}
-              resetFilter={event => resetFilterHandler(event)}
+              resetFilter={(event) => resetFilterHandler(event)}
             />
           </div>
         </div>
