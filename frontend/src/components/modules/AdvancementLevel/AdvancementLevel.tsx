@@ -1,32 +1,30 @@
 'use client';
-import { useState } from 'react';
 import Markdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { ChevronRightIcon } from '@app/static/icons/ChevronRightIcon';
 import { AccordionCard } from '@app/components/common/AccordionCard';
 import { AccordionList } from '@app/components/common/AccordionList';
 import { Modal } from '@app/components/common/Modal';
-import { AdvancementLevelProps } from './AdvancemetLevel.interface';
+import {AdvancementLevelComponentProps} from './AdvancemetLevel.interface';
 
-export const AdvancementLevel: React.FC<AdvancementLevelProps> = ({ data, showVerticalLine }) => {
-  const { advancementLevel, description, categories, projects } = data;
-  const [open, setOpen] = useState(false);
-  const [isModalOpen, setModalOpen] = useState(false);
-
-  const shouldBeExpandedByDefault = Object.keys(categories).length === 1;
-
-  const toggleOpen = () => setOpen((prevState) => !prevState);
-
-  const openModal = () => setModalOpen(true);
-
-  const hideModal = () => setModalOpen(false);
+export const AdvancementLevelComponent: React.FC<AdvancementLevelComponentProps> = ({
+                                                                                      showVerticalLine,
+                                                                                      hideModal,
+                                                                                      openModal,
+                                                                                      toggleAccordionOpen,
+                                                                                      modalOpen,
+                                                                                      accordionOpen,
+                                                                                      shouldBeExpandedByDefault,
+    data,
+}) => {
+  const {advancementLevel, description, projects, categories} = data;
 
   return (
     <div className="flex flex-row">
       <div className="flex flex-col items-center relative">
         <div
           className="mt-4 mb-2 bg-blue-800 rounded-full w-6 h-6 flex items-center justify-center hover:opacity-50"
-          onClick={toggleOpen}
+          onClick={toggleAccordionOpen}
         >
           <ChevronRightIcon className={`text-white w-3.5 h-3.5 ${!open ? 'rotate-90' : '-rotate-90'}`} />
         </div>
@@ -34,7 +32,7 @@ export const AdvancementLevel: React.FC<AdvancementLevelProps> = ({ data, showVe
       </div>
       <div
         className={`p-4 ml-2 flex flex-col gap-4 mb-4 w-full rounded-lg ${!open && 'hover:bg-navy-50'}`}
-        onClick={open ? undefined : toggleOpen}
+        onClick={accordionOpen ? undefined : toggleAccordionOpen}
       >
         <h3>Advancement level {advancementLevel}</h3>
         <p className="text-base text-navy-600 tracking-wide">{description}</p>
@@ -67,7 +65,7 @@ export const AdvancementLevel: React.FC<AdvancementLevelProps> = ({ data, showVe
           </>
         )}
       </div>
-      <Modal open={isModalOpen} onClose={hideModal} title="An example way to pass level">
+      <Modal open={modalOpen} onClose={hideModal} title="An example way to pass level">
         {projects.map(({ title, overview }) => (
           <div key={title} className="text-navy-600 text-base overflow-hidden">
             <p>{title}</p>
