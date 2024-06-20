@@ -1,5 +1,4 @@
-export interface AccordionCardProps {
+export interface AccordionCardProps extends HTMLDivElement {
   title: string;
-  className?: string;
   expandedByDefault?: boolean;
 }

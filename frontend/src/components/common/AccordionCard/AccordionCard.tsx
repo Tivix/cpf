@@ -6,9 +6,9 @@ import { AccordionCardProps } from './AccordionCard.interface';
 export const AccordionCard = ({
   title,
   children,
-  className,
   expandedByDefault,
-}: PropsWithChildren<AccordionCardProps>) => {
+    ...props
+                              }: PropsWithChildren<AccordionCardProps>) => {
   const [isOpen, setOpen] = useState(false);
 
   useEffect(() => {
@@ -18,7 +18,7 @@ export const AccordionCard = ({
   }, [expandedByDefault]);
 
   return (
-    <div className={className}>
+    <div {...props}>
       <h2>
         <button
           type="button"
