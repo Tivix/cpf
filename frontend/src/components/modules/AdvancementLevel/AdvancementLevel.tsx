@@ -1,12 +1,11 @@
 'use client';
-import Markdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
 import { ChevronRightIcon } from '@app/static/icons/ChevronRightIcon';
 import { AccordionCard } from '@app/components/common/AccordionCard';
 import { AccordionList } from '@app/components/common/AccordionList';
 import { Modal } from '@app/components/common/Modal';
 import { AdvancementLevelProps } from './AdvancemetLevel.interface';
 import { useAdvancementLevel } from '@app/components/modules/AdvancementLevel/AdvancementLevel.hooks';
+import {Markdown} from "@app/components/common/Markdown";
 
 export const AdvancementLevel: React.FC<AdvancementLevelProps> = ({ showVerticalLine, data }) => {
   const { hideModal, openModal, toggleAccordionOpen, modalOpen, accordionOpen } = useAdvancementLevel();
@@ -65,7 +64,7 @@ export const AdvancementLevel: React.FC<AdvancementLevelProps> = ({ showVertical
           <div key={title} className="text-navy-600 text-base overflow-hidden">
             <p>{title}</p>
             <article className="mt-5 prose">
-              <Markdown remarkPlugins={[remarkGfm]}>{overview}</Markdown>
+              <Markdown>{overview}</Markdown>
             </article>
           </div>
         ))}

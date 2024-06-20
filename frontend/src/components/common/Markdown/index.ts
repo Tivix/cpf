@@ -1,0 +1,1 @@
+export {MarkdownWithPlugins as Markdown} from './Markdown'
