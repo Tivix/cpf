@@ -1,1 +1,1 @@
-export {MarkdownWithPlugins as Markdown} from './Markdown'
+export { CustomMarkdown as Markdown } from './Markdown';

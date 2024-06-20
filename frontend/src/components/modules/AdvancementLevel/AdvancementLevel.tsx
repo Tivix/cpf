@@ -5,7 +5,7 @@ import { AccordionList } from '@app/components/common/AccordionList';
 import { Modal } from '@app/components/common/Modal';
 import { AdvancementLevelProps } from './AdvancemetLevel.interface';
 import { useAdvancementLevel } from '@app/components/modules/AdvancementLevel/AdvancementLevel.hooks';
-import {Markdown} from "@app/components/common/Markdown";
+import { Markdown } from '@app/components/common/Markdown';
 
 export const AdvancementLevel: React.FC<AdvancementLevelProps> = ({ showVerticalLine, data }) => {
   const { hideModal, openModal, toggleAccordionOpen, modalOpen, accordionOpen } = useAdvancementLevel();
