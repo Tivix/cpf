@@ -1,6 +1,6 @@
 import { Breadcrumbs } from '@app/components/modules/Breadcrumbs';
 import { mapKeysToCamelCase } from '@app/utils';
-import {API_URLS} from "@app/api";
+import { API_URLS } from '@app/api';
 
 async function getBucketDetails(slug: string) {
   const response = await fetch(`${API_URLS.library.buckets}/${slug}`);
