@@ -194,7 +194,7 @@ export default function People() {
 
         <table className="text-sm table-auto">
           <thead>
-            <tr className="h-14 mx-4 text-xs uppercase text-navy-500 *:px-4 *:font-medium *:text-start tracking-[1px]">
+            <tr className="h-14 mx-4 text-xs uppercase text-navy-500 *:px-4 *:font-medium *:text-start">
               <th>Employee</th>
               <th>Ladder</th>
               <th className="[&]:text-end">Current Band</th>

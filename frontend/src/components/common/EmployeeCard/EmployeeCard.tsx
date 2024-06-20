@@ -22,7 +22,7 @@ export const EmployeeCard = ({ employee }: EmployeeCardProps) => {
               />
             </div>
             <div className="flex flex-col justify-center">
-              <h3 className="text-navy-900 text-sm font-medium leading-[22.4px] tracking-wider">{name}</h3>
+              <h3 className="text-navy-900 text-sm font-medium leading-[22.4px]">{name}</h3>
               <p className="text-navy-600 text-sm">{title}</p>
             </div>
           </div>
