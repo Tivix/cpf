@@ -1,3 +1,5 @@
+import { MouseEventHandler } from "react";
+
 export interface Option {
   value: string;
   label: string;
@@ -9,4 +11,5 @@ export interface DropdownProps {
   selectedOptionValue: string;
   selectedOptionLabel: string;
   setSelectedOption: (value: string) => void;
+  resetFilter: MouseEventHandler<HTMLDivElement>;
 }

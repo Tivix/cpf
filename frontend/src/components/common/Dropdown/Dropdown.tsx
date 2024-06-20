@@ -4,16 +4,39 @@ import { DropdownProps } from './Dropdown.interface';
 import { Transition } from '@headlessui/react';
 import { Listbox } from '@headlessui/react';
 import { ChevronRightIcon } from '@app/static/icons/ChevronRightIcon';
+import { CloseIcon } from '@app/static/icons/CloseIcon';
+import { generateClassNames } from '@app/utils';
 
-export const Dropdown = ({ options, selectedOptionValue, selectedOptionLabel, setSelectedOption }: DropdownProps) => (
-  <div className="w-full">
+export const Dropdown = ({ options, selectedOptionValue, selectedOptionLabel, setSelectedOption, resetFilter }: DropdownProps) => (
+  <div>
     <Listbox value={selectedOptionValue} onChange={setSelectedOption}>
       <div className="relative">
-        <Listbox.Button className="relative w-full border border-navy-200 cursor-default rounded-lg bg-white py-3 pl-3 pr-4 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300">
-          <span className="block truncate text-navy-600">{selectedOptionLabel}</span>
-          <span className="pointer-events-none pl-2 absolute inset-y-0 right-0 flex items-center pr-2">
-            <ChevronRightIcon className="h-4 w-4 text-navy-600 rotate-90" aria-hidden="true" />
-          </span>
+        <Listbox.Button className={generateClassNames('relative flex justify-between items-center gap-3 h-12 border border-navy-200 cursor-default rounded-xl bg-white px-4 text-left focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300', {
+          'px-0 gap-0 bg-blue-200': selectedOptionValue !== options[0].value
+          })} 
+        >
+          {selectedOptionValue !== options[0].value
+            ? <>
+                <div className="flex items-center gap-2 h-12 pr-2 pl-3">
+                  <span className="pointer-events-none">
+                    <ChevronRightIcon className="h-4 w-4 text-navy-600 rotate-90" aria-hidden="true" />
+                  </span>
+                  <span className="block truncate text-navy-900">{selectedOptionLabel}</span>
+                </div>
+                <span 
+                  className="flex items-center h-12 pr-3 pl-2 cursor-pointer"
+                  onClick={resetFilter}
+                >
+                  <CloseIcon className="h-3 w-[18px] text-navy-600" aria-hidden="true" />
+                </span>
+              </>
+            : <>
+                <span className="block truncate text-navy-600">{selectedOptionLabel}</span>
+                <span className="pointer-events-none flex items-center">
+                  <ChevronRightIcon className="h-4 w-4 text-navy-600 rotate-90" aria-hidden="true" />
+                </span>
+              </>
+          }
         </Listbox.Button>
         <Transition
           enter="transition duration-100 ease-out"

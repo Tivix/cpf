@@ -5,14 +5,10 @@ import { Breadcrumbs } from '@app/components/modules/Breadcrumbs';
 import { Tabs } from '@app/components/modules/Tabs';
 import { Dropdown } from '@app/components/common/Dropdown/Dropdown';
 import { InputField } from '@app/components/common/InputField/InputField';
-import { useEffect, useState } from 'react';
+import { MouseEvent, useEffect, useState } from 'react';
 import { Employee } from '@app/types/common';
 import { EmployeeCard } from '@app/components/common/EmployeeCard';
-
-const FILTERS = [
-  { label: 'Current band', value: 'current_band', id: 1 },
-  { label: 'Ladder', value: 'ladder', id: 2 },
-];
+import { filters } from '@app/const/peopleDropdownFilterOptions';
 
 const PEOPLE = [
   {
@@ -122,12 +118,12 @@ export default function People() {
 
   const [activeTab, setActiveTab] = useState('Active');
   const [search, setSearch] = useState('');
-  const [selectedFilter, setSelectedFilter] = useState(FILTERS[0].value);
+  const [selectedFilter, setSelectedFilter] = useState(filters[0].value);
   const [activePeople, setActivePeople] = useState<Employee[]>();
   const [draftPeople, setDraftPeople] = useState<Employee[]>();
   const [deactivatedPeople, setDeactivatedPeople] = useState<Employee[]>();
 
-  const selectedFilterLabel = FILTERS.find((option) => option.value === selectedFilter)?.label || '';
+  const selectedFilterLabel = filters.find((option) => option.value === selectedFilter)?.label || '';
 
   const TABS = [
     {
@@ -164,6 +160,11 @@ export default function People() {
     }
   }, [people]);
 
+  const resetFilterHandler = (event: MouseEvent<HTMLDivElement, globalThis.MouseEvent>) => {
+    event.stopPropagation();
+    setSelectedFilter(filters[0].value);
+  };
+
   return (
     <div className="flex flex-col gap-6">
       <div className="flex items-center justify-between">
@@ -185,9 +186,10 @@ export default function People() {
             />
             <Dropdown
               selectedOptionLabel={selectedFilterLabel}
-              options={FILTERS}
+              options={filters}
               selectedOptionValue={selectedFilter}
               setSelectedOption={setSelectedFilter}
+              resetFilter={event => resetFilterHandler(event)}
             />
           </div>
         </div>
