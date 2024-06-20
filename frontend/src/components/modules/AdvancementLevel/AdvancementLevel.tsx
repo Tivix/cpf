@@ -64,7 +64,7 @@ export const AdvancementLevel: React.FC<AdvancementLevelProps> = ({ showVertical
           <div key={title} className="text-navy-600 text-base overflow-hidden">
             <p>{title}</p>
             <article className="mt-5 prose">
-              <Markdown>{overview}</Markdown>
+              <Markdown text={overview} />
             </article>
           </div>
         ))}

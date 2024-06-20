@@ -1,4 +1,4 @@
-export interface AccordionCardProps extends HTMLDivElement {
+export interface AccordionCardProps extends Partial<HTMLDivElement> {
   title: string;
   expandedByDefault?: boolean;
 }
