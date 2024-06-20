@@ -3,7 +3,7 @@ import { mapKeysToCamelCase } from '@app/utils';
 import { BucketDetails } from '@app/components/modules/BucketDetails';
 
 async function getBucketDetails(slug: string) {
-  const response = await fetch(`http://proxy/cpf/api/library/buckets/${slug}`);
+  const response = await fetch(`https://proxy/cpf/api/library/buckets/${slug}`);
 
   if (!response.ok) {
     throw new Error('Failed to fetch bucket details');
