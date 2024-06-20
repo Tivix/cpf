@@ -165,6 +165,16 @@ export default function People() {
     setSelectedFilter(filters[0].value);
   };
 
+  const filterPeople = (people: Employee[]) => {
+    if (selectedFilter === filters[0].value) return people;
+    
+    const filteredPeople = people.filter((employee: Employee) => 
+      employee.laddersDetails.find((ladder) =>
+        ladder.currentBand === +selectedFilter.split('_')[1]));
+    
+    return filteredPeople;
+  };
+
   return (
     <div className="flex flex-col gap-6">
       <div className="flex items-center justify-between">
@@ -196,19 +206,19 @@ export default function People() {
 
         <table className="text-sm table-auto">
           <thead>
-            <tr className="h-14 mx-4 text-xs uppercase text-navy-500 *:px-4 *:font-medium *:text-start">
-              <th>Employee</th>
+            <tr className="h-14 mx-4 text-xs uppercase text-navy-500 *:w-40 *:px-4 *:font-medium *:text-start">
+              <th className="[&]:w-auto">Employee</th>
               <th>Ladder</th>
               <th className="[&]:text-end">Current Band</th>
               <th className="[&]:text-end">Active Goal</th>
-              <th className="pr-4 [&]:pl-14">Goal Progress</th>
+              <th className="[&]:w-[248px] pr-4 [&]:pl-14">Goal Progress</th>
               <th className="[&]:text-center">Latest Activity</th>
-              <th />
+              <th className="[&]:w-12" />
             </tr>
           </thead>
 
           <tbody>
-            {people.map((employee: Employee, index) => (
+            {filterPeople(people).map((employee: Employee, index) => (
               <EmployeeCard employee={employee} key={index} />
             ))}
           </tbody>
