@@ -1,3 +1,4 @@
-export interface AccordionCardProps {
+export interface AccordionCardProps extends React.HTMLAttributes<HTMLDivElement> {
   title: string;
+  expandedByDefault?: boolean;
 }
