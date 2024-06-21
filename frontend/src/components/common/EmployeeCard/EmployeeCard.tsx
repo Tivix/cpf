@@ -10,7 +10,6 @@ export const EmployeeCard = ({ employee, tabSelected }: EmployeeCardProps) => {
 
   return (
     <>
-
       <tr className="text-navy-700 text-sm w-full h-16 border-t border-navy-200 *:px-4 *:py-0" key={name}>
         <td {...(laddersDetails.length > 1 && { className: 'flex h-16' })}>
           <div className="flex gap-4">
@@ -53,7 +52,7 @@ export const EmployeeCard = ({ employee, tabSelected }: EmployeeCardProps) => {
             </span>
           ))}
         </td>
-        {tabSelected === tabs[0] &&
+        {tabSelected === tabs[0] && (
           <>
             <td>
               {laddersDetails.map((ladder, index) => (
@@ -103,19 +102,25 @@ export const EmployeeCard = ({ employee, tabSelected }: EmployeeCardProps) => {
               )}
             </td>
           </>
-        }
-        {tabSelected === tabs[1] &&
+        )}
+        {tabSelected === tabs[1] && (
           <td className="flex gap-4 [&]:pr-2 [&]:pl-14">
-            <button className="h-11 px-5 text-navy-600 font-semibold border border-navy-300 rounded-full">Resume</button>
-            <button className="h-11 px-5 text-navy-600 font-semibold border border-navy-300 rounded-full">Activate employee</button>
+            <button className="h-11 px-5 text-navy-600 font-semibold border border-navy-300 rounded-full">
+              Resume
+            </button>
+            <button className="h-11 px-5 text-navy-600 font-semibold border border-navy-300 rounded-full">
+              Activate employee
+            </button>
           </td>
-        }
-        <td className={generateClassNames('[&]:px-0', {
-          '[&]:px-4': tabSelected === tabs[2]
+        )}
+        <td
+          className={generateClassNames('[&]:px-0', {
+            '[&]:px-4': tabSelected === tabs[2],
           })}
         >
-          <div className={generateClassNames('flex justify-center cursor-pointer', {
-            'justify-end': tabSelected === tabs[2]
+          <div
+            className={generateClassNames('flex justify-center cursor-pointer', {
+              'justify-end': tabSelected === tabs[2],
             })}
           >
             <DotsIcon className="w-[18px] h-[18px]" />

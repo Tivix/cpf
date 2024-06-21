@@ -209,39 +209,40 @@ export default function People() {
 
         <table className="text-sm table-auto">
           <thead>
-            <tr className={generateClassNames('h-14 text-xs uppercase text-navy-500 *:px-4 *:py-0 *:font-medium *:text-start', {
-              '*:w-40': activeTab === TABS[0].title,
-              '*:w-[200px]': activeTab === TABS[1].title,
-              '[&&>*]:w-1/4': activeTab === TABS[2].title,
-              })}
+            <tr
+              className={generateClassNames(
+                'h-14 text-xs uppercase text-navy-500 *:px-4 *:py-0 *:font-medium *:text-start',
+                {
+                  '*:w-40': activeTab === TABS[0].title,
+                  '*:w-[200px]': activeTab === TABS[1].title,
+                  '[&&>*]:w-1/4': activeTab === TABS[2].title,
+                },
+              )}
             >
-              <th className={generateClassNames('[&]:w-auto', {
-                'flex items-center [&&]:w-[400px] h-14': activeTab === TABS[2].title
+              <th
+                className={generateClassNames('[&]:w-auto', {
+                  'flex items-center [&&]:w-[400px] h-14': activeTab === TABS[2].title,
                 })}
-              >Employee</th>
+              >
+                Employee
+              </th>
               <th>Ladder</th>
               <th className="[&]:text-end">Current Band</th>
-              {activeTab === TABS[0].title &&
+              {activeTab === TABS[0].title && (
                 <>
                   <th className="[&]:text-end">Active Goal</th>
                   <th className="[&]:w-[248px] [&]:pl-14">Goal Progress</th>
                   <th className="[&]:text-center">Latest Activity</th>
                 </>
-              }
-              {activeTab === TABS[1].title &&
-                <th className="[&]:w-[400px] [&]:pl-14">Action</th>
-              }
+              )}
+              {activeTab === TABS[1].title && <th className="[&]:w-[400px] [&]:pl-14">Action</th>}
               <th className="[&]:w-12" />
             </tr>
           </thead>
 
           <tbody>
             {filterPeople(selectedTabPeople)?.map((employee: Employee, index) => (
-              <EmployeeCard 
-                key={index} 
-                employee={employee}
-                tabSelected={activeTab}
-              />
+              <EmployeeCard key={index} employee={employee} tabSelected={activeTab} />
             ))}
           </tbody>
         </table>
