@@ -16,6 +16,9 @@ ENV NODE_ENV development
 
 COPY . .
 
+# Remove the next cache folder
+RUN rm -rf .next
+
 # Note: Don't expose ports here, Compose will handle that for us
 CMD ["yarn", "dev"]
 
@@ -32,6 +35,9 @@ FROM build AS server
 WORKDIR /code
 
 ENV NODE_ENV production
+
+# Remove the next cache folder
+RUN rm -rf .next
 
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
