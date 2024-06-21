@@ -10,8 +10,8 @@ services:
     image: tivix/docker-nginx:v17
     restart: unless-stopped
     depends_on:
-      # - frontend
-      # - fusionauth
+      - frontend
+      - fusionauth
       - api-server
     ports:
       - "8080:80"
@@ -66,36 +66,21 @@ services:
     stdin_open: true
     tty: true
 
-  db:
-    image: postgres:16.0-bookworm
-    environment:
-      PGDATA: /var/lib/postgresql/data/pgdata
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+  postgres:
+    build:
+      context: ./backend/postgres
+    restart: unless-stopped
+    env_file:
+      - .env
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d postgres"]
       interval: 5s
       timeout: 5s
       retries: 5
-    restart: unless-stopped
+    ports:
+      - "5432:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
-
-  # postgres:
-  #   build:
-  #     context: ./backend/postgres
-  #   restart: unless-stopped
-  #   env_file:
-  #     - .env
-  #   healthcheck:
-  #     test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d postgres"]
-  #     interval: 5s
-  #     timeout: 5s
-  #     retries: 5
-  #   ports:
-  #     - "5432:5432"
-  #   volumes:
-  #     - postgres_data:/var/lib/postgresql/data/
+      - postgres_data:/var/lib/postgresql/data/
 
   search:
     image: opensearchproject/opensearch:2.11.0
@@ -106,10 +91,10 @@ services:
       plugins.security.disabled: true
       bootstrap.memory_lock: true
       OPENSEARCH_JAVA_OPTS: ${OPENSEARCH_JAVA_OPTS}
-    # healthcheck:
-    #   interval: 10s
-    #   retries: 80
-    #   test: curl --write-out 'HTTP %{http_code}' --fail --silent --output /dev/null http://localhost:9200/
+    healthcheck:
+      interval: 10s
+      retries: 80
+      test: curl --write-out 'HTTP %{http_code}' --fail --silent --output /dev/null http://localhost:9200/
     restart: unless-stopped
     ulimits:
       memlock:
@@ -129,12 +114,18 @@ services:
     env_file:
       - .env
     depends_on:
-      db:
+      postgres:
         condition: service_healthy
       search:
         condition: service_healthy
+    healthcheck:
+      test: curl -f http://localhost:9011/api/status
+      start_period: 15s
+      interval: 5s
+      timeout: 30s
+      retries: 5
     environment:
-      DATABASE_URL: jdbc:postgresql://db:5432/fusionauth
+      DATABASE_URL: jdbc:postgresql://postgres:5432/fusionauth
       DATABASE_ROOT_USERNAME: ${POSTGRES_USER}
       DATABASE_ROOT_PASSWORD: ${POSTGRES_PASSWORD}
       DATABASE_USERNAME: ${FUSIONAUTH_POSTGRES_USER}
