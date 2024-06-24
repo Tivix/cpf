@@ -128,32 +128,34 @@ export default function People() {
   const draftPeopleAmount = useMemo(() => people.filter((employee) => employee.draft).length, [people]);
   const deactivatedPeopleAmount = useMemo(() => people.filter((employee) => employee.deactivated).length, [people]);
 
-  const TABS = [
-    {
-      title: tabs[0],
-      employees: activePeopleAmount,
-    },
-    {
-      title: tabs[1],
-      employees: draftPeopleAmount,
-    },
-    {
-      title: tabs[2],
-      employees: deactivatedPeopleAmount,
-    },
-  ];
+  const peopleTabs = useMemo(() => {
+    return [
+      {
+        title: tabs[0],
+        employees: activePeopleAmount,
+      },
+      {
+        title: tabs[1],
+        employees: draftPeopleAmount,
+      },
+      {
+        title: tabs[2],
+        employees: deactivatedPeopleAmount,
+      },
+    ];
+  }, [activePeopleAmount, draftPeopleAmount, deactivatedPeopleAmount]);
 
   useEffect(() => {
     if (people) {
-      if (activeTab === TABS[0].title) {
+      if (activeTab === peopleTabs[0].title) {
         setSelectedTabPeople(people.filter((employee) => employee.active));
-      } else if (activeTab === TABS[1].title) {
+      } else if (activeTab === peopleTabs[1].title) {
         setSelectedTabPeople(people.filter((employee) => employee.draft));
       } else {
         setSelectedTabPeople(people.filter((employee) => employee.deactivated));
       }
     }
-  }, [people, activeTab]);
+  }, [people, activeTab, peopleTabs]);
 
   const resetFilterHandler = (event: MouseEvent<HTMLDivElement, globalThis.MouseEvent>) => {
     event.stopPropagation();
@@ -183,7 +185,7 @@ export default function People() {
       <Tabs
         active={activeTab}
         setActive={(tab) => setActiveTabHandler(tab)}
-        tabs={TABS}
+        tabs={peopleTabs}
         className="border-b border-navy-200"
       />
 
@@ -207,45 +209,35 @@ export default function People() {
           </div>
         </div>
 
-        <table className="text-sm table-auto">
-          <thead>
-            <tr
-              className={generateClassNames(
-                'h-14 text-xs uppercase text-navy-500 *:px-4 *:py-0 *:font-medium *:text-start',
-                {
-                  '*:w-40': activeTab === TABS[0].title,
-                  '*:w-[200px]': activeTab === TABS[1].title,
-                  '[&&>*]:w-1/4': activeTab === TABS[2].title,
-                },
-              )}
-            >
-              <th
-                className={generateClassNames('[&]:w-auto', {
-                  'flex items-center [&&]:w-[400px] h-14': activeTab === TABS[2].title,
-                })}
-              >
-                Employee
-              </th>
-              <th>Ladder</th>
-              <th className="[&]:text-end">Current Band</th>
-              {activeTab === TABS[0].title && (
-                <>
-                  <th className="[&]:text-end">Active Goal</th>
-                  <th className="[&]:w-[248px] [&]:pl-14">Goal Progress</th>
-                  <th className="[&]:text-center">Latest Activity</th>
-                </>
-              )}
-              {activeTab === TABS[1].title && <th className="[&]:w-[400px] [&]:pl-14">Action</th>}
-              <th className="[&]:w-12" />
-            </tr>
-          </thead>
+        <div
+          className={generateClassNames(
+            'grid grid-cols-[auto_repeat(3,_160px)_248px_160px_48px] grid-rows-[56px] auto-rows-[minmax(64px,_auto)]',
+            {
+              'grid-cols-[auto_repeat(2,_200px)_400px_48px]': activeTab === peopleTabs[1].title,
+              'grid-cols-[400px_repeat(3,_minmax(25%,_auto))]': activeTab === peopleTabs[2].title,
+            },
+          )}
+        >
+          <div className="*:self-center contents uppercase font-medium text-xs text-navy-500 *:px-4">
+            <div>Employee</div>
+            <div>Ladder</div>
+            <div className="text-right">Current band</div>
 
-          <tbody>
-            {filterPeople(selectedTabPeople)?.map((employee: Employee, index) => (
-              <EmployeeCard key={index} employee={employee} tabSelected={activeTab} />
-            ))}
-          </tbody>
-        </table>
+            {activeTab === peopleTabs[0].title && (
+              <>
+                <div className="text-right">Active goal</div>
+                <div className="[&]:pl-14">Goal progress</div>
+                <div className="text-center">Latest activity</div>
+              </>
+            )}
+
+            {activeTab === peopleTabs[1].title && <div className="[&]:pl-14">Action</div>}
+            <div></div>
+          </div>
+          {filterPeople(selectedTabPeople)?.map((employee: Employee, index) => (
+            <EmployeeCard key={index} employee={employee} tabSelected={activeTab} />
+          ))}
+        </div>
       </div>
     </div>
   );
