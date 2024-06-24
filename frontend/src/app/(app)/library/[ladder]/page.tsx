@@ -1,18 +1,6 @@
 import { Breadcrumbs } from '@app/components/modules/Breadcrumbs';
 import { LibraryDetailed } from '@app/components/modules/LibraryDetailed';
-import { mapKeysToCamelCase } from '@app/utils';
-import { API_URLS } from '@app/api';
-
-async function getLadderDetails(slug: string) {
-  const response = await fetch(`${API_URLS.library.ladders}/${slug}`);
-
-  if (!response.ok) {
-    throw new Error('Failed to fetch ladder details');
-  }
-  const data = await response.json();
-
-  return mapKeysToCamelCase(data);
-}
+import { getLadderDetails } from '@app/api/ladder';
 
 export default async function LadderDetailed({ params }: { params: { ladder: string } }) {
   const data = await getLadderDetails(params.ladder);
@@ -29,3 +17,5 @@ export default async function LadderDetailed({ params }: { params: { ladder: str
     </div>
   );
 }
+
+export const dynamic = 'force-dynamic';

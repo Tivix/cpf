@@ -1,17 +1,5 @@
-import { mapKeysToCamelCase } from '@app/utils';
 import { LadderCard, LadderCardInterface } from '@app/components/common/LadderCard';
-import { API_URLS } from '@app/api';
-
-async function getLadders() {
-  const response = await fetch(API_URLS.library.ladders);
-
-  if (!response.ok) {
-    throw new Error('Failed to fetch ladders');
-  }
-  const data = await response.json();
-
-  return mapKeysToCamelCase(data);
-}
+import { getLadders } from '@app/api/ladder';
 
 export default async function LibraryPage() {
   const data = await getLadders();
@@ -28,3 +16,5 @@ export default async function LibraryPage() {
     </div>
   );
 }
+
+export const dynamic = 'force-dynamic';
