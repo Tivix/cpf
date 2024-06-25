@@ -9,7 +9,7 @@ import { useState } from 'react';
 import { Modal } from '@app/components/common/Modal';
 import Cropper from 'react-easy-crop';
 import { Avatar } from '@app/components/common/Avatar';
-import {ImageIcon} from "@app/static/icons/ImageIcon";
+import { ImageIcon } from '@app/static/icons/ImageIcon';
 
 function readFile(file) {
   return new Promise((resolve) => {
@@ -52,7 +52,7 @@ export const ProfileSettings: React.FC<ProfileSettingsProps> = ({ data }) => {
   };
 
   const handleZoomChange = (event) => {
-    setZoom(event.target.value/10);
+    setZoom(event.target.value / 10);
   };
 
   return (
@@ -169,7 +169,7 @@ export const ProfileSettings: React.FC<ProfileSettingsProps> = ({ data }) => {
               type="range"
               min="10"
               max="100"
-              value={zoom*10}
+              value={zoom * 10}
               onChange={handleZoomChange}
               className="w-full h-2 range"
             />
