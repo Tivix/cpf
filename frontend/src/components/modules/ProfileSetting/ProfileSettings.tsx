@@ -14,11 +14,9 @@ export const ProfileSettings: React.FC<ProfileSettingsProps> = ({ data }) => {
   const { firstName, lastName, email, ladders, photo } = data;
   const { imageSrc, handleFileChange, modalOpen, handleCloseModal, handleSaveCroppedImage } = useProfileSettings();
 
-  const NotificationCheckbox: React.FC<{ icon: ReactNode }> = ({icon}) => (
+  const NotificationCheckbox: React.FC<{ icon: ReactNode }> = ({ icon }) => (
     <div className="flex flex-col items-center">
-      <div className="mb-6 text-navy-500">
-        {icon}
-      </div>
+      <div className="mb-6 text-navy-500">{icon}</div>
       <div className="flex h-6 items-center">
         <input type="checkbox" className="h-4 w-4 rounded border-gray-300 text-blue-800 focus:ring-blue-800" />
       </div>
@@ -83,12 +81,7 @@ export const ProfileSettings: React.FC<ProfileSettingsProps> = ({ data }) => {
           </div>
         </div>
       </Card>
-      <CropImageModal
-        open={modalOpen}
-        imageSrc={imageSrc}
-        onClose={handleCloseModal}
-        onSave={handleSaveCroppedImage}
-      />
+      <CropImageModal open={modalOpen} imageSrc={imageSrc} onClose={handleCloseModal} onSave={handleSaveCroppedImage} />
     </section>
   );
 };

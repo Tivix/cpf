@@ -3,14 +3,14 @@ import { ImageIcon } from '@app/static/icons/ImageIcon';
 import { Modal } from '@app/components/common/Modal';
 import { CropImageModalProps } from '@app/components/modules/CropImageModal/CropImageModal.interface';
 import { useCropImageModal } from '@app/components/modules/CropImageModal/CropImageModal.hooks';
-import {Button} from "@app/components/common/Button";
+import { Button } from '@app/components/common/Button';
 
 export const CropImageModal: React.FC<CropImageModalProps> = ({ imageSrc, open, onClose, onSave }) => {
   const { crop, zoom, handleCropChange, handleZoomChange, handleCropComplete, croppedAreaPixels } = useCropImageModal();
 
   const handleSave = () => {
     onSave(croppedAreaPixels);
-  }
+  };
   return (
     <Modal open={open} onClose={() => console.log('close')} title="Crop your photo" hideHeaderCloseButton>
       <div className="flex flex-col justify-center items-center gap-6">

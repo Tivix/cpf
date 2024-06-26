@@ -39,9 +39,9 @@ export const Modal = ({ children, open, onClose, title, hideHeaderCloseButton }:
                   {title}
                 </Dialog.Title>
                 {!hideHeaderCloseButton && (
-                    <button onClick={onClose} type="button">
-                      <CloseIcon className="h-5 w-5 text-navy-600 hover:text-navy-900" aria-hidden="true" />
-                    </button>
+                  <button onClick={onClose} type="button">
+                    <CloseIcon className="h-5 w-5 text-navy-600 hover:text-navy-900" aria-hidden="true" />
+                  </button>
                 )}
               </div>
 

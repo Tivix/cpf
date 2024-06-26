@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { Point } from '@app/types/common';
 import { CropImageModalHook } from '@app/components/modules/CropImageModal/CropImageModal.interface';
-import {Area} from "react-easy-crop";
+import { Area } from 'react-easy-crop';
 
 export const useCropImageModal = (): CropImageModalHook => {
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
-  const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area>(null)
+  const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area>(null);
 
   const handleCropChange = (location: Point) => {
     setCrop(location);

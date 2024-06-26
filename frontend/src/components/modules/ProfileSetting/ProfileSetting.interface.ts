@@ -1,5 +1,5 @@
 import { ChangeEvent } from 'react';
-import {Area} from "react-easy-crop";
+import { Area } from 'react-easy-crop';
 
 export interface ProfileSettingsProps {
   data: {
