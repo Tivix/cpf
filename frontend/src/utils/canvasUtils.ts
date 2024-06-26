@@ -31,7 +31,7 @@ export async function getCroppedImg(imageSrc: string, pixelCrop: Area): Promise<
       if (file) {
         resolve(URL.createObjectURL(file));
       } else {
-        reject()
+        reject();
       }
     }, 'image/png');
   }) as Promise<string>;
