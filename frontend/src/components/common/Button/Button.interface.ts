@@ -1,10 +1,10 @@
-import { ReactElement } from 'react';
+import { ReactElement, ButtonHTMLAttributes } from 'react';
 
-export interface ButtonProps {
+export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   leftIcon?: ReactElement;
   rightIcon?: ReactElement;
   title?: string;
-  type?: ButtonType;
+  uiType?: ButtonUIType;
   disabled?: boolean;
   color?: ButtonColor;
 }
@@ -15,6 +15,6 @@ export interface StyledButtonProps {
   darkColor: string;
 }
 
-export type ButtonType = 'solid' | 'border' | 'borderless' | 'link';
+export type ButtonUIType = 'solid' | 'border' | 'borderless' | 'link';
 
 export type ButtonColor = 'blue' | 'navy' | 'red';

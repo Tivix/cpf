@@ -1,5 +1,5 @@
 import { ChangeEvent } from 'react';
-import { Area } from 'react-easy-crop';
+import {Area} from "react-easy-crop";
 
 export interface ProfileSettingsProps {
   data: {
@@ -21,6 +21,8 @@ export interface ProfileSettingsProps {
 
 export interface ProfileSettingsHook {
   imageSrc: string | null;
-  handleCropComplete: (croppedArea: Area, croppedAreaPixels: Area) => void;
   handleFileChange: (event: ChangeEvent<HTMLInputElement>) => Promise<void>;
+  modalOpen: boolean;
+  handleCloseModal: () => void;
+  handleSaveCroppedImage: (croppedAreaPixels: Area) => void;
 }

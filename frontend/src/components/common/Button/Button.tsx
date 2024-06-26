@@ -1,4 +1,4 @@
-import { ButtonProps, ButtonType, StyledButtonProps } from '@app/components/common/Button/Button.interface';
+import { ButtonProps, ButtonUIType, StyledButtonProps } from '@app/components/common/Button/Button.interface';
 import {
   BorderButton,
   BorderlessButton,
@@ -7,7 +7,7 @@ import {
   SolidButton,
 } from '@app/components/common/Button/Button.styles';
 
-const getButtonComponent = (type?: ButtonType): React.FC<StyledButtonProps> => {
+const getButtonComponent = (type?: ButtonUIType): React.FC<StyledButtonProps> => {
   switch (type) {
     case 'border':
       return BorderButton;
@@ -21,12 +21,12 @@ const getButtonComponent = (type?: ButtonType): React.FC<StyledButtonProps> => {
   }
 };
 
-export const Button: React.FC<ButtonProps> = ({ color, disabled, title, leftIcon, rightIcon, type }) => {
-  const ButtonComponent = getButtonComponent(type);
+export const Button: React.FC<ButtonProps> = ({ color, disabled, title, leftIcon, rightIcon, uiType, ...props }) => {
+  const ButtonComponent = getButtonComponent(uiType);
   const buttonColors = getButtonColors(color);
 
   return (
-    <ButtonComponent disabled={disabled} darkColor={buttonColors.dark} lightColor={buttonColors.light}>
+    <ButtonComponent disabled={disabled} darkColor={buttonColors.dark} lightColor={buttonColors.light} {...props}>
       {leftIcon}
       {title}
       {rightIcon}

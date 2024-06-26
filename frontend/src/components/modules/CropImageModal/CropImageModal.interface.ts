@@ -5,7 +5,7 @@ export interface CropImageModalProps {
   imageSrc: string | null;
   open: boolean;
   onClose: () => void;
-  oCropComplete: (croppedArea: Area, croppedAreaPixels: Area) => void;
+  onSave: (croppedAreaPixels: Area) => void;
 }
 
 export interface CropImageModalHook {
@@ -13,4 +13,6 @@ export interface CropImageModalHook {
   zoom: number;
   handleCropChange: (location: Point) => void;
   handleZoomChange: (zoom: number) => void;
+  handleCropComplete: (croppedArea: Area, croppedAreaPixels: Area) => void;
+  croppedAreaPixels: Area;
 }

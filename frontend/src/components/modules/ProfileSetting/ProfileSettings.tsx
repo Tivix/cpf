@@ -12,18 +12,20 @@ import { ReactNode } from 'react';
 
 export const ProfileSettings: React.FC<ProfileSettingsProps> = ({ data }) => {
   const { firstName, lastName, email, ladders, photo } = data;
-  const { imageSrc, handleCropComplete, handleFileChange } = useProfileSettings();
+  const { imageSrc, handleFileChange, modalOpen, handleCloseModal, handleSaveCroppedImage } = useProfileSettings();
 
-  const NotificationCheckbox = (icon: ReactNode) => (
+  const NotificationCheckbox: React.FC<{ icon: ReactNode }> = ({icon}) => (
     <div className="flex flex-col items-center">
-      <div className="mb-6 text-navy-500">{icon}</div>
+      <div className="mb-6 text-navy-500">
+        {icon}
+      </div>
       <div className="flex h-6 items-center">
         <input type="checkbox" className="h-4 w-4 rounded border-gray-300 text-blue-800 focus:ring-blue-800" />
       </div>
     </div>
   );
 
-  const PersonalDetailsDataItem: React.FC<{ title: string; value: string | number }> = ({ title, value }) => (
+  const PersonalDetailsDataItem = ({ title, value }) => (
     <div className="border-b border-navy-200 px-4 py-6 sm:col-span-2 sm:px-0">
       <dt className="text-base font-medium leading-6 text-navy-900">{title}</dt>
       <dd className="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">{value}</dd>
@@ -82,10 +84,10 @@ export const ProfileSettings: React.FC<ProfileSettingsProps> = ({ data }) => {
         </div>
       </Card>
       <CropImageModal
-        open={!!imageSrc}
+        open={modalOpen}
         imageSrc={imageSrc}
-        oCropComplete={handleCropComplete}
-        onClose={() => console.log('close')}
+        onClose={handleCloseModal}
+        onSave={handleSaveCroppedImage}
       />
     </section>
   );
