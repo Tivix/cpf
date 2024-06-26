@@ -326,6 +326,13 @@
   dependencies:
     tslib "^2.4.0"
 
+"@swc/helpers@^0.5.0":
+  version "0.5.11"
+  resolved "https://registry.yarnpkg.com/@swc/helpers/-/helpers-0.5.11.tgz#5bab8c660a6e23c13b2d23fcd1ee44a2db1b0cb7"
+  integrity sha512-YNlnKRWF2sVojTpIyzwou9XoTNbzbzONwRhOoniEioF1AtaitTvVZblaQRrAzChWQ1bLYyYSWzM18y4WwgzJ+A==
+  dependencies:
+    tslib "^2.4.0"
+
 "@tailwindcss/typography@^0.5.13":
   version "0.5.13"
   resolved "https://registry.yarnpkg.com/@tailwindcss/typography/-/typography-0.5.13.tgz#cd788a4fa4d0ca2506e242d512f377b22c1f7932"
@@ -335,13 +342,6 @@
     lodash.isplainobject "^4.0.6"
     lodash.merge "^4.6.2"
     postcss-selector-parser "6.0.10"
-
-"@tanstack/react-virtual@^3.0.0-beta.60":
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/@tanstack/react-virtual/-/react-virtual-3.2.0.tgz#fb70f9c6baee753a5a0f7618ac886205d5a02af9"
-  integrity sha512-OEdMByf2hEfDa6XDbGlZN8qO6bTjlNKqjM3im9JG+u3mCL8jALy0T/67oDI001raUUPh1Bdmfn4ZvPOV5knpcg==
-  dependencies:
-    tslib "^2.4.0"
 
 "@tanstack/react-virtual@3.5.0":
   version "3.5.0"
@@ -3025,6 +3025,11 @@ prettier-linter-helpers@^1.0.0:
   integrity sha512-GbK2cP9nraSSUF9N2XwUwqfzlAFlMNYYl+ShE/V+H8a9uNl/oUqB1w2EL54Jh0OlyRSd8RfWYJ3coVS4TROP2w==
   dependencies:
     fast-diff "^1.1.2"
+
+prettier-plugin-tailwindcss@^0.6.5:
+  version "0.6.5"
+  resolved "https://registry.yarnpkg.com/prettier-plugin-tailwindcss/-/prettier-plugin-tailwindcss-0.6.5.tgz#e05202784a3f41889711ae38c75c5b8cad72f368"
+  integrity sha512-axfeOArc/RiGHjOIy9HytehlC0ZLeMaqY09mm8YCkMzznKiDkwFzOpBvtuhuv3xG5qB73+Mj7OCe2j/L1ryfuQ==
 
 prettier@3.2.5:
   version "3.2.5"
