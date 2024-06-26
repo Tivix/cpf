@@ -10,7 +10,7 @@ async function getLadders() {
   }
   const data = await response.json();
 
-  return mapKeysToCamelCase(data);
+  return mapKeysToCamelCase<LadderCardInterface[]>(data);
 }
 
 export default async function LibraryPage() {
