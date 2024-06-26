@@ -1,3 +1,6 @@
+import { ChangeEvent } from 'react';
+import { Area } from 'react-easy-crop';
+
 export interface ProfileSettingsProps {
   data: {
     photo?: string;
@@ -14,4 +17,10 @@ export interface ProfileSettingsProps {
       email: boolean;
     };
   };
+}
+
+export interface ProfileSettingsHook {
+  imageSrc: string | null;
+  handleCropComplete: (croppedArea: Area, croppedAreaPixels: Area) => void;
+  handleFileChange: (event: ChangeEvent<HTMLInputElement>) => Promise<void>;
 }
