@@ -36,7 +36,7 @@ export default async function BucketDetailed({ params }: { params: { bucket: str
         breadcrumbs={[
           { label: 'CPF Library', href: '/library', current: false },
           { label: ladderName, href: `/library/${ladder}`, current: false },
-          { label: data.bucketName, href: `/library/${bucket}`, current: true },
+          { label: data.bucketName, href: `/library/${ladder}/${bucket}`, current: true },
         ]}
       />
       {data && <BucketDetails data={data} />}
