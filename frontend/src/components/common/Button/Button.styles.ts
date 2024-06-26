@@ -90,19 +90,19 @@ export const LinkButton = styled(Button)<StyledButtonProps>`
     `}
 `;
 
-export const getButtonColors = (color?: ButtonColor) => {
+export const getButtonColors = (color?: (typeof ButtonColor)[keyof typeof ButtonColor]) => {
   switch (color) {
-    case 'navy':
+    case ButtonColor.NAVY:
       return {
         light: '#555C6B',
         dark: '#3C4455',
       };
-    case 'red':
+    case ButtonColor.RED:
       return {
         light: '#DC2626',
         dark: '#BA1919',
       };
-    case 'blue':
+    case ButtonColor.BLUE:
     default:
       return {
         light: '#4B69C9',

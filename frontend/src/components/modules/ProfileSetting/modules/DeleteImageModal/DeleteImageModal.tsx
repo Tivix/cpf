@@ -1,5 +1,5 @@
 import { Modal } from '@app/components/common/Modal';
-import { Button } from '@app/components/common/Button';
+import { Button, ButtonUIType, ButtonColor } from '@app/components/common/Button';
 import { DeleteImageModalProps } from './DeleteImageModal.interface';
 
 export const DeleteImageModal: React.FC<DeleteImageModalProps> = ({ open, onClose, onDelete }) => {
@@ -10,8 +10,8 @@ export const DeleteImageModal: React.FC<DeleteImageModalProps> = ({ open, onClos
           Your current photo will be replaced with a default avatar. Do you want to proceed?
         </p>
         <div className="w-full flex flex-row justify-end gap-4">
-          <Button title="Cancel" color="navy" uiType="borderless" onClick={onClose} />
-          <Button title="Delete photo" color="red" onClick={onDelete} />
+          <Button title="Cancel" buttonColor={ButtonColor.NAVY} uiType={ButtonUIType.BORDERLESS} onClick={onClose} />
+          <Button title="Delete photo" buttonColor={ButtonColor.RED} onClick={onDelete} />
         </div>
       </div>
     </Modal>

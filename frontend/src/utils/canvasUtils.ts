@@ -26,9 +26,13 @@ export async function getCroppedImg(imageSrc: string, pixelCrop: Area): Promise<
     pixelCrop.height,
   );
 
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     croppedCanvas.toBlob((file) => {
-      resolve(URL.createObjectURL(file));
+      if (file) {
+        resolve(URL.createObjectURL(file));
+      } else {
+        reject()
+      }
     }, 'image/png');
   }) as Promise<string>;
 }

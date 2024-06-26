@@ -34,7 +34,7 @@ export const ProfileSettings: React.FC<ProfileSettingsProps> = ({ data }) => {
     </div>
   );
 
-  const PersonalDetailsDataItem = ({ title, value }) => (
+  const PersonalDetailsDataItem: React.FC<{ title: string; value: string | number }> = ({ title, value }) => (
     <div className="border-b border-navy-200 px-4 py-6 sm:col-span-2 sm:px-0">
       <dt className="text-base font-medium leading-6 text-navy-900">{title}</dt>
       <dd className="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">{value}</dd>

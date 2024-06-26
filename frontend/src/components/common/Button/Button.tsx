@@ -7,23 +7,31 @@ import {
   SolidButton,
 } from '@app/components/common/Button/Button.styles';
 
-const getButtonComponent = (type?: ButtonUIType): React.FC<StyledButtonProps> => {
+const getButtonComponent = (type?: (typeof ButtonUIType)[keyof typeof ButtonUIType]): React.FC<StyledButtonProps> => {
   switch (type) {
-    case 'border':
+    case ButtonUIType.BORDER:
       return BorderButton;
-    case 'borderless':
+    case ButtonUIType.BORDERLESS:
       return BorderlessButton;
-    case 'link':
+    case ButtonUIType.LINK:
       return LinkButton;
-    case 'solid':
+    case ButtonUIType.SOLID:
     default:
       return SolidButton;
   }
 };
 
-export const Button: React.FC<ButtonProps> = ({ color, disabled, title, leftIcon, rightIcon, uiType, ...props }) => {
+export const Button: React.FC<ButtonProps> = ({
+  buttonColor,
+  disabled,
+  title,
+  leftIcon,
+  rightIcon,
+  uiType,
+  ...props
+}) => {
   const ButtonComponent = getButtonComponent(uiType);
-  const buttonColors = getButtonColors(color);
+  const buttonColors = getButtonColors(buttonColor);
 
   return (
     <ButtonComponent disabled={disabled} $darkColor={buttonColors.dark} $lightColor={buttonColors.light} {...props}>

@@ -3,7 +3,8 @@ import { ImageIcon } from '@app/static/icons/ImageIcon';
 import { Modal } from '@app/components/common/Modal';
 import { CropImageModalProps } from './CropImageModal.interface';
 import { useCropImageModal } from './CropImageModal.hooks';
-import { Button } from '@app/components/common/Button';
+import { Button, ButtonColor, ButtonUIType } from '@app/components/common/Button';
+import { ChangeEvent } from 'react';
 
 export const CropImageModal: React.FC<CropImageModalProps> = ({ imageSrc, open, onClose, onSave }) => {
   const { crop, zoom, handleCropChange, handleZoomChange, handleCropComplete, croppedAreaPixels } = useCropImageModal();
@@ -11,6 +12,11 @@ export const CropImageModal: React.FC<CropImageModalProps> = ({ imageSrc, open, 
   const handleSave = () => {
     onSave(croppedAreaPixels);
   };
+
+  const handleZoomInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    handleZoomChange(parseInt(e.target.value) / 10);
+  };
+
   return (
     <Modal open={open} onClose={onClose} title="Crop your photo" hideHeaderCloseButton>
       <div className="flex flex-col justify-center items-center gap-6">
@@ -44,13 +50,13 @@ export const CropImageModal: React.FC<CropImageModalProps> = ({ imageSrc, open, 
             min="10"
             max="100"
             value={zoom * 10}
-            onChange={(e) => handleZoomChange(e.target.value / 10)}
+            onChange={handleZoomInputChange}
             className="w-full h-2 range"
           />
           <ImageIcon className="w-9 h-9" />
         </div>
         <div className="w-full flex flex-row justify-end gap-4">
-          <Button title="Cancel" color="navy" uiType="borderless" onClick={onClose} />
+          <Button title="Cancel" buttonColor={ButtonColor.NAVY} uiType={ButtonUIType.BORDERLESS} onClick={onClose} />
           <Button title="Save" onClick={handleSave} />
         </div>
       </div>

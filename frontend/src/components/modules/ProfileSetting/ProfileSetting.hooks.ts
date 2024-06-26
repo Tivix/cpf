@@ -5,7 +5,7 @@ import { getCroppedImg } from '@app/utils/canvasUtils';
 import { Area } from 'react-easy-crop';
 
 export const useProfileSettings = (): ProfileSettingsHook => {
-  const [imageSrc, setImageSrc] = useState<string>(null);
+  const [imageSrc, setImageSrc] = useState<string | null>(null);
   const [cropModalOpen, setCropModalOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
 
@@ -30,7 +30,12 @@ export const useProfileSettings = (): ProfileSettingsHook => {
 
   const handleOpenDeleteModal = () => setDeleteModalOpen(true);
 
-  const handleSaveCroppedImage = async (croppedAreaPixels: Area) => {
+  const handleSaveCroppedImage = async (croppedAreaPixels: Area | null) => {
+    if (!croppedAreaPixels || !imageSrc) {
+      // TODO
+      return;
+    }
+
     try {
       const img = await getCroppedImg(imageSrc, croppedAreaPixels);
       if (img) {

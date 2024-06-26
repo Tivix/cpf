@@ -14,6 +14,6 @@ export interface ProfileSettingsHook {
   handleCloseCropModal: () => void;
   handleCloseDeleteModal: () => void;
   handleDeleteImage: () => void;
-  handleSaveCroppedImage: (croppedAreaPixels: Area) => void;
+  handleSaveCroppedImage: (croppedAreaPixels: Area | null) => void;
   handleOpenDeleteModal: () => void;
 }
