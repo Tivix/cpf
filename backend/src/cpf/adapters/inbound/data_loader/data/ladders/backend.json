@@ -4,7 +4,7 @@
   "bands": [
     {
       "threshold": 2,
-      "salary_range": "4000 - 8000 zł",
+      "salary_range": "4000 - 8000 pln",
       "buckets": [
         {
           "bucket_slug": "programming_language"
@@ -16,7 +16,7 @@
     },
     {
       "threshold": 6,
-      "salary_range": "6000 - 10000 zł",
+      "salary_range": "6000 - 10000 pln",
       "buckets": [
         {
           "bucket_slug": "programming_language"
@@ -25,7 +25,7 @@
     },
     {
       "threshold": 10,
-      "salary_range": "8000 - 12000 zł",
+      "salary_range": "8000 - 12000 pln",
       "buckets": [
         {
           "bucket_slug": "programming_language"
@@ -34,7 +34,7 @@
     },
     {
       "threshold": 14,
-      "salary_range": "10000 - 14000 zł",
+      "salary_range": "10000 - 14000 pln",
       "buckets": [
         {
           "bucket_slug": "programming_language"
@@ -43,7 +43,7 @@
     },
     {
       "threshold": 18,
-      "salary_range": "12000 - 16000 zł",
+      "salary_range": "12000 - 16000 pln",
       "buckets": [
         {
           "bucket_slug": "programming_language"
@@ -52,7 +52,7 @@
     },
     {
       "threshold": 22,
-      "salary_range": "14000 - 20000 zł",
+      "salary_range": "14000 - 20000 pln",
       "buckets": [
         {
           "bucket_slug": "programming_language"
@@ -61,7 +61,7 @@
     },
     {
       "threshold": 26,
-      "salary_range": "19000 - 24000 zł",
+      "salary_range": "19000 - 24000 pln",
       "buckets": [
         {
           "bucket_slug": "programming_language"
@@ -70,7 +70,7 @@
     },
     {
       "threshold": 30,
-      "salary_range": "21000 - 26000 zł",
+      "salary_range": "21000 - 26000 pln",
       "buckets": [
         {
           "bucket_slug": "programming_language"
@@ -79,7 +79,7 @@
     },
     {
       "threshold": 34,
-      "salary_range": "30000+ zł",
+      "salary_range": "30000+ pln",
       "buckets": [
         {
           "bucket_slug": "programming_language"
