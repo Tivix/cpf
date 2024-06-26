@@ -45,9 +45,9 @@ export const Modal = ({ children, open, onClose, title, hideHeaderCloseButton }:
                 )}
               </div>
 
-              <Dialog.Description className="overflow-y-auto py-5 px-8 h-[calc(100%-6rem)]">
+              <div className="overflow-y-auto py-5 px-8 h-[calc(100%-6rem)]">
                 {children}
-              </Dialog.Description>
+              </div>
             </Dialog.Panel>
           </Transition.Child>
         </div>

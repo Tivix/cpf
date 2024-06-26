@@ -7,14 +7,14 @@ const Button = styled.button`
 `;
 
 export const SolidButton = styled(Button)<StyledButtonProps>`
-  ${({ lightColor, darkColor, disabled }) =>
+  ${({ $lightColor, $darkColor, disabled }) =>
     !disabled &&
     css`
-      background-color: ${lightColor};
+      background-color: ${$lightColor};
       color: white;
       &:hover,
       &:focus {
-        background-color: ${darkColor};
+        background-color: ${$darkColor};
       }
     `}
 
@@ -27,14 +27,14 @@ export const SolidButton = styled(Button)<StyledButtonProps>`
 `;
 
 export const BorderButton = styled(Button)<StyledButtonProps>`
-  ${({ lightColor, darkColor, disabled }) =>
+  ${({ $lightColor, $darkColor, disabled }) =>
     !disabled &&
     css`
-      border: solid 1px ${lightColor};
-      color: ${lightColor};
+      border: solid 1px ${$lightColor};
+      color: ${$lightColor};
       &:focus {
-        border-color: ${darkColor};
-        color: ${darkColor};
+        border-color: ${$darkColor};
+        color: ${$darkColor};
       }
       &:hover {
         background-color: #f2f3f4; // navy-100
@@ -50,12 +50,12 @@ export const BorderButton = styled(Button)<StyledButtonProps>`
 `;
 
 export const BorderlessButton = styled(Button)<StyledButtonProps>`
-  ${({ disabled, darkColor, lightColor }) =>
+  ${({ disabled, $darkColor, $lightColor }) =>
     !disabled &&
     css`
-      color: ${lightColor};
+      color: ${$lightColor};
       &:focus {
-        color: ${darkColor};
+        color: ${$darkColor};
       }
       &:hover {
         background-color: #f2f3f4; // navy-100
@@ -70,13 +70,13 @@ export const BorderlessButton = styled(Button)<StyledButtonProps>`
 `;
 
 export const LinkButton = styled(Button)<StyledButtonProps>`
-  ${({ lightColor, darkColor, disabled }) =>
+  ${({ $lightColor, $darkColor, disabled }) =>
     !disabled &&
     css`
-      color: ${lightColor};
+      color: ${$lightColor};
       &:hover,
       &:focus {
-        color: ${darkColor};
+        color: ${$darkColor};
       }
       &:hover {
         text-decoration-line: underline;

@@ -26,7 +26,7 @@ export const Button: React.FC<ButtonProps> = ({ color, disabled, title, leftIcon
   const buttonColors = getButtonColors(color);
 
   return (
-    <ButtonComponent disabled={disabled} darkColor={buttonColors.dark} lightColor={buttonColors.light} {...props}>
+    <ButtonComponent disabled={disabled} $darkColor={buttonColors.dark} $lightColor={buttonColors.light} {...props}>
       {leftIcon}
       {title}
       {rightIcon}

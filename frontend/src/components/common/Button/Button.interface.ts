@@ -11,8 +11,8 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 export interface StyledButtonProps {
   disabled?: boolean | undefined;
-  lightColor: string;
-  darkColor: string;
+  $lightColor: string;
+  $darkColor: string;
 }
 
 export type ButtonUIType = 'solid' | 'border' | 'borderless' | 'link';
