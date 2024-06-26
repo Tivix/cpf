@@ -22,6 +22,7 @@
     "react-markdown": "^9.0.1",
     "react-tooltip": "^5.26.3",
     "remark-gfm": "^4.0.0",
+    "styled-components": "^6.1.11",
     "tailwind-merge": "^2.2.2"
   },
   "devDependencies": {
