@@ -22,8 +22,8 @@ export const Modal = ({ children, open, onClose, title, hideHeaderCloseButton }:
         <div className="fixed w-full h-full inset-0 bg-navy-50/75 transition-opacity" />
       </Transition.Child>
 
-      <div className="fixed inset-0 z-10">
-        <div className="flex justify-center h-full text-center items-center">
+      <div className="fixed inset-0 z-10 h-full flex items-center justify-center">
+        <div className="flex justify-center max-h-full text-center items-center">
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -44,8 +44,7 @@ export const Modal = ({ children, open, onClose, title, hideHeaderCloseButton }:
                   </button>
                 )}
               </div>
-
-              <div className="overflow-y-auto py-5 px-8 h-[calc(100%-6rem)]">{children}</div>
+              <div className="overflow-y-auto py-5 px-8 max-h-[calc(100%-6rem)]">{children}</div>
             </Dialog.Panel>
           </Transition.Child>
         </div>

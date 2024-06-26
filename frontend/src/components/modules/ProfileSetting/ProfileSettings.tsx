@@ -7,12 +7,13 @@ import { EditIcon } from '@app/static/icons/EditIcon';
 import { DeleteIcon } from '@app/static/icons/DeleteIcon';
 import { Avatar } from '@app/components/common/Avatar';
 import { useProfileSettings } from '@app/components/modules/ProfileSetting/ProfileSetting.hooks';
-import { CropImageModal } from '@app/components/modules/CropImageModal';
+import { CropImageModal } from './modules/CropImageModal';
 import { ReactNode } from 'react';
+import {DeleteImageModal} from "./modules/DeleteImageModal";
 
 export const ProfileSettings: React.FC<ProfileSettingsProps> = ({ data }) => {
   const { firstName, lastName, email, ladders, photo } = data;
-  const { imageSrc, handleFileChange, modalOpen, handleCloseModal, handleSaveCroppedImage } = useProfileSettings();
+  const { imageSrc, handleOpenDeleteModal, handleFileChange, cropModalOpen, handleCloseCropModal, deleteModalOpen, handleCloseDeleteModal, handleDeleteImage, handleSaveCroppedImage } = useProfileSettings();
 
   const NotificationCheckbox: React.FC<{ icon: ReactNode }> = ({ icon }) => (
     <div className="flex flex-col items-center">
@@ -52,6 +53,7 @@ export const ProfileSettings: React.FC<ProfileSettingsProps> = ({ data }) => {
             </label>
             <button
               type="button"
+              onClick={handleOpenDeleteModal}
               className="rounded-full bg-white h-11 w-11 flex items-center justify-center text-navy-600 shadow-sm hover:bg-navy-100 border border-navy-300"
             >
               <DeleteIcon className="h-5 w-5" aria-hidden="true" />
@@ -81,7 +83,8 @@ export const ProfileSettings: React.FC<ProfileSettingsProps> = ({ data }) => {
           </div>
         </div>
       </Card>
-      <CropImageModal open={modalOpen} imageSrc={imageSrc} onClose={handleCloseModal} onSave={handleSaveCroppedImage} />
+      <CropImageModal open={cropModalOpen} imageSrc={imageSrc} onClose={handleCloseCropModal} onSave={handleSaveCroppedImage} />
+      <DeleteImageModal open={deleteModalOpen} onClose={handleCloseDeleteModal} onDelete={handleDeleteImage} />
     </section>
   );
 };

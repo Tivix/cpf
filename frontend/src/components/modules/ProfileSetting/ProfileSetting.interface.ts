@@ -22,7 +22,11 @@ export interface ProfileSettingsProps {
 export interface ProfileSettingsHook {
   imageSrc: string | null;
   handleFileChange: (event: ChangeEvent<HTMLInputElement>) => Promise<void>;
-  modalOpen: boolean;
-  handleCloseModal: () => void;
+  cropModalOpen: boolean;
+  deleteModalOpen: boolean;
+  handleCloseCropModal: () => void;
+  handleCloseDeleteModal: () => void;
+  handleDeleteImage: () => void;
   handleSaveCroppedImage: (croppedAreaPixels: Area) => void;
+  handleOpenDeleteModal: () => void;
 }

@@ -1,8 +1,8 @@
 import Cropper from 'react-easy-crop';
 import { ImageIcon } from '@app/static/icons/ImageIcon';
 import { Modal } from '@app/components/common/Modal';
-import { CropImageModalProps } from '@app/components/modules/CropImageModal/CropImageModal.interface';
-import { useCropImageModal } from '@app/components/modules/CropImageModal/CropImageModal.hooks';
+import { CropImageModalProps } from './CropImageModal.interface';
+import { useCropImageModal } from './CropImageModal.hooks';
 import { Button } from '@app/components/common/Button';
 
 export const CropImageModal: React.FC<CropImageModalProps> = ({ imageSrc, open, onClose, onSave }) => {
@@ -12,7 +12,7 @@ export const CropImageModal: React.FC<CropImageModalProps> = ({ imageSrc, open, 
     onSave(croppedAreaPixels);
   };
   return (
-    <Modal open={open} onClose={() => console.log('close')} title="Crop your photo" hideHeaderCloseButton>
+    <Modal open={open} onClose={onClose} title="Crop your photo" hideHeaderCloseButton>
       <div className="flex flex-col justify-center items-center gap-6">
         <p className="text-navy-600 tracking-wider">
           For best results, use a PNG, JPG, or GIF image at least 300 x 300 px.

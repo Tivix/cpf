@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Point } from '@app/types/common';
-import { CropImageModalHook } from '@app/components/modules/CropImageModal/CropImageModal.interface';
+import { CropImageModalHook } from './CropImageModal.interface';
 import { Area } from 'react-easy-crop';
 
 export const useCropImageModal = (): CropImageModalHook => {
