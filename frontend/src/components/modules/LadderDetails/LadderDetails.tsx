@@ -11,7 +11,7 @@ export const LadderDetails = ({ ladder, ladderName, band }: LadderDetailsProps) 
     <div className="rounded-2xl bg-white px-20 py-12 flex flex-col gap-8">
       <div className="flex justify-between">
         <div className="flex flex-col gap-3">
-          <h2 className="text-xl font-semibold text-navy-900">
+          <h2 className="text-2xl font-semibold text-navy-900">
             Band {band}: {ladderName}
           </h2>
           <p className="text-navy-600 text-l font-medium">Salary range: {ladder.salaryRange}</p>
