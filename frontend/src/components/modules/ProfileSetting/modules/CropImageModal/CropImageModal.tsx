@@ -6,6 +6,8 @@ import { useCropImageModal } from './CropImageModal.hooks';
 import { Button, ButtonColor, ButtonUIType } from '@app/components/common/Button';
 import { ChangeEvent } from 'react';
 
+const ZOOM_SLIDER_MULTIPLIER = 10;
+
 export const CropImageModal: React.FC<CropImageModalProps> = ({ imageSrc, open, onClose, onSave }) => {
   const { crop, zoom, handleCropChange, handleZoomChange, handleCropComplete, croppedAreaPixels } = useCropImageModal();
 
@@ -14,7 +16,7 @@ export const CropImageModal: React.FC<CropImageModalProps> = ({ imageSrc, open, 
   };
 
   const handleZoomInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    handleZoomChange(parseInt(e.target.value) / 10);
+    handleZoomChange(parseInt(e.target.value) / ZOOM_SLIDER_MULTIPLIER);
   };
 
   return (
@@ -49,7 +51,7 @@ export const CropImageModal: React.FC<CropImageModalProps> = ({ imageSrc, open, 
             type="range"
             min="10"
             max="100"
-            value={zoom * 10}
+            value={zoom * ZOOM_SLIDER_MULTIPLIER}
             onChange={handleZoomInputChange}
             className="w-full h-2 range"
           />
