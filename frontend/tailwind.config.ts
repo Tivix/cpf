@@ -52,6 +52,7 @@ const config: Config = {
       },
     },
     fontSize: {
+      xs: ['0.75rem', '1rem'], // Body XS
       sm: ['0.875rem', '1.225rem'], // Body S
       base: ['1rem', '1.5rem'], // Body M
       xl: ['1.25rem', '1.75rem'], // Headline S
