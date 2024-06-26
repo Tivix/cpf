@@ -3,7 +3,7 @@ import { VerticalLineIcon } from '@app/static/icons/VerticalLineIcon';
 import { generateBandGrouping } from './utils';
 import { LadderTabsProps, LadderInterface } from './LadderTabs.interface';
 import { generateClassNames } from '@app/utils';
-import Button from '@app/components/common/Button/Button';
+import { Button } from '@app/components/common/Button';
 
 export const LadderTabs: React.FC<LadderTabsProps> = ({ maximumLadders, activeLadder, ladderOnClick }) => {
   const generateLadders = useCallback((maxLadders: number): LadderInterface => generateBandGrouping(maxLadders), []);
@@ -15,7 +15,7 @@ export const LadderTabs: React.FC<LadderTabsProps> = ({ maximumLadders, activeLa
       {Object.keys(ladders).map((positionName: string, index: number) => (
         <Fragment key={positionName}>
           <div className="rounded-2xl bg-white px-2 py-3">
-            <h3 className="mb-2 text-center text-xs uppercase tracking-wide text-navy-600">{positionName}</h3>
+            <h3 className="text-xs mb-2 text-center uppercase tracking-wide text-navy-600">{positionName}</h3>
             {ladders[positionName].map((ladder: number, index: number) => (
               <Fragment key={ladder.toString()}>
                 <Button

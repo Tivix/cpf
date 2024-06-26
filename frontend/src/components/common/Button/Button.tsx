@@ -1,17 +1,6 @@
 import { generateClassNames } from '@app/utils';
-import React, { ButtonHTMLAttributes, ReactNode } from 'react';
-
-export interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
-  styleType?: StyleTypes;
-  variant?: Variants;
-  disabled?: boolean;
-  className?: string;
-  children: ReactNode;
-}
-
-export type StyleTypes = 'primary' | 'natural' | 'warning';
-
-export type Variants = 'solid' | 'border' | 'borderless' | 'link';
+import React from 'react';
+import { Props, StyleTypes, Variants } from './Button.interface';
 
 const types: {
   [key in StyleTypes]: {
@@ -40,7 +29,7 @@ const types: {
   },
 };
 
-const Button = ({
+export const Button = ({
   styleType = 'primary',
   variant = 'solid',
   disabled = false,
@@ -63,5 +52,3 @@ const Button = ({
     </button>
   );
 };
-
-export default Button;
