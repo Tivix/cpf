@@ -54,7 +54,7 @@ export const ProfileSettings: React.FC<ProfileSettingsProps> = ({ data }) => {
         <div className="flex flex-row w-full border-b border-navy-200 px-4 py-6 sm:col-span-2 sm:px-0">
           <div className="grow">
             <div className="text-base font-medium leading-6 text-navy-900 mb-2">Profile photo</div>
-            <Avatar firstName={firstName} lastName={lastName} imageUrl={photo} />
+            <Avatar firstName={firstName} lastName={lastName} imageUrl={photo} size="72" />
           </div>
           <div className="flex flex-row gap-4">
             <label className="rounded-full bg-white h-11 w-11 flex items-center justify-center text-navy-600 shadow-sm hover:bg-navy-100 border border-navy-300">

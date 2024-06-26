@@ -4,7 +4,7 @@ import { ProfileSettings } from '@app/components/modules/ProfileSetting';
 export default async function LibraryPage() {
   const data = {
     firstName: 'Jane',
-    lastName: 'Doe',
+    lastName: 'Edge',
     email: 'example@gmail.com',
     ladders: [
       {

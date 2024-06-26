@@ -2,14 +2,7 @@ export interface AvatarProps {
   size?: AvatarSize;
   firstName: string;
   lastName: string;
-  imageUrl?: string;
+  imageUrl?: string | undefined;
 }
 
-export enum AvatarSize {
-  xs = 28,
-  s = 40,
-  m = 56,
-  l = 72,
-  xl = 100,
-  xxl = 320,
-}
+export type AvatarSize = '28' | '40' | '56' | '72' | '100' | '320';
