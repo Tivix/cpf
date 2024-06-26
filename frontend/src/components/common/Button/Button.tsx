@@ -6,6 +6,7 @@ import {
   LinkButton,
   SolidButton,
 } from '@app/components/common/Button/Button.styles';
+import { useTheme } from 'styled-components';
 
 const getButtonComponent = (type?: (typeof ButtonUIType)[keyof typeof ButtonUIType]): React.FC<StyledButtonProps> => {
   switch (type) {
@@ -30,8 +31,9 @@ export const Button: React.FC<ButtonProps> = ({
   uiType,
   ...props
 }) => {
+  const theme = useTheme();
   const ButtonComponent = getButtonComponent(uiType);
-  const buttonColors = getButtonColors(buttonColor);
+  const buttonColors = getButtonColors(theme, buttonColor);
 
   return (
     <ButtonComponent disabled={disabled} $darkColor={buttonColors.dark} $lightColor={buttonColors.light} {...props}>
