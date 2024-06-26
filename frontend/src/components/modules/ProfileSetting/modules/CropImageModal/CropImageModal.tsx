@@ -1,3 +1,4 @@
+'use client';
 import Cropper from 'react-easy-crop';
 import { ImageIcon } from '@app/static/icons/ImageIcon';
 import { Modal } from '@app/components/common/Modal';
