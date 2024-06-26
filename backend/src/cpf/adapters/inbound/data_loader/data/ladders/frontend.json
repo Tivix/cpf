@@ -4,7 +4,7 @@
   "bands": [
     {
       "threshold": 2,
-      "salary_range": "4000 - 8000 zł",
+      "salary_range": "4000 - 8000 pln",
       "buckets": [
         {
           "bucket_slug": "programming_language"
