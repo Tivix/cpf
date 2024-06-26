@@ -1,7 +1,7 @@
 import { Tooltip } from 'react-tooltip';
 import { LadderDetailsProps } from '@app/components/modules/LadderDetails/LadderDetails.interface';
 import { InfoIcon } from '@app/static/icons/InfoIcon';
-import { LadderBandBucket } from '@app/types/common';
+import { LadderBandBucket } from '@app/types/library';
 import { BucketCard } from '@app/components/common/BucketCard';
 import { AccordionCard } from '@app/components/common/AccordionCard';
 import { AccordionList } from '@app/components/common/AccordionList';

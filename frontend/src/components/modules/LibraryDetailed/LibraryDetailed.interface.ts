@@ -1,4 +1,4 @@
-import { LadderBand } from '@app/types/common';
+import { LadderBand } from '@app/types/library';
 
 export interface LibraryDetailedProps {
   data: {
