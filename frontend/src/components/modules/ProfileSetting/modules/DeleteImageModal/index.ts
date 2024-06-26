@@ -1,1 +1,1 @@
-export {DeleteImageModal} from './DeleteImageModal';
+export { DeleteImageModal } from './DeleteImageModal';

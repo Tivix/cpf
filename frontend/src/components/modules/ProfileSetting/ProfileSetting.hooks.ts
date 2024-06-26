@@ -45,7 +45,7 @@ export const useProfileSettings = (): ProfileSettingsHook => {
   const handleDeleteImage = () => {
     // TODO: delete photo
     setDeleteModalOpen(false);
-  }
+  };
 
   return {
     imageSrc,

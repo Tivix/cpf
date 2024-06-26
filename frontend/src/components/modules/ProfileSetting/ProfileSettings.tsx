@@ -9,11 +9,21 @@ import { Avatar } from '@app/components/common/Avatar';
 import { useProfileSettings } from '@app/components/modules/ProfileSetting/ProfileSetting.hooks';
 import { CropImageModal } from './modules/CropImageModal';
 import { ReactNode } from 'react';
-import {DeleteImageModal} from "./modules/DeleteImageModal";
+import { DeleteImageModal } from './modules/DeleteImageModal';
 
 export const ProfileSettings: React.FC<ProfileSettingsProps> = ({ data }) => {
   const { firstName, lastName, email, ladders, photo } = data;
-  const { imageSrc, handleOpenDeleteModal, handleFileChange, cropModalOpen, handleCloseCropModal, deleteModalOpen, handleCloseDeleteModal, handleDeleteImage, handleSaveCroppedImage } = useProfileSettings();
+  const {
+    imageSrc,
+    handleOpenDeleteModal,
+    handleFileChange,
+    cropModalOpen,
+    handleCloseCropModal,
+    deleteModalOpen,
+    handleCloseDeleteModal,
+    handleDeleteImage,
+    handleSaveCroppedImage,
+  } = useProfileSettings();
 
   const NotificationCheckbox: React.FC<{ icon: ReactNode }> = ({ icon }) => (
     <div className="flex flex-col items-center">
@@ -83,7 +93,12 @@ export const ProfileSettings: React.FC<ProfileSettingsProps> = ({ data }) => {
           </div>
         </div>
       </Card>
-      <CropImageModal open={cropModalOpen} imageSrc={imageSrc} onClose={handleCloseCropModal} onSave={handleSaveCroppedImage} />
+      <CropImageModal
+        open={cropModalOpen}
+        imageSrc={imageSrc}
+        onClose={handleCloseCropModal}
+        onSave={handleSaveCroppedImage}
+      />
       <DeleteImageModal open={deleteModalOpen} onClose={handleCloseDeleteModal} onDelete={handleDeleteImage} />
     </section>
   );
