@@ -1,5 +1,5 @@
 import { AvatarProps, AvatarSize } from './Avatar.interface';
-import {Wrapper} from "@app/components/common/Avatar/Avatar.styles";
+import { Wrapper } from '@app/components/common/Avatar/Avatar.styles';
 
 export const Avatar: React.FC<AvatarProps> = ({ firstName, lastName, imageUrl, size = AvatarSize.l }) => {
   return (
