@@ -15,26 +15,26 @@ export const AdvancementLevel: React.FC<AdvancementLevelProps> = ({ showVertical
 
   return (
     <div className="flex flex-row">
-      <div className="flex flex-col items-center relative">
+      <div className="relative flex flex-col items-center">
         <div
-          className="mt-4 mb-2 bg-blue-800 rounded-full w-6 h-6 flex items-center justify-center hover:opacity-50"
+          className="mb-2 mt-4 flex h-6 w-6 items-center justify-center rounded-full bg-blue-800 hover:opacity-50"
           onClick={toggleAccordionOpen}
         >
-          <ChevronRightIcon className={`text-white w-3.5 h-3.5 ${!accordionOpen ? 'rotate-90' : '-rotate-90'}`} />
+          <ChevronRightIcon className={`h-3.5 w-3.5 text-white ${!accordionOpen ? 'rotate-90' : '-rotate-90'}`} />
         </div>
-        {showVerticalLine && <div className="w-[1.5px] bg-blue-800 absolute top-12 left-3 h-[calc(100%-40px)]" />}
+        {showVerticalLine && <div className="absolute left-3 top-12 h-[calc(100%-40px)] w-[1.5px] bg-blue-800" />}
       </div>
       <div
-        className={`p-4 ml-2 flex flex-col gap-4 mb-4 w-full rounded-lg ${!accordionOpen && 'hover:bg-navy-50'}`}
+        className={`mb-4 ml-2 flex w-full flex-col gap-4 rounded-lg p-4 ${!accordionOpen && 'hover:bg-navy-50'}`}
         onClick={accordionOpen ? undefined : toggleAccordionOpen}
       >
         <h3>Advancement level {advancementLevel}</h3>
-        <p className="text-base text-navy-600 tracking-wide">{description}</p>
+        <p className="text-base tracking-wide text-navy-600">{description}</p>
         {accordionOpen && (
           <>
             {projects.length > 0 && (
               <button
-                className="text-blue-800 text-sm hover:text-blue-900 hover:underline hover:underline-offset-4 font-semibold w-fit"
+                className="w-fit text-sm font-semibold text-blue-800 hover:text-blue-900 hover:underline hover:underline-offset-4"
                 onClick={openModal}
               >
                 An example way to pass level
@@ -61,9 +61,9 @@ export const AdvancementLevel: React.FC<AdvancementLevelProps> = ({ showVertical
       </div>
       <Modal open={modalOpen} onClose={hideModal} title="An example way to pass level">
         {projects.map(({ title, overview }) => (
-          <div key={title} className="text-navy-600 text-base overflow-hidden">
+          <div key={title} className="overflow-hidden text-base text-navy-600">
             <p>{title}</p>
-            <article className="mt-5 prose">
+            <article className="prose mt-5">
               <Markdown text={overview} />
             </article>
           </div>

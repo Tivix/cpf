@@ -27,11 +27,11 @@ export const Topbar = () => {
   ];
 
   return (
-    <div className="bg-white mx-auto p-4 border-b border-navy-200 sticky top-0 z-40 shrink-0">
-      <div className="flex justify-end items-center px-2">
+    <div className="sticky top-0 z-40 mx-auto shrink-0 border-b border-navy-200 bg-white p-4">
+      <div className="flex items-center justify-end px-2">
         <button
           type="button"
-          className="relative rounded-full bg-gray-800 p-1 text-gray-400 focus:outline-none focus:ring-2"
+          className="bg-gray-800 text-gray-400 relative rounded-full p-1 focus:outline-none focus:ring-2"
         >
           <span className="absolute -inset-1.5" />
           <span className="sr-only">View notifications</span>
@@ -41,7 +41,7 @@ export const Topbar = () => {
         {/* Profile dropdown */}
         <Menu as="div" className="relative ml-3">
           <div>
-            <Menu.Button className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+            <Menu.Button className="bg-gray-800 focus:ring-offset-gray-800 relative flex rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2">
               <span className="absolute -inset-1.5" />
               <span className="sr-only">Open user menu</span>
               <Avatar firstName={user.firstName} lastName={user.lastName} variant="40" />

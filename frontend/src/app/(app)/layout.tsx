@@ -19,10 +19,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-navy-50 h-full`}>
+      <body className={`${inter.className} h-full bg-navy-50`}>
         <div className="flex">
           <Sidebar />
-          <div className="w-full pl-72">
+          <div className="w-full">
             <Topbar />
             <main className="p-8">{children}</main>
           </div>

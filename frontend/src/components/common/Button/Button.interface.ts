@@ -1,29 +1,13 @@
-import { ReactElement, ButtonHTMLAttributes, PropsWithChildren } from 'react';
+import { ButtonHTMLAttributes, ReactNode } from 'react';
 
-export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  leftIcon?: ReactElement;
-  rightIcon?: ReactElement;
-  title?: string;
-  uiType?: (typeof ButtonUIType)[keyof typeof ButtonUIType];
+export interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
+  styleType?: StyleTypes;
+  variant?: Variants;
   disabled?: boolean;
-  buttonColor?: (typeof ButtonColor)[keyof typeof ButtonColor];
+  className?: string;
+  children: ReactNode;
 }
 
-export interface StyledButtonProps extends PropsWithChildren<ButtonHTMLAttributes<HTMLButtonElement>> {
-  disabled?: boolean | undefined;
-  $lightColor: string;
-  $darkColor: string;
-}
+export type StyleTypes = 'primary' | 'natural' | 'warning';
 
-export const ButtonUIType = {
-  SOLID: 'solid',
-  BORDER: 'border',
-  BORDERLESS: 'borderless',
-  LINK: 'link',
-} as const;
-
-export const ButtonColor = {
-  BLUE: 'blue',
-  NAVY: 'navy',
-  RED: 'red',
-} as const;
+export type Variants = 'solid' | 'border' | 'borderless' | 'link';
