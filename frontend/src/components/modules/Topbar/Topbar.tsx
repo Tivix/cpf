@@ -6,11 +6,11 @@ import { NotificationIcon } from '@app/static/icons/NotificationIcon';
 
 export const Topbar = () => {
   return (
-    <div className="bg-white mx-auto p-4 border-b border-navy-200 sticky top-0 z-40 shrink-0">
-      <div className="flex justify-end items-center px-2">
+    <div className="sticky top-0 z-40 mx-auto shrink-0 border-b border-navy-200 bg-white p-4">
+      <div className="flex items-center justify-end px-2">
         <button
           type="button"
-          className="relative rounded-full bg-gray-800 p-1 text-gray-400 focus:outline-none focus:ring-2"
+          className="bg-gray-800 text-gray-400 relative rounded-full p-1 focus:outline-none focus:ring-2"
         >
           <span className="absolute -inset-1.5" />
           <span className="sr-only">View notifications</span>
@@ -20,7 +20,7 @@ export const Topbar = () => {
         {/* Profile dropdown */}
         <Menu as="div" className="relative ml-3">
           <div>
-            <Menu.Button className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+            <Menu.Button className="bg-gray-800 focus:ring-offset-gray-800 relative flex rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2">
               <span className="absolute -inset-1.5" />
               <span className="sr-only">Open user menu</span>
               <Image
@@ -40,10 +40,10 @@ export const Topbar = () => {
             leaveFrom="transform opacity-100 scale-100"
             leaveTo="transform opacity-0 scale-95"
           >
-            <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+            <Menu.Items className="ring-black absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-opacity-5 focus:outline-none">
               <Menu.Item>
                 {() => (
-                  <a href="#" className="block px-4 py-2 text-sm text-gray-700">
+                  <a href="#" className="text-gray-700 block px-4 py-2 text-sm">
                     Sign out
                   </a>
                 )}

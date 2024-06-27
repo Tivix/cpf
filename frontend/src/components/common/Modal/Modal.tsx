@@ -19,11 +19,11 @@ export const Modal = ({ children, open, onClose, title }: ModalProps) => (
         leaveFrom="opacity-100"
         leaveTo="opacity-0"
       >
-        <div className="fixed w-full h-full inset-0 bg-navy-50/75 transition-opacity" />
+        <div className="fixed inset-0 h-full w-full bg-navy-50/75 transition-opacity" />
       </Transition.Child>
 
       <div className="fixed inset-0 z-10">
-        <div className="flex justify-center h-full text-center items-center">
+        <div className="flex h-full items-center justify-center text-center">
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -33,7 +33,7 @@ export const Modal = ({ children, open, onClose, title }: ModalProps) => (
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <Dialog.Panel className="relative h-full sm:max-h-[672px] text-left bg-white rounded-xl shadow-xl transition-all max-w-[80%] sm:max-w-2xl p-0 w-full">
+            <Dialog.Panel className="relative h-full w-full max-w-[80%] rounded-xl bg-white p-0 text-left shadow-xl transition-all sm:max-h-[672px] sm:max-w-2xl">
               <div className="flex justify-between p-8">
                 <Dialog.Title as="h3" className="text-xl font-medium text-navy-900">
                   {title}
@@ -43,7 +43,7 @@ export const Modal = ({ children, open, onClose, title }: ModalProps) => (
                 </button>
               </div>
 
-              <Dialog.Description className="overflow-y-auto py-5 px-8 h-[calc(100%-6rem)]">
+              <Dialog.Description className="h-[calc(100%-6rem)] overflow-y-auto px-8 py-5">
                 {children}
               </Dialog.Description>
             </Dialog.Panel>
