@@ -16,7 +16,7 @@ export const Sidebar = () => {
 
   return (
     <nav
-      className={`z-50 h-screen ${open ? 'w-72' : 'w-16'} ${duration} flex flex-col bg-white px-3 border-r border-navy-200`}
+      className={`z-50 h-screen ${open ? 'w-72' : 'w-16'} ${duration} flex flex-col border-r border-navy-200 bg-white px-3`}
     >
       <div className="flex h-16 shrink-0 justify-between">
         <div className={`${duration} flex ${open ? 'opacity-1' : 'opacity-0'}`}>
@@ -28,7 +28,7 @@ export const Sidebar = () => {
           />
         </div>
         <Button onClick={toggleSidebar}>
-          <ChevronDoubleLeft className={`flex ${duration} ${open ? '' : 'rotate-180 mr-2'}`} />
+          <ChevronDoubleLeft className={`flex ${duration} ${open ? '' : 'mr-2 rotate-180'}`} />
         </Button>
       </div>
       <ul role="list" className="flex flex-1 flex-col gap-y-7">
@@ -39,12 +39,12 @@ export const Sidebar = () => {
                 <Link
                   href={item.href}
                   className={generateClassNames(
-                    'flex items-center p-2 rounded-md font-medium text-navy-600 hover:bg-blue-100 whitespace-nowrap',
+                    'flex items-center whitespace-nowrap rounded-md p-2 font-medium text-navy-600 hover:bg-blue-100',
                     { 'bg-blue-100 text-blue-900': item.current },
                   )}
                 >
-                  <div className="flex gap-x-3 items-center">
-                    <item.icon className="w-5 h-5" />
+                  <div className="flex items-center gap-x-3">
+                    <item.icon className="h-5 w-5" />
                     <span className={`${duration} leading-6 ${open ? 'text-sm' : 'text-[0px]'}`}>{item.name}</span>
                   </div>
                 </Link>
