@@ -29,7 +29,7 @@ export const ProfileSettings: React.FC<ProfileSettingsProps> = ({ data }) => {
     <div className="flex flex-col items-center">
       <div className="mb-6 text-navy-500">{icon}</div>
       <div className="flex h-6 items-center">
-        <input type="checkbox" className="h-4 w-4 rounded border-gray-300 text-blue-800 focus:ring-blue-800" />
+        <input type="checkbox" className="border-gray-300 h-4 w-4 rounded text-blue-800 focus:ring-blue-800" />
       </div>
     </div>
   );
@@ -37,34 +37,34 @@ export const ProfileSettings: React.FC<ProfileSettingsProps> = ({ data }) => {
   const PersonalDetailsDataItem: React.FC<{ title: string; value: string | number }> = ({ title, value }) => (
     <div className="border-b border-navy-200 px-4 py-6 sm:col-span-2 sm:px-0">
       <dt className="text-base font-medium leading-6 text-navy-900">{title}</dt>
-      <dd className="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">{value}</dd>
+      <dd className="text-gray-700 mt-1 text-sm leading-6 sm:mt-2">{value}</dd>
     </div>
   );
 
   const LadderDataItem: React.FC<{ title: string; value: string | number }> = ({ title, value }) => (
     <div>
       <dt className="text-base font-medium leading-6 text-navy-900">{title}</dt>
-      <dd className="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">{value}</dd>
+      <dd className="text-gray-700 mt-1 text-sm leading-6 sm:mt-2">{value}</dd>
     </div>
   );
 
   return (
-    <section className="py-16 flex flex-col items-center w-full gap-6">
+    <section className="flex w-full flex-col items-center gap-6 py-16">
       <Card title="Personal details">
-        <div className="flex flex-row w-full border-b border-navy-200 px-4 py-6 sm:col-span-2 sm:px-0">
+        <div className="flex w-full flex-row border-b border-navy-200 px-4 py-6 sm:col-span-2 sm:px-0">
           <div className="grow">
-            <div className="text-base font-medium leading-6 text-navy-900 mb-2">Profile photo</div>
+            <div className="mb-2 text-base font-medium leading-6 text-navy-900">Profile photo</div>
             <Avatar firstName={firstName} lastName={lastName} imageUrl={photo} variant="72" />
           </div>
           <div className="flex flex-row gap-4">
-            <label className="rounded-full bg-white h-11 w-11 flex items-center justify-center text-navy-600 shadow-sm hover:bg-navy-100 border border-navy-300">
+            <label className="flex h-11 w-11 items-center justify-center rounded-full border border-navy-300 bg-white text-navy-600 shadow-sm hover:bg-navy-100">
               <input type="file" onChange={handleFileChange} accept="image/*" className="hidden" />
               <EditIcon className="h-5 w-5" aria-hidden="true" />
             </label>
             <button
               type="button"
               onClick={handleOpenDeleteModal}
-              className="rounded-full bg-white h-11 w-11 flex items-center justify-center text-navy-600 shadow-sm hover:bg-navy-100 border border-navy-300"
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-navy-300 bg-white text-navy-600 shadow-sm hover:bg-navy-100"
             >
               <DeleteIcon className="h-5 w-5" aria-hidden="true" />
             </button>
@@ -75,7 +75,7 @@ export const ProfileSettings: React.FC<ProfileSettingsProps> = ({ data }) => {
       </Card>
       <Card title="Ladders">
         {ladders.map(({ ladderName, technology, band }) => (
-          <div className="flex flex-col gap-6 border border-navy-200 rounded-xl p-6" key={ladderName}>
+          <div className="flex flex-col gap-6 rounded-xl border border-navy-200 p-6" key={ladderName}>
             <LadderDataItem title="Ladder" value={ladderName} />
             <LadderDataItem title="Technology" value={technology} />
             <LadderDataItem title="Band" value={band} />
@@ -84,7 +84,7 @@ export const ProfileSettings: React.FC<ProfileSettingsProps> = ({ data }) => {
       </Card>
       <Card title="Notifications">
         <div className="flex flex-row">
-          <div className="self-end grow">
+          <div className="grow self-end">
             <p>Send me notifications via</p>
           </div>
           <div className="flex flex-row gap-8">

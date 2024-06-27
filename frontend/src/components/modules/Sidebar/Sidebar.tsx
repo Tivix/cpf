@@ -16,7 +16,7 @@ export const Sidebar = () => {
 
   return (
     <nav
-      className={`z-50 h-screen ${open ? 'w-72' : 'w-16'} ${duration} flex flex-col border-r border-navy-200 bg-white px-3`}
+      className={`sticky left-0 top-0 z-50 h-screen ${open ? 'w-72' : 'w-16'} ${duration} flex flex-col border-r border-navy-200 bg-white px-3`}
     >
       <div className="flex h-16 shrink-0 justify-between">
         <div className={`${duration} flex ${open ? 'opacity-1' : 'opacity-0'}`}>

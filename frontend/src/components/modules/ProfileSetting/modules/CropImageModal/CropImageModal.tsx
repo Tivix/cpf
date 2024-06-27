@@ -4,7 +4,7 @@ import { ImageIcon } from '@app/static/icons/ImageIcon';
 import { Modal } from '@app/components/common/Modal';
 import { CropImageModalProps } from './CropImageModal.interface';
 import { useCropImageModal } from './CropImageModal.hooks';
-import { Button, ButtonColor, ButtonUIType } from '@app/components/common/Button';
+import { Button } from '@app/components/common/Button';
 import { ChangeEvent } from 'react';
 
 const ZOOM_SLIDER_MULTIPLIER = 10;
@@ -22,8 +22,8 @@ export const CropImageModal: React.FC<CropImageModalProps> = ({ imageSrc, open, 
 
   return (
     <Modal open={open} onClose={onClose} title="Crop your photo" hideHeaderCloseButton>
-      <div className="flex flex-col justify-center items-center gap-6">
-        <p className="text-navy-600 tracking-wider">
+      <div className="flex flex-col items-center justify-center gap-6">
+        <p className="tracking-wider text-navy-600">
           For best results, use a PNG, JPG, or GIF image at least 300 x 300 px.
         </p>
         <div className="relative h-80 w-80">
@@ -46,21 +46,23 @@ export const CropImageModal: React.FC<CropImageModalProps> = ({ imageSrc, open, 
             <div>loader</div>
           )}
         </div>
-        <div className="flex flex-row gap-2 items-center text-navy-600">
-          <ImageIcon className="w-6 h-6" />
+        <div className="flex flex-row items-center gap-2 text-navy-600">
+          <ImageIcon className="h-6 w-6" />
           <input
             type="range"
             min="10"
             max="100"
             value={zoom * ZOOM_SLIDER_MULTIPLIER}
             onChange={handleZoomInputChange}
-            className="w-full h-2 range"
+            className="range h-2 w-full"
           />
-          <ImageIcon className="w-9 h-9" />
+          <ImageIcon className="h-9 w-9" />
         </div>
-        <div className="w-full flex flex-row justify-end gap-4">
-          <Button title="Cancel" buttonColor={ButtonColor.NAVY} uiType={ButtonUIType.BORDERLESS} onClick={onClose} />
-          <Button title="Save" onClick={handleSave} />
+        <div className="flex w-full flex-row justify-end gap-4">
+          <Button styleType="natural" variant="borderless" onClick={onClose}>
+            Cancel
+          </Button>
+          <Button onClick={handleSave}>Save</Button>
         </div>
       </div>
     </Modal>
