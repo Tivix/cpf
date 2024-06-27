@@ -10,9 +10,6 @@ const nextConfig = {
       pathname: '/img/logos/mark.svg',
     }],
   },
-  compiler: {
-    styledComponents: true
-  },
 };
 
 export default nextConfig;

@@ -1,15 +1,8 @@
 export interface AvatarProps {
-  size?: (typeof AvatarSize)[keyof typeof AvatarSize];
+  variant?: AvatarVariant;
   firstName: string;
   lastName: string;
   imageUrl?: string | undefined;
 }
 
-export const AvatarSize = {
-  XS: '28',
-  S: '40',
-  M: '56',
-  L: '72',
-  XL: '100',
-  XXL: '320',
-} as const;
+export type AvatarVariant = '28' | '40' | '56' | '72' | '100' | '320';
