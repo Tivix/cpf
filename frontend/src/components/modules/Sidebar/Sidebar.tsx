@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { generateClassNames } from '@app/utils';
 import { navigation } from './utils';
-import { ChevronDoubleLeft } from '@app/static/icons/ChevronDoubleLeft';
+import { ChevronDoubleLeftIcon } from '@app/static/icons/ChevronDoubleLeftIcon';
 import { Button } from '@headlessui/react';
 import { useState } from 'react';
 
@@ -28,7 +28,7 @@ export const Sidebar = () => {
           />
         </div>
         <Button onClick={toggleSidebar}>
-          <ChevronDoubleLeft className={`flex ${duration} ${open ? '' : 'mr-2 rotate-180'}`} />
+          <ChevronDoubleLeftIcon className={`flex ${duration} ${open ? '' : 'mr-2 rotate-180'}`} />
         </Button>
       </div>
       <ul role="list" className="flex flex-1 flex-col gap-y-7">

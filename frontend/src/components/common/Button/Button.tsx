@@ -29,6 +29,13 @@ const types: {
   },
 };
 
+const disabledStyles = {
+  solid: 'bg-navy-200',
+  border: 'bg-white border-navy-200 border',
+  borderless: 'px-2 border-none',
+  link: 'px-0 border-none',
+};
+
 export const Button = ({
   styleType = 'primary',
   variant = 'solid',
@@ -41,7 +48,7 @@ export const Button = ({
     'h-11 px-5 items-center justify-center rounded-full transition duration-200',
     {
       [types[styleType][variant]]: !disabled,
-      'bg-navy-200 border-navy-200 text-navy-300 cursor-not-allowed': disabled,
+      [`text-navy-300 cursor-not-allowed ${disabledStyles[variant]}`]: disabled,
     },
     className,
   );
