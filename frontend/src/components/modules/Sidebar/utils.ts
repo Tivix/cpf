@@ -3,24 +3,41 @@ import { PeopleIcon } from '@app/static/icons/PeopleIcon';
 import { LayoutIcon } from '@app/static/icons/LayoutIcon';
 import { DocumentIcon } from '@app/static/icons/DocumentIcon';
 
+export const routes = {
+  documentation: {
+    index: '/documentation',
+  },
+  library: {
+    index: '/library',
+  },
+  mySpace: {
+    index: '/my-space',
+  },
+  people: {
+    index: '/people',
+    myProfile: '/people/my-profile'
+  },
+}
+
 export const navigation = [
-  { name: 'My space', href: '#', current: false, icon: HomeIcon },
+  {
+    name: 'My space',
+    href: routes.mySpace.index,
+    icon: HomeIcon,
+  },
   {
     name: 'People',
-    href: '#',
-    current: false,
+    href: routes.people.index,
     icon: PeopleIcon,
   },
   {
     name: 'CPF Library',
-    href: '/library',
-    current: true,
+    href: routes.library.index,
     icon: LayoutIcon,
   },
   {
     name: 'Documentation',
-    href: '#',
-    current: false,
+    href: routes.documentation.index,
     icon: DocumentIcon,
   },
 ];
