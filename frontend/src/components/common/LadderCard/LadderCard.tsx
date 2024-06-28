@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { LadderCardInterface } from './LadderCard.interface';
-import {routes} from "@app/components/modules/Sidebar/utils";
+import { routes } from '@app/components/modules/Sidebar/utils';
 
 export const LadderCard = ({ ladderName, ladderSlug }: LadderCardInterface) => (
   <Link

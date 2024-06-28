@@ -5,7 +5,7 @@ import { navigation } from './utils';
 import { ChevronDoubleLeft } from '@app/static/icons/ChevronDoubleLeft';
 import { Button } from '@headlessui/react';
 import { useState } from 'react';
-import { usePathname } from 'next/navigation'
+import { usePathname } from 'next/navigation';
 
 const duration = 'duration-300' as const;
 
@@ -19,8 +19,10 @@ export const Sidebar = () => {
     <nav
       className={`z-50 h-screen ${open ? 'w-72' : 'w-16'} ${duration} flex flex-col border-r border-navy-200 bg-white px-3`}
     >
-      <div className={`flex h-16 shrink-0 ${open ? 'justify-between' : 'justify-center'}  mb-5 items-center`}>
-        <div className={`${duration} flex ${open ? 'ml-3 opacity-1 w-[104px] text-base' : 'w-0 opacity-0 text-[0px]'} h-11 border font-semibold border-navy-900 rounded-full justify-center items-center`}>
+      <div className={`flex h-16 shrink-0 ${open ? 'justify-between' : 'justify-center'} mb-5 items-center`}>
+        <div
+          className={`${duration} flex ${open ? 'opacity-1 ml-3 w-[104px] text-base' : 'w-0 text-[0px] opacity-0'} h-11 items-center justify-center rounded-full border border-navy-900 font-semibold`}
+        >
           CPF
         </div>
         <Button onClick={toggleSidebar}>

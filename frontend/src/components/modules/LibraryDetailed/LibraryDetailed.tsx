@@ -41,7 +41,12 @@ export const LibraryDetailed: React.FC<LibraryDetailedProps> = ({ data, ladderSl
         <LadderTabs {...tabsProps} ladderOnClick={handleLadderChange} />
       </div>
       <div className="col-span-7">
-        <LadderDetails band={currentBand} ladder={data.bands[currentBand]} ladderName={data.ladderName} ladderSlug={ladderSlug} />
+        <LadderDetails
+          band={currentBand}
+          ladder={data.bands[currentBand]}
+          ladderName={data.ladderName}
+          ladderSlug={ladderSlug}
+        />
       </div>
     </section>
   );

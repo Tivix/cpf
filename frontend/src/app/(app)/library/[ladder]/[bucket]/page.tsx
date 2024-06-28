@@ -2,7 +2,7 @@ import { Breadcrumbs } from '@app/components/modules/Breadcrumbs';
 import { mapKeysToCamelCase } from '@app/utils';
 import { BucketDetails } from '@app/components/modules/BucketDetails';
 import { API_URLS } from '@app/api';
-import {routes} from "@app/components/modules/Sidebar/utils";
+import { routes } from '@app/components/modules/Sidebar/utils';
 
 async function getBucketDetails(slug: string) {
   const response = await fetch(`${API_URLS.library.buckets}/${slug}`);

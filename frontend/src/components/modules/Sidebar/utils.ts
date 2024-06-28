@@ -15,9 +15,9 @@ export const routes = {
   },
   people: {
     index: '/people',
-    myProfile: '/people/my-profile'
+    myProfile: '/people/my-profile',
   },
-}
+};
 
 export const navigation = [
   {
