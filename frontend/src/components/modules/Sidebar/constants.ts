@@ -2,7 +2,7 @@ import { HomeIcon } from '@app/static/icons/HomeIcon';
 import { PeopleIcon } from '@app/static/icons/PeopleIcon';
 import { LayoutIcon } from '@app/static/icons/LayoutIcon';
 import { DocumentIcon } from '@app/static/icons/DocumentIcon';
-import {routes} from "@app/constants";
+import { routes } from '@app/constants';
 
 export const navigation = [
   {
