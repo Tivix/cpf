@@ -1,7 +1,7 @@
 'use client';
 import Link from 'next/link';
 import { generateClassNames } from '@app/utils';
-import { navigation } from './utils';
+import { navigation } from './constants';
 import { ChevronDoubleLeft } from '@app/static/icons/ChevronDoubleLeft';
 import { Button } from '@headlessui/react';
 import { useState } from 'react';

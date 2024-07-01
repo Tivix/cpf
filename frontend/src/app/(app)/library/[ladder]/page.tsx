@@ -2,7 +2,7 @@ import { Breadcrumbs } from '@app/components/modules/Breadcrumbs';
 import { LibraryDetailed } from '@app/components/modules/LibraryDetailed';
 import { mapKeysToCamelCase } from '@app/utils';
 import { API_URLS } from '@app/api';
-import { routes } from '@app/components/modules/Sidebar/utils';
+import { routes } from '@app/constants';
 
 async function getLadderDetails(slug: string) {
   const response = await fetch(`${API_URLS.library.ladders}/${slug}`);

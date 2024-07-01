@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { BucketCardProps } from './BucketCard.interface';
 import { ChevronRightIcon } from '@app/static/icons/ChevronRightIcon';
-import { routes } from '@app/components/modules/Sidebar/utils';
+import { routes } from '@app/constants';
 
 export const BucketCard = ({ bucket, ladderSlug }: BucketCardProps) => {
   const { bucketSlug, bucketName, description } = bucket;

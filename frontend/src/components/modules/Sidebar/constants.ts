@@ -2,22 +2,7 @@ import { HomeIcon } from '@app/static/icons/HomeIcon';
 import { PeopleIcon } from '@app/static/icons/PeopleIcon';
 import { LayoutIcon } from '@app/static/icons/LayoutIcon';
 import { DocumentIcon } from '@app/static/icons/DocumentIcon';
-
-export const routes = {
-  documentation: {
-    index: '/documentation',
-  },
-  library: {
-    index: '/library',
-  },
-  mySpace: {
-    index: '/my-space',
-  },
-  people: {
-    index: '/people',
-    myProfile: '/people/my-profile',
-  },
-};
+import {routes} from "@app/constants";
 
 export const navigation = [
   {
