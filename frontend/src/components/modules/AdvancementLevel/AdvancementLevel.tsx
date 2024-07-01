@@ -28,7 +28,7 @@ export const AdvancementLevel: React.FC<AdvancementLevelProps> = ({ showVertical
         className={`mb-4 ml-2 flex w-full flex-col gap-4 rounded-lg p-4 ${!accordionOpen && 'hover:bg-navy-50'}`}
         onClick={accordionOpen ? undefined : toggleAccordionOpen}
       >
-        <h3>Advancement level {advancementLevel}</h3>
+        <h3 className="text-l">Advancement level {advancementLevel}</h3>
         <p className="text-base tracking-wide text-navy-600">{description}</p>
         {accordionOpen && (
           <>
