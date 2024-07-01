@@ -22,7 +22,7 @@ export const Sidebar = () => {
       <div className={`flex h-16 shrink-0 ${open ? 'justify-between' : 'justify-center'} mb-5 items-center`}>
         <div
           className={`${duration} flex ${open ? 'ml-3 w-[104px] text-base' : 'w-12 cursor-pointer text-xs'} h-11 items-center justify-center rounded-full border border-navy-900 font-semibold`}
-          onClick={open ? null : toggleSidebar}
+          onClick={open ? undefined : toggleSidebar}
         >
           CPF
         </div>
