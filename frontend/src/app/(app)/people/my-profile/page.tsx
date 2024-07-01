@@ -1,6 +1,6 @@
 import { Breadcrumbs } from '@app/components/modules/Breadcrumbs';
 import { ProfileSettings } from '@app/components/modules/ProfileSetting';
-import { routes } from "@app/constants";
+import { routes } from '@app/constants';
 
 export default async function LibraryPage() {
   const data = {
