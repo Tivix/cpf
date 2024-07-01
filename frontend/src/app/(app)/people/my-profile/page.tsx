@@ -1,5 +1,6 @@
 import { Breadcrumbs } from '@app/components/modules/Breadcrumbs';
 import { ProfileSettings } from '@app/components/modules/ProfileSetting';
+import { routes } from "@app/constants";
 
 export default async function LibraryPage() {
   const data = {
@@ -22,8 +23,8 @@ export default async function LibraryPage() {
     <div>
       <Breadcrumbs
         breadcrumbs={[
-          { label: 'People', href: '/people', current: false },
-          { label: 'Profile setting', href: `/people/my-profile`, current: true },
+          { label: 'People', href: routes.people.index, current: false },
+          { label: 'Profile setting', href: routes.people.myProfile, current: true },
         ]}
       />
       <ProfileSettings data={data} />
