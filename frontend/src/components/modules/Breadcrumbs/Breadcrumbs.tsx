@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { ChevronRightIcon } from '@app/static/icons/ChevronRightIcon';
 import { BreadcrumbsProps } from './Breadcrumbs.interface';
-import clsx from 'clsx';
+import { generateClassNames } from '@app/utils';
 
 export const Breadcrumbs = ({ breadcrumbs }: BreadcrumbsProps) => {
   return (
@@ -15,7 +15,7 @@ export const Breadcrumbs = ({ breadcrumbs }: BreadcrumbsProps) => {
               )}
               <Link
                 href={breadcrumb.href}
-                className={clsx('text-l font-semibold leading-6 text-navy-600 hover:text-navy-900', {
+                className={generateClassNames('text-lg font-semibold leading-6 text-navy-600 hover:text-navy-900', {
                   'text-navy-900': breadcrumb.current,
                 })}
                 aria-current={breadcrumb.current ? 'page' : undefined}
