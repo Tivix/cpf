@@ -29,7 +29,7 @@ const PEOPLE = [
       active: true,
       draft: false,
       deactivated: false,
-    }
+    },
   },
   {
     id: 5329732,
@@ -48,7 +48,7 @@ const PEOPLE = [
       active: false,
       draft: false,
       deactivated: true,
-    }
+    },
   },
   {
     id: 54328701,
@@ -74,7 +74,7 @@ const PEOPLE = [
       active: false,
       draft: true,
       deactivated: false,
-    }
+    },
   },
   {
     id: 4321,
@@ -93,7 +93,7 @@ const PEOPLE = [
       active: true,
       draft: false,
       deactivated: false,
-    }
+    },
   },
   {
     id: 489901,
@@ -112,7 +112,7 @@ const PEOPLE = [
       active: false,
       draft: false,
       deactivated: true,
-    }
+    },
   },
 ];
 
@@ -141,7 +141,10 @@ export default function People() {
 
   const activePeopleAmount = useMemo(() => people.filter((employee) => employee.status.active).length, [people]);
   const draftPeopleAmount = useMemo(() => people.filter((employee) => employee.status.draft).length, [people]);
-  const deactivatedPeopleAmount = useMemo(() => people.filter((employee) => employee.status.deactivated).length, [people]);
+  const deactivatedPeopleAmount = useMemo(
+    () => people.filter((employee) => employee.status.deactivated).length,
+    [people],
+  );
 
   const peopleTabs = useMemo(() => {
     return [
@@ -256,4 +259,4 @@ export default function People() {
       </div>
     </div>
   );
-};
+}

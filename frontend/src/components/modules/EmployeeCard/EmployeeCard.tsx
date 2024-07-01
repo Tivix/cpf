@@ -1,15 +1,15 @@
 import Image from 'next/image';
 import { EmployeeCardProps } from './EmployeeCard.interface';
 import { CheckmarkIcon } from '@app/static/icons/CheckmarkIcon';
-import { DotsIcon } from '@app/static/icons/DotsIcon';
 import { generateClassNames } from '@app/utils';
 import { tabs } from '@app/const';
+import { DropdownMenuComponent } from '../../common/DropdownMenuComponent/DropdownMenuComponent';
 
 export const EmployeeCard = ({ employee, tabSelected }: EmployeeCardProps) => {
   const { name, title, laddersDetails } = employee;
 
   return (
-    <div className="contents *:flex *:items-center *:text-sm *:text-navy-700 *:px-4 *:border-t *:border-navy-200">
+    <div className="contents *:flex *:items-center *:border-t *:border-navy-200 *:px-4 *:text-sm *:text-navy-700">
       <div
         className={generateClassNames('col-start-1', {
           '[&]:items-start': laddersDetails.length > 1,
@@ -20,17 +20,17 @@ export const EmployeeCard = ({ employee, tabSelected }: EmployeeCardProps) => {
             'h-16': laddersDetails.length > 1,
           })}
         >
-          <div className="relative w-7 h-7 overflow-hidden rounded-full self-center">
+          <div className="relative h-7 w-7 self-center overflow-hidden rounded-full">
             <Image
               width={256}
               height={256}
               alt="User image"
               src="/images/image.jpeg"
-              className="overflow-hidden w-full h-auto"
+              className="h-auto w-full overflow-hidden"
             />
           </div>
           <div className="flex flex-col justify-center">
-            <h3 className="text-navy-900 font-medium">{name}</h3>
+            <h3 className="font-medium text-navy-900">{name}</h3>
             <p className="text-navy-600">{title}</p>
           </div>
         </div>
@@ -68,7 +68,7 @@ export const EmployeeCard = ({ employee, tabSelected }: EmployeeCardProps) => {
         ))}
       </div>
 
-      {tabSelected === tabs[0] && (
+      {tabSelected === tabs[0].title && (
         <>
           <div className="justify-end">
             {laddersDetails.map((ladder, index) => (
@@ -82,18 +82,18 @@ export const EmployeeCard = ({ employee, tabSelected }: EmployeeCardProps) => {
               </span>
             ))}
           </div>
-          <div className="[&]:pl-14 ">
+          <div className="[&]:pl-14">
             {laddersDetails.map(
               (ladder, index) =>
                 ladder.activeGoal && (
                   <div
                     key={index}
-                    className={generateClassNames('flex items-center gap-2 w-full', {
+                    className={generateClassNames('flex w-full items-center gap-2', {
                       '[&:not(:first-of-type)]:-mt-[17px]': laddersDetails.length > 1,
                     })}
                   >
                     <div className="w-full rounded-full bg-navy-300">
-                      <div className="bg-blue-800 h-2 rounded-full" style={{ width: `${ladder.goalProgress}%` }} />
+                      <div className="h-2 rounded-full bg-blue-800" style={{ width: `${ladder.goalProgress}%` }} />
                     </div>
                     <span>{ladder.goalProgress}%</span>
                   </div>
@@ -110,7 +110,7 @@ export const EmployeeCard = ({ employee, tabSelected }: EmployeeCardProps) => {
                       className: '[&:not(:first-of-type)]:-mt-[17px]',
                     })}
                   >
-                    <div className="flex items-center justify-center bg-blue-800 rounded-full text-white w-7 h-7 font-semibold p-2">
+                    <div className="flex h-7 w-7 items-center justify-center rounded-full bg-blue-800 p-2 font-semibold text-white">
                       {ladder.latestActivity}
                     </div>
                   </div>
@@ -120,26 +120,13 @@ export const EmployeeCard = ({ employee, tabSelected }: EmployeeCardProps) => {
         </>
       )}
 
-      {tabSelected === tabs[1] && (
-        <div className="flex gap-4 [&]:pr-2 [&]:pl-14">
-          <button className="h-11 px-5 text-navy-600 font-semibold border border-navy-300 rounded-full">Resume</button>
-          <button className="h-11 px-5 text-navy-600 font-semibold border border-navy-300 rounded-full">
-            Activate employee
-          </button>
+      {tabSelected === tabs[1].title && (
+        <div className="flex gap-4 font-semibold text-navy-600 *:h-11 *:rounded-full *:border *:border-navy-300 *:px-5 [&]:pl-14 [&]:pr-2">
+          <button>Resume</button>
+          <button>Activate employee</button>
         </div>
       )}
-
-      <div
-        className={generateClassNames('justify-center [&]:p-0', {
-          'justify-end': tabSelected === tabs[2],
-        })}
-      >
-        <div className="flex justify-center items-center w-11 h-11 cursor-pointer">
-          <span>
-            <DotsIcon className="w-[18px] h-[18px]" />
-          </span>
-        </div>
-      </div>
+      <DropdownMenuComponent tabSelected={tabSelected} />
     </div>
   );
 };
