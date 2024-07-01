@@ -45,12 +45,15 @@ export interface AtomicSkill {
 }
 
 export interface Employee {
+  id: number;
   name: string;
   title: string;
   laddersDetails: LadderDetails[];
-  active: boolean;
-  draft: boolean;
-  deactivated: boolean;
+  status: {
+    active: boolean;
+    draft: boolean;
+    deactivated: boolean;
+  };
 }
 
 export interface LadderDetails {
