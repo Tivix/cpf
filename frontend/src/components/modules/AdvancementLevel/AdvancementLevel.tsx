@@ -46,6 +46,7 @@ export const AdvancementLevel: React.FC<AdvancementLevelProps> = ({ showVertical
                 className="w-full"
                 title={category}
                 expandedByDefault={shouldBeExpandedByDefault}
+                small
               >
                 <AccordionList
                   items={skills.map(({ name, description }) => ({
