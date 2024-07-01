@@ -36,7 +36,7 @@ export const LadderDetails = ({ ladder, ladderName, band, ladderSlug }: LadderDe
           <p className="text-sm uppercase tracking-wide text-navy-600">Hard skills</p>
           <div className="flex flex-col gap-6">
             {ladder.hardSkillBuckets.map((bucket: LadderBandBucket) => (
-              <BucketCard bucket={bucket} key={bucket.bucketSlug} ladderSLug={ladderSlug} />
+              <BucketCard bucket={bucket} key={bucket.bucketSlug} ladderSlug={ladderSlug} />
             ))}
           </div>
         </div>

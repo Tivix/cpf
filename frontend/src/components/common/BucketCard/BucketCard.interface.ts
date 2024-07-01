@@ -1,6 +1,6 @@
 import { LadderBandBucket } from '@app/types/common';
 
 export interface BucketCardProps {
-  ladderSLug: string;
+  ladderSlug: string;
   bucket: LadderBandBucket;
 }
