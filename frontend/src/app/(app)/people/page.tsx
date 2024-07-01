@@ -3,16 +3,17 @@
 import { SearchIcon } from '@app/static/icons/SearchIcon';
 import { Breadcrumbs } from '@app/components/modules/Breadcrumbs';
 import { Tabs } from '@app/components/modules/Tabs';
-import { Dropdown } from '@app/components/common/Dropdown/Dropdown';
+import { ListboxComponent } from '@app/components/common/ListboxComponent';
 import { InputField } from '@app/components/common/InputField/InputField';
 import { MouseEvent, useEffect, useMemo, useState } from 'react';
 import { Employee } from '@app/types/common';
-import { EmployeeCard } from '@app/components/common/EmployeeCard';
+import { EmployeeCard } from '@app/components/modules/EmployeeCard';
 import { filters, tabs } from '@app/const';
 import { generateClassNames } from '@app/utils';
 
 const PEOPLE = [
   {
+    id: 426243,
     name: 'John Doe',
     title: 'Front End Developer, Junior',
     laddersDetails: [
@@ -24,11 +25,14 @@ const PEOPLE = [
         latestActivity: 5,
       },
     ],
-    active: true,
-    draft: false,
-    deactivated: false,
+    status: {
+      active: true,
+      draft: false,
+      deactivated: false,
+    }
   },
   {
+    id: 5329732,
     name: 'Jane Doe',
     title: 'Back End Developer, Senior',
     laddersDetails: [
@@ -40,11 +44,14 @@ const PEOPLE = [
         latestActivity: 0,
       },
     ],
-    active: false,
-    draft: false,
-    deactivated: true,
+    status: {
+      active: false,
+      draft: false,
+      deactivated: true,
+    }
   },
   {
+    id: 54328701,
     name: 'Jane Does',
     title: 'QA, Senior',
     laddersDetails: [
@@ -63,11 +70,14 @@ const PEOPLE = [
         latestActivity: 4,
       },
     ],
-    active: false,
-    draft: true,
-    deactivated: false,
+    status: {
+      active: false,
+      draft: true,
+      deactivated: false,
+    }
   },
   {
+    id: 4321,
     name: 'Tim Brooks',
     title: 'DevOps, Senior',
     laddersDetails: [
@@ -79,11 +89,14 @@ const PEOPLE = [
         latestActivity: 3,
       },
     ],
-    active: true,
-    draft: false,
-    deactivated: false,
+    status: {
+      active: true,
+      draft: false,
+      deactivated: false,
+    }
   },
   {
+    id: 489901,
     name: 'Marvin Joe',
     title: 'Engineering Manager, Senior',
     laddersDetails: [
@@ -95,9 +108,11 @@ const PEOPLE = [
         latestActivity: 3,
       },
     ],
-    active: false,
-    draft: false,
-    deactivated: true,
+    status: {
+      active: false,
+      draft: false,
+      deactivated: true,
+    }
   },
 ];
 
@@ -124,22 +139,22 @@ export default function People() {
 
   const selectedFilterLabel = filters.find((option) => option.value === selectedFilter)?.label || '';
 
-  const activePeopleAmount = useMemo(() => people.filter((employee) => employee.active).length, [people]);
-  const draftPeopleAmount = useMemo(() => people.filter((employee) => employee.draft).length, [people]);
-  const deactivatedPeopleAmount = useMemo(() => people.filter((employee) => employee.deactivated).length, [people]);
+  const activePeopleAmount = useMemo(() => people.filter((employee) => employee.status.active).length, [people]);
+  const draftPeopleAmount = useMemo(() => people.filter((employee) => employee.status.draft).length, [people]);
+  const deactivatedPeopleAmount = useMemo(() => people.filter((employee) => employee.status.deactivated).length, [people]);
 
   const peopleTabs = useMemo(() => {
     return [
       {
-        title: tabs[0],
+        title: tabs[0].title,
         employees: activePeopleAmount,
       },
       {
-        title: tabs[1],
+        title: tabs[1].title,
         employees: draftPeopleAmount,
       },
       {
-        title: tabs[2],
+        title: tabs[2].title,
         employees: deactivatedPeopleAmount,
       },
     ];
@@ -148,11 +163,11 @@ export default function People() {
   useEffect(() => {
     if (people) {
       if (activeTab === peopleTabs[0].title) {
-        setSelectedTabPeople(people.filter((employee) => employee.active));
+        setSelectedTabPeople(people.filter((employee) => employee.status.active));
       } else if (activeTab === peopleTabs[1].title) {
-        setSelectedTabPeople(people.filter((employee) => employee.draft));
+        setSelectedTabPeople(people.filter((employee) => employee.status.draft));
       } else {
-        setSelectedTabPeople(people.filter((employee) => employee.deactivated));
+        setSelectedTabPeople(people.filter((employee) => employee.status.deactivated));
       }
     }
   }, [people, activeTab, peopleTabs]);
@@ -179,7 +194,7 @@ export default function People() {
     <div className="flex flex-col gap-6">
       <div className="flex items-center justify-between">
         <Breadcrumbs breadcrumbs={[{ label: 'People', href: '/people', current: true }]} />
-        <button className="py-2 px-5 text-white text-sm font-semibold bg-blue-800 rounded-full">+ Employee</button>
+        <button className="rounded-full bg-blue-800 px-5 py-2 text-sm font-semibold text-white">+ Employee</button>
       </div>
 
       <Tabs
@@ -189,9 +204,9 @@ export default function People() {
         className="border-b border-navy-200"
       />
 
-      <div className="flex flex-col gap-2 bg-white rounded-2xl p-6 pb-2">
+      <div className="flex flex-col gap-2 rounded-2xl bg-white p-6 pb-2">
         <div className="w-1/3">
-          <div className="w-full flex gap-4 items-center justify-between">
+          <div className="flex w-full items-center justify-between gap-4">
             <InputField
               value={search}
               name="people-search"
@@ -199,7 +214,7 @@ export default function People() {
               icon={<SearchIcon />}
               onChange={(e) => setSearch(e.target.value)}
             />
-            <Dropdown
+            <ListboxComponent
               selectedOptionLabel={selectedFilterLabel}
               options={filters}
               selectedOptionValue={selectedFilter}
@@ -211,14 +226,14 @@ export default function People() {
 
         <div
           className={generateClassNames(
-            'grid grid-cols-[auto_repeat(3,_160px)_248px_160px_48px] grid-rows-[56px] auto-rows-[minmax(64px,_auto)]',
+            'grid auto-rows-[minmax(64px,_auto)] grid-cols-[auto_repeat(3,_160px)_248px_160px_48px] grid-rows-[56px]',
             {
               'grid-cols-[auto_repeat(2,_200px)_400px_48px]': activeTab === peopleTabs[1].title,
-              'grid-cols-[400px_repeat(3,_minmax(25%,_auto))]': activeTab === peopleTabs[2].title,
+              'grid-cols-[400px_repeat(3,_1fr)]': activeTab === peopleTabs[2].title,
             },
           )}
         >
-          <div className="*:self-center contents uppercase font-medium text-xs text-navy-500 *:px-4">
+          <div className="contents text-xs font-medium uppercase text-navy-500 *:self-center *:px-4">
             <div>Employee</div>
             <div>Ladder</div>
             <div className="text-right">Current band</div>
@@ -241,4 +256,4 @@ export default function People() {
       </div>
     </div>
   );
-}
+};

@@ -6,7 +6,7 @@ export interface Option {
   id: number;
 }
 
-export interface DropdownProps {
+export interface ListboxComponentProps {
   options: Option[];
   selectedOptionValue: string;
   selectedOptionLabel: string;
