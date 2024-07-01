@@ -121,9 +121,9 @@ export const EmployeeCard = ({ employee, tabSelected }: EmployeeCardProps) => {
       )}
 
       {tabSelected === tabs[1].title && (
-        <div className="flex gap-4 font-semibold text-navy-600 *:h-11 *:rounded-full *:border *:border-navy-300 *:px-5 [&]:pl-14 [&]:pr-2">
-          <button>Resume</button>
-          <button>Activate employee</button>
+        <div className="flex h-16 gap-4 font-semibold text-navy-600 *:h-11 *:rounded-full *:border *:border-navy-300 *:px-5 [&]:pl-14 [&]:pr-2">
+          <button className="hover:bg-navy-300">Resume</button>
+          <button className="hover:bg-navy-300">Activate employee</button>
         </div>
       )}
       <DropdownMenuComponent tabSelected={tabSelected} />

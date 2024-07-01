@@ -61,7 +61,7 @@ export const ListboxComponent = ({
                 value={option.value}
                 className={({ active }) =>
                   `relative cursor-default select-none border-navy-200 py-2 pl-10 pr-4 ${
-                    active ? 'bg-navy-200 text-navy-600' : 'text-gray-900'
+                    active ? 'bg-blue-300 text-navy-600' : 'text-gray-900'
                   }`
                 }
               >

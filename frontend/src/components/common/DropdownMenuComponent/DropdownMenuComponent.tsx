@@ -7,7 +7,7 @@ import { tabs } from '@app/const';
 export const DropdownMenuComponent = ({ tabSelected }: DropdownMenuComponentProps) => {
   return (
     <div
-      className={generateClassNames('justify-center [&]:p-0', {
+      className={generateClassNames('h-16 justify-center [&]:p-0', {
         'justify-end': tabSelected === tabs[2].title,
       })}
     >
@@ -27,23 +27,13 @@ export const DropdownMenuComponent = ({ tabSelected }: DropdownMenuComponentProp
             anchor="bottom end"
             className="w-60 origin-top-right rounded-xl border border-[#E6E8EE] bg-white py-[6px] text-navy-700 shadow-[0_2px_6px_0_#383A441A] *:flex *:h-11 *:w-full *:items-center *:px-3"
           >
-            {tabSelected === tabs[0].title
-              ? tabs[0].employeeActions.map((action, index) => (
-                  <MenuItem key={index}>
-                    <button>{action}</button>
-                  </MenuItem>
-                ))
-              : tabSelected === tabs[1].title
-                ? tabs[1].employeeActions.map((action, index) => (
-                    <MenuItem key={index}>
-                      <button>{action}</button>
-                    </MenuItem>
-                  ))
-                : tabs[2].employeeActions.map((action, index) => (
-                    <MenuItem key={index}>
-                      <button>{action}</button>
-                    </MenuItem>
-                  ))}
+            {tabs
+              .filter((tab) => tab.title === tabSelected)[0]
+              .employeeActions.map((action, index) => (
+                <MenuItem key={index}>
+                  <button className="data-[focus]:bg-blue-100">{action}</button>
+                </MenuItem>
+              ))}
           </MenuItems>
         </Transition>
       </Menu>
