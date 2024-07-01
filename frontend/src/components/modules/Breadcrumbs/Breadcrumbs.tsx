@@ -11,7 +11,7 @@ export const Breadcrumbs = ({ breadcrumbs }: BreadcrumbsProps) => {
           <li key={breadcrumb.label}>
             <div className="flex items-center">
               {index !== 0 && (
-                <ChevronRightIcon className="h-4 w-4 flex-shrink-0 text-gray-400 mr-2" aria-hidden="true" />
+                <ChevronRightIcon className="text-gray-400 mr-2 h-4 w-4 flex-shrink-0" aria-hidden="true" />
               )}
               <Link
                 href={breadcrumb.href}
