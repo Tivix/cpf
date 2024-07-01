@@ -20,13 +20,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} h-full bg-navy-50`}>
-        <div className="flex">
+        {children}
+        {/* <div className="flex">
           <Sidebar />
           <div className="w-full">
             <Topbar />
             <main className="p-8">{children}</main>
           </div>
-        </div>
+        </div> */}
       </body>
     </html>
   );

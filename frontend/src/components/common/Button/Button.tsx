@@ -1,6 +1,6 @@
 import { generateClassNames } from '@app/utils';
-import React from 'react';
-import { Props, StyleTypes, Variants } from './Button.interface';
+import React, { FC } from 'react';
+import { ButtonProps, StyleTypes, Variants } from './Button.interface';
 
 const types: {
   [key in StyleTypes]: {
@@ -36,14 +36,14 @@ const disabledStyles = {
   link: 'px-0 border-none',
 };
 
-export const Button = ({
+export const Button: FC<ButtonProps> = ({
   styleType = 'primary',
   variant = 'solid',
   disabled = false,
   className,
   children,
   ...props
-}: Props) => {
+}) => {
   const buttonClass = generateClassNames(
     'h-11 px-5 items-center justify-center rounded-full transition duration-200',
     {
