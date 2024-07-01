@@ -24,10 +24,11 @@ export const AdvancementLevel: React.FC<AdvancementLevelProps> = ({ showVertical
         </button>
         {showVerticalLine && <div className="absolute left-3 top-12 h-[calc(100%-40px)] w-[1.5px] bg-blue-800" />}
       </div>
-      <div
-        className={`mb-4 ml-2 flex w-full flex-col gap-4  `}
-      >
-        <button className={`flex w-full cursor-pointer flex-col gap-4 rounded-lg p-4 ${!accordionOpen && 'hover:bg-navy-50'}`} onClick={toggleAccordionOpen}>
+      <div className="mb-4 ml-2 flex w-full flex-col gap-4">
+        <button
+          className={`flex w-full cursor-pointer flex-col gap-4 rounded-lg p-4 ${!accordionOpen && 'hover:bg-navy-50'}`}
+          onClick={toggleAccordionOpen}
+        >
           <h3>Advancement level {advancementLevel}</h3>
           <p className="text-base tracking-wide text-navy-600">{description}</p>
         </button>
