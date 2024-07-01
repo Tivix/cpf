@@ -21,20 +21,20 @@ export const Sidebar = () => {
     >
       <div className={`flex h-16 shrink-0 ${open ? 'justify-between' : 'justify-center'} mb-5 items-center`}>
         <div
-          className={`${duration} flex ${open ? 'ml-3 w-[104px] text-base' : 'w-12 text-xs cursor-pointer'} h-11 items-center justify-center rounded-full border border-navy-900 font-semibold`}
+          className={`${duration} flex ${open ? 'ml-3 w-[104px] text-base' : 'w-12 cursor-pointer text-xs'} h-11 items-center justify-center rounded-full border border-navy-900 font-semibold`}
           onClick={open ? null : toggleSidebar}
         >
           CPF
         </div>
         {open && (
-            <Button onClick={toggleSidebar}>
-              <ChevronDoubleLeft className={`flex ${duration}`} />
-            </Button>
+          <Button onClick={toggleSidebar}>
+            <ChevronDoubleLeft className={`flex ${duration}`} />
+          </Button>
         )}
       </div>
       <ul role="list" className="flex flex-1 flex-col space-y-2">
         {navigation.map((item) => (
-          <li key={item.name} className={`w-full flex ${open ? 'justify-start' : 'justify-center'}`}>
+          <li key={item.name} className={`flex w-full ${open ? 'justify-start' : 'justify-center'}`}>
             <Link
               href={item.href}
               className={generateClassNames(
@@ -42,7 +42,7 @@ export const Sidebar = () => {
                 {
                   'bg-blue-100 text-blue-900': pathname.startsWith(item.href),
                   'w-full': open,
-                  'justify-center w-10': !open,
+                  'w-10 justify-center': !open,
                 },
               )}
             >
