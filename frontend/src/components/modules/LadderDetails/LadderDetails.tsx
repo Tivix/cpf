@@ -33,7 +33,7 @@ export const LadderDetails = ({ ladder, ladderName, band }: LadderDetailsProps) 
       <div className="flex flex-col gap-6">
         <p className="text-base tracking-wide text-navy-600">Buckets you need to complete to get on this band:</p>
         <div className="flex flex-col gap-4">
-          <p className="text-sm uppercase tracking-wide text-navy-600">Hard skills</p>
+          <p className="text-xs uppercase tracking-wide text-navy-600">Hard skills</p>
           <div className="flex flex-col gap-6">
             {ladder.hardSkillBuckets.map((bucket: LadderBandBucket) => (
               <BucketCard bucket={bucket} key={bucket.bucketSlug} />
@@ -41,7 +41,7 @@ export const LadderDetails = ({ ladder, ladderName, band }: LadderDetailsProps) 
           </div>
         </div>
         <div className="flex flex-col gap-4">
-          <p className="text-sm uppercase tracking-wide text-navy-600">Soft skills</p>
+          <p className="text-xs uppercase tracking-wide text-navy-600">Soft skills</p>
           <div className="flex flex-col gap-6">
             <AccordionCard title="Time management">
               <div className="flex flex-col gap-6">
