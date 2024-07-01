@@ -9,7 +9,7 @@ export const BucketDetails: React.FC<BucketDetailsProps> = ({ data }) => {
       <div className="mx-28 flex flex-col gap-8 rounded-2xl bg-white px-20 py-12">
         <div className="flex justify-between">
           <div className="flex flex-col gap-3">
-            <h2 className="text-xl font-semibold text-navy-900">{bucketName}</h2>
+            <h2 className="text-2xl font-semibold text-navy-900">{bucketName}</h2>
             <p className="text-base tracking-wide text-navy-600">{description}</p>
           </div>
         </div>
