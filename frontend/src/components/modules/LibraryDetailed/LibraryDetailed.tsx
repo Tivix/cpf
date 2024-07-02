@@ -5,7 +5,7 @@ import { LadderTabs } from '@app/components/modules/LadderTabs';
 import { LibraryDetailedProps } from './LibraryDetailed.interface';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
-export const LibraryDetailed: React.FC<LibraryDetailedProps> = ({ data }) => {
+export const LibraryDetailed: React.FC<LibraryDetailedProps> = ({ data, ladderSlug }) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -36,12 +36,17 @@ export const LibraryDetailed: React.FC<LibraryDetailedProps> = ({ data }) => {
   }
 
   return (
-    <section className="py-16 grid grid-cols-10">
+    <section className="grid grid-cols-10 py-16">
       <div className="col-span-2 mx-auto">
         <LadderTabs {...tabsProps} ladderOnClick={handleLadderChange} />
       </div>
       <div className="col-span-7">
-        <LadderDetails band={currentBand} ladder={data.bands[currentBand]} ladderName={data.ladderName} />
+        <LadderDetails
+          band={currentBand}
+          ladder={data.bands[currentBand]}
+          ladderName={data.ladderName}
+          ladderSlug={ladderSlug}
+        />
       </div>
     </section>
   );
