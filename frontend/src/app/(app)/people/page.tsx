@@ -45,14 +45,14 @@ const PEOPLE = [
       },
     ],
     status: {
-      active: false,
+      active: true,
       draft: false,
-      deactivated: true,
+      deactivated: false,
     },
   },
   {
     id: 54328701,
-    name: 'Jane Does',
+    name: 'Thomas Anderson',
     title: 'QA, Senior',
     laddersDetails: [
       {
@@ -69,6 +69,13 @@ const PEOPLE = [
         goalProgress: 65,
         latestActivity: 4,
       },
+      {
+        ladderName: 'Front End',
+        currentBand: 2,
+        activeGoal: true,
+        goalProgress: 95,
+        latestActivity: 2,
+      },
     ],
     status: {
       active: false,
@@ -84,9 +91,16 @@ const PEOPLE = [
       {
         ladderName: 'Back End',
         currentBand: 4,
-        activeGoal: true,
+        activeGoal: false,
         goalProgress: 15,
         latestActivity: 3,
+      },
+      {
+        ladderName: 'Front End',
+        currentBand: 1,
+        activeGoal: true,
+        goalProgress: 45,
+        latestActivity: 5,
       },
     ],
     status: {

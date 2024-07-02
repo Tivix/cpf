@@ -7,6 +7,7 @@ import { DropdownMenuComponent } from '../../common/DropdownMenuComponent/Dropdo
 
 export const EmployeeCard = ({ employee, tabSelected }: EmployeeCardProps) => {
   const { name, title, laddersDetails } = employee;
+  const multipleItems = 'flex items-center h-16 [&:not(:first-of-type)]:-mt-[17px]';
 
   return (
     <div className="contents *:flex *:items-center *:border-t *:border-navy-200 *:px-4 *:text-sm *:text-navy-700">
@@ -44,7 +45,7 @@ export const EmployeeCard = ({ employee, tabSelected }: EmployeeCardProps) => {
           <span
             key={index}
             {...(laddersDetails.length > 1 && {
-              className: 'flex items-center h-16 [&:not(:first-of-type)]:-mt-[17px]',
+              className: multipleItems,
             })}
           >
             {ladder.ladderName}
@@ -60,7 +61,7 @@ export const EmployeeCard = ({ employee, tabSelected }: EmployeeCardProps) => {
           <span
             key={index}
             {...(laddersDetails.length > 1 && {
-              className: 'flex items-center h-16 [&:not(:first-of-type)]:-mt-[17px]',
+              className: multipleItems,
             })}
           >
             {ladder.currentBand}
@@ -70,58 +71,70 @@ export const EmployeeCard = ({ employee, tabSelected }: EmployeeCardProps) => {
 
       {tabSelected === tabs[0].title && (
         <>
-          <div className="justify-end">
+          <div
+            className={generateClassNames('justify-end', {
+              'flex-col [&]:items-end': laddersDetails.length > 1,
+            })}
+          >
             {laddersDetails.map((ladder, index) => (
               <span
                 key={index}
                 {...(laddersDetails.length > 1 && {
-                  className: '[&:not(:first-of-type)]:-mt-[17px]',
+                  className: multipleItems,
                 })}
               >
                 {ladder.activeGoal ? <CheckmarkIcon /> : null}
               </span>
             ))}
           </div>
-          <div className="[&]:pl-14">
-            {laddersDetails.map(
-              (ladder, index) =>
-                ladder.activeGoal && (
-                  <div
-                    key={index}
-                    className={generateClassNames('flex w-full items-center gap-2', {
-                      '[&:not(:first-of-type)]:-mt-[17px]': laddersDetails.length > 1,
-                    })}
-                  >
+          <div
+            className={generateClassNames('[&]:pl-14', {
+              'flex-col': laddersDetails.length > 1,
+            })}
+          >
+            {laddersDetails.map((ladder, index) => (
+              <div
+                key={index}
+                className={generateClassNames('flex w-full items-center gap-2', {
+                  'h-16 [&:not(:first-of-type)]:-mt-[17px]': laddersDetails.length > 1,
+                })}
+              >
+                {ladder.activeGoal && (
+                  <>
                     <div className="w-full rounded-full bg-navy-300">
                       <div className="h-2 rounded-full bg-blue-800" style={{ width: `${ladder.goalProgress}%` }} />
                     </div>
                     <span>{ladder.goalProgress}%</span>
-                  </div>
-                ),
-            )}
+                  </>
+                )}
+              </div>
+            ))}
           </div>
-          <div className="justify-center">
-            {laddersDetails.map(
-              (ladder, index) =>
-                ladder.activeGoal && (
-                  <div
-                    key={index}
-                    {...(laddersDetails.length > 1 && {
-                      className: '[&:not(:first-of-type)]:-mt-[17px]',
-                    })}
-                  >
-                    <div className="flex h-7 w-7 items-center justify-center rounded-full bg-blue-800 p-2 font-semibold text-white">
-                      {ladder.latestActivity}
-                    </div>
+          <div
+            className={generateClassNames('justify-center', {
+              'flex-col': laddersDetails.length > 1,
+            })}
+          >
+            {laddersDetails.map((ladder, index) => (
+              <div
+                key={index}
+                {...(laddersDetails.length > 1 && {
+                  className: multipleItems,
+                })}
+              >
+                {ladder.activeGoal && (
+                  <div className="flex h-7 w-7 items-center justify-center rounded-full bg-blue-800 p-2 font-semibold text-white">
+                    {ladder.latestActivity}
                   </div>
-                ),
-            )}
+                )}
+              </div>
+            ))}
           </div>
         </>
       )}
 
       {tabSelected === tabs[1].title && (
-        <div className="flex h-16 gap-4 font-semibold text-navy-600 *:h-11 *:rounded-full *:border *:border-navy-300 *:px-5 [&]:pl-14 [&]:pr-2">
+        <div className="flex h-16 gap-4 font-semibold text-navy-600 *:h-11 *:rounded-full *:border *:border-navy-300 *:px-5 *:transition *:duration-300 *:ease-out [&]:pl-14 [&]:pr-2">
           <button className="hover:bg-navy-300">Resume</button>
           <button className="hover:bg-navy-300">Activate employee</button>
         </div>
