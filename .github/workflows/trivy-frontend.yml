@@ -1,0 +1,55 @@
+name: Scan Frontend with Trivy
+
+on:
+  workflow_dispatch:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - ready_for_review
+    branches:
+      - main
+      - develop
+
+env:
+  IMAGE_NAME: frontend
+  VERSION: v1
+
+jobs:
+  build_docker_image:
+    name: Build docker image
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Build docker image
+        run: docker build . --file Dockerfile --tag $IMAGE_NAME
+
+      - name: Log in to gHRC
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Push image
+        run: |
+          docker tag $IMAGE_NAME ghcr.io/tivix/cpf/$IMAGE_NAME:$VERSION
+          docker push ghcr.io/tivix/cpf/$IMAGE_NAME:$VERSION
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@0.23.0
+        with:
+          image-ref: "ghcr.io/tivix/cpf/${{ env.IMAGE_NAME }}:${{ env.VERSION }}"
+          scanners: "vuln,secret,config"
+          format: "sarif"
+          output: "trivy-fe-results.sarif"
+          severity: "CRITICAL,HIGH"
+
+      - name: Upload scan result to Github Security
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: trivy-fe-results.sarif
+          category: "image"
