@@ -43,7 +43,12 @@ const variantsStyles: {
   'head-2xl/bold': 'text-5xl font-bold',
 };
 
-export const Typography = ({ variant = 'body-m/regular', as, className, children }: PropsWithChildren<TypographyProps>) => {
+export const Typography = ({
+  variant = 'body-m/regular',
+  as,
+  className,
+  children,
+}: PropsWithChildren<TypographyProps>) => {
   const classnames = `navy-900 ${variantsStyles[variant]} ${className}`;
 
   switch (as) {
