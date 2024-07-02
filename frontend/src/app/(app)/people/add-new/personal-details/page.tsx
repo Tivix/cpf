@@ -1,23 +1,25 @@
 'use client';
-import { Button } from '@app/components/common/Button';
 import { FormProvider } from '@app/components/common/FormProvider';
 import { Input } from '@app/components/common/Input';
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
+enum PersonalDetailsFormNames {
+  firstName = 'firstName',
+  lastName = 'lastName',
+  email = 'email',
+}
 interface PersonalDetailsForm {
-  firstName: string;
-  lastName: string;
-  email: string;
+  [PersonalDetailsFormNames.firstName]: string;
+  [PersonalDetailsFormNames.lastName]: string;
+  [PersonalDetailsFormNames.email]: string;
 }
 
 export default function PersonalDetails() {
-  const [num, setNum] = useState(0);
   const form = useForm<PersonalDetailsForm>({
     defaultValues: {
-      firstName: '',
-      lastName: '',
-      email: '',
+      [PersonalDetailsFormNames.firstName]: '',
+      [PersonalDetailsFormNames.lastName]: '',
+      [PersonalDetailsFormNames.email]: '',
     },
   });
 
@@ -25,18 +27,10 @@ export default function PersonalDetails() {
     <FormProvider<PersonalDetailsForm> form={form}>
       <div className="mb-6 text-2xl font-semibold leading-7">Personal details</div>
       <div className="grid w-full grid-cols-2 rounded-[20px] bg-white p-8">
-        <Input name="firstName" />
-        <Input name="lastName" />
-        <Input name="email" />
+        <Input name={PersonalDetailsFormNames.firstName} placeholder="First Name" />
+        <Input name={PersonalDetailsFormNames.lastName} />
+        <Input name={PersonalDetailsFormNames.email} />
       </div>
-      <Button
-        onClick={(e) => {
-          e.preventDefault();
-          setNum((prev) => prev + 1);
-        }}
-      >
-        {num}
-      </Button>
     </FormProvider>
   );
 }
