@@ -3,6 +3,7 @@ import { mapKeysToCamelCase } from '@app/utils';
 import { BucketDetails } from '@app/components/modules/BucketDetails';
 import { API_URLS } from '@app/api';
 import { Bucket, LadderBand } from '@app/types/common';
+import { routes } from '@app/constants';
 
 async function getBucketDetails(slug: string) {
   const response = await fetch(`${API_URLS.library.buckets}/${slug}`);
@@ -38,9 +39,9 @@ export default async function BucketDetailed({ params }: { params: { bucket: str
     <div>
       <Breadcrumbs
         breadcrumbs={[
-          { label: 'CPF Library', href: '/library', current: false },
-          { label: ladderName, href: `/library/${ladder}`, current: false },
-          { label: data.bucketName, href: `/library/${ladder}/${bucket}`, current: true },
+          { label: 'CPF Library', href: routes.library.index, current: false },
+          { label: ladderName, href: `${routes.library.index}/${ladder}`, current: false },
+          { label: data.bucketName, href: `${routes.library.index}/${ladder}/${bucket}`, current: true },
         ]}
       />
       {data && <BucketDetails data={data} />}

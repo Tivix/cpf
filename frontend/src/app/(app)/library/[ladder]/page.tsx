@@ -3,6 +3,7 @@ import { LibraryDetailed } from '@app/components/modules/LibraryDetailed';
 import { mapKeysToCamelCase } from '@app/utils';
 import { API_URLS } from '@app/api';
 import { LadderBand } from '@app/types/common';
+import { routes } from '@app/constants';
 
 async function getLadderDetails(slug: string) {
   const response = await fetch(`${API_URLS.library.ladders}/${slug}`);
@@ -25,11 +26,11 @@ export default async function LadderDetailed({ params }: { params: { ladder: str
     <div>
       <Breadcrumbs
         breadcrumbs={[
-          { label: 'CPF Library', href: '/library', current: false },
-          { label: data.ladderName, href: `/library/${params.ladder}`, current: true },
+          { label: 'CPF Library', href: routes.library.index, current: false },
+          { label: data.ladderName, href: `${routes.library.index}/${params.ladder}`, current: true },
         ]}
       />
-      {data && <LibraryDetailed data={data} />}
+      {data && <LibraryDetailed ladderSlug={params.ladder} data={data} />}
     </div>
   );
 }

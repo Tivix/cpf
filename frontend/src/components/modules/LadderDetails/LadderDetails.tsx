@@ -6,7 +6,7 @@ import { BucketCard } from '@app/components/common/BucketCard';
 import { AccordionCard } from '@app/components/common/AccordionCard';
 import { AccordionList } from '@app/components/common/AccordionList';
 
-export const LadderDetails = ({ ladder, ladderName, band }: LadderDetailsProps) => {
+export const LadderDetails = ({ ladder, ladderName, band, ladderSlug }: LadderDetailsProps) => {
   return (
     <div className="flex flex-col gap-8 rounded-2xl bg-white px-20 py-12">
       <div className="flex justify-between">
@@ -33,15 +33,15 @@ export const LadderDetails = ({ ladder, ladderName, band }: LadderDetailsProps) 
       <div className="flex flex-col gap-6">
         <p className="text-base tracking-wide text-navy-600">Buckets you need to complete to get on this band:</p>
         <div className="flex flex-col gap-4">
-          <p className="text-sm uppercase tracking-wide text-navy-600">Hard skills</p>
+          <p className="text-xs uppercase tracking-wide text-navy-600">Hard skills</p>
           <div className="flex flex-col gap-6">
             {ladder.hardSkillBuckets.map((bucket: LadderBandBucket) => (
-              <BucketCard bucket={bucket} key={bucket.bucketSlug} />
+              <BucketCard bucket={bucket} key={bucket.bucketSlug} ladderSlug={ladderSlug} />
             ))}
           </div>
         </div>
         <div className="flex flex-col gap-4">
-          <p className="text-sm uppercase tracking-wide text-navy-600">Soft skills</p>
+          <p className="text-xs uppercase tracking-wide text-navy-600">Soft skills</p>
           <div className="flex flex-col gap-6">
             <AccordionCard title="Time management">
               <div className="flex flex-col gap-6">
