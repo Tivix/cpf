@@ -6,6 +6,6 @@ export interface Step {
   active: boolean;
 }
 
-export interface StepperProps {
+export interface SideStepperProps {
   steps: Step[];
 }

@@ -1,6 +1,6 @@
 import { CheckMarkIcon } from '@app/static/icons/CheckMarkIcon';
 import { generateClassNames } from '@app/utils';
-import { StepperProps, StepStates } from './Stepper.interface';
+import { SideStepperProps, StepStates } from './SideStepper.interface';
 import { Fragment } from 'react';
 
 const Completed = () => {
@@ -27,7 +27,7 @@ const stepsMap: { [key in StepStates]: JSX.Element } = {
   notStarted: <NotStarted />,
 };
 
-export const Stepper = ({ steps }: StepperProps) => {
+export const SideStepper = ({ steps }: SideStepperProps) => {
   return (
     <div className="flex">
       <div className="flex flex-col">
