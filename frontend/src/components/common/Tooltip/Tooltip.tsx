@@ -24,7 +24,7 @@ export const TooltipPopover: FC<PropsWithChildren<TooltipProps>> = ({ tooltipTex
         leaveFrom="transform scale-100 opacity-100"
         leaveTo="transform scale-95 opacity-0"
       >
-        <Popover.Panel static transition className={`absolute z-10 w-screen max-w-max rounded bg-grey-800 px-3 py-2`}>
+        <Popover.Panel static className={`absolute z-10 w-screen max-w-max rounded bg-grey-800 px-3 py-2`}>
           <div className="max-w-[480px] text-sm text-white shadow-lg">
             <p>{tooltipText}</p>
           </div>
