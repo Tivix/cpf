@@ -1,1 +1,1 @@
-export {TooltipPopover as Tooltip} from './Tooltip';
+export { TooltipPopover as Tooltip } from './Tooltip';
