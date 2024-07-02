@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { ChevronRightIcon } from '@app/static/icons/ChevronRightIcon';
-import { generateClassNames } from '@app/utils';
 import { BreadcrumbsProps } from './Breadcrumbs.interface';
+import { generateClassNames } from '@app/utils';
 
 export const Breadcrumbs = ({ breadcrumbs }: BreadcrumbsProps) => {
   return (

@@ -10,6 +10,7 @@
     "test": "echo \"tests\"",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
+    "format": "prettier 'src/**/*.{js,jsx,ts,tsx}' --write",
     "postinstall": "cd .. && husky frontend/.husky"
   },
   "dependencies": {
@@ -29,6 +30,7 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@typescript-eslint/eslint-plugin": "^7.14.1",
     "autoprefixer": "^10.0.1",
     "eslint": "^8",
     "eslint-config-next": "14.2.4",
@@ -40,7 +42,7 @@
     "prettier": "3.2.5",
     "prettier-plugin-tailwindcss": "^0.6.5",
     "tailwindcss": "^3.4.4",
-    "typescript": "^5"
+    "typescript": "^5.4.9"
   },
   "engines": {
     "node": ">=20.11.1",

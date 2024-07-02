@@ -8,6 +8,7 @@ export const AccordionCard = ({
   children,
   expandedByDefault,
   className,
+  small,
 }: PropsWithChildren<AccordionCardProps>) => {
   const [isOpen, setOpen] = useState(false);
 
@@ -32,7 +33,7 @@ export const AccordionCard = ({
           )}
           onClick={() => setOpen(!isOpen)}
         >
-          <span className="text-xl font-semibold text-navy-900">{title}</span>
+          <span className={`${small ? 'text-base' : 'text-xl'} font-semibold text-navy-900`}>{title}</span>
           {children ? (
             <div className="flex h-8 w-8 items-center justify-center rounded-full bg-navy-50">
               <ChevronRightIcon className={generateClassNames('rotate-90 text-navy-500', { '-rotate-90': isOpen })} />
