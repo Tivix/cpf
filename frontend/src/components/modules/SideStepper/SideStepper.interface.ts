@@ -3,7 +3,8 @@ export type StepStates = 'completed' | 'inProgress' | 'notStarted';
 export interface Step {
   label: string;
   state: StepStates;
-  active: boolean;
+  current: boolean;
+  href: '/personal-details' | '/main-ladder';
 }
 
 export interface SideStepperProps {

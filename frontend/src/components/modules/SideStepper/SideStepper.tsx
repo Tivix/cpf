@@ -31,19 +31,19 @@ export const SideStepper = ({ steps }: SideStepperProps) => {
   return (
     <div className="flex">
       <div className="flex flex-col">
-        {steps.map(({ label, state, active }, i) => {
-          const isLast = i === steps.length - 1;
+        {steps.map(({ label, state, current }, i) => {
+          const last = i === steps.length - 1;
           return (
             <Fragment key={label}>
               <div className="flex items-center gap-x-3">
                 {stepsMap[state]}
                 <div
-                  className={generateClassNames('font-semibold leading-6', active ? 'text-navy-900' : 'text-navy-600')}
+                  className={generateClassNames('font-semibold leading-6', current ? 'text-navy-900' : 'text-navy-600')}
                 >
                   {label}
                 </div>
               </div>
-              {!isLast && (
+              {!last && (
                 <div className="flex w-7 justify-center py-2">
                   <div className="flex h-[16px] w-[1.5px] border border-navy-300" />
                 </div>

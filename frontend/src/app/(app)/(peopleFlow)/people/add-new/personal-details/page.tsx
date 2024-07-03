@@ -2,6 +2,8 @@
 import { Button } from '@app/components/common/Button';
 import { FormProvider } from '@app/components/common/FormProvider';
 import { Input } from '@app/components/common/Input';
+import { usePeopleStore } from '@app/store/peopleStore';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 enum PersonalDetailsFormNames {
@@ -24,8 +26,19 @@ export default function PersonalDetails() {
       [PersonalDetailsFormNames.email]: '',
     },
   });
-
   const { isDirty, isValid } = form.formState;
+  const [formValid, setFormValid] = useState(false);
+  const updateProgress = usePeopleStore((state) => state.updateProgress);
+
+  useEffect(() => {
+    setFormValid(isDirty && isValid);
+  }, [isDirty, isValid]);
+
+  // INFO: update progress in sidebar stepper
+  useEffect(() => {
+    if (formValid) updateProgress({ '/personal-details': 'completed' });
+    else updateProgress({ '/personal-details': 'inProgress' });
+  }, [formValid, updateProgress]);
 
   return (
     <FormProvider<PersonalDetailsForm> form={form}>
@@ -57,12 +70,7 @@ export default function PersonalDetails() {
         />
       </div>
       <div className="flex justify-end">
-        <Button
-          styleType="primary"
-          variant="border"
-          onClick={(e) => e.preventDefault()}
-          disabled={!isDirty || !isValid}
-        >
+        <Button styleType="primary" variant="border" onClick={(e) => e.preventDefault()} disabled={!formValid}>
           Continue
         </Button>
       </div>
