@@ -50,6 +50,9 @@ const config: Config = {
         500: '#E9CE40',
         600: '#C6A700',
       },
+      grey: {
+        800: '#2C2E3A',
+      }
     },
     fontSize: {
       xs: ['0.75rem', '1rem'], // Body XS
