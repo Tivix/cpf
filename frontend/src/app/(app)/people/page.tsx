@@ -1,10 +1,9 @@
 'use client';
 
-import { SearchIcon } from '@app/static/icons/SearchIcon';
 import { Breadcrumbs } from '@app/components/modules/Breadcrumbs';
 import { Tabs } from '@app/components/modules/Tabs';
 import { ListboxComponent } from '@app/components/common/ListboxComponent';
-import { InputField } from '@app/components/common/InputField/InputField';
+import { ComboboxComponent } from '@app/components/common/ComboboxComponent';
 import { MouseEvent, useEffect, useMemo, useState } from 'react';
 import { Employee } from '@app/types/common';
 import { EmployeeCard } from '@app/components/modules/EmployeeCard';
@@ -52,7 +51,7 @@ const PEOPLE = [
     },
   },
   {
-    id: 54328701,
+    id: 5444328701,
     name: 'Thomas Anderson',
     title: 'QA, Seniorr',
     laddersDetails: [
@@ -79,13 +78,13 @@ const PEOPLE = [
       },
     ],
     status: {
-      active: true,
-      draft: false,
+      active: false,
+      draft: true,
       deactivated: false,
     },
   },
   {
-    id: 4321,
+    id: 436621,
     name: 'Tim B.',
     title: 'DevOps, Regular',
     laddersDetails: [
@@ -111,7 +110,7 @@ const PEOPLE = [
     },
   },
   {
-    id: 489901,
+    id: 48955901,
     name: 'Marvin Joes',
     title: 'Engineering Manager, Junior',
     laddersDetails: [
@@ -130,7 +129,7 @@ const PEOPLE = [
     },
   },
   {
-    id: 426243,
+    id: 4262343,
     name: 'John Doe',
     title: 'Front End Developer',
     laddersDetails: [
@@ -149,7 +148,7 @@ const PEOPLE = [
     },
   },
   {
-    id: 5329732,
+    id: 53129732,
     name: 'Jane Doe',
     title: 'Back End Developer, Junior',
     laddersDetails: [
@@ -168,7 +167,7 @@ const PEOPLE = [
     },
   },
   {
-    id: 54328701,
+    id: 543287301,
     name: 'Jane Does',
     title: 'QA',
     laddersDetails: [
@@ -200,44 +199,6 @@ const PEOPLE = [
       deactivated: false,
     },
   },
-  {
-    id: 4321,
-    name: 'T. Brooks',
-    title: 'DevOps, Intern',
-    laddersDetails: [
-      {
-        ladderName: 'Back End',
-        currentBand: 2,
-        activeGoal: true,
-        goalProgress: 15,
-        latestActivity: 3,
-      },
-    ],
-    status: {
-      active: true,
-      draft: false,
-      deactivated: false,
-    },
-  },
-  {
-    id: 489901,
-    name: 'M. Joe',
-    title: 'Engineering Manager',
-    laddersDetails: [
-      {
-        ladderName: 'Front End',
-        currentBand: 1,
-        activeGoal: false,
-        goalProgress: 0,
-        latestActivity: 3,
-      },
-    ],
-    status: {
-      active: true,
-      draft: false,
-      deactivated: false,
-    },
-  },
 ];
 
 function getPeopleDetails() {
@@ -258,7 +219,6 @@ export default function People() {
   const people = getPeopleDetails();
 
   const [activeTab, setActiveTab] = useState('Active');
-  const [search, setSearch] = useState('');
   const [selectedFilter, setSelectedFilter] = useState(filters[0].value);
   const [selectedTabPeople, setSelectedTabPeople] = useState<Employee[]>();
   const [pageNumber, setPageNumber] = useState(1);
@@ -288,16 +248,8 @@ export default function People() {
   }, [activePeople, draftPeople, deactivatedPeople]);
 
   useEffect(() => {
-    if (people) {
-      if (activeTab === peopleTabs[0].title) {
-        setSelectedTabPeople(activePeople);
-      } else if (activeTab === peopleTabs[1].title) {
-        setSelectedTabPeople(draftPeople);
-      } else {
-        setSelectedTabPeople(deactivatedPeople);
-      }
-    }
-  }, [people, activeTab, peopleTabs, activePeople, draftPeople, deactivatedPeople]);
+    if (people) setPeople();
+  }, [people, activeTab]);
 
   useEffect(() => {
     if (selectedTabPeople) {
@@ -307,6 +259,16 @@ export default function People() {
       setPageNumber(1);
     }
   }, [selectedFilter, selectedTabPeople]);
+
+  const setPeople = () => {
+    if (activeTab === peopleTabs[0].title) {
+      setSelectedTabPeople(activePeople);
+    } else if (activeTab === peopleTabs[1].title) {
+      setSelectedTabPeople(draftPeople);
+    } else {
+      setSelectedTabPeople(deactivatedPeople);
+    }
+  };
 
   const resetFilterHandler = (event: MouseEvent<HTMLDivElement, globalThis.MouseEvent>) => {
     event.stopPropagation();
@@ -336,6 +298,12 @@ export default function People() {
     setPageNumber(pageNumber);
   };
 
+  const displaySearchbarResults = (person: Employee[]) => {
+    if (person.length > 0) return setSelectedTabPeople(person);
+
+    setPeople();
+  };
+
   return (
     <div className="flex flex-col gap-6">
       <div className="flex items-center justify-between">
@@ -353,12 +321,9 @@ export default function People() {
       <div className="flex flex-col gap-2 rounded-2xl bg-white p-6 pb-2">
         <div>
           <div className="flex gap-3">
-            <InputField
-              value={search}
-              name="people-search"
-              placeholder="Search"
-              icon={<SearchIcon />}
-              onChange={(e) => setSearch(e.target.value)}
+            <ComboboxComponent
+              people={selectedTabPeople}
+              setSearchedPerson={(person) => displaySearchbarResults(person)}
             />
             <ListboxComponent
               selectedOptionLabel={selectedFilterLabel}

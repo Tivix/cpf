@@ -3,7 +3,7 @@ import { EmployeeCardProps } from './EmployeeCard.interface';
 import { CheckmarkIcon } from '@app/static/icons/CheckmarkIcon';
 import { generateClassNames } from '@app/utils';
 import { tabs } from '@app/const';
-import { DropdownMenuComponent } from '../../common/DropdownMenuComponent/DropdownMenuComponent';
+import { DropdownMenuComponent } from '../../common/DropdownMenuComponent';
 
 export const EmployeeCard = ({ employee, tabSelected }: EmployeeCardProps) => {
   const { name, title, laddersDetails } = employee;
