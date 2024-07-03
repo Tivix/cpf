@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { ChevronRightIcon } from '@app/static/icons/ChevronRightIcon';
 import { BreadcrumbsProps } from './Breadcrumbs.interface';
 import { generateClassNames } from '@app/utils';
+import {Typography} from "@app/components/common/Typography";
 
 export const Breadcrumbs = ({ breadcrumbs }: BreadcrumbsProps) => {
   return (
@@ -15,12 +16,11 @@ export const Breadcrumbs = ({ breadcrumbs }: BreadcrumbsProps) => {
               )}
               <Link
                 href={breadcrumb.href}
-                className={generateClassNames('text-lg font-semibold leading-6 text-navy-600 hover:text-navy-900', {
-                  'text-navy-900': breadcrumb.current,
-                })}
                 aria-current={breadcrumb.current ? 'page' : undefined}
               >
-                {breadcrumb.label}
+                <Typography variant="body-l/semibold" className={generateClassNames('text-navy-600 hover:text-navy-900', {
+                  'text-navy-900': breadcrumb.current,
+                })}>{breadcrumb.label}</Typography>
               </Link>
             </div>
           </li>

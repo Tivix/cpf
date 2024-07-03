@@ -6,6 +6,8 @@ import { Modal } from '@app/components/common/Modal';
 import { AdvancementLevelProps } from './AdvancemetLevel.interface';
 import { useAdvancementLevel } from '@app/components/modules/AdvancementLevel/AdvancementLevel.hooks';
 import { Markdown } from '@app/components/common/Markdown';
+import {Typography} from "@app/components/common/Typography";
+import {Button} from "@app/components/common/Button";
 
 export const AdvancementLevel: React.FC<AdvancementLevelProps> = ({ showVerticalLine, data }) => {
   const { hideModal, openModal, toggleAccordionOpen, modalOpen, accordionOpen } = useAdvancementLevel();
@@ -14,7 +16,7 @@ export const AdvancementLevel: React.FC<AdvancementLevelProps> = ({ showVertical
   const shouldBeExpandedByDefault = Object.keys(data.categories).length === 1;
 
   return (
-    <div className="flex flex-row">
+    <div className="flex flex-row gap-2">
       <div className="relative flex flex-col items-center">
         <button
           className="mb-2 mt-4 flex h-6 w-6 items-center justify-center rounded-full bg-blue-800 hover:opacity-50"
@@ -24,23 +26,20 @@ export const AdvancementLevel: React.FC<AdvancementLevelProps> = ({ showVertical
         </button>
         {showVerticalLine && <div className="absolute left-3 top-12 h-[calc(100%-40px)] w-[1.5px] bg-blue-800" />}
       </div>
-      <div className="mb-4 ml-2 flex w-full flex-col gap-4">
+      <div className="mb-4 ml-4 flex w-full flex-col gap-4">
         <button
-          className={`flex w-full cursor-pointer flex-col gap-4 rounded-lg p-4 ${!accordionOpen && 'hover:bg-navy-50'}`}
+          className={`flex w-full cursor-pointer flex-col gap-4 rounded-lg ${!accordionOpen && 'hover:bg-navy-50'}`}
           onClick={toggleAccordionOpen}
         >
-          <h3>Advancement level {advancementLevel}</h3>
-          <p className="text-base tracking-wide text-navy-600">{description}</p>
+          <Typography as="h3" variant="body-l/semibold">Advancement level {advancementLevel}</Typography>
+          <Typography variant="body-m/regular" className="text-navy-600">{description}</Typography>
         </button>
         {accordionOpen && (
           <>
             {projects.length > 0 && (
-              <button
-                className="w-fit text-sm font-semibold text-blue-800 hover:text-blue-900 hover:underline hover:underline-offset-4"
-                onClick={openModal}
-              >
-                An example way to pass level
-              </button>
+                <Button variant="link" onClick={openModal} className="w-fit text-sm">
+                  An example way to pass level
+                </Button>
             )}
             {Object.entries(categories).map(([category, skills]) => (
               <AccordionCard

@@ -1,7 +1,9 @@
+import {Typography} from "@app/components/common/Typography";
+
 export default function Documentation() {
   return (
     <div>
-      <h1 className="mb-10 text-lg font-semibold leading-6 text-navy-900">Documentation</h1>
+      <Typography className="mb-10" variant="body-l/semibold" as="h1">Documentation</Typography>
     </div>
   );
 }

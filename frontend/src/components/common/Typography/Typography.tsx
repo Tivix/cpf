@@ -1,19 +1,20 @@
 import React, { PropsWithChildren } from 'react';
 import { TypographyProps, TypographyVariants } from '@app/components/common/Typography/Typography.interface';
+import {generateClassNames} from "@app/utils";
 
 const variantsStyles: {
   [key in TypographyVariants]: string;
 } = {
-  'hint/caps-medium': 'text-xs tracking-[.6em] uppercase font-medium',
-  'hint/regular': 'text-xs tracking-[.2em] font-normal',
+  'hint/caps-medium': 'text-xs tracking-widest uppercase font-medium',
+  'hint/regular': 'text-xs tracking-wider font-normal',
   'hint/medium': 'text-xs font-medium',
   'hint/semibold': 'text-xs font-semibold',
   'hint/bold': 'text-xs font-bold',
-  'body-s/regular': 'text-sm tracking-[.1em] font-normal',
-  'body-s/medium': 'text-sm tracking-[.2em] font-medium',
-  'body-s/semibold': 'text-sm tracking-[.2em] font-semibold',
-  'body-s/bold': 'text-sm tracking-[.1em] font-bold',
-  'body-m/regular': 'text-base tracking-[.2em] font-normal',
+  'body-s/regular': 'text-sm tracking-wide font-normal',
+  'body-s/medium': 'text-sm tracking-wider font-medium',
+  'body-s/semibold': 'text-sm tracking-wider font-semibold',
+  'body-s/bold': 'text-sm tracking-wide font-bold',
+  'body-m/regular': 'text-base tracking-wider font-normal',
   'body-m/medium': 'text-base font-medium',
   'body-m/semibold': 'text-base font-semibold',
   'body-m/bold': 'text-base font-bold',
@@ -49,23 +50,27 @@ export const Typography = ({
   className,
   children,
 }: PropsWithChildren<TypographyProps>) => {
-  const classnames = `navy-900 ${variantsStyles[variant]} ${className}`;
+  const classnames = generateClassNames(
+      'text-navy-900',
+      variantsStyles[variant],
+      className ?? '',
+  );
 
-  switch (as) {
-    case 'h1':
-      return <h1 className={classnames}>{children}</h1>;
-    case 'h2':
-      return <h2 className={classnames}>{children}</h2>;
-    case 'h3':
-      return <h3 className={classnames}>{children}</h3>;
-    case 'h4':
-      return <h4 className={classnames}>{children}</h4>;
-    case 'h5':
-      return <h5 className={classnames}>{children}</h5>;
-    case 'h6':
-      return <p className={classnames}>{children}</p>;
-    case 'p':
-    default:
-      return <p className={classnames}>{children}</p>;
-  }
+    switch (as) {
+      case 'h1':
+        return <h1 className={classnames}>{children}</h1>;
+      case 'h2':
+        return <h2 className={classnames}>{children}</h2>;
+      case 'h3':
+        return <h3 className={classnames}>{children}</h3>;
+      case 'h4':
+        return <h4 className={classnames}>{children}</h4>;
+      case 'h5':
+        return <h5 className={classnames}>{children}</h5>;
+      case 'h6':
+        return <p className={classnames}>{children}</p>;
+      case 'p':
+      default:
+        return <p className={classnames}>{children}</p>;
+    }
 };
