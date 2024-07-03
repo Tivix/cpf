@@ -1,7 +1,6 @@
 import { ProfileSettingsHook } from '@app/components/modules/ProfileSetting/ProfileSetting.interface';
 import { ChangeEvent, useState } from 'react';
-import { readFile } from '@app/components/modules/ProfileSetting/utils';
-import { getCroppedImg } from '@app/utils/canvasUtils';
+import { getCroppedImg, readFile } from '@app/utils';
 import { Area } from 'react-easy-crop';
 
 export const useProfileSettings = (): ProfileSettingsHook => {
@@ -13,7 +12,7 @@ export const useProfileSettings = (): ProfileSettingsHook => {
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files?.[0];
 
-      let imageDataUrl = await readFile(file);
+      const imageDataUrl = await readFile(file);
       setImageSrc(imageDataUrl);
       setCropModalOpen(true);
     }

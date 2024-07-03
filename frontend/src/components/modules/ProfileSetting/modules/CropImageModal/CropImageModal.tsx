@@ -5,20 +5,11 @@ import { Modal } from '@app/components/common/Modal';
 import { CropImageModalProps } from './CropImageModal.interface';
 import { useCropImageModal } from './CropImageModal.hooks';
 import { Button } from '@app/components/common/Button';
-import { ChangeEvent } from 'react';
-
-const ZOOM_SLIDER_MULTIPLIER = 10;
+import { ZOOM_SLIDER_MULTIPLIER } from './constants';
 
 export const CropImageModal: React.FC<CropImageModalProps> = ({ imageSrc, open, onClose, onSave }) => {
-  const { crop, zoom, handleCropChange, handleZoomChange, handleCropComplete, croppedAreaPixels } = useCropImageModal();
-
-  const handleSave = () => {
-    onSave(croppedAreaPixels);
-  };
-
-  const handleZoomInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    handleZoomChange(parseInt(e.target.value) / ZOOM_SLIDER_MULTIPLIER);
-  };
+  const { crop, zoom, handleCropChange, handleZoomChange, handleCropComplete, handleZoomInputChange, handleSave } =
+    useCropImageModal(onSave);
 
   return (
     <Modal open={open} onClose={onClose} title="Crop your photo" hideHeaderCloseButton>

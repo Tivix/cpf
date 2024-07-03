@@ -1,5 +1,6 @@
 import { Point } from '@app/types/common';
 import { Area } from 'react-easy-crop';
+import { ChangeEvent } from 'react';
 
 export interface CropImageModalProps {
   imageSrc: string | null;
@@ -15,4 +16,6 @@ export interface CropImageModalHook {
   handleZoomChange: (zoom: number) => void;
   handleCropComplete: (croppedArea: Area, croppedAreaPixels: Area) => void;
   croppedAreaPixels: Area | null;
+  handleSave: () => void;
+  handleZoomInputChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
