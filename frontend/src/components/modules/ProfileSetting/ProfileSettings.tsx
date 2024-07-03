@@ -37,15 +37,27 @@ export const ProfileSettings: React.FC<ProfileSettingsProps> = ({ data }) => {
 
   const PersonalDetailsDataItem: React.FC<{ title: string; value: string | number }> = ({ title, value }) => (
     <div className="border-b border-navy-200 px-4 py-6 sm:col-span-2 sm:px-0">
-      <dt><Typography variant="body-m/medium">{title}</Typography></dt>
-      <dd><Typography variant="body-m/regular" className="text-navy-600 mt-1 sm:mt-2">{value}</Typography></dd>
+      <dt>
+        <Typography variant="body-m/medium">{title}</Typography>
+      </dt>
+      <dd>
+        <Typography variant="body-m/regular" className="mt-1 text-navy-600 sm:mt-2">
+          {value}
+        </Typography>
+      </dd>
     </div>
   );
 
   const LadderDataItem: React.FC<{ title: string; value: string | number }> = ({ title, value }) => (
     <div>
-      <dt><Typography variant="body-m/medium">{title}</Typography></dt>
-      <dd><Typography variant="body-m/regular" className="text-navy-600 mt-1 sm:mt-2">{value}</Typography></dd>
+      <dt>
+        <Typography variant="body-m/medium">{title}</Typography>
+      </dt>
+      <dd>
+        <Typography variant="body-m/regular" className="mt-1 text-navy-600 sm:mt-2">
+          {value}
+        </Typography>
+      </dd>
     </div>
   );
 
