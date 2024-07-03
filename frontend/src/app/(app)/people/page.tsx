@@ -351,8 +351,8 @@ export default function People() {
       />
 
       <div className="flex flex-col gap-2 rounded-2xl bg-white p-6 pb-2">
-        <div className="w-1/3">
-          <div className="flex w-full items-center justify-between gap-4">
+        <div>
+          <div className="flex gap-3">
             <InputField
               value={search}
               name="people-search"

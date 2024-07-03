@@ -4,16 +4,14 @@ import { InputFieldProps } from './InputField.interface';
 
 export const InputField = ({ placeholder, id, value, icon, ...props }: InputFieldProps) => {
   return (
-    <div className="mx-auto w-full rounded-xl">
-      <label htmlFor={id} className="text-gray-900 sr-only mb-2 text-sm font-medium">
-        {placeholder}
-      </label>
-      <div className="relative">
-        {icon && <div className="pointer-events-none absolute inset-y-0 start-0 flex items-center ps-3">{icon}</div>}
+    <div className="w-[304px]">
+      <label htmlFor={id}></label>
+      <div className="relative flex items-center">
+        {icon && <div className="absolute left-4">{icon}</div>}
         <input
           id={id}
           value={value || ''}
-          className="bg-gray-50 bg-gray-700 placeholder-gray-400 block w-full rounded-lg border border-navy-200 p-3 ps-10 text-sm text-navy-600 focus:border-blue-500 focus:ring-blue-500"
+          className="h-12 w-full rounded-xl border border-navy-200 pl-[46px] pr-4 text-navy-600 placeholder-navy-600"
           placeholder={placeholder}
           required
           {...props}
