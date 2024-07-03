@@ -13,12 +13,16 @@ export const BucketCard = ({ bucket, ladderSlug }: BucketCardProps) => {
       className="flex cursor-pointer flex-col gap-2 rounded-2xl border border-navy-200 bg-white p-6 hover:bg-navy-100"
     >
       <div className="flex justify-between">
-        <Typography variant="head-s/semibold" as="h2">{bucketName}</Typography>
+        <Typography variant="head-s/semibold" as="h2">
+          {bucketName}
+        </Typography>
         <div className="flex h-8 w-8 items-center justify-center rounded-full bg-navy-50">
           <ChevronRightIcon className="text-navy-500" />
         </div>
       </div>
-      <Typography variant="body-m/regular" className="text-navy-600">{description}</Typography>
+      <Typography variant="body-m/regular" className="text-navy-600">
+        {description}
+      </Typography>
     </Link>
   );
 };

@@ -4,7 +4,7 @@ import { generateBandGrouping } from './utils';
 import { LadderTabsProps, LadderInterface } from './LadderTabs.interface';
 import { generateClassNames } from '@app/utils';
 import { Button } from '@app/components/common/Button';
-import {Typography} from "@app/components/common/Typography";
+import { Typography } from '@app/components/common/Typography';
 
 export const LadderTabs: React.FC<LadderTabsProps> = ({ maximumLadders, activeLadder, ladderOnClick }) => {
   const generateLadders = useCallback((maxLadders: number): LadderInterface => generateBandGrouping(maxLadders), []);
@@ -16,7 +16,9 @@ export const LadderTabs: React.FC<LadderTabsProps> = ({ maximumLadders, activeLa
       {Object.keys(ladders).map((positionName: string, index: number) => (
         <Fragment key={positionName}>
           <div className="rounded-2xl bg-white px-2 py-3">
-            <Typography as="h3" variant="hint/caps-medium" className="mb-2 text-center text-navy-600">{positionName}</Typography>
+            <Typography as="h3" variant="hint/caps-medium" className="mb-2 text-center text-navy-600">
+              {positionName}
+            </Typography>
             {ladders[positionName].map((ladder: number, index: number) => (
               <Fragment key={ladder.toString()}>
                 <Button

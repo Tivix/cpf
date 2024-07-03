@@ -2,7 +2,7 @@ import { PropsWithChildren, useEffect, useState } from 'react';
 import { ChevronRightIcon } from '@app/static/icons/ChevronRightIcon';
 import { generateClassNames } from '@app/utils';
 import { AccordionCardProps } from './AccordionCard.interface';
-import {Typography} from "@app/components/common/Typography";
+import { Typography } from '@app/components/common/Typography';
 
 export const AccordionCard = ({
   title,
@@ -34,9 +34,9 @@ export const AccordionCard = ({
         onClick={() => setOpen(!isOpen)}
       >
         {small ? (
-            <Typography variant="body-m/semibold">{title}</Typography>
-        ): (
-            <Typography variant="head-s/semibold">{title}</Typography>
+          <Typography variant="body-m/semibold">{title}</Typography>
+        ) : (
+          <Typography variant="head-s/semibold">{title}</Typography>
         )}
         {children ? (
           <div className="flex h-8 w-8 items-center justify-center rounded-full bg-navy-50">

@@ -1,6 +1,6 @@
 import React, { PropsWithChildren } from 'react';
 import { TypographyProps, TypographyVariants } from '@app/components/common/Typography/Typography.interface';
-import {generateClassNames} from "@app/utils";
+import { generateClassNames } from '@app/utils';
 
 const variantsStyles: {
   [key in TypographyVariants]: string;
@@ -50,27 +50,23 @@ export const Typography = ({
   className,
   children,
 }: PropsWithChildren<TypographyProps>) => {
-  const classnames = generateClassNames(
-      'text-navy-900',
-      variantsStyles[variant],
-      className ?? '',
-  );
+  const classnames = generateClassNames('text-navy-900', variantsStyles[variant], className ?? '');
 
-    switch (as) {
-      case 'h1':
-        return <h1 className={classnames}>{children}</h1>;
-      case 'h2':
-        return <h2 className={classnames}>{children}</h2>;
-      case 'h3':
-        return <h3 className={classnames}>{children}</h3>;
-      case 'h4':
-        return <h4 className={classnames}>{children}</h4>;
-      case 'h5':
-        return <h5 className={classnames}>{children}</h5>;
-      case 'h6':
-        return <p className={classnames}>{children}</p>;
-      case 'p':
-      default:
-        return <p className={classnames}>{children}</p>;
-    }
+  switch (as) {
+    case 'h1':
+      return <h1 className={classnames}>{children}</h1>;
+    case 'h2':
+      return <h2 className={classnames}>{children}</h2>;
+    case 'h3':
+      return <h3 className={classnames}>{children}</h3>;
+    case 'h4':
+      return <h4 className={classnames}>{children}</h4>;
+    case 'h5':
+      return <h5 className={classnames}>{children}</h5>;
+    case 'h6':
+      return <p className={classnames}>{children}</p>;
+    case 'p':
+    default:
+      return <p className={classnames}>{children}</p>;
+  }
 };

@@ -6,8 +6,8 @@ import { Modal } from '@app/components/common/Modal';
 import { AdvancementLevelProps } from './AdvancemetLevel.interface';
 import { useAdvancementLevel } from '@app/components/modules/AdvancementLevel/AdvancementLevel.hooks';
 import { Markdown } from '@app/components/common/Markdown';
-import {Typography} from "@app/components/common/Typography";
-import {Button} from "@app/components/common/Button";
+import { Typography } from '@app/components/common/Typography';
+import { Button } from '@app/components/common/Button';
 
 export const AdvancementLevel: React.FC<AdvancementLevelProps> = ({ showVerticalLine, data }) => {
   const { hideModal, openModal, toggleAccordionOpen, modalOpen, accordionOpen } = useAdvancementLevel();
@@ -31,15 +31,19 @@ export const AdvancementLevel: React.FC<AdvancementLevelProps> = ({ showVertical
           className={`flex w-full cursor-pointer flex-col gap-4 rounded-lg ${!accordionOpen && 'hover:bg-navy-50'}`}
           onClick={toggleAccordionOpen}
         >
-          <Typography as="h3" variant="body-l/semibold">Advancement level {advancementLevel}</Typography>
-          <Typography variant="body-m/regular" className="text-navy-600">{description}</Typography>
+          <Typography as="h3" variant="body-l/semibold">
+            Advancement level {advancementLevel}
+          </Typography>
+          <Typography variant="body-m/regular" className="text-navy-600">
+            {description}
+          </Typography>
         </button>
         {accordionOpen && (
           <>
             {projects.length > 0 && (
-                <Button variant="link" onClick={openModal} className="w-fit text-sm">
-                  An example way to pass level
-                </Button>
+              <Button variant="link" onClick={openModal} className="w-fit text-sm">
+                An example way to pass level
+              </Button>
             )}
             {Object.entries(categories).map(([category, skills]) => (
               <AccordionCard
