@@ -1,4 +1,4 @@
-import { ProfileSettingsHook } from '@app/components/modules/ProfileSetting/ProfileSetting.interface';
+import { ProfileSettingsHook } from './ProfileSetting.interface';
 import { ChangeEvent, useState } from 'react';
 import { getCroppedImg, readFile } from '@app/utils';
 import { Area } from 'react-easy-crop';
