@@ -9,7 +9,7 @@ const nextConfig = {
       hostname: 'tailwindui.com',
       pathname: '/img/logos/mark.svg',
     }],
-  }
+  },
 };
 
 export default nextConfig;

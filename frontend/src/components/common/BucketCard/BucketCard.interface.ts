@@ -1,4 +1,4 @@
-import { LadderBandBucket } from '@app/types/common';
+import { LadderBandBucket } from '@app/types/library';
 
 export interface BucketCardProps {
   ladderSlug: string;
