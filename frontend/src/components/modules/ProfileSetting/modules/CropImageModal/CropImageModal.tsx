@@ -6,6 +6,7 @@ import { CropImageModalProps } from './CropImageModal.interface';
 import { useCropImageModal } from './CropImageModal.hooks';
 import { Button } from '@app/components/common/Button';
 import { ZOOM_SLIDER_MULTIPLIER } from './constants';
+import {Typography} from "@app/components/common/Typography";
 
 export const CropImageModal: React.FC<CropImageModalProps> = ({ imageSrc, open, onClose, onSave }) => {
   const { crop, zoom, handleCropChange, handleZoomChange, handleCropComplete, handleZoomInputChange, handleSave } =
@@ -14,9 +15,9 @@ export const CropImageModal: React.FC<CropImageModalProps> = ({ imageSrc, open, 
   return (
     <Modal open={open} onClose={onClose} title="Crop your photo" hideHeaderCloseButton>
       <div className="flex flex-col items-center justify-center gap-6">
-        <p className="tracking-wider text-navy-600">
+        <Typography variant="body-m/regular" className="text-navy-600">
           For best results, use a PNG, JPG, or GIF image at least 300 x 300 px.
-        </p>
+        </Typography>
         <div className="relative h-80 w-80">
           {imageSrc ? (
             <Cropper
