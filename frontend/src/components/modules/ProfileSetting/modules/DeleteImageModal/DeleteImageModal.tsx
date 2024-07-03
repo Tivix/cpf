@@ -1,7 +1,7 @@
 import { Modal } from '@app/components/common/Modal';
 import { Button } from '@app/components/common/Button';
 import { DeleteImageModalProps } from './DeleteImageModal.interface';
-import {Typography} from "@app/components/common/Typography";
+import { Typography } from '@app/components/common/Typography';
 
 export const DeleteImageModal: React.FC<DeleteImageModalProps> = ({ open, onClose, onDelete }) => {
   return (

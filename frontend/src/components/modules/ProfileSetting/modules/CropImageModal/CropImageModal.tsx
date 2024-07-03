@@ -6,7 +6,7 @@ import { CropImageModalProps } from './CropImageModal.interface';
 import { useCropImageModal } from './CropImageModal.hooks';
 import { Button } from '@app/components/common/Button';
 import { ZOOM_SLIDER_MULTIPLIER } from './constants';
-import {Typography} from "@app/components/common/Typography";
+import { Typography } from '@app/components/common/Typography';
 
 export const CropImageModal: React.FC<CropImageModalProps> = ({ imageSrc, open, onClose, onSave }) => {
   const { crop, zoom, handleCropChange, handleZoomChange, handleCropComplete, handleZoomInputChange, handleSave } =

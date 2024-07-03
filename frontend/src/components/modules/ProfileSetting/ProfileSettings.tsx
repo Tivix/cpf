@@ -10,7 +10,7 @@ import { useProfileSettings } from '@app/components/modules/ProfileSetting/Profi
 import { CropImageModal } from './modules/CropImageModal';
 import { ReactNode } from 'react';
 import { DeleteImageModal } from './modules/DeleteImageModal';
-import {Typography} from "@app/components/common/Typography";
+import { Typography } from '@app/components/common/Typography';
 
 export const ProfileSettings: React.FC<ProfileSettingsProps> = ({ data }) => {
   const { firstName, lastName, email, ladders, photo } = data;
@@ -54,7 +54,9 @@ export const ProfileSettings: React.FC<ProfileSettingsProps> = ({ data }) => {
       <Card title="Personal details">
         <div className="flex w-full flex-row border-b border-navy-200 px-4 py-6 sm:col-span-2 sm:px-0">
           <div className="grow">
-            <Typography variant="body-m/medium" className="mb-2">Profile photo</Typography>
+            <Typography variant="body-m/medium" className="mb-2">
+              Profile photo
+            </Typography>
             <Avatar firstName={firstName} lastName={lastName} imageUrl={photo} variant="72" />
           </div>
           <div className="flex flex-row gap-4">
