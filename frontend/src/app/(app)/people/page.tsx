@@ -1,7 +1,11 @@
+import { Typography } from '@app/components/common/Typography';
+
 export default function People() {
   return (
     <div>
-      <h1 className="mb-10 text-lg font-semibold leading-6 text-navy-900">People</h1>
+      <Typography className="mb-10" variant="body-l/semibold" as="h1">
+        People
+      </Typography>
     </div>
   );
 }
