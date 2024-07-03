@@ -1,6 +1,6 @@
 import { mapKeysToCamelCase } from '@app/utils';
 import { API_URLS } from '.';
-import { Bucket } from '@app/types/common';
+import { Bucket } from '@app/types/library';
 
 async function getBucketDetails(slug: string) {
   const response = await fetch(`${API_URLS.library.buckets}/${slug}`);

@@ -1,7 +1,7 @@
 import { mapKeysToCamelCase } from '@app/utils';
 import { API_URLS } from '.';
 import { LadderCardInterface } from '@app/components/common/LadderCard';
-import { LadderBand } from '@app/types/common';
+import { LadderBand } from '@app/types/library';
 
 async function getLadders() {
   const response = await fetch(API_URLS.library.ladders);
