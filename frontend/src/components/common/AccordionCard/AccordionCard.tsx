@@ -33,7 +33,7 @@ export const AccordionCard = ({
         )}
         onClick={() => setOpen(!isOpen)}
       >
-        <Typography variant={small ? "body-m/semibold" : "head-s/semibold"}>{title}</Typography>
+        <Typography variant={small ? 'body-m/semibold' : 'head-s/semibold'}>{title}</Typography>
         {children ? (
           <div className="flex h-8 w-8 items-center justify-center rounded-full bg-navy-50">
             <ChevronRightIcon className={generateClassNames('rotate-90 text-navy-500', { '-rotate-90': isOpen })} />
