@@ -8,14 +8,15 @@ import { InputField } from '@app/components/common/InputField/InputField';
 import { MouseEvent, useEffect, useMemo, useState } from 'react';
 import { Employee } from '@app/types/common';
 import { EmployeeCard } from '@app/components/modules/EmployeeCard';
-import { filters, tabs } from '@app/const';
+import { filters, rowsPerPage, tabs } from '@app/const';
 import { generateClassNames } from '@app/utils';
+import { Pagination } from '@app/components/common/Pagination/Pagination';
 
 const PEOPLE = [
   {
     id: 426243,
-    name: 'John Doe',
-    title: 'Front End Developer, Junior',
+    name: 'A. Smith',
+    title: 'Front-End Developer, Junior',
     laddersDetails: [
       {
         ladderName: 'Front End',
@@ -34,7 +35,7 @@ const PEOPLE = [
   {
     id: 5329732,
     name: 'Jane Doe',
-    title: 'Back End Developer, Senior',
+    title: 'Back-End Developer, Senior',
     laddersDetails: [
       {
         ladderName: 'Back End',
@@ -53,7 +54,7 @@ const PEOPLE = [
   {
     id: 54328701,
     name: 'Thomas Anderson',
-    title: 'QA, Senior',
+    title: 'QA, Seniorr',
     laddersDetails: [
       {
         ladderName: 'Back End',
@@ -78,19 +79,19 @@ const PEOPLE = [
       },
     ],
     status: {
-      active: false,
-      draft: true,
+      active: true,
+      draft: false,
       deactivated: false,
     },
   },
   {
     id: 4321,
-    name: 'Tim Brooks',
-    title: 'DevOps, Senior',
+    name: 'Tim B.',
+    title: 'DevOps, Regular',
     laddersDetails: [
       {
         ladderName: 'Back End',
-        currentBand: 4,
+        currentBand: 2,
         activeGoal: false,
         goalProgress: 15,
         latestActivity: 3,
@@ -111,8 +112,117 @@ const PEOPLE = [
   },
   {
     id: 489901,
-    name: 'Marvin Joe',
-    title: 'Engineering Manager, Senior',
+    name: 'Marvin Joes',
+    title: 'Engineering Manager, Junior',
+    laddersDetails: [
+      {
+        ladderName: 'Front End',
+        currentBand: 2,
+        activeGoal: false,
+        goalProgress: 0,
+        latestActivity: 3,
+      },
+    ],
+    status: {
+      active: true,
+      draft: false,
+      deactivated: false,
+    },
+  },
+  {
+    id: 426243,
+    name: 'John Doe',
+    title: 'Front End Developer',
+    laddersDetails: [
+      {
+        ladderName: 'Front End',
+        currentBand: 2,
+        activeGoal: true,
+        goalProgress: 35,
+        latestActivity: 5,
+      },
+    ],
+    status: {
+      active: true,
+      draft: false,
+      deactivated: false,
+    },
+  },
+  {
+    id: 5329732,
+    name: 'Jane Doe',
+    title: 'Back End Developer, Junior',
+    laddersDetails: [
+      {
+        ladderName: 'Back End',
+        currentBand: 2,
+        activeGoal: false,
+        goalProgress: 0,
+        latestActivity: 0,
+      },
+    ],
+    status: {
+      active: false,
+      draft: false,
+      deactivated: true,
+    },
+  },
+  {
+    id: 54328701,
+    name: 'Jane Does',
+    title: 'QA',
+    laddersDetails: [
+      {
+        ladderName: 'Back End',
+        currentBand: 5,
+        activeGoal: true,
+        goalProgress: 80,
+        latestActivity: 2,
+      },
+      {
+        ladderName: 'Manager',
+        currentBand: 2,
+        activeGoal: false,
+        goalProgress: 65,
+        latestActivity: 4,
+      },
+      {
+        ladderName: 'QA',
+        currentBand: 1,
+        activeGoal: true,
+        goalProgress: 75,
+        latestActivity: 3,
+      },
+    ],
+    status: {
+      active: true,
+      draft: false,
+      deactivated: false,
+    },
+  },
+  {
+    id: 4321,
+    name: 'T. Brooks',
+    title: 'DevOps, Intern',
+    laddersDetails: [
+      {
+        ladderName: 'Back End',
+        currentBand: 2,
+        activeGoal: true,
+        goalProgress: 15,
+        latestActivity: 3,
+      },
+    ],
+    status: {
+      active: true,
+      draft: false,
+      deactivated: false,
+    },
+  },
+  {
+    id: 489901,
+    name: 'M. Joe',
+    title: 'Engineering Manager',
     laddersDetails: [
       {
         ladderName: 'Front End',
@@ -123,9 +233,9 @@ const PEOPLE = [
       },
     ],
     status: {
-      active: false,
+      active: true,
       draft: false,
-      deactivated: true,
+      deactivated: false,
     },
   },
 ];
@@ -140,6 +250,7 @@ function getPeopleDetails() {
   //   const data = await response.json();
 
   //   return mapKeysToCamelCase(data);
+
   return PEOPLE;
 }
 
@@ -150,44 +261,52 @@ export default function People() {
   const [search, setSearch] = useState('');
   const [selectedFilter, setSelectedFilter] = useState(filters[0].value);
   const [selectedTabPeople, setSelectedTabPeople] = useState<Employee[]>();
+  const [pageNumber, setPageNumber] = useState(1);
+  const [filteredPeople, setFilteredPeople] = useState<Employee[]>();
 
   const selectedFilterLabel = filters.find((option) => option.value === selectedFilter)?.label || '';
 
-  const activePeopleAmount = useMemo(() => people.filter((employee) => employee.status.active).length, [people]);
-  const draftPeopleAmount = useMemo(() => people.filter((employee) => employee.status.draft).length, [people]);
-  const deactivatedPeopleAmount = useMemo(
-    () => people.filter((employee) => employee.status.deactivated).length,
-    [people],
-  );
+  const activePeople = useMemo(() => people.filter((employee) => employee.status.active), [people]);
+  const draftPeople = useMemo(() => people.filter((employee) => employee.status.draft), [people]);
+  const deactivatedPeople = useMemo(() => people.filter((employee) => employee.status.deactivated), [people]);
 
   const peopleTabs = useMemo(() => {
     return [
       {
         title: tabs[0].title,
-        employees: activePeopleAmount,
+        employees: activePeople.length,
       },
       {
         title: tabs[1].title,
-        employees: draftPeopleAmount,
+        employees: draftPeople.length,
       },
       {
         title: tabs[2].title,
-        employees: deactivatedPeopleAmount,
+        employees: deactivatedPeople.length,
       },
     ];
-  }, [activePeopleAmount, draftPeopleAmount, deactivatedPeopleAmount]);
+  }, [activePeople, draftPeople, deactivatedPeople]);
 
   useEffect(() => {
     if (people) {
       if (activeTab === peopleTabs[0].title) {
-        setSelectedTabPeople(people.filter((employee) => employee.status.active));
+        setSelectedTabPeople(activePeople);
       } else if (activeTab === peopleTabs[1].title) {
-        setSelectedTabPeople(people.filter((employee) => employee.status.draft));
+        setSelectedTabPeople(draftPeople);
       } else {
-        setSelectedTabPeople(people.filter((employee) => employee.status.deactivated));
+        setSelectedTabPeople(deactivatedPeople);
       }
     }
-  }, [people, activeTab, peopleTabs]);
+  }, [people, activeTab, peopleTabs, activePeople, draftPeople, deactivatedPeople]);
+
+  useEffect(() => {
+    if (selectedTabPeople) {
+      const filteredPeople = filterPeople(selectedTabPeople);
+
+      setFilteredPeople(filteredPeople);
+      setPageNumber(1);
+    }
+  }, [selectedFilter, selectedTabPeople]);
 
   const resetFilterHandler = (event: MouseEvent<HTMLDivElement, globalThis.MouseEvent>) => {
     event.stopPropagation();
@@ -202,9 +321,19 @@ export default function People() {
     );
   };
 
+  const paginatePeople = (people?: Employee[]) => {
+    return people?.slice(pageNumber * rowsPerPage - rowsPerPage, rowsPerPage * pageNumber);
+  };
+
   const setActiveTabHandler = (tab: string) => {
     setActiveTab(tab);
     setSelectedFilter(filters[0].value);
+  };
+
+  const pageClickHandler = (event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>, pageNumber?: number) => {
+    if (!pageNumber) return setPageNumber(+event.currentTarget.value);
+
+    setPageNumber(pageNumber);
   };
 
   return (
@@ -266,10 +395,16 @@ export default function People() {
             {activeTab === peopleTabs[1].title && <div className="[&]:pl-14">Action</div>}
             <div></div>
           </div>
-          {filterPeople(selectedTabPeople)?.map((employee: Employee, index) => (
+          {paginatePeople(filteredPeople)?.map((employee: Employee, index) => (
             <EmployeeCard key={index} employee={employee} tabSelected={activeTab} />
           ))}
         </div>
+
+        <Pagination
+          itemsAmount={filteredPeople?.length}
+          setPageNumber={(e, number) => pageClickHandler(e, number)}
+          pageNumber={pageNumber}
+        />
       </div>
     </div>
   );

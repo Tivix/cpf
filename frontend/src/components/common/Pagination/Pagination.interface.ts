@@ -1,0 +1,7 @@
+import { MouseEvent, MouseEventHandler } from 'react';
+
+export interface PaginationProps {
+  itemsAmount?: number;
+  setPageNumber: (event: MouseEvent<HTMLButtonElement>, number?: number) => void;
+  pageNumber: number;
+}

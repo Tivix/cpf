@@ -1,2 +1,1 @@
-export { filters } from './peopleDropdownFilterOptions';
-export { tabs } from './peopleTabs';
+export { filters, tabs, rowsPerPage } from './peoplePage';
