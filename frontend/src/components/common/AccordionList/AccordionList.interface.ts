@@ -8,4 +8,5 @@ export interface AccordionListProps {
 
 export interface AccordionListItemProps {
   title: string;
+  noContentTooltipText: string;
 }
