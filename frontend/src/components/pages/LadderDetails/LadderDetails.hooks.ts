@@ -10,7 +10,7 @@ export const useLadderDetails = (bands?: Record<string, LadderBand>): LadderDeta
   const band = searchParams.get('band');
 
   const [currentBand, setCurrentBand] = useState(typeof band === 'string' ? parseInt(band, 10) : 1);
-  const maximumLadders = useMemo(() => bands ? Object.keys(bands).length : 0, [bands]);
+  const maximumLadders = useMemo(() => (bands ? Object.keys(bands).length : 0), [bands]);
   const tabsProps = useMemo(() => ({ activeLadder: currentBand, maximumLadders }), [currentBand, maximumLadders]);
 
   const handleReplace = useCallback(() => {
