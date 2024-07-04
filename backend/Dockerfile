@@ -3,13 +3,13 @@ ARG BASE_IMAGE=python:3.12.1-alpine3.19
 ###########################################################
 # Tools stage
 ###########################################################
-FROM --platform=linux/amd64 ${BASE_IMAGE} AS tools
+FROM ${BASE_IMAGE} AS tools
 
 # Install curl
-RUN apk add --no-cache curl
+RUN apk add --no-cache curl musl-dev libffi-dev gcc
 
 # Download waitforit
-RUN curl -o /usr/local/bin/waitforit -sSL https://github.com/maxcnunes/waitforit/releases/download/v2.4.1/waitforit-linux_amd64 && \
+RUN curl -o /usr/local/bin/waitforit -sSL https://github.com/maxcnunes/waitforit/releases/download/v2.4.1/waitforit-linux_${TARGETARCH} && \
     chmod +x /usr/local/bin/waitforit
 
 # Download poetry
@@ -21,7 +21,7 @@ RUN curl -sSL https://install.python-poetry.org | python
 ###########################################################
 # Base stage
 ###########################################################
-FROM --platform=linux/amd64 ${BASE_IMAGE} AS base
+FROM ${BASE_IMAGE} AS base
 
 # Install runtime dependencies
 RUN apk add --no-cache bash libpq
@@ -36,8 +36,8 @@ COPY --from=tools /usr/local/bin/waitforit /usr/local/bin/waitforit
 WORKDIR /src
 
 # Copy and set entrypoint script
-COPY --chmod=755 docker-entrypoint.sh /usr/local/bin/
-ENTRYPOINT ["docker-entrypoint.sh"]
+COPY --chmod=755 entrypoint.sh /usr/local/bin/
+ENTRYPOINT ["entrypoint.sh"]
 
 
 ###########################################################

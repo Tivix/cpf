@@ -12,6 +12,8 @@ RUN yarn --frozen-lockfile
 FROM base AS development
 WORKDIR /code
 
+RUN apt update && apt install -y wget && apt clean && rm -rf /var/lib/apt/lists/*
+
 ENV NODE_ENV development
 
 COPY . .
