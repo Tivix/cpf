@@ -27,7 +27,7 @@ const stepsMap: { [key in StepStates]: JSX.Element } = {
   notStarted: <NotStarted />,
 };
 
-export const SideStepper = ({ steps }: SideStepperProps) => {
+export const SideStepper = <T extends string>({ steps }: SideStepperProps<T>) => {
   return (
     <div className="flex">
       <div className="flex flex-col">

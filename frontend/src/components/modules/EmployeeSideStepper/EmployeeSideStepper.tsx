@@ -3,10 +3,12 @@ import { usePeopleStore } from '@app/store/peopleStore';
 import { SideStepper, Step, StepStates } from '../SideStepper';
 import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
+import { routes } from '@app/constants';
+import { AddNewPersonRouteKeys } from './EmployeeSideStepper.interface';
 
-const addEmployeeInitialSteps: Step[] = [
-  { label: '1. Personal details', state: 'notStarted', current: true, href: '/personal-details' },
-  { label: '2. Main ladder', state: 'notStarted', current: false, href: '/main-ladder' },
+const addEmployeeInitialSteps: Step<AddNewPersonRouteKeys>[] = [
+  { label: '1. Personal details', state: 'notStarted', current: true, href: routes.people.addNew.personalDetails },
+  { label: '2. Main ladder', state: 'notStarted', current: false, href: routes.people.addNew.mainLadder },
 ];
 
 export const EmployeeSideStepper = () => {
@@ -14,7 +16,7 @@ export const EmployeeSideStepper = () => {
   const pathname = usePathname();
   const [addEmployeeSteps, setAddEmployeeSteps] = useState(addEmployeeInitialSteps);
 
-  // INFO: If current step is not already 'completed', then set 'inProgress' state to the current path
+  // INFO: If current step is not 'completed', then set 'inProgress' state to the current path
   useEffect(() => {
     setAddEmployeeSteps((prevState) =>
       prevState.map((step) => {
@@ -29,5 +31,5 @@ export const EmployeeSideStepper = () => {
     );
   }, [pathname, progress]);
 
-  return <SideStepper steps={addEmployeeSteps} />;
+  return <SideStepper<AddNewPersonRouteKeys> steps={addEmployeeSteps} />;
 };

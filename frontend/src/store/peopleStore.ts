@@ -1,15 +1,17 @@
+import { AddNewPersonRouteKeys } from '@app/components/modules/EmployeeSideStepper';
 import { StepStates } from '@app/components/modules/SideStepper';
+import { routes } from '@app/constants';
 import { create } from 'zustand';
 
 interface PeopleState {
-  progress: Record<string, StepStates>;
+  progress: Record<AddNewPersonRouteKeys, StepStates>;
   updateProgress: (newProgress: Record<string, StepStates>) => void;
 }
 
 const initialState: PeopleState = {
   progress: {
-    '/personal-details': 'notStarted',
-    '/main-ladder': 'notStarted',
+    [routes.people.addNew.personalDetails]: 'notStarted',
+    [routes.people.addNew.mainLadder]: 'notStarted',
   },
   updateProgress: () => {},
 };

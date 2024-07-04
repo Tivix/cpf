@@ -1,12 +1,12 @@
 export type StepStates = 'completed' | 'inProgress' | 'notStarted';
 
-export interface Step {
+export interface Step<T> {
   label: string;
   state: StepStates;
   current: boolean;
-  href: '/personal-details' | '/main-ladder';
+  href: T;
 }
 
-export interface SideStepperProps {
-  steps: Step[];
+export interface SideStepperProps<T> {
+  steps: Step<T>[];
 }

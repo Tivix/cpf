@@ -2,6 +2,7 @@
 import { Button } from '@app/components/common/Button';
 import { FormProvider } from '@app/components/common/FormProvider';
 import { Input } from '@app/components/common/Input';
+import { routes } from '@app/constants';
 import { usePeopleStore } from '@app/store/peopleStore';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -36,8 +37,8 @@ export default function PersonalDetails() {
 
   // INFO: update progress in sidebar stepper
   useEffect(() => {
-    if (formValid) updateProgress({ '/personal-details': 'completed' });
-    else updateProgress({ '/personal-details': 'inProgress' });
+    if (formValid) updateProgress({ [routes.people.addNew.personalDetails]: 'completed' });
+    else updateProgress({ [routes.people.addNew.personalDetails]: 'inProgress' });
   }, [formValid, updateProgress]);
 
   return (
