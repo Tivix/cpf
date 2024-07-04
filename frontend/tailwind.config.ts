@@ -50,11 +50,15 @@ const config: Config = {
         500: '#E9CE40',
         600: '#C6A700',
       },
+      grey: {
+        800: '#2C2E3A',
+      }
     },
     fontSize: {
       xs: ['0.75rem', '1rem'], // Body XS
       sm: ['0.875rem', '1.225rem'], // Body S
       base: ['1rem', '1.5rem'], // Body M
+      lg: ['1.125rem', '1.625rem'], // Body L
       xl: ['1.25rem', '1.75rem'], // Headline S
       '2xl': ['1.5rem', '1.875rem'], // Headline M
       '3xl': ['2rem', '2.5rem'], // Headline L
@@ -66,10 +70,6 @@ const config: Config = {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
-      fontSize: {
-        xs: ['0.750rem', '1rem'],       // Body XS
-        l: ['1.125rem', '1.625rem'],    // Body L
-      }
     },
   },
   plugins: [require('@tailwindcss/typography')],

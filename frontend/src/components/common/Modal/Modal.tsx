@@ -7,7 +7,7 @@ import { Inter } from 'next/font/google';
 
 const inter = Inter({ subsets: ['latin'] });
 
-export const Modal = ({ children, open, onClose, title }: ModalProps) => (
+export const Modal = ({ children, open, onClose, title, hideHeaderCloseButton }: ModalProps) => (
   <Transition.Root show={open} as={Fragment}>
     <Dialog as="div" className={`${inter.className} relative z-50`} onClose={onClose}>
       <Transition.Child
@@ -22,8 +22,8 @@ export const Modal = ({ children, open, onClose, title }: ModalProps) => (
         <div className="fixed inset-0 h-full w-full bg-navy-50/75 transition-opacity" />
       </Transition.Child>
 
-      <div className="fixed inset-0 z-10">
-        <div className="flex h-full items-center justify-center text-center">
+      <div className="fixed inset-0 z-10 flex h-full items-center justify-center">
+        <div className="flex max-h-full items-center justify-center text-center">
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -38,14 +38,13 @@ export const Modal = ({ children, open, onClose, title }: ModalProps) => (
                 <Dialog.Title as="h3" className="text-xl font-medium text-navy-900">
                   {title}
                 </Dialog.Title>
-                <button onClick={onClose} type="button">
-                  <CloseIcon className="h-5 w-5 text-navy-600 hover:text-navy-900" aria-hidden="true" />
-                </button>
+                {!hideHeaderCloseButton && (
+                  <button onClick={onClose} type="button">
+                    <CloseIcon className="h-5 w-5 text-navy-600 hover:text-navy-900" aria-hidden="true" />
+                  </button>
+                )}
               </div>
-
-              <Dialog.Description className="h-[calc(100%-6rem)] overflow-y-auto px-8 py-5">
-                {children}
-              </Dialog.Description>
+              <div className="max-h-[calc(100%-6rem)] overflow-y-auto px-8 py-5">{children}</div>
             </Dialog.Panel>
           </Transition.Child>
         </div>

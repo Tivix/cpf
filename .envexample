@@ -15,4 +15,4 @@ FUSIONAUTH_URL: http://fusionauth:9011
 FUSIONAUTH_APPLICATION_ID: 23e4b229-1219-42e5-aed6-f9b6f1eedef8
 
 # Frontend
-API_BASE_URL=http://proxy/cpf/api
+NEXT_PUBLIC_API_BASE_URL: http://proxy/cpf/api
