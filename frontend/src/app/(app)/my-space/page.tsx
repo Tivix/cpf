@@ -1,14 +1,22 @@
-import { Typography } from '@app/components/common/Typography';
-import { MySpaceContext } from "@app/context/MySpaceContext/MySpaceContext";
+import { MySpace } from '@app/components/pages/MySpace';
 
-export default function MySpace() {
-  return (
-    <MySpaceContext.Provider value={{}}>
-      <div>
-        <Typography className="mb-10" variant="body-l/semibold" as="h1">
-          My Space
-        </Typography>
-      </div>
-    </MySpaceContext.Provider>
-  );
+// TODO: get data from api
+const data = {
+  user: {
+    firstName: 'Jane',
+    lastName: 'Edge',
+    position: 'Front End Developer, Junior',
+  },
+  currentLevel: {
+    band: 2,
+    score: 10,
+  },
+  nextLevel: {
+    band: 3,
+    threshold: 11,
+  },
+};
+
+export default function MySpacePage() {
+  return <MySpace data={data} />;
 }
