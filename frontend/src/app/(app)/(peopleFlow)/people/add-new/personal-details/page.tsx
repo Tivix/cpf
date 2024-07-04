@@ -2,6 +2,7 @@
 import { Button } from '@app/components/common/Button';
 import { FormProvider } from '@app/components/common/FormProvider';
 import { Input } from '@app/components/common/Input';
+import { Typography } from '@app/components/common/Typography';
 import { routes } from '@app/constants';
 import { usePeopleStore } from '@app/store/peopleStore';
 import { useEffect, useState } from 'react';
@@ -43,7 +44,9 @@ export default function PersonalDetails() {
 
   return (
     <FormProvider<PersonalDetailsForm> form={form}>
-      <div className="mb-6 text-2xl font-semibold leading-7">Personal details</div>
+      <Typography variant="head-m/semibold" className="mb-6">
+        Personal details
+      </Typography>
       <div className="mb-6 grid w-full grid-cols-2 gap-x-8 gap-y-6 rounded-[20px] border border-navy-200 bg-white p-8">
         <Input
           name={PersonalDetailsFormNames.firstName}

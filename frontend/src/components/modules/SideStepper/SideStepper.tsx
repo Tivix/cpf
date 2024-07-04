@@ -2,6 +2,7 @@ import { CheckMarkIcon } from '@app/static/icons/CheckMarkIcon';
 import { generateClassNames } from '@app/utils';
 import { SideStepperProps, StepStates } from './SideStepper.interface';
 import { Fragment } from 'react';
+import { Typography } from '@app/components/common/Typography';
 
 const Completed = () => {
   return (
@@ -37,11 +38,12 @@ export const SideStepper = <T extends string>({ steps }: SideStepperProps<T>) =>
             <Fragment key={label}>
               <div className="flex items-center gap-x-3">
                 {stepsMap[state]}
-                <div
-                  className={generateClassNames('font-semibold leading-6', current ? 'text-navy-900' : 'text-navy-600')}
+                <Typography
+                  variant="body-m/semibold"
+                  className={generateClassNames(current ? 'text-navy-900' : 'text-navy-600')}
                 >
                   {label}
-                </div>
+                </Typography>
               </div>
               {!last && (
                 <div className="flex w-7 justify-center py-2">
