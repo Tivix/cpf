@@ -1,10 +1,10 @@
 'use client';
-import { usePeopleStore } from '@app/store/peopleStore';
 import { SideStepper, StepStates } from '../SideStepper';
 import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { AddNewPersonRouteKeys } from './EmployeeSideStepper.interface';
 import { addEmployeeInitialSteps } from './EmployeeSideStepper.const';
+import { usePeopleStore } from '@app/store/people/store';
 
 export const EmployeeSideStepper = () => {
   const progress = usePeopleStore((state) => state.progress);

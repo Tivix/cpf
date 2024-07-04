@@ -7,7 +7,7 @@ export default function PeopleLayout({ children }: Readonly<{ children: React.Re
       <div className="w-full">
         <WorkflowTopbar />
         <main className="p-8">
-          <div className="grid grid-cols-[minmax(200px,1fr),minmax(400px,1100px),1fr]">
+          <div className="grid grid-cols-workflow">
             <EmployeeSideStepper />
             <div className="col-span-1 px-8">{children}</div>
           </div>
