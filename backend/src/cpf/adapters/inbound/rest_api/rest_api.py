@@ -19,7 +19,11 @@ from cpf.core.ports.provided.services import (
 from cpf.core.ports.required.dtos import UserDTO
 
 router = APIRouter(prefix="/cpf/api")
-app = FastAPI()
+app = FastAPI(
+    title="CPF API",
+    description="Kellton Europe Career Progression Framework Application",
+    version="0.0.1",
+)
 
 library_manage_service: ManageService | None = None
 library_query_service: QueryService | None = None
