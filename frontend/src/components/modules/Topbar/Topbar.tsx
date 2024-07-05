@@ -1,6 +1,6 @@
 'use client';
 import { Fragment } from 'react';
-import { Menu, Transition } from '@headlessui/react';
+import { Menu, MenuButton, MenuItem, MenuItems, Transition } from '@headlessui/react';
 import { NotificationIcon } from '@app/static/icons/NotificationIcon';
 import { Avatar } from '@app/components/common/Avatar';
 import { UserIcon } from '@app/static/icons/UserIcon';
@@ -41,11 +41,11 @@ export const Topbar = () => {
         {/* Profile dropdown */}
         <Menu as="div" className="relative ml-3">
           <div>
-            <Menu.Button className="bg-gray-800 focus:ring-offset-gray-800 relative flex rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2">
+            <MenuButton className="bg-gray-800 focus:ring-offset-gray-800 relative flex rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2">
               <span className="absolute -inset-1.5" />
               <span className="sr-only">Open user menu</span>
               <Avatar firstName={user.firstName} lastName={user.lastName} variant="40" />
-            </Menu.Button>
+            </MenuButton>
           </div>
           <Transition
             as={Fragment}
@@ -56,16 +56,16 @@ export const Topbar = () => {
             leaveFrom="transform opacity-100 scale-100"
             leaveTo="transform opacity-0 scale-95"
           >
-            <Menu.Items className="ring-black absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-opacity-5 focus:outline-none">
+            <MenuItems className="ring-black absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-opacity-5 focus:outline-none">
               {menuItems.map(({ href, label, icon }) => (
-                <Menu.Item key={label}>
+                <MenuItem key={label}>
                   <a href={href} className="flex items-center gap-3 px-4 py-2 text-sm text-navy-700 hover:bg-navy-100">
                     <span>{icon}</span>
                     <span>{label}</span>
                   </a>
-                </Menu.Item>
+                </MenuItem>
               ))}
-            </Menu.Items>
+            </MenuItems>
           </Transition>
         </Menu>
       </div>
