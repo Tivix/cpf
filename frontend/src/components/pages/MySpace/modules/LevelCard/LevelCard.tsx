@@ -5,9 +5,7 @@ export const LevelCard: React.FC<LevelCardProps> = ({ title, band, score, icon, 
   return (
     <div className="flex flex-col justify-center gap-3 rounded-2xl bg-navy-100 py-2 text-center">
       <div className="flex flex-col items-center gap-2">
-        <div className="text-blue-800">
-          {icon}
-        </div>
+        <div className="text-blue-800">{icon}</div>
         <Typography variant="body-m/semibold">{title}</Typography>
       </div>
       <div className="flex">
