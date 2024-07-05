@@ -2,7 +2,15 @@
 
 ## Career Progression Framework Application
 
-Kellton Europe CPF app is an innovative web-based platform – a seamless solution designed to connect employees, managers, and directors to facilitate the career development of each team member. This dynamic application empowers employees to track progress and milestones toward their chosen career paths. Managers and directors can easily oversee employee development, monitor assigned goals, and provide essential support for continuous growth. Experience enhanced collaboration and foster a thriving, goal-oriented work environment with a cutting-edge platform.
+Kellton Europe CPF app is an innovative web-based platform – 
+a seamless solution designed to connect employees, 
+managers, and directors to facilitate the career development of each team member. 
+This dynamic application empowers employees 
+to track progress and milestones toward their chosen career paths. 
+Managers and directors can easily oversee employee development, monitor assigned goals, 
+and provide essential support for continuous growth. 
+Experience enhanced collaboration and foster a thriving, 
+goal-oriented work environment with a cutting-edge platform.
 
 # Table of Contents
 
@@ -44,6 +52,12 @@ Instructions on how to use the project.
 # Wiki
 
 For more information, check out the project's wiki under the link: https://github.com/Tivix/cpf/wiki
+
+# swagger/redoc
+
+Swagger and redoc can be accessed using following urls:
+- http://0.0.0.0:8000/docs
+- http://0.0.0.0:8000/redoc
 
 # Contributing
 
