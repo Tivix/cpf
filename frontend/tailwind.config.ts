@@ -52,7 +52,7 @@ const config: Config = {
       },
       grey: {
         800: '#2C2E3A',
-      }
+      },
     },
     fontSize: {
       xs: ['0.75rem', '1rem'], // Body XS
@@ -69,6 +69,9 @@ const config: Config = {
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+      },
+      gridTemplateColumns: {
+        workflow: 'minmax(200px,1fr),minmax(400px,1100px),1fr',
       },
     },
   },

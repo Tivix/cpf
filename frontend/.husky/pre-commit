@@ -1,5 +1,7 @@
 # hooks start from the project root directory
+
 cd frontend
 
-yarn lint:fix && yarn format
+yarn lint:fix
+yarn format
 yarn compile

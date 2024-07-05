@@ -64,7 +64,7 @@ export const Typography = ({
     case 'h5':
       return <h5 className={classnames}>{children}</h5>;
     case 'h6':
-      return <p className={classnames}>{children}</p>;
+      return <h6 className={classnames}>{children}</h6>;
     case 'p':
     default:
       return <p className={classnames}>{children}</p>;
