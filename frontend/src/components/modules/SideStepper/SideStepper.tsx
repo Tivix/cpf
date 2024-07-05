@@ -1,26 +1,8 @@
-import { CheckMarkIcon } from '@app/static/icons/CheckMarkIcon';
 import { generateClassNames } from '@app/utils';
 import { SideStepperProps, StepStates } from './SideStepper.interface';
 import { Fragment } from 'react';
 import { Typography } from '@app/components/common/Typography';
-
-const Completed = () => {
-  return (
-    <div className="flex h-7 w-7 items-center justify-center rounded-full bg-blue-800">
-      <CheckMarkIcon />
-    </div>
-  );
-};
-const InProgress = () => {
-  return (
-    <div className="flex h-7 w-7 items-center justify-center rounded-full border border-blue-800 bg-white">
-      <div className="h-[10px] w-[10px] rounded-full bg-blue-800" />
-    </div>
-  );
-};
-const NotStarted = () => {
-  return <div className="flex h-7 w-7 items-center justify-center rounded-full border border-navy-300 bg-white" />;
-};
+import { Completed, InProgress, NotStarted } from './SideStepper.utils';
 
 const stepsMap: { [key in StepStates]: JSX.Element } = {
   completed: <Completed />,
