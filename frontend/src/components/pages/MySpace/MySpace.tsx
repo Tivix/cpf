@@ -2,10 +2,10 @@
 import { Typography } from '@app/components/common/Typography';
 import { MySpaceProps } from '@app/components/pages/MySpace/MySpace.interface';
 import { Header } from '@app/components/pages/MySpace/modules/Header';
-import {Tabs} from "@app/components/common/Tabs";
-import {useCallback, useEffect, useState} from "react";
-import {useSearchParams, useRouter, usePathname} from "next/navigation";
-import {routes} from "@app/constants";
+import { Tabs } from '@app/components/common/Tabs';
+import { useCallback, useEffect, useState } from 'react';
+import { useSearchParams, useRouter, usePathname } from 'next/navigation';
+import { routes } from '@app/constants';
 
 const mySpaceTabs = [
   {
@@ -22,7 +22,8 @@ const mySpaceTabs = [
     key: 'goals',
     label: 'Goals',
     href: `${routes.mySpace.index}?tab=goals`,
-  },{
+  },
+  {
     key: 'projects',
     label: 'Projects',
     href: `${routes.mySpace.index}?tab=projects`,
@@ -31,8 +32,8 @@ const mySpaceTabs = [
     key: 'activity',
     label: 'Activity',
     href: `${routes.mySpace.index}?tab=activity`,
-  }
-]
+  },
+];
 
 const DEFAULT_TAB = 'ladder';
 
@@ -56,7 +57,6 @@ export const MySpace: React.FC<MySpaceProps> = ({ data }) => {
   useEffect(() => {
     handleReplace();
   }, [handleReplace]);
-
 
   return (
     <div className="flex flex-col gap-8">
