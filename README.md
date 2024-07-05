@@ -20,6 +20,7 @@ goal-oriented work environment with a cutting-edge platform.
 - Contributing
 - Development
   - Frontend
+  - Backend
 - License
 - Contact
 
@@ -52,12 +53,6 @@ Instructions on how to use the project.
 # Wiki
 
 For more information, check out the project's wiki under the link: https://github.com/Tivix/cpf/wiki
-
-# swagger/redoc
-
-Swagger and redoc can be accessed using following urls:
-- http://0.0.0.0:8000/docs
-- http://0.0.0.0:8000/redoc
 
 # Contributing
 
@@ -95,6 +90,14 @@ Component folder should contain:
 - `ComponentName.tsx` - view part of a component.
 - `ComponentName.interface.ts` - types related to that component.
 - `ComponentName.hooks.tsx` - the logic of our component
+
+## Backend
+
+### swagger/redoc
+
+Swagger and redoc can be accessed using following urls:
+- http://0.0.0.0:8000/docs
+- http://0.0.0.0:8000/redoc
 
 # License
 
