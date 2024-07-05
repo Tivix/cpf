@@ -3,7 +3,7 @@ import { FC, PropsWithChildren, useState } from 'react';
 import { Popover, PopoverButton, PopoverPanel, Transition } from '@headlessui/react';
 import { TooltipProps } from './Tooltip.interface';
 
-export const TooltipPopover: FC<PropsWithChildren<TooltipProps>> = ({ tooltipText, children, onClick }) => {
+export const TooltipPopover: FC<PropsWithChildren<TooltipProps>> = ({ tooltipText, children }) => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -12,7 +12,7 @@ export const TooltipPopover: FC<PropsWithChildren<TooltipProps>> = ({ tooltipTex
         onMouseEnter={() => setOpen(true)}
         onMouseLeave={() => setOpen(false)}
         className="flex flex-1 focus:outline-none"
-        onClick={onClick}
+        as="div"
       >
         {children}
       </PopoverButton>
