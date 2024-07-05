@@ -23,6 +23,7 @@ export const AccordionListItem = ({
         type="button"
         className={generateClassNames('flex w-full items-center justify-between', { 'cursor-auto': !children })}
         onClick={handleClick}
+        disabled={disableExpand}
       >
         <Typography variant="body-m/medium" className="text-left text-navy-600">
           {title}

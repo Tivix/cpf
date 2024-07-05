@@ -11,5 +11,9 @@ export const routes = {
   people: {
     index: '/people',
     myProfile: '/people/my-profile',
+    addNew: {
+      personalDetails: 'people/add-new/personal-details',
+      mainLadder: 'people/add-new/main-ladder',
+    },
   },
-};
+} as const;
