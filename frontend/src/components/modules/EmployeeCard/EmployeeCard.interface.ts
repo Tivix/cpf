@@ -1,4 +1,4 @@
-import { Employee } from '@app/types/common';
+import { Employee } from '@app/types/people';
 
 export interface EmployeeCardProps {
   employee: Employee;

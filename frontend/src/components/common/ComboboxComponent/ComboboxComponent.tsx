@@ -3,10 +3,10 @@
 import { Combobox, ComboboxInput, ComboboxOption, ComboboxOptions } from '@headlessui/react';
 import { SearchIcon } from '@app/static/icons/SearchIcon';
 import React, { useEffect, useState } from 'react';
-import { Employee } from '@app/types/common';
+import { Employee } from '@app/types/people';
 import { ComboboxComponentProps } from './ComboboxComponent.interface';
 
-export const ComboboxComponent = ({ people, setSearchedPerson }: ComboboxComponentProps) => {
+export const ComboboxComponent = ({ people }: ComboboxComponentProps) => {
   const [selectedPerson, setSelectedPerson] = useState<Employee | string>('');
   const [query, setQuery] = useState('');
 
@@ -19,19 +19,19 @@ export const ComboboxComponent = ({ people, setSearchedPerson }: ComboboxCompone
 
   useEffect(() => {
     if (selectedPerson) {
-      setSearchedPerson([selectedPerson as Employee]);
+      // setSearchedPerson([selectedPerson as Employee]);
     }
-  }, [selectedPerson, setSearchedPerson]);
+  }, [selectedPerson]);
 
   const resetResults = () => {
     setSelectedPerson('');
-    setSearchedPerson([]);
+    // setSearchedPerson([]);
   };
 
   return (
     <Combobox
       value={selectedPerson as Employee}
-      onChange={(value) => value && setSelectedPerson(value)}
+      // onChange={(value) => value && setSelectedPerson(value)}
       onClose={() => !query && resetResults()}
     >
       <div className="relative flex w-[304px] items-center">

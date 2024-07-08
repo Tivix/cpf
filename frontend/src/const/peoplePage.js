@@ -1,5 +1,5 @@
-export const filters = [
-  { label: 'Current band', value: 'current_band', id: 1 },
+export const bands = [
+  { label: 'Current band', value: '', id: 1 },
   { label: 'Band 1', value: 'band_1', id: 2 },
   { label: 'Band 2', value: 'band_2', id: 3 },
   { label: 'Band 3', value: 'band_3', id: 4 },
@@ -9,15 +9,15 @@ export const filters = [
 
 export const tabs = [
   {
-    title: 'Active',
+    title: 'active',
     employeeActions: ['Manage account'],
   },
   {
-    title: 'Drafts',
+    title: 'drafts',
     employeeActions: ['Delete employee'],
   },
   {
-    title: 'Deactivated',
+    title: 'deactivated',
     employeeActions: ['Manage account', 'Activate employee'],
   },
 ];

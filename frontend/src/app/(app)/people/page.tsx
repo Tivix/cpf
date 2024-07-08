@@ -4,304 +4,307 @@ import { Breadcrumbs } from '@app/components/modules/Breadcrumbs';
 import { Tabs } from '@app/components/modules/Tabs';
 import { ListboxComponent } from '@app/components/common/ListboxComponent';
 import { ComboboxComponent } from '@app/components/common/ComboboxComponent';
-import { MouseEvent, useEffect, useMemo, useState } from 'react';
-import { Employee } from '@app/types/common';
+import { MouseEvent, useEffect, useState } from 'react';
+import { Employee, FetchedPeopleTypes, StatusType } from '@app/types/people';
 import { EmployeeCard } from '@app/components/modules/EmployeeCard';
-import { filters, rowsPerPage, tabs } from '@app/const';
+import { bands, tabs } from '@app/const';
 import { generateClassNames } from '@app/utils';
 import { Pagination } from '@app/components/common/Pagination/Pagination';
+import { usePathname, useSearchParams, useRouter } from 'next/navigation';
+import { getPeople } from '@app/api/people';
 
-const PEOPLE = [
-  {
-    id: 426243,
-    name: 'A. Smith',
-    title: 'Front-End Developer, Junior',
-    laddersDetails: [
-      {
-        ladderName: 'Front End',
-        currentBand: 2,
-        activeGoal: true,
-        goalProgress: 35,
-        latestActivity: 5,
-      },
-    ],
-    status: {
-      active: true,
-      draft: false,
-      deactivated: false,
-    },
-  },
-  {
-    id: 5329732,
-    name: 'Jane Doe',
-    title: 'Back-End Developer, Senior',
-    laddersDetails: [
-      {
-        ladderName: 'Back End',
-        currentBand: 5,
-        activeGoal: false,
-        goalProgress: 0,
-        latestActivity: 0,
-      },
-    ],
-    status: {
-      active: true,
-      draft: false,
-      deactivated: false,
-    },
-  },
-  {
-    id: 5444328701,
-    name: 'Thomas Anderson',
-    title: 'QA, Seniorr',
-    laddersDetails: [
-      {
-        ladderName: 'Back End',
-        currentBand: 5,
-        activeGoal: true,
-        goalProgress: 80,
-        latestActivity: 2,
-      },
-      {
-        ladderName: 'Manager',
-        currentBand: 2,
-        activeGoal: true,
-        goalProgress: 65,
-        latestActivity: 4,
-      },
-      {
-        ladderName: 'Front End',
-        currentBand: 2,
-        activeGoal: true,
-        goalProgress: 95,
-        latestActivity: 2,
-      },
-    ],
-    status: {
-      active: false,
-      draft: true,
-      deactivated: false,
-    },
-  },
-  {
-    id: 436621,
-    name: 'Tim B.',
-    title: 'DevOps, Regular',
-    laddersDetails: [
-      {
-        ladderName: 'Back End',
-        currentBand: 2,
-        activeGoal: false,
-        goalProgress: 15,
-        latestActivity: 3,
-      },
-      {
-        ladderName: 'Front End',
-        currentBand: 1,
-        activeGoal: true,
-        goalProgress: 45,
-        latestActivity: 5,
-      },
-    ],
-    status: {
-      active: true,
-      draft: false,
-      deactivated: false,
-    },
-  },
-  {
-    id: 48955901,
-    name: 'Marvin Joes',
-    title: 'Engineering Manager, Junior',
-    laddersDetails: [
-      {
-        ladderName: 'Front End',
-        currentBand: 2,
-        activeGoal: false,
-        goalProgress: 0,
-        latestActivity: 3,
-      },
-    ],
-    status: {
-      active: true,
-      draft: false,
-      deactivated: false,
-    },
-  },
-  {
-    id: 4262343,
-    name: 'John Doe',
-    title: 'Front End Developer',
-    laddersDetails: [
-      {
-        ladderName: 'Front End',
-        currentBand: 2,
-        activeGoal: true,
-        goalProgress: 35,
-        latestActivity: 5,
-      },
-    ],
-    status: {
-      active: true,
-      draft: false,
-      deactivated: false,
-    },
-  },
-  {
-    id: 53129732,
-    name: 'Jane Doe',
-    title: 'Back End Developer, Junior',
-    laddersDetails: [
-      {
-        ladderName: 'Back End',
-        currentBand: 2,
-        activeGoal: false,
-        goalProgress: 0,
-        latestActivity: 0,
-      },
-    ],
-    status: {
-      active: false,
-      draft: false,
-      deactivated: true,
-    },
-  },
-  {
-    id: 543287301,
-    name: 'Jane Does',
-    title: 'QA',
-    laddersDetails: [
-      {
-        ladderName: 'Back End',
-        currentBand: 5,
-        activeGoal: true,
-        goalProgress: 80,
-        latestActivity: 2,
-      },
-      {
-        ladderName: 'Manager',
-        currentBand: 2,
-        activeGoal: false,
-        goalProgress: 65,
-        latestActivity: 4,
-      },
-      {
-        ladderName: 'QA',
-        currentBand: 1,
-        activeGoal: true,
-        goalProgress: 75,
-        latestActivity: 3,
-      },
-    ],
-    status: {
-      active: true,
-      draft: false,
-      deactivated: false,
-    },
-  },
-];
+// DELETE WHEN API AVAILABLE
 
-function getPeopleDetails() {
-  // TODO use real data when available
-  //   const response = await fetch(`http://proxy/cpf/api/people`);
-
-  //   if (!response.ok) {
-  //     throw new Error('Failed to fetch bucket details');
-  //   }
-  //   const data = await response.json();
-
-  //   return mapKeysToCamelCase(data);
-
-  return PEOPLE;
-}
+const PEOPLE_DETAILS = {
+  total: 100,
+  page: 1,
+  count: 11,
+  results: [
+    {
+      id: 4262433,
+      name: 'A. Smith',
+      title: 'Front-End Developer, Junior',
+      laddersDetails: [
+        {
+          ladderName: 'Front End',
+          currentBand: 2,
+          activeGoal: true,
+          goalProgress: 35,
+          latestActivity: 5,
+        },
+      ],
+      status: StatusType,
+    },
+    {
+      id: 42624,
+      name: 'Marvin',
+      title: 'DevOps Developer',
+      laddersDetails: [
+        {
+          ladderName: 'DevOps',
+          currentBand: 5,
+          activeGoal: false,
+          goalProgress: 65,
+          latestActivity: 2,
+        },
+        {
+          ladderName: 'Manager',
+          currentBand: 1,
+          activeGoal: false,
+          goalProgress: 25,
+          latestActivity: 4,
+        },
+        {
+          ladderName: 'QA',
+          currentBand: 2,
+          activeGoal: true,
+          goalProgress: 35,
+          latestActivity: 1,
+        },
+      ],
+      status: StatusType,
+    },
+    {
+      id: 9933,
+      name: 'Joe',
+      title: 'Back-end',
+      laddersDetails: [
+        {
+          ladderName: 'Back End',
+          currentBand: 3,
+          activeGoal: true,
+          goalProgress: 45,
+          latestActivity: 3,
+        },
+      ],
+      status: StatusType,
+    },
+    {
+      id: 493683,
+      name: 'John',
+      title: 'Back-end, Regular',
+      laddersDetails: [
+        {
+          ladderName: 'Back End',
+          currentBand: 2,
+          activeGoal: false,
+          goalProgress: 15,
+          latestActivity: 2,
+        },
+      ],
+      status: StatusType,
+    },
+    {
+      id: 422433,
+      name: 'Joe',
+      title: 'Back-end, Senior',
+      laddersDetails: [
+        {
+          ladderName: 'Back End',
+          currentBand: 1,
+          activeGoal: true,
+          goalProgress: 45,
+          latestActivity: 3,
+        },
+      ],
+      status: StatusType,
+    },
+    {
+      id: 4893,
+      name: 'Alex',
+      title: 'Junior',
+      laddersDetails: [
+        {
+          ladderName: 'Back End',
+          currentBand: 2,
+          activeGoal: true,
+          goalProgress: 45,
+          latestActivity: 3,
+        },
+      ],
+      status: StatusType,
+    },
+    {
+      id: 42673,
+      name: 'Joe',
+      title: 'QA, Junior',
+      laddersDetails: [
+        {
+          ladderName: 'Back End',
+          currentBand: 4,
+          activeGoal: true,
+          goalProgress: 25,
+          latestActivity: 2,
+        },
+      ],
+      status: StatusType,
+    },
+    {
+      id: 4773,
+      name: 'John',
+      title: 'QA, Junior',
+      laddersDetails: [
+        {
+          ladderName: 'QA',
+          currentBand: 2,
+          activeGoal: true,
+          goalProgress: 95,
+          latestActivity: 2,
+        },
+      ],
+      status: StatusType,
+    },
+    {
+      id: 33,
+      name: 'J. Adams',
+      title: 'DevOps, Junior',
+      laddersDetails: [
+        {
+          ladderName: 'Back End',
+          currentBand: 5,
+          activeGoal: true,
+          goalProgress: 75,
+          latestActivity: 4,
+        },
+      ],
+      status: StatusType,
+    },
+    {
+      id: 433,
+      name: 'Fred',
+      title: 'Front End, Junior',
+      laddersDetails: [
+        {
+          ladderName: 'QA',
+          currentBand: 3,
+          activeGoal: true,
+          goalProgress: 35,
+          latestActivity: 2,
+        },
+      ],
+      status: StatusType,
+    },
+    {
+      id: 42243,
+      name: 'Joe',
+      title: 'QA, Regular',
+      laddersDetails: [
+        {
+          ladderName: 'Back End',
+          currentBand: 4,
+          activeGoal: false,
+          goalProgress: 75,
+          latestActivity: 2,
+        },
+      ],
+      status: StatusType,
+    },
+  ],
+  active: 11,
+  draft: 80,
+  deactivated: 9,
+};
 
 export default function People() {
-  const people = getPeopleDetails();
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
-  const [activeTab, setActiveTab] = useState('Active');
-  const [selectedFilter, setSelectedFilter] = useState(filters[0].value);
-  const [selectedTabPeople, setSelectedTabPeople] = useState<Employee[]>();
-  const [pageNumber, setPageNumber] = useState(1);
-  const [filteredPeople, setFilteredPeople] = useState<Employee[]>();
+  const tabParam = searchParams.get('tab');
+  const pageParam = searchParams.get('page');
+  const bandParam = searchParams.get('band');
 
-  const selectedFilterLabel = filters.find((option) => option.value === selectedFilter)?.label || '';
+  const [tab, setTab] = useState(tabParam ? tabParam : 'active');
+  const [page, setPage] = useState(pageParam ? +pageParam : 1);
+  const [band, setBand] = useState(bandParam ? bandParam : bands[0].value);
+  const [fetchedPeople, setFetchedPeople] = useState<Employee[]>();
+  const [fetchedPeopleTypes, setFetchedPeopleTypes] = useState<FetchedPeopleTypes>();
+  const [peopleTypeAmount, setPeopleTypeAmount] = useState(-1);
 
-  const activePeople = useMemo(() => people.filter((employee) => employee.status.active), [people]);
-  const draftPeople = useMemo(() => people.filter((employee) => employee.status.draft), [people]);
-  const deactivatedPeople = useMemo(() => people.filter((employee) => employee.status.deactivated), [people]);
+  const selectedFilterLabel = bands.find((option) => option.value === band)?.label || 'Current band';
 
-  const peopleTabs = useMemo(() => {
-    return [
-      {
-        title: tabs[0].title,
-        employees: activePeople.length,
-      },
-      {
-        title: tabs[1].title,
-        employees: draftPeople.length,
-      },
-      {
-        title: tabs[2].title,
-        employees: deactivatedPeople.length,
-      },
-    ];
-  }, [activePeople, draftPeople, deactivatedPeople]);
-
-  useEffect(() => {
-    if (people) setPeople();
-  }, [people, activeTab]);
+  const peopleTabs = [
+    {
+      title: tabs[0].title,
+      employees: fetchedPeopleTypes?.active,
+    },
+    {
+      title: tabs[1].title,
+      employees: fetchedPeopleTypes?.draft,
+    },
+    {
+      title: tabs[2].title,
+      employees: fetchedPeopleTypes?.deactivated,
+    },
+  ];
 
   useEffect(() => {
-    if (selectedTabPeople) {
-      const filteredPeople = filterPeople(selectedTabPeople);
-
-      setFilteredPeople(filteredPeople);
-      setPageNumber(1);
+    if (tabParam && tabParam !== tab) {
+      setTab(tabParam);
     }
-  }, [selectedFilter, selectedTabPeople]);
-
-  const setPeople = () => {
-    if (activeTab === peopleTabs[0].title) {
-      setSelectedTabPeople(activePeople);
-    } else if (activeTab === peopleTabs[1].title) {
-      setSelectedTabPeople(draftPeople);
-    } else {
-      setSelectedTabPeople(deactivatedPeople);
+    if (pageParam && +pageParam !== page) {
+      setPage(+pageParam);
     }
+    if (bandParam && bandParam !== band.split('_')[1]) {
+      bandParam && setBand(bands.filter((band) => band.id - 1 === +bandParam)[0].value);
+    }
+  }, [tabParam, pageParam, bandParam]);
+
+  useEffect(() => {
+    getPeopleDetails(tab, page.toString(), band);
+  }, [tab, page, band]);
+
+  const getPeopleDetails = async (tab: string, page: string, band: string): Promise<void> => {
+    // UNCOMMENT WHEN API AVAILABLE AND DELETE CONSOLE.LOG - ESLINT ERROR NO UNUSED VARS
+    const people = await getPeople(tab, page, band.split('_')[1]);
+    console.log('FETCHED PEOPLE', people);
+
+    const fetchedPeopleGroups = {
+      active: PEOPLE_DETAILS.active,
+      draft: PEOPLE_DETAILS.draft,
+      deactivated: PEOPLE_DETAILS.deactivated,
+    };
+    // const fetchedPeopleGroups = {
+    //   active: people.active,
+    //   draft: people.draft,
+    //   deactivated: people.deactivated
+    // }
+    setFetchedPeople(PEOPLE_DETAILS.results);
+    // setFetchedPeople(people.results);
+    setFetchedPeopleTypes(fetchedPeopleGroups);
+    setPeopleTypeAmount(PEOPLE_DETAILS.count);
+    // setPeopleTypeAmount(people.count);
   };
 
-  const resetFilterHandler = (event: MouseEvent<HTMLDivElement, globalThis.MouseEvent>) => {
-    event.stopPropagation();
-    setSelectedFilter(filters[0].value);
+  const urlChangeHandler = (
+    passedTab: string = tab,
+    passedPage: string = page.toString(),
+    passedBand: string = band,
+  ) => {
+    const bandQuery = passedBand ? `&band=${passedBand}` : '';
+    router.push(`${pathname}?tab=${passedTab}&page=${passedPage}${bandQuery}`);
   };
 
-  const filterPeople = (people?: Employee[]) => {
-    if (selectedFilter === filters[0].value) return people;
-
-    return people?.filter((employee: Employee) =>
-      employee.laddersDetails.find((ladder) => ladder.currentBand === +selectedFilter.split('_')[1]),
-    );
-  };
-
-  const paginatePeople = (people?: Employee[]) => {
-    return people?.slice(pageNumber * rowsPerPage - rowsPerPage, rowsPerPage * pageNumber);
-  };
-
-  const setActiveTabHandler = (tab: string) => {
-    setActiveTab(tab);
-    setSelectedFilter(filters[0].value);
+  const tabClickHandler = (tab: string) => {
+    band !== bands[0].value && setBand(bands[0].value);
+    urlChangeHandler(tab, '1', '');
   };
 
   const pageClickHandler = (event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>, pageNumber?: number) => {
-    if (!pageNumber) return setPageNumber(+event.currentTarget.value);
+    if (!pageNumber) return urlChangeHandler(undefined, event.currentTarget.value, band.split('_')[1]);
 
-    setPageNumber(pageNumber);
+    urlChangeHandler(undefined, pageNumber.toString(), band.split('_')[1]);
   };
 
-  const displaySearchbarResults = (person: Employee[]) => {
-    if (person.length > 0) return setSelectedTabPeople(person);
+  const bandChangeHandler = (band: string) => {
+    !band && setBand(bands[0].value);
+    urlChangeHandler(undefined, '1', band && band.split('_')[1]);
+  };
 
-    setPeople();
+  const resetBandHandler = (event: MouseEvent<HTMLDivElement, globalThis.MouseEvent>) => {
+    event.stopPropagation();
+    setBand(bands[0].value);
+    urlChangeHandler(tab, '1', bands[0].value);
   };
 
   return (
@@ -312,8 +315,8 @@ export default function People() {
       </div>
 
       <Tabs
-        active={activeTab}
-        setActive={(tab) => setActiveTabHandler(tab)}
+        active={tab}
+        setActive={(tab) => tabClickHandler(tab)}
         tabs={peopleTabs}
         className="border-b border-navy-200"
       />
@@ -322,15 +325,15 @@ export default function People() {
         <div>
           <div className="flex gap-3">
             <ComboboxComponent
-              people={selectedTabPeople}
-              setSearchedPerson={(person) => displaySearchbarResults(person)}
+            // people={selectedTabPeople}
+            // setSearchedPerson={(person) => displaySearchbarResults(person)}
             />
             <ListboxComponent
               selectedOptionLabel={selectedFilterLabel}
-              options={filters}
-              selectedOptionValue={selectedFilter}
-              setSelectedOption={setSelectedFilter}
-              resetFilter={(event) => resetFilterHandler(event)}
+              options={bands}
+              selectedOptionValue={band}
+              setSelectedOption={(band) => bandChangeHandler(band)}
+              resetFilter={(event) => resetBandHandler(event)}
             />
           </div>
         </div>
@@ -339,8 +342,8 @@ export default function People() {
           className={generateClassNames(
             'grid auto-rows-[minmax(64px,_auto)] grid-cols-[auto_repeat(3,_160px)_248px_160px_48px] grid-rows-[56px]',
             {
-              'grid-cols-[auto_repeat(2,_200px)_400px_48px]': activeTab === peopleTabs[1].title,
-              'grid-cols-[400px_repeat(3,_1fr)]': activeTab === peopleTabs[2].title,
+              'grid-cols-[auto_repeat(2,_200px)_400px_48px]': tab === peopleTabs[1].title,
+              'grid-cols-[400px_repeat(3,_1fr)]': tab === peopleTabs[2].title,
             },
           )}
         >
@@ -349,7 +352,7 @@ export default function People() {
             <div>Ladder</div>
             <div className="text-right">Current band</div>
 
-            {activeTab === peopleTabs[0].title && (
+            {tab === peopleTabs[0].title && (
               <>
                 <div className="text-right">Active goal</div>
                 <div className="[&]:pl-14">Goal progress</div>
@@ -357,18 +360,18 @@ export default function People() {
               </>
             )}
 
-            {activeTab === peopleTabs[1].title && <div className="[&]:pl-14">Action</div>}
+            {tab === peopleTabs[1].title && <div className="[&]:pl-14">Action</div>}
             <div></div>
           </div>
-          {paginatePeople(filteredPeople)?.map((employee: Employee, index) => (
-            <EmployeeCard key={index} employee={employee} tabSelected={activeTab} />
+          {fetchedPeople?.map((employee: Employee, index) => (
+            <EmployeeCard key={index} employee={employee} tabSelected={tab} />
           ))}
         </div>
 
         <Pagination
-          itemsAmount={filteredPeople?.length}
+          itemsAmount={peopleTypeAmount}
           setPageNumber={(e, number) => pageClickHandler(e, number)}
-          pageNumber={pageNumber}
+          pageNumber={page}
         />
       </div>
     </div>

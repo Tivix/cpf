@@ -1,4 +1,4 @@
-import { MouseEvent, MouseEventHandler } from 'react';
+import { MouseEvent } from 'react';
 
 export interface PaginationProps {
   itemsAmount?: number;

@@ -40,7 +40,7 @@ export const Sidebar = () => {
               className={generateClassNames(
                 'flex items-center whitespace-nowrap rounded-md p-2 font-medium text-navy-600 hover:bg-blue-100',
                 {
-                  'bg-blue-100 text-blue-900': pathname.startsWith(item.href),
+                  'bg-blue-100 text-blue-900': pathname.startsWith(item.href.split(pathname)[0]),
                   'w-full': open,
                   'w-10 justify-center': !open,
                 },

@@ -12,7 +12,7 @@ export const Tabs = ({ tabs, active, setActive, className }: TabsProps) => (
             })}
             onClick={() => setActive(tab.title)}
           >
-            {tab.title} ({tab.employees})
+            {tab.title.replace(tab.title[0], tab.title[0].toUpperCase())} ({tab.employees})
           </div>
         </li>
       ))}

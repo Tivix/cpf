@@ -4,6 +4,7 @@ import { CheckmarkIcon } from '@app/static/icons/CheckmarkIcon';
 import { generateClassNames } from '@app/utils';
 import { tabs } from '@app/const';
 import { DropdownMenuComponent } from '../../common/DropdownMenuComponent';
+import { LadderDetails } from '@app/types/people';
 
 export const EmployeeCard = ({ employee, tabSelected }: EmployeeCardProps) => {
   const { name, title, laddersDetails } = employee;
@@ -41,7 +42,7 @@ export const EmployeeCard = ({ employee, tabSelected }: EmployeeCardProps) => {
           className: 'flex-col [&]:items-start',
         })}
       >
-        {laddersDetails.map((ladder, index) => (
+        {laddersDetails.map((ladder: LadderDetails, index: number) => (
           <span
             key={index}
             {...(laddersDetails.length > 1 && {
@@ -57,7 +58,7 @@ export const EmployeeCard = ({ employee, tabSelected }: EmployeeCardProps) => {
           'flex-col [&]:items-end': laddersDetails.length > 1,
         })}
       >
-        {laddersDetails.map((ladder, index) => (
+        {laddersDetails.map((ladder: LadderDetails, index: number) => (
           <span
             key={index}
             {...(laddersDetails.length > 1 && {
@@ -76,7 +77,7 @@ export const EmployeeCard = ({ employee, tabSelected }: EmployeeCardProps) => {
               'flex-col [&]:items-end': laddersDetails.length > 1,
             })}
           >
-            {laddersDetails.map((ladder, index) => (
+            {laddersDetails.map((ladder: LadderDetails, index: number) => (
               <span
                 key={index}
                 {...(laddersDetails.length > 1 && {
@@ -92,7 +93,7 @@ export const EmployeeCard = ({ employee, tabSelected }: EmployeeCardProps) => {
               'flex-col': laddersDetails.length > 1,
             })}
           >
-            {laddersDetails.map((ladder, index) => (
+            {laddersDetails.map((ladder: LadderDetails, index: number) => (
               <div
                 key={index}
                 className={generateClassNames('flex w-full items-center gap-2', {
@@ -115,7 +116,7 @@ export const EmployeeCard = ({ employee, tabSelected }: EmployeeCardProps) => {
               'flex-col': laddersDetails.length > 1,
             })}
           >
-            {laddersDetails.map((ladder, index) => (
+            {laddersDetails.map((ladder: LadderDetails, index: number) => (
               <div
                 key={index}
                 {...(laddersDetails.length > 1 && {

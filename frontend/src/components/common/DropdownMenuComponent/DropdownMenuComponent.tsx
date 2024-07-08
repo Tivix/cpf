@@ -27,8 +27,8 @@ export const DropdownMenuComponent = ({ tabSelected }: DropdownMenuComponentProp
           className="w-60 origin-top-right rounded-xl border border-[#E6E8EE] bg-white py-[6px] text-navy-700 shadow-[0_2px_6px_0_#383A441A] *:flex *:h-11 *:w-full *:items-center *:px-3"
         >
           {tabs
-            .filter((tab) => tab.title === tabSelected)[0]
-            .employeeActions.map((action, index) => (
+            .filter((tab) => tab.title == tabSelected)[0]
+            ?.employeeActions.map((action, index) => (
               <MenuItem key={index}>
                 <button className="data-[focus]:bg-blue-100">{action}</button>
               </MenuItem>

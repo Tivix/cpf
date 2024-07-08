@@ -1,6 +1,6 @@
-import { Employee } from '@app/types/common';
+import { Employee } from '@app/types/people';
 
 export interface ComboboxComponentProps {
   people?: Employee[];
-  setSearchedPerson: (person: Employee[]) => void;
+  // setSearchedPerson: (person: Employee[]) => void;
 }

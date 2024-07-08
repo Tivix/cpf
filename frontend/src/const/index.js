@@ -1,1 +1,1 @@
-export { filters, tabs, rowsPerPage } from './peoplePage';
+export { bands, tabs, rowsPerPage } from './peoplePage';
