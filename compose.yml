@@ -1,23 +1,32 @@
-version: '3.9'
-
 volumes:
-  postgres_data:
-  fusionauth_config:
+  postgres-data:
+  fusionauth-config:
 
 services:
   proxy:
-    image: tivix/docker-nginx:v17
+    image: tivix/docker-nginx:v18
     restart: unless-stopped
     depends_on:
-      - frontend
-      - fusionauth
-      - api-server
+      frontend:
+        condition: service_healthy
+      fusionauth:
+        condition: service_healthy
+      api-server:
+        condition: service_healthy
     ports:
       - "8080:80"
     environment:
       - UPSTREAMS=/api:fusionauth:9011,/cpf/api:api-server:8000,/:frontend:3000
       - WEBSOCKETS=true
-      
+      - HEALTHCHECK=/health
+      - HEALTHCHECK_PORT=8888
+      - HEALTHCHECK_LISTEN=0.0.0.0
+    healthcheck:
+      test: wget -q -O /dev/null http://proxy:8888/health
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
   frontend:
     restart: unless-stopped
     stdin_open: true
@@ -28,9 +37,14 @@ services:
       - ./frontend/src:/code/src
       - ./frontend/public:/code/public
     ports:
-      - '3000:3000'
+      - "3000:3000"
     env_file:
       - .env
+    healthcheck: # TODO: /health once available
+      test: wget -q -O /dev/null http://frontend:3000/auth
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   api-server:
     image: cpf/backend-image
@@ -47,8 +61,18 @@ services:
       - ./backend/src:/src
     stdin_open: true
     tty: true
+    depends_on:
+      data-loader:
+        condition: service_completed_successfully
+      fusionauth:
+        condition: service_healthy
+    healthcheck:
+      test: wget -q -O /dev/null http://api-server:8000/cpf/api/health
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
-  data_loader:
+  data-loader:
     image: cpf/backend-image
     restart: "no"
     build:
@@ -72,14 +96,14 @@ services:
     env_file:
       - .env
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d postgres" ]
+      test: pg_isready -U ${POSTGRES_USER} -d postgres
       interval: 5s
       timeout: 5s
       retries: 5
     ports:
       - "5432:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data/
+      - postgres-data:/var/lib/postgresql/data/
 
   fusionauth:
     image: fusionauth/fusionauth-app:1.48.3
@@ -103,10 +127,10 @@ services:
       postgres:
         condition: service_healthy
     healthcheck:
-      test: curl --silent --fail http://localhost:9011/api/status -o /dev/null -w "%{http_code}"
+      test: curl --silent --fail http://fusionauth:9011/api/status -o /dev/null -w "%{http_code}"
       interval: 5s
       timeout: 5s
       retries: 5
     volumes:
-      - fusionauth_config:/usr/local/fusionauth/config
+      - fusionauth-config:/usr/local/fusionauth/config
       - ./fusionauth/kickstart:/usr/local/fusionauth/kickstart

@@ -248,7 +248,7 @@ export default function People() {
     if (bandParam && bandParam !== band.split('_')[1]) {
       bandParam && setBand(bands.filter((band) => band.id - 1 === +bandParam)[0].value);
     }
-  }, [tabParam, pageParam, bandParam]);
+  }, [tabParam, pageParam, bandParam, band, page, tab]);
 
   useEffect(() => {
     getPeopleDetails(tab, page.toString(), band);
