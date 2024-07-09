@@ -9,14 +9,12 @@ services:
     depends_on:
       frontend:
         condition: service_healthy
-      fusionauth:
-        condition: service_healthy
       api-server:
         condition: service_healthy
     ports:
       - "8080:80"
     environment:
-      - UPSTREAMS=/api:fusionauth:9011,/cpf/api:api-server:8000,/:frontend:3000
+      - UPSTREAMS=/cpf/api:api-server:8000,/:frontend:3000
       - WEBSOCKETS=true
       - HEALTHCHECK=/health
       - HEALTHCHECK_PORT=8888
@@ -64,8 +62,6 @@ services:
     depends_on:
       data-loader:
         condition: service_completed_successfully
-      fusionauth:
-        condition: service_healthy
     healthcheck:
       test: wget -q -O /dev/null http://api-server:8000/cpf/api/health
       interval: 5s
@@ -83,9 +79,6 @@ services:
       - .env
     volumes:
       - ./backend/src:/src
-    depends_on:
-      fusionauth:
-        condition: service_healthy
     stdin_open: true
     tty: true
 
@@ -104,33 +97,3 @@ services:
       - "5432:5432"
     volumes:
       - postgres-data:/var/lib/postgresql/data/
-
-  fusionauth:
-    image: fusionauth/fusionauth-app:1.48.3
-    ports:
-      - "9011:9011"
-    env_file:
-      - .env
-    environment:
-      DATABASE_URL: "jdbc:postgresql://postgres:5432/${FUSIONAUTH_POSTGRES_DB}"
-      DATABASE_ROOT_USERNAME: ${POSTGRES_USER}
-      DATABASE_ROOT_PASSWORD: ${POSTGRES_PASSWORD}
-      DATABASE_USERNAME: ${FUSIONAUTH_POSTGRES_USER}
-      DATABASE_PASSWORD: ${FUSIONAUTH_POSTGRES_PASSWORD}
-      FUSIONAUTH_APP_MEMORY: 512m
-      FUSIONAUTH_APP_RUNTIME_MODE: development
-      ES_JAVA_OPTS: "-Xms512m -Xmx512m"
-      FUSIONAUTH_APP_URL: http://fusionauth:9011
-      FUSIONAUTH_APP_KICKSTART_FILE: /usr/local/fusionauth/kickstart/kickstart.json
-    restart: unless-stopped
-    depends_on:
-      postgres:
-        condition: service_healthy
-    healthcheck:
-      test: curl --silent --fail http://fusionauth:9011/api/status -o /dev/null -w "%{http_code}"
-      interval: 5s
-      timeout: 5s
-      retries: 5
-    volumes:
-      - fusionauth-config:/usr/local/fusionauth/config
-      - ./fusionauth/kickstart:/usr/local/fusionauth/kickstart

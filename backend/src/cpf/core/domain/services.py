@@ -152,7 +152,7 @@ class LibraryQueryService(QueryService):
         return self._bucket_dao.get_bucket(slug=bucket_slug)
 
 
-class FusionAuthUserManagementService(UserManagementService):
+class UsersManagementService(UserManagementService):
 
     def __init__(
         self,

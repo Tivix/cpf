@@ -2,7 +2,7 @@ import sys
 
 import cpf.adapters.inbound.data_loader.loader as loader
 import cpf.adapters.inbound.rest_api.rest_api as rest_api
-from cpf.adapters.outbound.fusionauth.client import authentication_client_factory
+from cpf.adapters.outbound.mocks.client import mock_authenticate_client_factory
 from cpf.adapters.outbound.postgres.daos import bucket_dao_factory, ladder_dao_factory
 from cpf.adapters.outbound.postgres.repositories import (
     bucket_repository_factory,
@@ -10,7 +10,7 @@ from cpf.adapters.outbound.postgres.repositories import (
     user_repository_factory,
 )
 from cpf.core.domain.services import (
-    FusionAuthUserManagementService,
+    UsersManagementService,
     LadderManageService,
     LibraryQueryService,
 )
@@ -28,8 +28,9 @@ def rest_api_app():
     )
     query_service = LibraryQueryService(ladder_dao=ladder_dao, bucket_dao=bucket_dao)
 
-    user_management_service = FusionAuthUserManagementService(
-        repository=user_repository_factory(), client=authentication_client_factory()
+    user_management_service = UsersManagementService(
+        repository=user_repository_factory(),
+        client=mock_authenticate_client_factory()
     )
 
     rest_api.set_library_manage_service(library_manage_service)
@@ -48,8 +49,9 @@ def data_loader():
         ladder_dao=ladder_dao,
         bucket_dao=bucket_dao,
     )
-    user_management_service = FusionAuthUserManagementService(
-        repository=user_repository_factory(), client=authentication_client_factory()
+    user_management_service = UsersManagementService(
+        repository=user_repository_factory(),
+        client=mock_authenticate_client_factory()
     )
 
     loader.set_manage_service(service=library_manage_service)
