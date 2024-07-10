@@ -5,9 +5,12 @@ import { Input } from '@app/components/common/Input';
 import { Typography } from '@app/components/common/Typography';
 import { PersonalDetailsForm, PersonalDetailsFormNames } from './PersonalDetails.interface';
 import { usePersonalDetails } from './PersonalDetails.hooks';
+import { routes } from '@app/constants';
+import { useRouter } from 'next/navigation';
 
 export const PersonalDetails = () => {
   const { form, formValid } = usePersonalDetails();
+  const router = useRouter();
 
   return (
     <FormProvider<PersonalDetailsForm> form={form}>
@@ -41,7 +44,15 @@ export const PersonalDetails = () => {
         />
       </div>
       <div className="flex justify-end">
-        <Button styleType="primary" variant="border" onClick={(e) => e.preventDefault()} disabled={!formValid}>
+        <Button
+          styleType="primary"
+          variant="border"
+          onClick={(e) => {
+            e.preventDefault();
+            router.push(routes.people.addNew.mainLadder);
+          }}
+          disabled={formValid}
+        >
           Continue
         </Button>
       </div>
