@@ -1,1 +1,1 @@
-export { bands, tabs, rowsPerPage } from './peoplePage';
+export { bands, tabs, rowsPerPage, paginationMaxPages, startPagesWithoutTruncation } from './peoplePage';

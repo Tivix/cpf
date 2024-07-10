@@ -23,3 +23,5 @@ export const tabs = [
 ];
 
 export const rowsPerPage = 10;
+export const paginationMaxPages = 8;
+export const startPagesWithoutTruncation = 3;

@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { EmployeeCardProps } from './EmployeeCard.interface';
-import { CheckmarkIcon } from '@app/static/icons/CheckmarkIcon';
+import { CheckMarkIcon } from '@app/static/icons/CheckmarkIcon';
 import { generateClassNames } from '@app/utils';
 import { tabs } from '@app/const';
 import { DropdownMenuComponent } from '../../common/DropdownMenuComponent';
@@ -84,7 +84,7 @@ export const EmployeeCard = ({ employee, tabSelected }: EmployeeCardProps) => {
                   className: multipleItems,
                 })}
               >
-                {ladder.activeGoal ? <CheckmarkIcon /> : null}
+                {ladder.activeGoal ? <CheckMarkIcon /> : null}
               </span>
             ))}
           </div>

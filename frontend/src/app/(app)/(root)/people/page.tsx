@@ -220,6 +220,7 @@ export default function People() {
   const [fetchedPeople, setFetchedPeople] = useState<Employee[]>();
   const [fetchedPeopleTypes, setFetchedPeopleTypes] = useState<FetchedPeopleTypes>();
   const [peopleTypeAmount, setPeopleTypeAmount] = useState(-1);
+  const [pagePosition, setPagePosition] = useState(1);
 
   const selectedFilterLabel = bands.find((option) => option.value === band)?.label || 'Current band';
 
@@ -239,16 +240,23 @@ export default function People() {
   ];
 
   useEffect(() => {
+    const selectedPagePosition =
+      pageParam && document.querySelector(`[data-page="${pageParam}"]`)?.getAttribute('data-position');
+
+    selectedPagePosition && setPagePosition(+selectedPagePosition);
+  }, [pageParam]);
+
+  useEffect(() => {
     if (tabParam && tabParam !== tab) {
       setTab(tabParam);
     }
     if (pageParam && +pageParam !== page) {
       setPage(+pageParam);
     }
-    if (bandParam && bandParam !== band.split('_')[1]) {
-      bandParam && setBand(bands.filter((band) => band.id - 1 === +bandParam)[0].value);
+    if (bandParam !== band.split('_')[1]) {
+      setBand(bandParam ? bands.filter((band) => band.id - 1 === +bandParam)[0].value : bands[0].value);
     }
-  }, [tabParam, pageParam, bandParam, band, page, tab]);
+  }, [tabParam, pageParam, bandParam, tab, page, band]);
 
   useEffect(() => {
     getPeopleDetails(tab, page.toString(), band);
@@ -291,13 +299,15 @@ export default function People() {
   };
 
   const pageClickHandler = (event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>, pageNumber?: number) => {
-    if (!pageNumber) return urlChangeHandler(undefined, event.currentTarget.value, band.split('_')[1]);
+    const clickedPagePosition = event.currentTarget.dataset.position;
+    clickedPagePosition && setPagePosition(+clickedPagePosition);
+
+    if (!pageNumber) return urlChangeHandler(undefined, event.currentTarget.innerText, band.split('_')[1]);
 
     urlChangeHandler(undefined, pageNumber.toString(), band.split('_')[1]);
   };
 
   const bandChangeHandler = (band: string) => {
-    !band && setBand(bands[0].value);
     urlChangeHandler(undefined, '1', band && band.split('_')[1]);
   };
 
@@ -372,6 +382,7 @@ export default function People() {
           itemsAmount={peopleTypeAmount}
           setPageNumber={(e, number) => pageClickHandler(e, number)}
           pageNumber={page}
+          pagePosition={pagePosition}
         />
       </div>
     </div>
