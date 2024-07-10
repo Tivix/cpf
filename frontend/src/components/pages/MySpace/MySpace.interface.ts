@@ -16,3 +16,8 @@ export interface MySpaceProps {
     };
   };
 }
+
+export interface MySpaceHooks {
+  currentTab: string;
+  setCurrentTab: (tab: string) => void;
+}
