@@ -76,9 +76,10 @@ Guidelines for contributing to the project.
 - `components` - Contains all components used in the app.
    - `common` - In the common folder, we keep all essential components like Button, Card, or Input.
    - `modules` - Here we keep more complex components that are still reusable or are part of layouts.
-   - `views` - Here we compose view together to create a page. If you want to extract some module of the page, create `modules` folder there and put it in it.
+   - `pages` - Here we compose view together to create a page. If you want to extract some module of the page, create `modules` folder there and put it in it.
 - `constants` - Contains all the constant values used in the app.
 - `static`- Contains assets like icons.
+- `store` - Contains all stores for state management.
 - `types` - Contains all reusable types and interfaces that are shared between many pages and modules.
 - `utils` - Contains all utility functions like data transformations or calculations.
 
