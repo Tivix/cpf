@@ -1,9 +1,9 @@
-import { ProfileSettingsHook } from './ProfileSetting.interface';
 import { ChangeEvent, useState } from 'react';
 import { getCroppedImg, readFile } from '@app/utils';
 import { Area } from 'react-easy-crop';
+import { PersonalDetailsHook } from './PersonalDetails.interface';
 
-export const useProfileSettings = (): ProfileSettingsHook => {
+export const usePersonalDetails = (): PersonalDetailsHook => {
   const [imageSrc, setImageSrc] = useState<string | null>(null);
   const [cropModalOpen, setCropModalOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
