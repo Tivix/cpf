@@ -68,7 +68,7 @@ export const ProfileSettings: React.FC<ProfileSettingsProps> = ({ data }) => {
       <Breadcrumbs
         breadcrumbs={[
           { label: 'People', href: routes.people.index, current: false },
-          { label: 'Profile setting', href: routes.people.myProfile, current: true },
+          { label: 'Profile settings', href: routes.people.myProfile, current: true },
         ]}
       />
       <section className="flex w-full flex-col items-center gap-6 py-16">

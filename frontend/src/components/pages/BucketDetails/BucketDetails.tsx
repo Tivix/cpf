@@ -1,11 +1,14 @@
+'use client';
 import { BucketDetailsProps } from './BucketDetails.interface';
 import { AdvancementLevel } from './modules/AdvancementLevel';
 import { Typography } from '@app/components/common/Typography';
 import { Breadcrumbs } from '@app/components/modules/Breadcrumbs';
+import { useBucketDetails } from './BucketDetails.hooks';
 import { routes } from '@app/constants';
 
 export const BucketDetails: React.FC<BucketDetailsProps> = ({ data, ladderName, ladderSlug, bucketSlug }) => {
   const { bucketName, description, advancementLevels } = data;
+  const { levelOpen, handleOpen } = useBucketDetails();
 
   return (
     <div>
@@ -34,6 +37,8 @@ export const BucketDetails: React.FC<BucketDetailsProps> = ({ data, ladderName, 
                 key={level.advancementLevel}
                 data={level}
                 showVerticalLine={index < advancementLevels.length - 1}
+                open={levelOpen === level.advancementLevel}
+                onClick={() => handleOpen(level.advancementLevel)}
               />
             ))}
           </div>
