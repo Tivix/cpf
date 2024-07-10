@@ -1,3 +1,3 @@
-import { PersonalDetails } from '@app/components/pages/PersonalDetails/PersonalDetails';
+import { PersonalDetails } from '@app/components/views/PersonalDetails/PersonalDetails';
 
 export default PersonalDetails;

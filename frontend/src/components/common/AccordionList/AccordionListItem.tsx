@@ -20,8 +20,9 @@ export const AccordionListItem = ({
   return (
     <div className="border-b border-b-navy-200 px-2 py-4">
       <button
-        type="button"
-        className={generateClassNames('flex w-full items-center justify-between', { 'cursor-auto': !children })}
+        className={generateClassNames('flex w-full items-center justify-between', {
+          'cursor-pointer': children,
+        })}
         onClick={handleClick}
         disabled={disableExpand}
       >
@@ -30,12 +31,13 @@ export const AccordionListItem = ({
         </Typography>
         <Tooltip tooltipText={noContentTooltipText}>
           <div
-            className={`flex min-h-10 min-w-10 cursor-pointer items-center justify-center ${disableExpand ? 'text-navy-300' : 'text-navy-500'}`}
+            className={`flex min-h-10 min-w-10 items-center justify-center ${disableExpand ? 'text-navy-300' : 'text-navy-500'}`}
           >
             <ChevronRightIcon className={generateClassNames('rotate-90', { '-rotate-90': isOpen })} />
           </div>
         </Tooltip>
       </button>
+
       {children ? (
         <div className={`font-normal text-navy-600 duration-300 ${isOpen ? 'mt-4 h-auto text-sm' : 'h-0 text-[0px]'}`}>
           {children}

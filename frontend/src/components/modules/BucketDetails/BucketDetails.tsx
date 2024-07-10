@@ -1,9 +1,12 @@
+'use client';
 import { BucketDetailsProps } from './BucketDetails.interface';
 import { AdvancementLevel } from '@app/components/modules/AdvancementLevel';
 import { Typography } from '@app/components/common/Typography';
+import { useBucketDetails } from './BucketDetails.hooks';
 
 export const BucketDetails: React.FC<BucketDetailsProps> = ({ data }) => {
   const { bucketName, description, advancementLevels } = data;
+  const { levelOpen, handleOpen } = useBucketDetails();
 
   return (
     <section className="py-16">
@@ -24,6 +27,8 @@ export const BucketDetails: React.FC<BucketDetailsProps> = ({ data }) => {
               key={level.advancementLevel}
               data={level}
               showVerticalLine={index < advancementLevels.length - 1}
+              open={levelOpen === level.advancementLevel}
+              onClick={() => handleOpen(level.advancementLevel)}
             />
           ))}
         </div>
