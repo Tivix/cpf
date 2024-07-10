@@ -1,4 +1,4 @@
-import { CheckMarkIcon } from '@app/static/icons/CheckmarkIcon';
+import { CheckMarkIcon } from '@app/static/icons/CheckMarkIcon';
 
 export const Completed = () => {
   return (

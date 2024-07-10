@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { EmployeeCardProps } from './EmployeeCard.interface';
-import { CheckMarkIcon } from '@app/static/icons/CheckmarkIcon';
+import { CheckMarkIcon } from '@app/static/icons/CheckMarkIcon';
 import { generateClassNames } from '@app/utils';
 import { tabs } from '@app/const';
 import { DropdownMenuComponent } from '../../common/DropdownMenuComponent';
