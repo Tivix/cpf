@@ -1,12 +1,16 @@
 import { ChangeEvent } from 'react';
 import { Area } from 'react-easy-crop';
-import { User } from '@app/types/people';
 
-export interface ProfileSettingsProps {
-  data: User;
+export interface PersonalDetailsProps {
+  data: {
+    photo?: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+  };
 }
 
-export interface ProfileSettingsHook {
+export interface PersonalDetailsHook {
   imageSrc: string | null;
   handleFileChange: (event: ChangeEvent<HTMLInputElement>) => Promise<void>;
   cropModalOpen: boolean;
