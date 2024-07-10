@@ -1,11 +1,9 @@
-import { Typography } from '@app/components/common/Typography';
+import { PageTitle } from '@app/components/common/PageTitle';
 
 export default function MySpace() {
   return (
     <div>
-      <Typography className="mb-10" variant="body-l/semibold" as="h1">
-        My Space
-      </Typography>
+      <PageTitle title="My Space" />
     </div>
   );
 }

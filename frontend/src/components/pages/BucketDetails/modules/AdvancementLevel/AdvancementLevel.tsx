@@ -4,7 +4,7 @@ import { AccordionCard } from '@app/components/common/AccordionCard';
 import { AccordionList } from '@app/components/common/AccordionList';
 import { Modal } from '@app/components/common/Modal';
 import { AdvancementLevelProps } from './AdvancemetLevel.interface';
-import { useAdvancementLevel } from '@app/components/modules/AdvancementLevel/AdvancementLevel.hooks';
+import { useAdvancementLevel } from './AdvancementLevel.hooks';
 import { Markdown } from '@app/components/common/Markdown';
 import { Typography } from '@app/components/common/Typography';
 import { Button } from '@app/components/common/Button';

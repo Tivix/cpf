@@ -18,6 +18,9 @@ goal-oriented work environment with a cutting-edge platform.
 - Usage
 - Wiki
 - Contributing
+- Development
+  - Frontend
+  - Backend
 - License
 - Contact
 
@@ -51,12 +54,6 @@ Instructions on how to use the project.
 
 For more information, check out the project's wiki under the link: https://github.com/Tivix/cpf/wiki
 
-# swagger/redoc
-
-Swagger and redoc can be accessed using following urls:
-- http://0.0.0.0:8000/docs
-- http://0.0.0.0:8000/redoc
-
 # Contributing
 
 Guidelines for contributing to the project.
@@ -67,6 +64,41 @@ Guidelines for contributing to the project.
 - Commit your changes.
 - Push to the branch.
 - Open a pull request.
+
+# Development
+
+## Frontend
+
+### Folder structure
+
+- `api` - Contains api calls.
+- `app`- The App Router by Next.js.
+- `components` - Contains all components used in the app.
+   - `common` - In the common folder, we keep all essential components like Button, Card, or Input.
+   - `modules` - Here we keep more complex components that are still reusable or are part of layouts.
+   - `pages` - Here we compose view together to create a page. If you want to extract some module of the page, create `modules` folder there and put it in it.
+- `constants` - Contains all the constant values used in the app.
+- `static`- Contains assets like icons.
+- `store` - Contains all stores for state management.
+- `types` - Contains all reusable types and interfaces that are shared between many pages and modules.
+- `utils` - Contains all utility functions like data transformations or calculations.
+
+### Component structure
+
+Component folder should contain:
+
+- `index.ts` - importing and exporting the component.
+- `ComponentName.tsx` - view part of a component.
+- `ComponentName.interface.ts` - types related to that component.
+- `ComponentName.hooks.tsx` - the logic of our component
+
+## Backend
+
+### swagger/redoc
+
+Swagger and redoc can be accessed using following urls:
+- http://0.0.0.0:8000/docs
+- http://0.0.0.0:8000/redoc
 
 # License
 
