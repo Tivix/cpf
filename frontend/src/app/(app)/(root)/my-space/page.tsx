@@ -20,3 +20,5 @@ const data = {
 export default function MySpacePage() {
   return <MySpace data={data} />;
 }
+
+export const dynamic = 'force-dynamic';
