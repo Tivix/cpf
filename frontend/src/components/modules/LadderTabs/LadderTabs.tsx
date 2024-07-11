@@ -5,8 +5,11 @@ import { LadderTabsProps, LadderInterface } from './LadderTabs.interface';
 import { generateClassNames } from '@app/utils';
 import { Button } from '@app/components/common/Button';
 import { Typography } from '@app/components/common/Typography';
+import { TargetIcon } from '@app/static/icons/TargetIcon';
+import { CheckIcon } from '@app/static/icons/CheckIcon';
+import { LockIcon } from '@app/static/icons/LockIcon';
 
-export const LadderTabs: React.FC<LadderTabsProps> = ({ maximumLadders, activeLadder, ladderOnClick }) => {
+export const LadderTabs: React.FC<LadderTabsProps> = ({ maximumLadders, activeLadder, ladderOnClick, currentBand }) => {
   const generateLadders = useCallback((maxLadders: number): LadderInterface => generateBandGrouping(maxLadders), []);
 
   const ladders: LadderInterface = useMemo(() => generateLadders(maximumLadders), [generateLadders, maximumLadders]);
@@ -23,13 +26,18 @@ export const LadderTabs: React.FC<LadderTabsProps> = ({ maximumLadders, activeLa
               <Fragment key={ladder.toString()}>
                 <Button
                   onClick={() => ladderOnClick && ladderOnClick(ladder)}
-                  className={generateClassNames('w-full', {
+                  className={generateClassNames('flex w-full gap-1', {
+                    'border-transparent bg-blue-100 text-blue-900 hover:border-navy-300':
+                      currentBand && currentBand >= ladder,
                     'pointer-events-none border-blue-800 bg-blue-800 text-white': ladder === activeLadder,
                   })}
                   styleType="natural"
                   variant="border"
                 >
                   {ladder}
+                  {ladder <= currentBand && <CheckIcon />}
+                  {ladder === currentBand + 1 && <TargetIcon />}
+                  {ladder > currentBand + 1 && <LockIcon />}
                 </Button>
                 {index !== ladders[positionName].length - 1 && (
                   <VerticalLineIcon className="h-6 w-full text-navy-300" />

@@ -12,11 +12,18 @@ export const useMySpace = (): MySpaceHooks => {
 
   const handleReplace = useCallback(() => {
     if (!currentTab) {
-      router.replace(`${pathname}?tab=${DEFAULT_TAB}`);
+      router.replace(`${pathname}?tab=ladder&band=1`);
+    } else if (currentTab === 'ladder') {
+      const band = searchParams.get('band');
+      if (band) {
+        router.replace(`${pathname}?tab=${currentTab}&band=${band}`);
+      } else {
+        router.replace(`${pathname}?tab=ladder&band=1`);
+      }
     } else {
       router.replace(`${pathname}?tab=${currentTab}`);
     }
-  }, [currentTab, pathname, router]);
+  }, [currentTab, pathname, router, searchParams]);
 
   useEffect(() => {
     handleReplace();

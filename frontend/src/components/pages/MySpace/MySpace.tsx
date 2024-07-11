@@ -5,9 +5,10 @@ import { Header } from '@app/components/pages/MySpace/modules/Header';
 import { Tabs } from '@app/components/common/Tabs';
 import { useMySpace } from './MySpace.hooks';
 import { mySpaceTabs } from './contants';
+import { LadderTab } from './modules/LadderTab';
 
 export const MySpace: React.FC<MySpaceProps> = ({ data }) => {
-  const { user, currentLevel, nextLevel } = data;
+  const { user, currentLevel, nextLevel, ladder } = data;
   const { currentTab, setCurrentTab } = useMySpace();
 
   return (
@@ -17,6 +18,7 @@ export const MySpace: React.FC<MySpaceProps> = ({ data }) => {
       </Typography>
       <Header user={user} currentLevel={currentLevel} nextLevel={nextLevel} />
       <Tabs tabs={mySpaceTabs} currentTab={currentTab} onTabChange={setCurrentTab} />
+      <div>{currentTab === 'ladder' && <LadderTab bands={ladder.bands} goalBand={3} />}</div>
     </div>
   );
 };

@@ -2,10 +2,10 @@
 
 import { Breadcrumbs } from '@app/components/modules/Breadcrumbs';
 import { routes } from '@app/constants';
-import { LadderTabs } from './modules/LadderTabs';
-import { LadderDetails } from './modules/LadderDetails';
+import { LadderTabs } from '../../modules/LadderTabs';
 import { useLadderDetails } from './LadderDetails.hooks';
 import { LadderDetailsProps } from './LadderDetails.interface';
+import { LadderDetails } from '@app/components/modules/LadderDetails';
 
 export const LadderDetailsPage: React.FC<LadderDetailsProps> = ({ data, ladderSlug }) => {
   const { currentBand, handleLadderChange, tabsProps } = useLadderDetails(data?.bands);
