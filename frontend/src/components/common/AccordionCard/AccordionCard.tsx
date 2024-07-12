@@ -26,7 +26,7 @@ export const AccordionCard = ({
         className={generateClassNames(
           'group flex w-full items-center justify-between rounded-2xl border border-navy-200 p-6',
           {
-            'hover:bg-transparent rounded-b-none border-b-0 pb-0': isOpen,
+            'rounded-b-none border-b-0 pb-0 hover:bg-transparent': isOpen,
             'cursor-auto': !children,
           },
         )}
