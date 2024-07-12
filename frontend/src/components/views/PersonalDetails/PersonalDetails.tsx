@@ -47,10 +47,7 @@ export const PersonalDetails = () => {
         <Button
           styleType="primary"
           variant="border"
-          onClick={(e) => {
-            e.preventDefault();
-            router.push(routes.people.addNew.mainLadder);
-          }}
+          onClick={() => router.push(routes.people.addNew.mainLadder)}
           disabled={formValid}
         >
           Continue

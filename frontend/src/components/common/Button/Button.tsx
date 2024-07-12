@@ -12,20 +12,20 @@ const types: {
     border:
       'bg-transparent text-blue-800 border border-blue-800 hover:bg-navy-100 active:text-blue-900 active:border-blue-900',
     borderless: 'px-2 bg-transparent text-blue-800 hover:bg-navy-100 active:text-blue-900',
-    link: 'px-0 bg-transparent text-blue-800 hover:underline hover:text-blue-900 active:text-blue-900 active:no-underline',
+    link: 'px-0 h-auto bg-transparent text-blue-800 hover:underline hover:text-blue-900 active:text-blue-900 active:no-underline',
   },
   natural: {
     solid: 'bg-navy-600 text-white hover:bg-navy-700',
     border: 'bg-transparent text-navy-600 border border-navy-300 hover:bg-navy-100',
     borderless: 'px-2 bg-transparent text-navy-600 hover:bg-navy-50 active:bg-navy-100',
-    link: 'px-0 bg-transparent text-navy-600 hover:underline hover:text-navy-700 active:no-underline',
+    link: 'px-0 h-auto bg-transparent text-navy-600 hover:underline hover:text-navy-700 active:no-underline',
   },
   warning: {
     solid: 'bg-red-600 text-white hover:bg-red-700',
     border: 'bg-transparent text-red-600 border border-red-600 hover:bg-navy-100 hover:text-red-700',
     borderless:
       'px-2 bg-transparent text-red-600 hover:bg-navy-50 hover:border-[1.5px] hover:border-red-700 hover:text-red-700',
-    link: 'px-0 bg-transparent text-red-600 hover:underline hover:text-red-700 active:no-underline',
+    link: 'px-0 h-auto bg-transparent text-red-600 hover:underline hover:text-red-700 active:no-underline',
   },
 };
 
@@ -39,6 +39,7 @@ const disabledStyles = {
 export const Button: FC<ButtonProps> = ({
   styleType = 'primary',
   variant = 'solid',
+  type = 'button',
   disabled = false,
   className,
   children,
@@ -54,7 +55,7 @@ export const Button: FC<ButtonProps> = ({
   );
 
   return (
-    <button className={buttonClass} disabled={disabled} {...props}>
+    <button className={buttonClass} type={type} disabled={disabled} {...props}>
       {children}
     </button>
   );
