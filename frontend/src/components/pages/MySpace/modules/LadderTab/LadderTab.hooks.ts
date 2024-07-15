@@ -1,37 +1,30 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useEffect, useMemo } from 'react';
 import { LadderBand } from '@app/types/library';
 import { LadderTabHooks } from '@app/components/pages/MySpace/modules/LadderTab/LadderTab.interface';
+import { useSearchParamsReplacer } from '../../../../../hooks';
+
+const DEFAULT_BAND = '1';
 
 export const useLadderTab = (bands: Record<string, LadderBand>): LadderTabHooks => {
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-  console.log(searchParams.keys());
-  const band = searchParams.get('band');
+  const { currentValue: currentBand, handleValueChange } = useSearchParamsReplacer('band', '1');
 
-  const [currentBand, setCurrentBand] = useState(typeof band === 'string' ? parseInt(band, 10) : 1);
+  const numericBand = parseInt(currentBand, 10);
+
   const maximumLadders = useMemo(() => (bands ? Object.keys(bands).length : 0), [bands]);
-  const tabsProps = useMemo(() => ({ activeLadder: currentBand, maximumLadders }), [currentBand, maximumLadders]);
-
-  const handleReplace = useCallback(() => {
-    if (!currentBand || currentBand > maximumLadders || currentBand < 1) {
-      router.replace(`${pathname}?tab=ladder&band=1`);
-    } else {
-      router.replace(`${pathname}?tab=ladder&band=${currentBand}`);
-    }
-  }, [currentBand, maximumLadders, pathname, router]);
-
-  const handleLadderChange = useCallback((ladder: number) => {
-    setCurrentBand(ladder);
-  }, []);
+  const tabsProps = useMemo(() => ({ activeLadder: numericBand, maximumLadders }), [numericBand, maximumLadders]);
 
   useEffect(() => {
-    handleReplace();
-  }, [handleReplace]);
+    if (numericBand < 1 || numericBand > maximumLadders) {
+      handleValueChange(DEFAULT_BAND);
+    }
+  }, [handleValueChange, maximumLadders, numericBand]);
+
+  const handleLadderChange = (ladder: number) => {
+    handleValueChange(ladder.toString());
+  };
 
   return {
-    currentBand,
+    currentBand: numericBand,
     handleLadderChange,
     tabsProps,
   };

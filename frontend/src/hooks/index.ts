@@ -1,0 +1,1 @@
+export { useSearchParamsReplacer } from './useSearchParamsReplacer';
