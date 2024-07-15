@@ -7,7 +7,7 @@ export const TooltipPopover: FC<PropsWithChildren<TooltipProps>> = ({ tooltipTex
   const [open, setOpen] = useState(false);
 
   return (
-    <Popover className="relative flex flex-1">
+    <Popover className="relative">
       <PopoverButton
         onMouseEnter={() => setOpen(true)}
         onMouseLeave={() => setOpen(false)}

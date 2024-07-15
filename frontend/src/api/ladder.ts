@@ -1,6 +1,6 @@
 import { mapKeysToCamelCase } from '@app/utils';
 import { API_URLS } from '.';
-import { LadderCardInterface } from '@app/components/common/LadderCard';
+import { LadderCardInterface } from '@app/components/pages/Library/modules/LadderCard';
 import { LadderBand } from '@app/types/library';
 
 async function getLadders() {
