@@ -1,36 +1,28 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useEffect, useMemo } from 'react';
 import { LadderBand } from '@app/types/library';
 import { LadderDetailsHook } from './LadderDetails.interface';
+import { DEFAULT_STEP } from '../../modules/SideStepper';
+import { useSearchParamsReplacer } from '../../../hooks';
 
 export const useLadderDetails = (bands?: Record<string, LadderBand>): LadderDetailsHook => {
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const band = searchParams.get('band');
+  const { currentValue: currentBand, handleValueChange } = useSearchParamsReplacer('band', DEFAULT_STEP);
+  const numericBand = parseInt(currentBand, 10);
 
-  const [currentBand, setCurrentBand] = useState(typeof band === 'string' ? parseInt(band, 10) : 1);
   const maximumLadders = useMemo(() => (bands ? Object.keys(bands).length : 0), [bands]);
-  const tabsProps = useMemo(() => ({ activeLadder: currentBand, maximumLadders }), [currentBand, maximumLadders]);
-
-  const handleReplace = useCallback(() => {
-    if (!currentBand || currentBand > maximumLadders || currentBand < 1) {
-      router.replace(`${pathname}?band=1`);
-    } else {
-      router.replace(`${pathname}?band=${currentBand}`);
-    }
-  }, [currentBand, maximumLadders, pathname, router]);
-
-  const handleLadderChange = useCallback((ladder: number) => {
-    setCurrentBand(ladder);
-  }, []);
+  const tabsProps = useMemo(() => ({ activeLadder: numericBand, maximumLadders }), [numericBand, maximumLadders]);
 
   useEffect(() => {
-    handleReplace();
-  }, [handleReplace]);
+    if (numericBand < 1 || numericBand > maximumLadders) {
+      handleValueChange(DEFAULT_STEP);
+    }
+  }, [handleValueChange, maximumLadders, numericBand]);
+
+  const handleLadderChange = (ladder: number) => {
+    handleValueChange(ladder.toString());
+  };
 
   return {
-    currentBand,
+    currentBand: numericBand,
     handleLadderChange,
     tabsProps,
   };
