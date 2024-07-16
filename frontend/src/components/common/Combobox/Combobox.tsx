@@ -12,8 +12,9 @@ import {
 import { useMemo, useState } from 'react';
 import { ComboboxProps, Option } from './Combobox.interface';
 import { Controller, useFormContext } from 'react-hook-form';
+import { generateClassNames } from '@app/utils';
 
-export const Combobox: React.FC<ComboboxProps> = ({ label, options, name, renderRightContent }) => {
+export const Combobox: React.FC<ComboboxProps> = ({ label, options, name, renderRightContent, className }) => {
   const [query, setQuery] = useState('');
   const { control } = useFormContext();
 
@@ -38,7 +39,7 @@ export const Combobox: React.FC<ComboboxProps> = ({ label, options, name, render
             setQuery('');
             onChange(person);
           }}
-          className="flex flex-1 flex-col gap-y-2"
+          className={generateClassNames('flex flex-1 flex-col gap-y-2', className)}
         >
           {label && <Label className="font-semibold text-navy-900">{label}</Label>}
           <div className="flex flex-1 items-center">

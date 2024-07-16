@@ -5,4 +5,5 @@ export const API_URLS = {
     ladders: `${baseUrl}/library/ladders`,
     buckets: `${baseUrl}/library/buckets`,
   },
+  people: `${baseUrl}/people`,
 };

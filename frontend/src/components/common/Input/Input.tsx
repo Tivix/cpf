@@ -5,7 +5,7 @@ import { generateClassNames } from '@app/utils';
 import { ErrorMessage } from '@hookform/error-message';
 import { AlertTriangleIcon } from '@app/static/icons/AlertTriangleIcon';
 
-export const Input: FC<InputProps> = memo(({ label, name, placeholder, options = {}, ...otherProps }) => {
+export const Input: FC<InputProps> = memo(({ label, name, placeholder, leftIcon, options = {}, ...otherProps }) => {
   const { formState, register, getFieldState } = useFormContext();
   const error = getFieldState(name).error;
 
@@ -16,16 +16,21 @@ export const Input: FC<InputProps> = memo(({ label, name, placeholder, options =
           {label}
         </label>
       )}
-      <input
-        className={generateClassNames(
-          'outline-black h-12 w-full rounded-xl border border-navy-200 px-4 outline-none focus:border-navy-700',
-          { 'border-red-600 focus:border-red-600': !!error },
+      <div className="relative rounded-md shadow-sm">
+        {leftIcon && (
+          <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">{leftIcon}</div>
         )}
-        placeholder={placeholder}
-        id={`input-${name}`}
-        {...register(name, options)}
-        {...otherProps}
-      />
+        <input
+          className={generateClassNames(
+            'outline-black h-12 w-full rounded-xl border border-navy-200 pl-8 pr-4 outline-none focus:border-navy-700',
+            { 'border-red-600 focus:border-red-600': !!error },
+          )}
+          placeholder={placeholder}
+          id={`input-${name}`}
+          {...register(name, options)}
+          {...otherProps}
+        />
+      </div>
       <ErrorMessage
         errors={formState.errors}
         name={name}

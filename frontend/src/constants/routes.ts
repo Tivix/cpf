@@ -9,7 +9,7 @@ export const routes = {
     index: '/my-space',
   },
   people: {
-    index: '/people',
+    index: '/people?tab=active&page=1',
     myProfile: '/people/my-profile',
     addNew: {
       personalDetails: '/people/add-new/personal-details',

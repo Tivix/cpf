@@ -14,7 +14,7 @@ const removeIgnoredFiles = async (files) => {
 export default {
   './src/**/*.{js,cjs,mjs,jsx,ts,tsx,json,md,yml}': async (files) => {
     const match = await removeIgnoredFiles(files);
-    return [`eslint --max-warnings=0 ${match}`, `prettier --write ${match}`];
+    return [`eslint --max-warnings=0 ${match}`, `tsc --noEmit`, `prettier --write ${match}`];
   },
   './**/*.{json,md,yml}': ['prettier --write'],
   'package.json': 'npx sort-package-json',
