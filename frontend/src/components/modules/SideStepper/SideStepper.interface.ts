@@ -3,7 +3,7 @@ export type StepStates = 'completed' | 'inProgress' | 'notStarted';
 export interface Step<T> {
   label: string;
   state: StepStates;
-  current: boolean;
+  active: boolean;
   href: T;
 }
 

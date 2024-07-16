@@ -5,6 +5,7 @@ import { NotificationIcon } from '@app/static/icons/NotificationIcon';
 import { Avatar } from '@app/components/common/Avatar';
 import { UserIcon } from '@app/static/icons/UserIcon';
 import { LogoutIcon } from '@app/static/icons/LogoutIcon';
+import Link from 'next/link';
 
 export const Topbar = () => {
   // TODO: get user from some context
@@ -59,10 +60,13 @@ export const Topbar = () => {
             <MenuItems className="ring-black absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-opacity-5 focus:outline-none">
               {menuItems.map(({ href, label, icon }) => (
                 <MenuItem key={label}>
-                  <a href={href} className="flex items-center gap-3 px-4 py-2 text-sm text-navy-700 hover:bg-navy-100">
+                  <Link
+                    href={href}
+                    className="flex items-center gap-3 px-4 py-2 text-sm text-navy-700 hover:bg-navy-100"
+                  >
                     <span>{icon}</span>
                     <span>{label}</span>
-                  </a>
+                  </Link>
                 </MenuItem>
               ))}
             </MenuItems>
