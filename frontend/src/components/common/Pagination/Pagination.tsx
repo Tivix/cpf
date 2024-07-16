@@ -1,7 +1,7 @@
 import { ChevronRightIcon } from '@app/static/icons/ChevronRightIcon';
 import { PaginationProps } from './Pagination.interface';
-import { paginationMaxPages, rowsPerPage } from '@app/const';
 import { generateClassNames } from '@app/utils';
+import { paginationMaxPages, rowsPerPage } from '@app/components/pages/People/People.utils';
 
 export const Pagination = ({ itemsAmount, setPageNumber, pageNumber }: PaginationProps) => {
   const pagesButtons = itemsAmount && [...Array(Math.ceil(itemsAmount / rowsPerPage))];
@@ -16,36 +16,6 @@ export const Pagination = ({ itemsAmount, setPageNumber, pageNumber }: Paginatio
 
   // TO REFACTOR
   const getPageNumber = (index: number) => {
-    // return pagesButtons && pagesButtons?.length > paginationMaxPages
-    //   ? (pageNumber <= startPagesWithoutTruncation && index + 1 === paginationMaxPages - 1) ||
-    //     (pageNumber >= pagesButtons.length - 2 && index + 1 === 2)
-    //     ? '...'
-    //     : pageNumber <= startPagesWithoutTruncation && index + 1 <= startPagesWithoutTruncation
-    //       ? index + 1
-    //       : pageNumber >= pagesButtons.length - 2 && index + 1 >= startPagesWithoutTruncation
-    //         ? pagesButtons.length - (paginationMaxPages - (index + 1))
-    //         : index + 1 === paginationMaxPages
-    //           ? pagesButtons.length
-    //           : (pagePosition === startPagesWithoutTruncation + 1 &&
-    //                 pageNumber > startPagesWithoutTruncation + 1 &&
-    //                 index + 1 === 2) ||
-    //               (pagePosition === startPagesWithoutTruncation + 2 &&
-    //                 pageNumber > startPagesWithoutTruncation + 2 &&
-    //                 index + 1 === 2) ||
-    //               (pagePosition === startPagesWithoutTruncation + 1 &&
-    //                 pageNumber < pagesButtons.length - 4 &&
-    //                 index + 1 === paginationMaxPages - 1) ||
-    //               (pagePosition === startPagesWithoutTruncation + 2 &&
-    //                 pageNumber < pagesButtons.length - 3 &&
-    //                 index + 1 === paginationMaxPages - 1)
-    //             ? '...'
-    //             : pagePosition === 6 &&
-    //                 pageNumber !== pagesButtons.length - 2 &&
-    //                 index + 1 <= pagePosition &&
-    //                 index + 1 >= startPagesWithoutTruncation
-    //               ? pageNumber + (index + 1 - pageNumber + 1)
-    //               : index + 1
-    //   : index + 1;
     return index + 1;
   };
 

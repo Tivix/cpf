@@ -2,7 +2,7 @@ import { ComponentProps } from 'react';
 
 interface Tab {
   title: string;
-  employees?: number;
+  count?: number;
 }
 
 export interface TabsProps {

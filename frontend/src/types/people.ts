@@ -1,7 +1,7 @@
 export const StatusType = {
-  ACTIVE: 'Active',
-  DRAFT: 'Draft',
-  DEACTIVATED: 'Deactivated',
+  active: 'active',
+  draft: 'draft',
+  deactivated: 'deactivated',
 } as const;
 
 export interface PeopleDetails {
@@ -19,7 +19,7 @@ export interface Employee {
   name: string;
   title: string;
   laddersDetails: LadderDetails[];
-  status: typeof StatusType;
+  status: keyof typeof StatusType;
 }
 
 export interface LadderDetails {
@@ -28,12 +28,6 @@ export interface LadderDetails {
   activeGoal: boolean;
   goalProgress: number;
   latestActivity: number;
-}
-
-export interface FetchedPeopleTypes {
-  active: number;
-  draft: number;
-  deactivated: number;
 }
 
 export interface User {

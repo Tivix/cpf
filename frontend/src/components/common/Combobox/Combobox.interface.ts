@@ -10,4 +10,5 @@ export interface ComboboxProps {
   options: Option[];
   name: string;
   renderRightContent?: () => ReactNode;
+  className?: string;
 }

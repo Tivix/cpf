@@ -2,7 +2,7 @@ import { generateClassNames } from '@app/utils';
 import { TabsProps } from './Tabs.interface';
 
 export const Tabs = ({ tabs, active, setActive, className }: TabsProps) => (
-  <nav className={`flex ${className}`} aria-label="Tab">
+  <div className={`flex ${className}`} aria-label="Tab">
     <ol role="list" className="flex gap-8 pt-4">
       {tabs.map((tab, index) => (
         <li key={index}>
@@ -12,10 +12,10 @@ export const Tabs = ({ tabs, active, setActive, className }: TabsProps) => (
             })}
             onClick={() => setActive(tab.title)}
           >
-            {tab.title.replace(tab.title[0], tab.title[0].toUpperCase())} ({tab.employees})
+            {tab.title.replace(tab.title[0], tab.title[0].toUpperCase())} ({tab.count})
           </div>
         </li>
       ))}
     </ol>
-  </nav>
+  </div>
 );
