@@ -65,8 +65,6 @@ export const usePeople = () => {
 
   const getPeopleDetails = async (tab: string): Promise<void> => {
     const people = PEOPLE_DETAILS;
-    console.log('people', people);
-    console.log('tab', tab);
     const filteredPeople = people.results.filter(
       (person) => person.status.toLocaleLowerCase() === tab.toLocaleLowerCase(),
     );

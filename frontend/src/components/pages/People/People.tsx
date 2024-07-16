@@ -4,9 +4,9 @@ import { Tabs } from '@app/components/modules/Tabs';
 import { Pagination } from '@app/components/common/Pagination/Pagination';
 import { usePeople } from './People.hook';
 import Image from 'next/image';
-import { CheckMarkIcon } from '@app/static/icons/CheckMarkIcon';
+
 import { Typography } from '@app/components/common/Typography';
-import { Menu, MenuButton, MenuItem, MenuItems, Transition } from '@headlessui/react';
+import { Button, Menu, MenuButton, MenuItem, MenuItems, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
 import { DotVerticalIcon } from '@app/static/icons/DotVerticalIcon';
 import Link from 'next/link';
@@ -16,6 +16,8 @@ import { Input } from '@app/components/common/Input';
 import { SearchIcon } from '@app/static/icons/SearchIcon';
 import { bands, employeeMenuOptions } from './People.utils';
 import { PeopleTableForm } from './People.interface';
+import { CheckMarkIcon } from '@app/static/icons/CheckMarkIcon';
+import { routes } from '@app/constants';
 
 export const People = () => {
   const {
@@ -30,14 +32,14 @@ export const People = () => {
     form,
   } = usePeople();
 
-  console.log('fetchedPeople', fetchedPeople);
-
   return (
     <FormProvider<PeopleTableForm> form={form}>
       <div className="flex flex-col gap-6">
         <div className="flex items-center justify-between">
           <Breadcrumbs breadcrumbs={[{ label: 'People', href: '/people', current: true }]} />
-          <button className="rounded-full bg-blue-800 px-5 py-2 text-sm font-semibold text-white">+ Employee</button>
+          <Button>
+            <Link href={routes.people.addNew.personalDetails}>+ Employee</Link>
+          </Button>
         </div>
 
         {/* TODO: refactor Tabs */}
@@ -125,7 +127,7 @@ export const People = () => {
                           <div className="flex flex-col items-end gap-y-4">
                             {person?.laddersDetails?.map((ladder) => (
                               <div key={ladder.ladderName} className="h-4 w-4 text-navy-700">
-                                {ladder?.activeGoal && <CheckMarkIcon />}
+                                {ladder?.activeGoal && <CheckMarkIcon className="text-green-600" />}
                               </div>
                             ))}
                           </div>
