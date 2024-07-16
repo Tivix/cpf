@@ -2,7 +2,7 @@
 import { LadderTabProps } from './LadderTab.interface';
 import { LadderTabs } from '@app/components/modules/LadderTabs';
 import { useLadderTab } from './LadderTab.hooks';
-import { LadderDetails } from '@app/components/modules/LadderDetails';
+import { LadderDetails } from './modules/LadderDetails';
 
 export const LadderTab: React.FC<LadderTabProps> = ({ bands, currentLevel }) => {
   const { currentBand, handleLadderChange, tabsProps } = useLadderTab(bands);
