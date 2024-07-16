@@ -2,7 +2,7 @@ import multiprocessing
 import os
 
 # Server and Worker configuration
-bind = "0.0.0.0:8000"
+bind = "0.0.0.0:8001"
 workers = os.getenv("GUNICORN_WORKERS", multiprocessing.cpu_count() * 2 + 1)
 worker_class = "uvicorn.workers.UvicornWorker"
 worker_connections = 1000
