@@ -1,6 +1,4 @@
-import { Breadcrumbs } from '@app/components/modules/Breadcrumbs';
-import { ProfileSettings } from '@app/components/modules/ProfileSetting';
-import { routes } from '@app/constants';
+import { ProfileSettings } from '@app/components/pages/ProfileSetting';
 
 // TODO: get data from api
 const data = {
@@ -21,15 +19,5 @@ const data = {
 };
 
 export default async function LibraryPage() {
-  return (
-    <div>
-      <Breadcrumbs
-        breadcrumbs={[
-          { label: 'People', href: routes.people.index, current: false },
-          { label: 'Profile setting', href: routes.people.myProfile, current: true },
-        ]}
-      />
-      <ProfileSettings data={data} />
-    </div>
-  );
+  return <ProfileSettings data={data} />;
 }

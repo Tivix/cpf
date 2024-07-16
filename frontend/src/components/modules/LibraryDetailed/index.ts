@@ -1,1 +1,0 @@
-export { LibraryDetailed } from './LibraryDetailed';

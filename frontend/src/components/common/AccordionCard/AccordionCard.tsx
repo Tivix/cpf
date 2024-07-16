@@ -24,10 +24,9 @@ export const AccordionCard = ({
       <button
         type="button"
         className={generateClassNames(
-          'flex w-full items-center justify-between rounded-2xl border border-navy-200 p-6',
+          'group flex w-full items-center justify-between rounded-2xl border border-navy-200 p-6',
           {
-            'hover:bg-navy-100': !isOpen && children,
-            'hover:bg-transparent rounded-b-none border-b-0 pb-0': isOpen,
+            'rounded-b-none border-b-0 pb-0 hover:bg-transparent': isOpen,
             'cursor-auto': !children,
           },
         )}
@@ -35,8 +34,10 @@ export const AccordionCard = ({
       >
         <Typography variant={small ? 'body-m/semibold' : 'head-s/semibold'}>{title}</Typography>
         {children ? (
-          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-navy-50">
-            <ChevronRightIcon className={generateClassNames('rotate-90 text-navy-500', { '-rotate-90': isOpen })} />
+          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-navy-50 group-hover:bg-white">
+            <ChevronRightIcon
+              className={generateClassNames('rotate-90 text-navy-500 transition', { '-rotate-90': isOpen })}
+            />
           </div>
         ) : undefined}
       </button>
