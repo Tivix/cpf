@@ -5,6 +5,7 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: Variants;
   disabled?: boolean;
   className?: string;
+  type?: ButtonHTMLAttributes<HTMLButtonElement>['type'];
 }
 
 export type StyleTypes = 'primary' | 'natural' | 'warning';

@@ -1,18 +1,12 @@
 import { routes } from '@app/constants';
 import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { PersonalDetailsForm, PersonalDetailsFormNames } from './PersonalDetails.interface';
+import { useFormContext } from 'react-hook-form';
+
 import { usePeopleStore } from '@app/store/people/store';
+import { AddEmployeeForm } from '../AddEmployeeFormProvider';
 
 export const usePersonalDetails = () => {
-  const form = useForm<PersonalDetailsForm>({
-    mode: 'onChange',
-    defaultValues: {
-      [PersonalDetailsFormNames.firstName]: '',
-      [PersonalDetailsFormNames.lastName]: '',
-      [PersonalDetailsFormNames.email]: '',
-    },
-  });
+  const form = useFormContext<AddEmployeeForm>();
   const { isDirty, isValid } = form.formState;
   const [formValid, setFormValid] = useState(false);
   const updateProgress = usePeopleStore((state) => state.updateProgress);
@@ -27,5 +21,5 @@ export const usePersonalDetails = () => {
     else updateProgress({ [routes.people.addNew.personalDetails]: 'inProgress' });
   }, [formValid, updateProgress]);
 
-  return { form, formValid };
+  return { formValid };
 };

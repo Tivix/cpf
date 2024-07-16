@@ -11,16 +11,18 @@ export const EmployeeSideStepper = () => {
   const pathname = usePathname();
   const [addEmployeeSteps, setAddEmployeeSteps] = useState(addEmployeeInitialSteps);
 
-  // INFO: If current step is not 'completed', then set 'inProgress' state to the current path
   useEffect(() => {
     setAddEmployeeSteps((prevState) =>
       prevState.map((step) => {
+        const active = pathname.endsWith(step.href);
+        // INFO: If current step is not 'completed', then set 'inProgress' state to the current path
         const state: StepStates =
           progress[step.href] !== 'completed' && pathname.endsWith(step.href) ? 'inProgress' : progress[step.href];
 
         return {
           ...step,
-          state: state,
+          state,
+          active,
         };
       }),
     );
