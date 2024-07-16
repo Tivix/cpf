@@ -14,6 +14,7 @@ goal-oriented work environment with a cutting-edge platform.
 
 # Table of Contents
 
+- Cloning and Initializing
 - Installation
 - Usage
 - Wiki
@@ -21,18 +22,50 @@ goal-oriented work environment with a cutting-edge platform.
 - License
 - Contact
 
+## Cloning and Initializing the Repository with Submodules
+
+When you clone a repository that includes submodules, you need to ensure that the submodules are initialized and updated to the correct versions. This guide will walk you through the steps to properly clone and initialize a repository with submodules.
+
+### Cloning the Repository
+
+To clone the repository along with its submodules, use the `--recurse-submodules` flag. This ensures that all submodules are cloned and initialized automatically.
+
+Step 1:
+```
+git clone --recurse-submodules git@github.com:Tivix/cpf.git
+```
+
+Step 2:
+```
+cd cpf
+```
+
+### Initializing Submodules in an Already Cloned Repository
+
+If the repository has already been cloned without the --recurse-submodules flag, you can manually initialize and update the submodules using the following commands:
+
+#### 1. Initialize the Submodule
+```
+git submodule init
+```
+
+#### 2. Update the Submodule
+```
+git submodule update
+```
+
 # Installation
 
 Instructions on how to install and set up the project.
 
-1. Copy variables to `.env` files.
+#### Copy variables to `.env` files.
    ```
    cp .envexample .env
    ```
 
-- for testing purposes you might want to change flag `USE_MOCK_USER` to `True`
+for testing purposes you might want to change flag `USE_MOCK_USER` to `True`
 
-1. Build and run the project
+#### Build and run the project
    ```
    docker compose build
    docker compose up
@@ -41,7 +74,16 @@ Instructions on how to install and set up the project.
    ```
    docker compose up --build
    ```
-2. Open http://0.0.0.0:8080/ with your browser to see the result.
+
+After you have done the above steps, you should be able to access the application.
+
+##### Supabase admin panel
+
+[localhost:8080](http://localhost:8080)
+
+##### CPF Frontend application
+[localhost:8080/cpf](http://localhost:8080/cpf)
+
 
 # Usage
 
