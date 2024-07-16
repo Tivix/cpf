@@ -6,7 +6,7 @@ import { usePeople } from './People.hook';
 import Image from 'next/image';
 
 import { Typography } from '@app/components/common/Typography';
-import { Button, Menu, MenuButton, MenuItem, MenuItems, Transition } from '@headlessui/react';
+import { Menu, MenuButton, MenuItem, MenuItems, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
 import { DotVerticalIcon } from '@app/static/icons/DotVerticalIcon';
 import Link from 'next/link';
@@ -18,6 +18,7 @@ import { bands, employeeMenuOptions } from './People.utils';
 import { PeopleTableForm } from './People.interface';
 import { CheckMarkIcon } from '@app/static/icons/CheckMarkIcon';
 import { routes } from '@app/constants';
+import { Button } from '@app/components/common/Button';
 
 export const People = () => {
   const {
@@ -93,7 +94,7 @@ export const People = () => {
                                 width={200}
                                 height={200}
                                 alt="User image"
-                                src="/images/image.jpeg"
+                                src="/images/avatar_placeholder.jpeg"
                                 className="h-8 w-8 rounded-full object-cover"
                               />
                             </div>
