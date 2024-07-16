@@ -3,7 +3,7 @@ import { InputProps } from './Input.interface';
 import { useFormContext } from 'react-hook-form';
 import { generateClassNames } from '@app/utils';
 import { ErrorMessage } from '@hookform/error-message';
-import { CheckMarkIcon } from '@app/static/icons/AlertTriangleIcon';
+import { AlertTriangleIcon } from '@app/static/icons/AlertTriangleIcon';
 
 export const Input: FC<InputProps> = memo(({ label, name, placeholder, options = {}, ...otherProps }) => {
   const { formState, register, getFieldState } = useFormContext();
@@ -31,7 +31,7 @@ export const Input: FC<InputProps> = memo(({ label, name, placeholder, options =
         name={name}
         render={({ message }) => (
           <div className="flex items-center gap-x-2">
-            <CheckMarkIcon />
+            <AlertTriangleIcon />
             <div className="text-sm text-red-600 first-letter:uppercase">{message}</div>
           </div>
         )}
