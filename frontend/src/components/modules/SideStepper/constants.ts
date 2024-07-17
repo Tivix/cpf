@@ -1,1 +1,1 @@
-export const DEFAULT_STEP = '1';
+export const DEFAULT_STEP = 1;

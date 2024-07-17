@@ -1,12 +1,12 @@
 import { MySpaceHooks } from './MySpace.interface';
 import { DEFAULT_TAB } from './contants';
-import { useSearchParamsReplacer } from '../../../hooks';
+import { useQueryParam, StringParam, withDefault } from 'use-query-params';
 
 export const useMySpace = (): MySpaceHooks => {
-  const { currentValue, handleValueChange } = useSearchParamsReplacer('tab', DEFAULT_TAB);
+  const [currentTab, setCurrentTab] = useQueryParam('tab', withDefault(StringParam, DEFAULT_TAB));
 
   return {
-    currentTab: currentValue,
-    setCurrentTab: handleValueChange,
+    currentTab,
+    setCurrentTab,
   };
 };

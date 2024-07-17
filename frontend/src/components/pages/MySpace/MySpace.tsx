@@ -18,7 +18,7 @@ export const MySpace: React.FC<MySpaceProps> = ({ data }) => {
       </Typography>
       <Header user={user} currentLevel={currentLevel} nextLevel={nextLevel} />
       <Tabs tabs={mySpaceTabs} currentTab={currentTab} onTabChange={setCurrentTab} />
-      <div>{currentTab === 'ladder' && <LadderTab bands={ladder.bands} currentLevel={currentLevel} />}</div>
+      <div>{currentTab === 'ladder' && <LadderTab bands={ladder.bands} currentLevel={currentLevel.band} />}</div>
     </div>
   );
 };

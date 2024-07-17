@@ -35,9 +35,13 @@ export const LadderTabs: React.FC<LadderTabsProps> = ({ maximumLadders, activeLa
                   variant="border"
                 >
                   {ladder}
-                  {ladder <= currentBand && <CheckIcon />}
-                  {ladder === currentBand + 1 && <TargetIcon />}
-                  {ladder > currentBand + 1 && <LockIcon />}
+                  {currentBand && (
+                    <>
+                      {ladder <= currentBand && <CheckIcon />}
+                      {ladder === currentBand + 1 && <TargetIcon />}
+                      {ladder > currentBand + 1 && <LockIcon />}
+                    </>
+                  )}
                 </Button>
                 {index !== ladders[positionName].length - 1 && (
                   <VerticalLineIcon className="h-6 w-full text-navy-300" />

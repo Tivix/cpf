@@ -5,7 +5,7 @@ import { ThresholdCard } from '@app/components/modules/ThresholdCard';
 import { BucketCard } from '@app/components/modules/BucketCard';
 import { routes } from '@app/constants';
 
-export const LadderDetails = ({ ladder, ladderName, band, ladderSlug }: LadderDetailsProps) => {
+export const LadderDetails = ({ ladder, ladderName, band }: LadderDetailsProps) => {
   return (
     <div className="flex flex-col gap-8 rounded-2xl bg-white px-20 py-12">
       <div className="flex justify-between">
@@ -48,7 +48,6 @@ export const LadderDetails = ({ ladder, ladderName, band, ladderSlug }: LadderDe
                 <BucketCard
                   bucket={bucket}
                   key={bucket.bucketSlug}
-                  ladderSlug={ladderSlug}
                   withLevel
                   href={`${routes.mySpace.index}/${bucket.bucketSlug}`}
                 />

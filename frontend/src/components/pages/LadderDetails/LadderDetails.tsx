@@ -5,7 +5,7 @@ import { routes } from '@app/constants';
 import { LadderTabs } from '../../modules/LadderTabs';
 import { useLadderDetails } from './LadderDetails.hooks';
 import { LadderDetailsProps } from './LadderDetails.interface';
-import { LadderDetails } from '@app/components/modules/LadderDetails';
+import { LadderDetails } from './modules/LadderDetails';
 
 export const LadderDetailsPage: React.FC<LadderDetailsProps> = ({ data, ladderSlug }) => {
   const { currentBand, handleLadderChange, tabsProps } = useLadderDetails(data?.bands);

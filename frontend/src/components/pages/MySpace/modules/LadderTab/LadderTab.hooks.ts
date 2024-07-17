@@ -1,30 +1,24 @@
 import { useEffect, useMemo } from 'react';
 import { LadderBand } from '@app/types/library';
 import { LadderTabHooks } from '@app/components/pages/MySpace/modules/LadderTab/LadderTab.interface';
-import { useSearchParamsReplacer } from '../../../../../hooks';
 import { DEFAULT_STEP } from '@app/components/modules/SideStepper';
+import { useQueryParam, NumberParam, withDefault } from 'use-query-params';
 
 export const useLadderTab = (bands: Record<string, LadderBand>): LadderTabHooks => {
-  const { currentValue: currentBand, handleValueChange } = useSearchParamsReplacer('band', DEFAULT_STEP);
-
-  const numericBand = parseInt(currentBand, 10);
+  const [currentBand, setCurrentBand] = useQueryParam('band', withDefault(NumberParam, DEFAULT_STEP));
 
   const maximumLadders = useMemo(() => (bands ? Object.keys(bands).length : 0), [bands]);
-  const tabsProps = useMemo(() => ({ activeLadder: numericBand, maximumLadders }), [numericBand, maximumLadders]);
+  const tabsProps = useMemo(() => ({ activeLadder: currentBand, maximumLadders }), [currentBand, maximumLadders]);
 
   useEffect(() => {
-    if (numericBand < 1 || numericBand > maximumLadders) {
-      handleValueChange(DEFAULT_STEP);
+    if (currentBand < 1 || currentBand > maximumLadders) {
+      setCurrentBand(DEFAULT_STEP);
     }
-  }, [handleValueChange, maximumLadders, numericBand]);
-
-  const handleLadderChange = (ladder: number) => {
-    handleValueChange(ladder.toString());
-  };
+  }, [setCurrentBand, maximumLadders, currentBand]);
 
   return {
-    currentBand: numericBand,
-    handleLadderChange,
+    currentBand,
+    handleLadderChange: setCurrentBand,
     tabsProps,
   };
 };

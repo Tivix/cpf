@@ -1,11 +1,11 @@
 import { LadderDetailsProps } from './LadderDetails.interface';
 import { LadderBandBucket } from '@app/types/library';
-import { BucketCard } from '../BucketCard';
 import { AccordionCard } from '@app/components/common/AccordionCard';
 import { AccordionList } from '@app/components/common/AccordionList';
 import { Typography } from '@app/components/common/Typography';
 import { ThresholdCard } from '@app/components/modules/ThresholdCard';
 import { routes } from '@app/constants';
+import { BucketCard } from '@app/components/modules/BucketCard';
 
 export const LadderDetails = ({ ladder, ladderName, band, ladderSlug }: LadderDetailsProps) => {
   return (
