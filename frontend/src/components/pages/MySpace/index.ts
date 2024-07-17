@@ -1,1 +1,1 @@
-export { MySpace } from './MySpace';
+export { MySpaceWrapper as MySpace } from './MySpace';
