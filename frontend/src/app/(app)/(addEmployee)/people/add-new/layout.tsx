@@ -1,12 +1,12 @@
 import { EmployeeSideStepper } from '@app/components/modules/EmployeeSideStepper';
-import { WorkflowTopbar } from '@app/components/modules/WorkflowTopbar';
+import { EmployeeTopbar } from '@app/components/modules/EmployeeTopbar/EmployeeTopbar';
 import { AddEmployeeFormProvider } from '@app/components/pages/addEmployee/AddEmployeeFormProvider';
 
 export default function PeopleLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <div className="flex">
       <div className="w-full">
-        <WorkflowTopbar />
+        <EmployeeTopbar />
         <main className="p-8">
           <div className="grid grid-cols-workflow">
             <EmployeeSideStepper />
