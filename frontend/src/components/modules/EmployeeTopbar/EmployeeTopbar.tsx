@@ -29,7 +29,7 @@ export const EmployeeTopbar = () => {
             <Button variant="borderless" styleType="natural" onClick={handleBack}>
               Continue without saving
             </Button>
-            {/* TODO: disable when saving in progress */}
+            {/* TODO: disable when saving is in progress */}
             <Button variant="solid" styleType="primary" onClick={handleSave}>
               Save as draft
             </Button>
