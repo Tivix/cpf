@@ -7,7 +7,7 @@ import { Typography } from '@app/components/common/Typography';
 import { Button } from '@app/components/common/Button';
 
 export const EmployeeTopbar = () => {
-  const { cancelModalOpen, setCancelModalOpen, isDirty, handleBack } = useEmployeeTopbar();
+  const { cancelModalOpen, setCancelModalOpen, isDirty, handleBack, handleSave } = useEmployeeTopbar();
 
   return (
     <>
@@ -17,19 +17,20 @@ export const EmployeeTopbar = () => {
         saveTitle="Save as draft"
         activateTitle="Activate Employee"
         onCancel={isDirty ? () => setCancelModalOpen(true) : handleBack}
-        onSave={() => {}}
+        onSave={handleSave}
         onActivate={() => {}}
       />
-      <Modal open={cancelModalOpen} onClose={() => setCancelModalOpen(false)} title="Delete new employee">
+      <Modal open={cancelModalOpen} onClose={() => setCancelModalOpen(false)} title="Save as draft?">
         <div className="flex flex-col gap-y-6">
           <Typography variant="body-m/regular" className="text-navy-600">
             Do you want to save this employee as draft?
           </Typography>
           <div className="flex justify-end gap-x-6">
-            <Button variant="borderless" styleType="natural" onClick={() => setCancelModalOpen(false)}>
+            <Button variant="borderless" styleType="natural" onClick={handleBack}>
               Continue without saving
             </Button>
-            <Button variant="solid" styleType="primary" onClick={handleBack}>
+            {/* TODO: disable when saving in progress */}
+            <Button variant="solid" styleType="primary" onClick={handleSave}>
               Save as draft
             </Button>
           </div>

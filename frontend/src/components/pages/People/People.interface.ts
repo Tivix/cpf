@@ -1,4 +1,4 @@
-import { Option } from '@app/components/common/Combobox';
+import { Option } from '@app/types/common';
 
 export const peopleTableFormName = {
   search: 'search',
