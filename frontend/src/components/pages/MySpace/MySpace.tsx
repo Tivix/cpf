@@ -6,10 +6,8 @@ import { Tabs } from '@app/components/common/Tabs';
 import { useMySpace } from './MySpace.hooks';
 import { mySpaceTabs } from './contants';
 import { LadderTab } from './modules/LadderTab';
-import NextAdapterApp from 'next-query-params/app';
-import { QueryParamProvider } from 'use-query-params';
 
-const MySpace: React.FC<MySpaceProps> = ({ data }) => {
+export const MySpace: React.FC<MySpaceProps> = ({ data }) => {
   const { user, currentLevel, nextLevel, ladder } = data;
   const { currentTab, setCurrentTab } = useMySpace();
 
@@ -24,9 +22,3 @@ const MySpace: React.FC<MySpaceProps> = ({ data }) => {
     </div>
   );
 };
-
-export const MySpaceWrapper: React.FC<MySpaceProps> = (props) => (
-  <QueryParamProvider adapter={NextAdapterApp}>
-    <MySpace {...props} />
-  </QueryParamProvider>
-);

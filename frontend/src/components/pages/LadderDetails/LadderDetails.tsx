@@ -6,10 +6,8 @@ import { LadderTabs } from '../../modules/LadderTabs';
 import { useLadderDetails } from './LadderDetails.hooks';
 import { LadderDetailsProps } from './LadderDetails.interface';
 import { LadderDetails } from './modules/LadderDetails';
-import NextAdapterApp from 'next-query-params/app';
-import { QueryParamProvider } from 'use-query-params';
 
-const LadderDetailsPage: React.FC<LadderDetailsProps> = ({ data, ladderSlug }) => {
+export const LadderDetailsPage: React.FC<LadderDetailsProps> = ({ data, ladderSlug }) => {
   const { currentBand, handleLadderChange, tabsProps } = useLadderDetails(data?.bands);
 
   if (!currentBand || !data || !data.bands[currentBand]) {
@@ -42,9 +40,3 @@ const LadderDetailsPage: React.FC<LadderDetailsProps> = ({ data, ladderSlug }) =
     </div>
   );
 };
-
-export const LadderDetailsWrapper: React.FC<LadderDetailsProps> = (props) => (
-  <QueryParamProvider adapter={NextAdapterApp}>
-    <LadderDetailsPage {...props} />
-  </QueryParamProvider>
-);

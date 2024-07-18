@@ -1,1 +1,1 @@
-export { LadderDetailsWrapper as LadderDetails } from './LadderDetails';
+export { LadderDetailsPage as LadderDetails } from './LadderDetails';
