@@ -10,7 +10,7 @@ export const Input: FC<InputProps> = memo(({ label, name, placeholder, leftIcon,
   const error = getFieldState(name).error;
 
   return (
-    <div className="flex flex-col gap-y-3">
+    <div className="flex w-full flex-col gap-y-3">
       {label && (
         <label className="text-navy-900" htmlFor={`input-${name}`}>
           {label}
@@ -22,8 +22,9 @@ export const Input: FC<InputProps> = memo(({ label, name, placeholder, leftIcon,
         )}
         <input
           className={generateClassNames(
-            'outline-black h-12 w-full rounded-xl border border-navy-200 pl-8 pr-4 outline-none focus:border-navy-700',
+            'outline-black h-12 w-full rounded-xl border border-navy-200 px-4 outline-none focus:border-navy-700',
             { 'border-red-600 focus:border-red-600': !!error },
+            { 'pl-8': leftIcon },
           )}
           placeholder={placeholder}
           id={`input-${name}`}
