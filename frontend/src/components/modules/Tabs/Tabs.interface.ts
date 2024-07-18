@@ -1,13 +1,9 @@
+import { Option } from '@app/components/common/Combobox';
 import { ComponentProps } from 'react';
 
-interface Tab {
-  title: string;
-  count?: number;
-}
-
 export interface TabsProps {
-  tabs: Tab[];
-  active: string;
-  setActive: (active: string) => void;
+  tabs: Option[];
+  active: Option;
+  onChange: (active: Option) => void;
   className?: ComponentProps<'nav'>['className'];
 }

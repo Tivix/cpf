@@ -1,7 +1,6 @@
 'use client';
 import { Breadcrumbs } from '@app/components/modules/Breadcrumbs';
 import { Tabs } from '@app/components/modules/Tabs';
-import { Pagination } from '@app/components/common/Pagination/Pagination';
 import { usePeople } from './People.hook';
 import Image from 'next/image';
 
@@ -10,28 +9,18 @@ import { Menu, MenuButton, MenuItem, MenuItems, Transition } from '@headlessui/r
 import { Fragment } from 'react';
 import { DotVerticalIcon } from '@app/static/icons/DotVerticalIcon';
 import Link from 'next/link';
-import { Combobox } from '@app/components/common/Combobox';
 import { FormProvider } from '@app/components/common/FormProvider';
 import { Input } from '@app/components/common/Input';
 import { SearchIcon } from '@app/static/icons/SearchIcon';
 import { bands, employeeMenuOptions } from './People.utils';
-import { PeopleTableForm } from './People.interface';
+import { PeopleTableForm, peopleTableFormName } from './People.interface';
 import { CheckMarkIcon } from '@app/static/icons/CheckMarkIcon';
 import { routes } from '@app/constants';
 import { Button } from '@app/components/common/Button';
+import { Listbox } from '@app/components/common/Listbox';
 
 export const People = () => {
-  const {
-    activeTab,
-    tabClickHandler,
-    tabsData,
-    pageClickHandler,
-    fetchedPeople,
-    peopleTypeAmount,
-    page,
-    pagePosition,
-    form,
-  } = usePeople();
+  const { tab, handleChangeTab, tabsData, filteredPeople, form, handleClearBand } = usePeople();
 
   return (
     <FormProvider<PeopleTableForm> form={form}>
@@ -43,14 +32,17 @@ export const People = () => {
           </Button>
         </div>
 
-        {/* TODO: refactor Tabs */}
-        <Tabs active={activeTab} setActive={tabClickHandler} tabs={tabsData} className="border-b border-navy-200" />
+        {tab && <Tabs active={tab} onChange={handleChangeTab} tabs={tabsData} className="border-b border-navy-200" />}
         <div className="flex flex-col gap-2 rounded-2xl bg-white p-6">
           <div className="w-2/5">
             <div className="flex gap-3">
               <Input name="search" placeholder="Search" leftIcon={<SearchIcon className="h-4 w-4" />} />
-              {/* TODO: Create and replace with listbox */}
-              <Combobox options={bands} className="w-1/2" name="band" />
+              <Listbox
+                options={bands}
+                name={peopleTableFormName.band}
+                placeholder="Current band"
+                handleClear={handleClearBand}
+              />
             </div>
           </div>
 
@@ -85,9 +77,9 @@ export const People = () => {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-navy-200 bg-white">
-                    {fetchedPeople?.map((person) => (
+                    {filteredPeople?.map((person) => (
                       <tr key={person.id}>
-                        <td className="whitespace-nowrap py-5 pl-4 pr-3 text-sm sm:pl-0">
+                        <td className="flex whitespace-nowrap py-5 pl-4 pr-3 text-sm sm:pl-0">
                           <div className="flex items-center">
                             <div className="h-8 w-8">
                               <Image
@@ -127,8 +119,10 @@ export const People = () => {
                         <td className="text-gray-500 whitespace-nowrap px-3 py-5 text-sm">
                           <div className="flex flex-col items-end gap-y-4">
                             {person?.laddersDetails?.map((ladder) => (
-                              <div key={ladder.ladderName} className="h-4 w-4 text-navy-700">
-                                {ladder?.activeGoal && <CheckMarkIcon className="text-green-600" />}
+                              <div key={ladder.ladderName} className="mr-2 h-4 w-4 text-navy-700">
+                                {ladder?.activeGoal && (
+                                  <CheckMarkIcon className="text-green-600" width={20} height={20} />
+                                )}
                               </div>
                             ))}
                           </div>
@@ -154,7 +148,7 @@ export const People = () => {
                             ))}
                           </div>
                         </td>
-                        <td className="text-gray-500 flex flex-col items-center whitespace-nowrap px-3 py-5 text-sm">
+                        <td className="text-gray-500 flex flex-col items-center whitespace-nowrap px-3 py-8 text-sm">
                           {person?.laddersDetails?.map((details) => (
                             <div
                               key={details.ladderName}
@@ -209,12 +203,12 @@ export const People = () => {
             </div>
           </div>
 
-          <Pagination
+          {/* <Pagination
             itemsAmount={peopleTypeAmount}
             setPageNumber={(e, number) => pageClickHandler(e, number)}
             pageNumber={page}
             pagePosition={pagePosition}
-          />
+          /> */}
         </div>
       </div>
     </FormProvider>

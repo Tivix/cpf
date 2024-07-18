@@ -4,7 +4,7 @@ import { StepStates } from './SideStepper.interface';
 const Completed = () => {
   return (
     <div className="flex h-7 w-7 items-center justify-center rounded-full bg-blue-800">
-      <CheckMarkIcon />
+      <CheckMarkIcon className="text-white" />
     </div>
   );
 };

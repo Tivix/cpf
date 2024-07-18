@@ -1,130 +1,91 @@
-import { MouseEvent, useEffect, useState } from 'react';
-import { Employee, StatusType } from '@app/types/people';
-import { usePathname, useSearchParams, useRouter } from 'next/navigation';
+import { useCallback, useEffect, useState } from 'react';
+import { Employee, PeopleDetails, StatusType } from '@app/types/people';
+import { useSearchParams } from 'next/navigation';
 import { PEOPLE_DETAILS } from './People.utils';
 import { useForm } from 'react-hook-form';
 import { PeopleTableForm, peopleTableFormName } from './People.interface';
+import { Option } from '@app/components/common/Combobox';
 
 export const usePeople = () => {
-  const router = useRouter();
-  const pathname = usePathname();
   const searchParams = useSearchParams();
+  const tabParam = searchParams.get('tab');
+
   const form = useForm<PeopleTableForm>({
     mode: 'onChange',
     defaultValues: {
-      [peopleTableFormName.band]: {},
+      [peopleTableFormName.band]: null,
       [peopleTableFormName.search]: '',
     },
   });
 
-  const tabParam = searchParams.get('tab');
-  const pageParam = searchParams.get('page');
-  const bandParam = searchParams.get('band');
+  const [tab, setTab] = useState<Option | undefined>();
+  const [fetchedPeople, setFetchedPeople] = useState<PeopleDetails>();
+  const [filteredPeople, setFilteredPeople] = useState<Employee[]>([]);
+  const [tabsData, setTabsData] = useState<Option[]>([]);
 
-  const [activeTab, setActiveTab] = useState(tabParam || 'active');
-  const [page, setPage] = useState(Number(pageParam) || 1);
-
-  const [fetchedPeople, setFetchedPeople] = useState<Employee[]>();
-  const [tabsData, setTabsData] = useState([
-    {
-      title: StatusType.active,
-      count: 0,
-    },
-    {
-      title: StatusType.draft,
-      count: 0,
-    },
-    {
-      title: StatusType.deactivated,
-      count: 0,
-    },
-  ]);
-
-  const [peopleTypeAmount, setPeopleTypeAmount] = useState(-1);
-  const [pagePosition, setPagePosition] = useState(1);
+  const fetchPeople = useCallback(async () => {
+    setFetchedPeople(PEOPLE_DETAILS);
+  }, []);
 
   useEffect(() => {
-    const selectedPagePosition =
-      pageParam && document.querySelector(`[data-page="${pageParam}"]`)?.getAttribute('data-position');
+    fetchPeople();
+  }, [fetchPeople]);
 
-    selectedPagePosition && setPagePosition(+selectedPagePosition);
-  }, [pageParam]);
-
+  // INFO: set all available tabs
   useEffect(() => {
-    if (tabParam && tabParam !== activeTab) {
-      setActiveTab(tabParam);
+    if (fetchedPeople) {
+      const tabs: Option[] = [
+        { name: `${StatusType.active} (${fetchedPeople.active})`, id: StatusType.active },
+        { name: `${StatusType.deactivated} (${fetchedPeople.deactivated})`, id: StatusType.deactivated },
+        { name: `${StatusType.draft} (${fetchedPeople.draft})`, id: StatusType.draft },
+      ];
+      setTabsData(tabs);
     }
-    if (pageParam && +pageParam !== page) {
-      setPage(+pageParam);
-    }
-  }, [tabParam, pageParam, bandParam, activeTab, page]);
+  }, [fetchedPeople]);
 
+  // INFO: set current tab
   useEffect(() => {
-    getPeopleDetails(activeTab);
-  }, [activeTab, page]);
+    if (tabParam) {
+      const currentTab = tabsData.find((tab) => tab.id === tabParam);
+      setTab(currentTab);
+    }
+  }, [tabParam, tabsData]);
 
-  const getPeopleDetails = async (tab: string): Promise<void> => {
-    const people = PEOPLE_DETAILS;
-    const filteredPeople = people.results.filter(
-      (person) => person.status.toLocaleLowerCase() === tab.toLocaleLowerCase(),
+  // TODO: use url params update hook to set new band in url.
+  // useEffect(() => {
+  //   if (values.band) {
+  //     urlChangeHandler(tab, 1, values.band);
+  //   }
+  // }, [tab, urlChangeHandler, values]);
+
+  // INFO: set people based on filters
+  useEffect(() => {
+    const filteredPeople = fetchedPeople?.results.filter(
+      (person) => person.status.toLocaleLowerCase() === tab?.id.toLocaleLowerCase(),
     );
 
-    setTabsData([
-      {
-        title: StatusType.active,
-        count: people.active,
-      },
-      {
-        title: StatusType.draft,
-        count: people.draft,
-      },
-      {
-        title: StatusType.deactivated,
-        count: people.deactivated,
-      },
-    ]);
+    if (filteredPeople) {
+      setFilteredPeople(filteredPeople);
+    }
+  }, [fetchedPeople, tab?.id]);
 
-    setFetchedPeople(filteredPeople);
-    setPeopleTypeAmount(people.count);
+  const handleChangeTab = (newTab: Option) => {
+    console.log('newTab', newTab);
+
+    // TODO: use url params update hook to set new tab in url.
+    // urlChangeHandler(pressedTab);
   };
 
-  const urlChangeHandler = (passedTab: string = activeTab, passedPage: string = page.toString()) => {
-    router.push(`${pathname}?tab=${passedTab}&page=${passedPage}`);
-  };
-
-  const tabClickHandler = (tab: string) => {
-    urlChangeHandler(tab, '1');
-  };
-
-  const pageClickHandler = (event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>, pageNumber?: number) => {
-    const clickedPagePosition = event.currentTarget.dataset.position;
-    clickedPagePosition && setPagePosition(+clickedPagePosition);
-
-    if (!pageNumber) return urlChangeHandler(undefined, event.currentTarget.innerText);
-
-    urlChangeHandler(undefined, pageNumber.toString());
-  };
-
-  const bandChangeHandler = () => {
-    urlChangeHandler(undefined, '1');
-  };
-
-  const resetBandHandler = (event: MouseEvent<HTMLDivElement, globalThis.MouseEvent>) => {
-    event.stopPropagation();
-    urlChangeHandler(activeTab, '1');
+  const handleClearBand = () => {
+    form.setValue('band', null);
   };
 
   return {
-    activeTab,
-    tabClickHandler,
+    tab,
+    handleChangeTab,
     tabsData,
-    bandChangeHandler,
-    resetBandHandler,
-    pageClickHandler,
-    fetchedPeople,
-    peopleTypeAmount,
-    page,
-    pagePosition,
+    filteredPeople,
     form,
+    handleClearBand,
   };
 };
