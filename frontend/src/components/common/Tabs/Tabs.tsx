@@ -25,9 +25,9 @@ export const Tabs: FC<TabsProps> = ({ tabs, currentTab, onTabChange }) => {
         <div className="border-b border-navy-200">
           <nav aria-label="Tabs" className="flex justify-center space-x-8">
             {tabs.map((tab) => (
-              <a
+              <button
                 key={tab.key}
-                href={tab.href}
+                onClick={() => onTabChange(tab.key)}
                 aria-current={tab.key === currentTab ? 'page' : undefined}
                 className={generateClassNames(
                   tab.key === currentTab
@@ -37,7 +37,7 @@ export const Tabs: FC<TabsProps> = ({ tabs, currentTab, onTabChange }) => {
                 )}
               >
                 {tab.label}
-              </a>
+              </button>
             ))}
           </nav>
         </div>
