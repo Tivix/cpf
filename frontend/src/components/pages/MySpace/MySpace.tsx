@@ -17,7 +17,7 @@ export const MySpace: React.FC<MySpaceProps> = ({ data }) => {
         My Space
       </Typography>
       <Header user={user} currentLevel={currentLevel} nextLevel={nextLevel} />
-      <Tabs tabs={mySpaceTabs} current={currentTab} onTabChange={setCurrentTab} centered />
+      <Tabs tabs={mySpaceTabs} current={currentTab} onTabChange={setCurrentTab} className="justify-center" />
       <div>{currentTab.id === 'ladder' && <LadderTab bands={ladder.bands} currentLevel={currentLevel.band} />}</div>
     </div>
   );

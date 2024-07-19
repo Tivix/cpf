@@ -3,7 +3,7 @@ import { TabsProps } from './Tabs.interface';
 import { generateClassNames } from '@app/utils';
 import { useTabs } from './Tabs.hooks';
 
-export const Tabs: FC<TabsProps> = ({ tabs, current, onTabChange, className, centered }) => {
+export const Tabs: FC<TabsProps> = ({ tabs, current, onTabChange, className }) => {
   const { handleSelectTab } = useTabs(tabs, onTabChange);
   return (
     <div>
@@ -25,10 +25,7 @@ export const Tabs: FC<TabsProps> = ({ tabs, current, onTabChange, className, cen
       </div>
       <div className="hidden sm:block">
         <div className="border-b border-navy-200">
-          <nav
-            aria-label="Tabs"
-            className={generateClassNames('flex space-x-8', { 'justify-center': centered }, className)}
-          >
+          <nav aria-label="Tabs" className={generateClassNames('flex space-x-8', className)}>
             {tabs.map((tab) => (
               <div
                 key={tab.id}

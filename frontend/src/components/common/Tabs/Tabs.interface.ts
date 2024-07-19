@@ -5,5 +5,4 @@ export interface TabsProps {
   current: Option;
   onTabChange: (tab: Option) => void;
   className?: string;
-  centered?: boolean;
 }
