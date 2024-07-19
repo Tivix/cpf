@@ -28,7 +28,7 @@ export const LadderTabs: React.FC<LadderTabsProps> = ({ maximumLadders, activeLa
                   onClick={() => ladderOnClick && ladderOnClick(ladder)}
                   className={generateClassNames('flex w-full gap-1', {
                     'border-transparent bg-blue-100 text-blue-900 hover:border-navy-300':
-                      currentBand && currentBand >= ladder,
+                      currentBand !== undefined && currentBand >= ladder,
                     'pointer-events-none border-blue-800 bg-blue-800 text-white': ladder === activeLadder,
                   })}
                   styleType="natural"
