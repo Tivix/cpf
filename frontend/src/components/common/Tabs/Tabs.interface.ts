@@ -1,4 +1,4 @@
-import { Option } from '../Combobox';
+import { Option } from '@app/types/common';
 
 export interface TabsProps {
   tabs: Array<Option & { href?: string }>;
