@@ -8,11 +8,13 @@ const initialState: PeopleState = {
     [routes.people.addNew.mainLadder]: 'notStarted',
   },
   updateProgress: () => {},
+  reset: () => {},
 };
 
 const usePeopleStore = create<PeopleState>()((set) => ({
   ...initialState,
   updateProgress: (newProgress) => set((state) => ({ progress: { ...state.progress, ...newProgress } })),
+  reset: () => set(initialState),
 }));
 
 export { usePeopleStore };

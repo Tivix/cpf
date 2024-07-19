@@ -6,4 +6,5 @@ export type Progress = Record<AddNewPersonRouteKeys, StepStates>;
 export interface PeopleState {
   progress: Progress;
   updateProgress: (newProgress: Partial<Progress>) => void;
+  reset: () => void;
 }

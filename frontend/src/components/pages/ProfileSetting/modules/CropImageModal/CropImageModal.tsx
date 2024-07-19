@@ -13,7 +13,7 @@ export const CropImageModal: React.FC<CropImageModalProps> = ({ imageSrc, open, 
     useCropImageModal(onSave);
 
   return (
-    <Modal open={open} onClose={onClose} title="Crop your photo" hideHeaderCloseButton>
+    <Modal open={open} onClose={onClose} title="Crop your photo" headerCloseButton={false}>
       <div className="flex flex-col items-center justify-center gap-6">
         <Typography variant="body-m/regular" className="text-navy-600">
           For best results, use a PNG, JPG, or GIF image at least 300 x 300 px.
