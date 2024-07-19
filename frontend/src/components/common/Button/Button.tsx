@@ -8,7 +8,7 @@ const types: {
   };
 } = {
   primary: {
-    solid: 'bg-blue-600 text-white hover:bg-blue-900',
+    solid: 'bg-blue-800 text-white hover:bg-blue-900',
     border:
       'bg-transparent text-blue-800 border border-blue-800 hover:bg-navy-100 active:text-blue-900 active:border-blue-900',
     borderless: 'px-2 bg-transparent text-blue-800 hover:bg-navy-100 active:text-blue-900',
@@ -20,7 +20,7 @@ const types: {
     borderless: 'px-2 bg-transparent text-navy-600 hover:bg-navy-50 active:bg-navy-100',
     link: 'px-0 h-auto bg-transparent text-navy-600 hover:underline hover:text-navy-700 active:no-underline',
   },
-  warning: {
+  red: {
     solid: 'bg-red-600 text-white hover:bg-red-700',
     border: 'bg-transparent text-red-600 border border-red-600 hover:bg-navy-100 hover:text-red-700',
     borderless:

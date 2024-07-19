@@ -14,7 +14,7 @@ export const DeleteImageModal: React.FC<DeleteImageModalProps> = ({ open, onClos
           <Button styleType="natural" variant="borderless" onClick={onClose}>
             Cancel
           </Button>
-          <Button styleType="warning" onClick={onDelete}>
+          <Button styleType="red" onClick={onDelete}>
             Delete photo
           </Button>
         </div>

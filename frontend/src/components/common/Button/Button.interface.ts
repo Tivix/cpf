@@ -8,6 +8,6 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   type?: ButtonHTMLAttributes<HTMLButtonElement>['type'];
 }
 
-export type StyleTypes = 'primary' | 'natural' | 'warning';
+export type StyleTypes = 'primary' | 'natural' | 'red';
 
 export type Variants = 'solid' | 'border' | 'borderless' | 'link';
