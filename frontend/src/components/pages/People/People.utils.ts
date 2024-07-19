@@ -1,4 +1,4 @@
-import { StatusType } from '@app/types/people';
+import { PeopleStatus } from './People.interface';
 
 export const PEOPLE_DETAILS = {
   total: 100,
@@ -18,7 +18,7 @@ export const PEOPLE_DETAILS = {
           latestActivity: 5,
         },
       ],
-      status: StatusType.active,
+      status: PeopleStatus.active,
     },
     {
       id: 42624,
@@ -47,7 +47,7 @@ export const PEOPLE_DETAILS = {
           latestActivity: 1,
         },
       ],
-      status: StatusType.active,
+      status: PeopleStatus.active,
     },
     {
       id: 9933,
@@ -62,7 +62,7 @@ export const PEOPLE_DETAILS = {
           latestActivity: 3,
         },
       ],
-      status: StatusType.active,
+      status: PeopleStatus.active,
     },
     {
       id: 493683,
@@ -77,7 +77,7 @@ export const PEOPLE_DETAILS = {
           latestActivity: 2,
         },
       ],
-      status: StatusType.active,
+      status: PeopleStatus.active,
     },
     {
       id: 422433,
@@ -92,7 +92,7 @@ export const PEOPLE_DETAILS = {
           latestActivity: 3,
         },
       ],
-      status: StatusType.deactivated,
+      status: PeopleStatus.deactivated,
     },
     {
       id: 4893,
@@ -107,7 +107,7 @@ export const PEOPLE_DETAILS = {
           latestActivity: 3,
         },
       ],
-      status: StatusType.deactivated,
+      status: PeopleStatus.deactivated,
     },
     {
       id: 42673,
@@ -122,7 +122,7 @@ export const PEOPLE_DETAILS = {
           latestActivity: 2,
         },
       ],
-      status: StatusType.deactivated,
+      status: PeopleStatus.deactivated,
     },
     {
       id: 4773,
@@ -137,7 +137,7 @@ export const PEOPLE_DETAILS = {
           latestActivity: 2,
         },
       ],
-      status: StatusType.draft,
+      status: PeopleStatus.draft,
     },
     {
       id: 33,
@@ -152,7 +152,7 @@ export const PEOPLE_DETAILS = {
           latestActivity: 4,
         },
       ],
-      status: StatusType.draft,
+      status: PeopleStatus.draft,
     },
     {
       id: 433,
@@ -167,7 +167,7 @@ export const PEOPLE_DETAILS = {
           latestActivity: 2,
         },
       ],
-      status: StatusType.draft,
+      status: PeopleStatus.draft,
     },
     {
       id: 42243,
@@ -182,7 +182,7 @@ export const PEOPLE_DETAILS = {
           latestActivity: 2,
         },
       ],
-      status: StatusType.draft,
+      status: PeopleStatus.draft,
     },
   ],
   active: 11,

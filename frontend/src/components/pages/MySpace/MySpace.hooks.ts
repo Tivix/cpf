@@ -1,22 +1,15 @@
 import { useCallback, useEffect, useState } from 'react';
-import { MySpaceHooks } from './MySpace.interface';
-import { useSearchParams, useRouter, usePathname } from 'next/navigation';
-import { DEFAULT_TAB } from './contants';
+import { mySpaceTabs } from './contants';
+import { Option } from '@app/components/common/Combobox';
+import { useQueryParams } from '@app/hooks';
 
-export const useMySpace = (): MySpaceHooks => {
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const tab = searchParams.get('tab');
-  const [currentTab, setCurrentTab] = useState<string>(tab ?? DEFAULT_TAB);
+export const useMySpace = () => {
+  const [currentTab, setCurrentTab] = useState<Option>(mySpaceTabs[0]);
+  const { setParams } = useQueryParams();
 
   const handleReplace = useCallback(() => {
-    if (!currentTab) {
-      router.replace(`${pathname}?tab=${DEFAULT_TAB}`);
-    } else {
-      router.replace(`${pathname}?tab=${currentTab}`);
-    }
-  }, [currentTab, pathname, router]);
+    setParams({ tab: currentTab?.id });
+  }, [currentTab?.id, setParams]);
 
   useEffect(() => {
     handleReplace();

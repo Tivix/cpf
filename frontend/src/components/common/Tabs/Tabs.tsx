@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { TabsProps } from './Tabs.interface';
 import { generateClassNames } from '@app/utils';
 
-export const Tabs: FC<TabsProps> = ({ tabs, currentTab, onTabChange }) => {
+export const Tabs: FC<TabsProps> = ({ tabs, current, onTabChange, className }) => {
   return (
     <div>
       <div className="sm:hidden">
@@ -12,32 +12,35 @@ export const Tabs: FC<TabsProps> = ({ tabs, currentTab, onTabChange }) => {
         <select
           id="tabs"
           name="tabs"
-          onChange={(e) => onTabChange(e.target.value)}
-          defaultValue={tabs.find((tab) => tab.key === currentTab)?.label}
+          onChange={(e) => {
+            const tab = tabs.find((tab) => tab.name === e.target.value);
+            if (tab) onTabChange(tab);
+          }}
+          defaultValue={tabs.find((tab) => tab.id === current.id)?.id}
           className="block w-full rounded-md border-navy-300 py-2 pl-3 pr-10 text-base focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
         >
           {tabs.map((tab) => (
-            <option key={tab.key}>{tab.label}</option>
+            <option key={tab.id}>{tab.name}</option>
           ))}
         </select>
       </div>
       <div className="hidden sm:block">
         <div className="border-b border-navy-200">
-          <nav aria-label="Tabs" className="flex justify-center space-x-8">
+          <nav aria-label="Tabs" className={generateClassNames('flex space-x-8', className)}>
             {tabs.map((tab) => (
-              <a
-                key={tab.key}
-                href={tab.href}
-                aria-current={tab.key === currentTab ? 'page' : undefined}
+              <div
+                key={tab.id}
+                onClick={() => onTabChange(tab)}
+                aria-current={tab.id === current.id ? 'page' : undefined}
                 className={generateClassNames(
-                  tab.key === currentTab
+                  'cursor-pointer whitespace-nowrap border-b-2 px-1 py-4 text-sm font-medium transition duration-75 first-letter:uppercase',
+                  tab.id === current.id
                     ? 'border-blue-800 text-blue-800'
                     : 'border-transparent text-navy-500 hover:border-navy-300 hover:text-navy-700',
-                  'whitespace-nowrap border-b-2 px-1 py-4 text-sm font-medium',
                 )}
               >
-                {tab.label}
-              </a>
+                {tab.name}
+              </div>
             ))}
           </nav>
         </div>

@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Employee, PeopleDetails, StatusType } from '@app/types/people';
 import { useSearchParams } from 'next/navigation';
 import { PEOPLE_DETAILS } from './People.utils';
 import { useForm } from 'react-hook-form';
-import { PeopleTableForm, peopleTableFormName } from './People.interface';
+import { Employee, PeopleDetails, PeopleStatus, PeopleTableForm, peopleTableFormName } from './People.interface';
 import { Option } from '@app/components/common/Combobox';
+import { useQueryParams } from '@app/hooks';
 
 export const usePeople = () => {
   const searchParams = useSearchParams();
@@ -22,6 +22,8 @@ export const usePeople = () => {
   const [fetchedPeople, setFetchedPeople] = useState<PeopleDetails>();
   const [filteredPeople, setFilteredPeople] = useState<Employee[]>([]);
   const [tabsData, setTabsData] = useState<Option[]>([]);
+  const { setParams } = useQueryParams();
+  const values = form.watch();
 
   const fetchPeople = useCallback(async () => {
     setFetchedPeople(PEOPLE_DETAILS);
@@ -35,15 +37,15 @@ export const usePeople = () => {
   useEffect(() => {
     if (fetchedPeople) {
       const tabs: Option[] = [
-        { name: `${StatusType.active} (${fetchedPeople.active})`, id: StatusType.active },
-        { name: `${StatusType.deactivated} (${fetchedPeople.deactivated})`, id: StatusType.deactivated },
-        { name: `${StatusType.draft} (${fetchedPeople.draft})`, id: StatusType.draft },
+        { name: `${PeopleStatus.active} (${fetchedPeople.active})`, id: PeopleStatus.active },
+        { name: `${PeopleStatus.deactivated} (${fetchedPeople.deactivated})`, id: PeopleStatus.deactivated },
+        { name: `${PeopleStatus.draft} (${fetchedPeople.draft})`, id: PeopleStatus.draft },
       ];
       setTabsData(tabs);
     }
   }, [fetchedPeople]);
 
-  // INFO: set current tab
+  // INFO: set current tab based on url param
   useEffect(() => {
     if (tabParam) {
       const currentTab = tabsData.find((tab) => tab.id === tabParam);
@@ -51,12 +53,9 @@ export const usePeople = () => {
     }
   }, [tabParam, tabsData]);
 
-  // TODO: use url params update hook to set new band in url.
-  // useEffect(() => {
-  //   if (values.band) {
-  //     urlChangeHandler(tab, 1, values.band);
-  //   }
-  // }, [tab, urlChangeHandler, values]);
+  useEffect(() => {
+    setParams({ band: values?.band?.id });
+  }, [setParams, values.band]);
 
   // INFO: set people based on filters
   useEffect(() => {
@@ -70,10 +69,7 @@ export const usePeople = () => {
   }, [fetchedPeople, tab?.id]);
 
   const handleChangeTab = (newTab: Option) => {
-    console.log('newTab', newTab);
-
-    // TODO: use url params update hook to set new tab in url.
-    // urlChangeHandler(pressedTab);
+    setParams({ tab: newTab.id });
   };
 
   const handleClearBand = () => {
