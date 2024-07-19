@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 import { LadderBand } from '@app/types/library';
 import { LadderTabHooks } from '@app/components/pages/MySpace/modules/LadderTab/LadderTab.interface';
 import { useQueryParams } from '@app/hooks';
@@ -7,9 +7,9 @@ import { DEFAULT_STEP } from '@app/components/modules/SideStepper';
 export const useLadderTab = (bands: Record<string, LadderBand>): LadderTabHooks => {
   const [params, setParams] = useQueryParams({ band: DEFAULT_STEP.toString() });
 
-  const band = useMemo(() => (params.band ? parseInt(params.band) : DEFAULT_STEP), [params]);
-  const maximumLadders = useMemo(() => (bands ? Object.keys(bands).length : 0), [bands]);
-  const tabsProps = useMemo(() => ({ activeLadder: band, maximumLadders }), [band, maximumLadders]);
+  const band = params.band ? parseInt(params.band) : DEFAULT_STEP;
+  const maximumLadders = bands ? Object.keys(bands).length : 0;
+  const tabsProps = { activeLadder: band, maximumLadders };
 
   useEffect(() => {
     if (!band || band < 1 || band > maximumLadders) {
