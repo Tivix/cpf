@@ -10,6 +10,7 @@ export interface LadderBandBucket {
   bucketSlug: string;
   bucketType: typeof BucketType;
   description: string;
+  level?: number;
 }
 
 export interface Bucket {

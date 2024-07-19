@@ -1,3 +1,5 @@
+import { LadderBand } from '@app/types/library';
+
 export interface MySpaceProps {
   data: {
     user: {
@@ -13,6 +15,10 @@ export interface MySpaceProps {
     nextLevel: {
       band: number;
       threshold: number;
+    };
+    ladder: {
+      ladderName: string;
+      bands: Record<string, LadderBand>;
     };
   };
 }

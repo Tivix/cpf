@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useState } from 'react';
 import { LadderBand } from '@app/types/library';
-import { LadderDetailsHook } from './LadderDetails.interface';
-import { DEFAULT_STEP } from '../../modules/SideStepper';
+import { LadderTabHooks } from '@app/components/pages/MySpace/modules/LadderTab/LadderTab.interface';
 import { useQueryParams } from '@app/hooks';
+import { DEFAULT_STEP } from '@app/components/modules/SideStepper';
 import { useSearchParams } from 'next/navigation';
 
-export const useLadderDetails = (bands?: Record<string, LadderBand>): LadderDetailsHook => {
+export const useLadderTab = (bands: Record<string, LadderBand>): LadderTabHooks => {
   const [currentBand, setCurrentBand] = useState<number>(DEFAULT_STEP);
   const { setParams } = useQueryParams();
   const searchParams = useSearchParams();
