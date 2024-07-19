@@ -1,5 +1,4 @@
 import { Button } from '@app/components/common/Button';
-import { DotVerticalIcon } from '@app/static/icons/DotVerticalIcon';
 import { FC } from 'react';
 import { WorkflowTopbarProps } from './WorkflowTopbar.interface';
 
@@ -24,9 +23,6 @@ export const WorkflowTopbar: FC<WorkflowTopbarProps> = ({
         </Button>
         <Button disabled variant="solid" onClick={onActivate}>
           {activateTitle}
-        </Button>
-        <Button variant="border" styleType="natural" className="flex h-11 w-11 justify-center p-0">
-          <DotVerticalIcon />
         </Button>
       </div>
     </div>

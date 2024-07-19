@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { mySpaceTabs } from './contants';
-import { Option } from '@app/components/common/Combobox';
 import { useQueryParams } from '@app/hooks';
+import { Option } from '@app/types/common';
 
 export const useMySpace = () => {
   const [currentTab, setCurrentTab] = useState<Option>(mySpaceTabs[0]);

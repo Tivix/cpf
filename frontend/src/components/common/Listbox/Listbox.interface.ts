@@ -1,4 +1,4 @@
-import { Option } from '../Combobox';
+import { Option } from '@app/types/common';
 
 export interface ListboxProps {
   name: string;

@@ -3,8 +3,8 @@ import { useSearchParams } from 'next/navigation';
 import { PEOPLE_DETAILS } from './People.utils';
 import { useForm } from 'react-hook-form';
 import { Employee, PeopleDetails, PeopleStatus, PeopleTableForm, peopleTableFormName } from './People.interface';
-import { Option } from '@app/components/common/Combobox';
 import { useQueryParams } from '@app/hooks';
+import { Option } from '@app/types/common';
 
 export const usePeople = () => {
   const searchParams = useSearchParams();
