@@ -4,5 +4,5 @@ export interface ListboxProps {
   name: string;
   options: Option[];
   placeholder?: string;
-  handleClear?: () => void;
+  onClear?: () => void;
 }

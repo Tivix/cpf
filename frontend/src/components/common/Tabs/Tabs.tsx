@@ -1,8 +1,10 @@
 import { FC } from 'react';
 import { TabsProps } from './Tabs.interface';
 import { generateClassNames } from '@app/utils';
+import { useTabs } from './Tabs.hooks';
 
 export const Tabs: FC<TabsProps> = ({ tabs, current, onTabChange, className }) => {
+  const { handleSelectTab } = useTabs(tabs, onTabChange);
   return (
     <div>
       <div className="sm:hidden">
@@ -12,10 +14,7 @@ export const Tabs: FC<TabsProps> = ({ tabs, current, onTabChange, className }) =
         <select
           id="tabs"
           name="tabs"
-          onChange={(e) => {
-            const tab = tabs.find((tab) => tab.name === e.target.value);
-            if (tab) onTabChange(tab);
-          }}
+          onChange={handleSelectTab}
           defaultValue={tabs.find((tab) => tab.id === current.id)?.id}
           className="block w-full rounded-md border-navy-300 py-2 pl-3 pr-10 text-base focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
         >

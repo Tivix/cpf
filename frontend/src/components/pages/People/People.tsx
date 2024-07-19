@@ -35,7 +35,7 @@ export const People = () => {
                 options={bands}
                 name={peopleTableFormName.band}
                 placeholder="Current band"
-                handleClear={handleClearBand}
+                onClear={handleClearBand}
               />
             </div>
           </div>

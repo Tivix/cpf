@@ -6,9 +6,11 @@ import { ListboxProps } from './Listbox.interface';
 import { generateClassNames } from '@app/utils';
 import { ChevronUpIcon } from '@app/static/icons/ChevronUpIcon';
 import { CloseIcon } from '@app/static/icons/CloseIcon';
+import { useListBox } from './Listbox.hooks';
 
-export const Listbox: FC<ListboxProps> = ({ name, options, placeholder, handleClear }) => {
+export const Listbox: FC<ListboxProps> = ({ name, options, placeholder, onClear }) => {
   const { control } = useFormContext();
+  const { handleClear } = useListBox(onClear);
 
   return (
     <Controller
@@ -36,12 +38,7 @@ export const Listbox: FC<ListboxProps> = ({ name, options, placeholder, handleCl
                 <div className="flex flex-1 items-center justify-between">
                   {!value && placeholder ? placeholder : value?.name}
                   {selected ? (
-                    <div
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleClear?.();
-                      }}
-                    >
+                    <div onClick={handleClear}>
                       <CloseIcon />
                     </div>
                   ) : (
