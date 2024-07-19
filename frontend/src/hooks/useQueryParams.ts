@@ -1,39 +1,34 @@
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback } from 'react';
 
 interface IQueryParams {
   [key: string]: string | undefined | null;
 }
 
-export const useQueryParams = (
-  defaultParams: IQueryParams,
-): [params: IQueryParams, setParams: (newParams: IQueryParams) => void] => {
+export const useQueryParams = () => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const [params, setParams] = useState(defaultParams);
+  const setParams = useCallback(
+    (params: IQueryParams) => {
+      const currentParams = new URLSearchParams(searchParams.toString());
 
-  const replaceParams = useCallback(() => {
-    const currentParams = new URLSearchParams(searchParams.toString());
+      Object.keys(params).forEach((key) => {
+        const value = params[key];
 
-    Object.keys(params).forEach((key) => {
-      const value = params[key];
+        if (value === undefined || value === null) {
+          currentParams.delete(key);
+        } else {
+          currentParams.set(key, value);
+        }
+      });
 
-      if (value === undefined || value === null) {
-        currentParams.delete(key);
-      } else {
-        currentParams.set(key, value);
-      }
-    });
+      const newUrl = `${pathname}?${currentParams.toString()}`;
+      router.replace(newUrl);
+    },
+    [pathname, router, searchParams],
+  );
 
-    const newUrl = `${pathname}?${currentParams.toString()}`;
-    router.replace(newUrl);
-  }, [params, searchParams, router, pathname]);
-
-  useEffect(() => {
-    replaceParams();
-  }, [replaceParams]);
-
-  return [params, setParams];
+  return { setParams };
 };
