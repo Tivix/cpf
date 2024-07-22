@@ -10,7 +10,8 @@ import {
   Label,
 } from '@headlessui/react';
 import { useMemo, useState } from 'react';
-import { ComboboxProps, Option } from './Combobox.interface';
+import { ComboboxProps } from './Combobox.interface';
+import { Option } from '@app/types/common';
 import { Controller, useFormContext } from 'react-hook-form';
 import { generateClassNames } from '@app/utils';
 

@@ -1,31 +1,22 @@
-import { routes } from '@app/constants';
-
-export const DEFAULT_TAB = 'ladder';
-
 export const mySpaceTabs = [
   {
-    key: 'ladder',
-    label: 'Ladder',
-    href: `${routes.mySpace.index}?tab=ladder`,
+    id: 'ladder',
+    name: 'Ladder',
   },
   {
-    key: 'score-card',
-    label: 'Score Card',
-    href: `${routes.mySpace.index}?tab=score-card`,
+    id: 'score-card',
+    name: 'Score Card',
   },
   {
-    key: 'goals',
-    label: 'Goals',
-    href: `${routes.mySpace.index}?tab=goals`,
+    id: 'goals',
+    name: 'Goals',
   },
   {
-    key: 'projects',
-    label: 'Projects',
-    href: `${routes.mySpace.index}?tab=projects`,
+    id: 'projects',
+    name: 'Projects',
   },
   {
-    key: 'activity',
-    label: 'Activity',
-    href: `${routes.mySpace.index}?tab=activity`,
+    id: 'activity',
+    name: 'Activity',
   },
 ];

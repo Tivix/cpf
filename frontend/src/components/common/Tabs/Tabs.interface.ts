@@ -1,9 +1,8 @@
+import { Option } from '@app/types/common';
+
 export interface TabsProps {
-  tabs: {
-    key: string;
-    label: string;
-    href: string;
-  }[];
-  currentTab: string;
-  onTabChange: (tab: string) => void;
+  tabs: Array<Option & { href?: string }>;
+  current: Option;
+  onTabChange: (tab: Option) => void;
+  className?: string;
 }

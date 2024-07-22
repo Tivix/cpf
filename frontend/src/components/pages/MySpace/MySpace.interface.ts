@@ -1,3 +1,5 @@
+import { LadderBand } from '@app/types/library';
+
 export interface MySpaceProps {
   data: {
     user: {
@@ -14,10 +16,9 @@ export interface MySpaceProps {
       band: number;
       threshold: number;
     };
+    ladder: {
+      ladderName: string;
+      bands: Record<string, LadderBand>;
+    };
   };
-}
-
-export interface MySpaceHooks {
-  currentTab: string;
-  setCurrentTab: (tab: string) => void;
 }

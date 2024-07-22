@@ -1,9 +1,5 @@
+import { Option } from '@app/types/common';
 import { ReactNode } from 'react';
-
-export interface Option {
-  id: string;
-  name: string;
-}
 
 export interface ComboboxProps {
   label?: string;

@@ -4,5 +4,5 @@ export interface ModalProps extends PropsWithChildren {
   open: boolean;
   onClose: () => void;
   title: string;
-  hideHeaderCloseButton?: boolean;
+  headerCloseButton?: boolean;
 }

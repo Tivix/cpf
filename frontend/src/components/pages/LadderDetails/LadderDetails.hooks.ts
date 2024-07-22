@@ -1,37 +1,45 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useCallback, useEffect, useState } from 'react';
 import { LadderBand } from '@app/types/library';
 import { LadderDetailsHook } from './LadderDetails.interface';
+import { DEFAULT_STEP } from '../../modules/SideStepper';
+import { useQueryParams } from '@app/hooks';
+import { useSearchParams } from 'next/navigation';
 
 export const useLadderDetails = (bands?: Record<string, LadderBand>): LadderDetailsHook => {
-  const router = useRouter();
-  const pathname = usePathname();
+  const [currentBand, setCurrentBand] = useState<number>(DEFAULT_STEP);
+  const { setParams } = useQueryParams();
   const searchParams = useSearchParams();
-  const band = searchParams.get('band');
+  const bandParam = searchParams.get('band');
 
-  const [currentBand, setCurrentBand] = useState(typeof band === 'string' ? parseInt(band, 10) : 1);
-  const maximumLadders = useMemo(() => (bands ? Object.keys(bands).length : 0), [bands]);
-  const tabsProps = useMemo(() => ({ activeLadder: currentBand, maximumLadders }), [currentBand, maximumLadders]);
+  const maximumLadders = bands ? Object.keys(bands).length : 0;
+  const tabsProps = { activeLadder: currentBand, maximumLadders };
 
   const handleReplace = useCallback(() => {
-    if (!currentBand || currentBand > maximumLadders || currentBand < 1) {
-      router.replace(`${pathname}?band=1`);
-    } else {
-      router.replace(`${pathname}?band=${currentBand}`);
-    }
-  }, [currentBand, maximumLadders, pathname, router]);
-
-  const handleLadderChange = useCallback((ladder: number) => {
-    setCurrentBand(ladder);
-  }, []);
+    setParams({ band: currentBand.toString() });
+  }, [currentBand, setParams]);
 
   useEffect(() => {
     handleReplace();
   }, [handleReplace]);
 
+  useEffect(() => {
+    if (!bandParam || isNaN(parseInt(bandParam))) {
+      setCurrentBand(DEFAULT_STEP);
+      return;
+    }
+
+    const numBandParam = parseInt(bandParam);
+
+    if (numBandParam < 1 || numBandParam > maximumLadders) {
+      setCurrentBand(DEFAULT_STEP);
+    } else {
+      setCurrentBand(numBandParam);
+    }
+  }, [maximumLadders, bandParam]);
+
   return {
     currentBand,
-    handleLadderChange,
+    handleLadderChange: setCurrentBand,
     tabsProps,
   };
 };

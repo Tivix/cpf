@@ -6,4 +6,5 @@ export interface LadderTabsProps {
   maximumLadders: number;
   activeLadder: number;
   ladderOnClick?: (ladder: number) => void;
+  currentBand?: number | undefined;
 }

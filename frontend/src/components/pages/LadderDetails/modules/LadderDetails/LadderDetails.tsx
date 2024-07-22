@@ -1,11 +1,11 @@
-import { Tooltip } from 'react-tooltip';
 import { LadderDetailsProps } from './LadderDetails.interface';
-import { InfoIcon } from '@app/static/icons/InfoIcon';
 import { LadderBandBucket } from '@app/types/library';
-import { BucketCard } from '../BucketCard';
 import { AccordionCard } from '@app/components/common/AccordionCard';
 import { AccordionList } from '@app/components/common/AccordionList';
 import { Typography } from '@app/components/common/Typography';
+import { ThresholdCard } from '@app/components/modules/ThresholdCard';
+import { routes } from '@app/constants';
+import { BucketCard } from '@app/components/modules/BucketCard';
 
 export const LadderDetails = ({ ladder, ladderName, band, ladderSlug }: LadderDetailsProps) => {
   return (
@@ -19,21 +19,7 @@ export const LadderDetails = ({ ladder, ladderName, band, ladderSlug }: LadderDe
             Salary range: {ladder.salaryRange}
           </Typography>
         </div>
-        <div className="flex flex-col items-center rounded-xl border border-navy-200 p-4">
-          <div className="flex justify-between gap-2">
-            <Typography variant="body-m/medium" className="text-navy-600">
-              Threshold
-            </Typography>
-            <InfoIcon
-              className="text-navy-600"
-              data-tooltip-id="threshold-info-tooltip"
-              data-tooltip-content="Min. points needed to complete band"
-              data-tooltip-place="top"
-            />
-            <Tooltip id="threshold-info-tooltip" />
-          </div>
-          <Typography variant="head-m/bold">{ladder.threshold}</Typography>
-        </div>
+        <ThresholdCard threshold={ladder.threshold} />
       </div>
       <div className="flex flex-col gap-6">
         <Typography variant="body-m/regular" className="text-navy-600">
@@ -45,7 +31,11 @@ export const LadderDetails = ({ ladder, ladderName, band, ladderSlug }: LadderDe
           </Typography>
           <div className="flex flex-col gap-6">
             {ladder.hardSkillBuckets.map((bucket: LadderBandBucket) => (
-              <BucketCard bucket={bucket} key={bucket.bucketSlug} ladderSlug={ladderSlug} />
+              <BucketCard
+                bucket={bucket}
+                key={bucket.bucketSlug}
+                href={`${routes.library.index}/${ladderSlug}/${bucket.bucketSlug}`}
+              />
             ))}
           </div>
         </div>
