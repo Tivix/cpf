@@ -1,6 +1,6 @@
 'use client';
 import { BucketDetailsProps } from './BucketDetails.interface';
-import { AdvancementLevel } from './modules/AdvancementLevel';
+import { AdvancementLevel } from '@app/components/modules/AdvancementLevel';
 import { Typography } from '@app/components/common/Typography';
 import { Breadcrumbs } from '@app/components/modules/Breadcrumbs';
 import { useBucketDetails } from './BucketDetails.hooks';

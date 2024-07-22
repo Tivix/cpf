@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { BucketCardProps } from './BucketCard.interface';
 import { ChevronRightIcon } from '@app/static/icons/ChevronRightIcon';
 import { Typography } from '@app/components/common/Typography';
-import { AdvancementLevel } from '@app/components/modules/AdvancementLevel';
+import { LevelDots } from '@app/components/modules/LevelDots';
 
 export const BucketCard = ({ bucket, withLevel, href }: BucketCardProps) => {
   const { bucketName, description } = bucket;
@@ -22,7 +22,7 @@ export const BucketCard = ({ bucket, withLevel, href }: BucketCardProps) => {
               <Typography variant="body-m/medium" className="text-navy-600">
                 Level #
               </Typography>
-              <AdvancementLevel level={1} />
+              <LevelDots level={1} />
             </div>
           )}
           <div className="flex h-8 w-8 items-center justify-center rounded-full bg-navy-50">
