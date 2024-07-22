@@ -72,13 +72,13 @@ INSERT INTO band (ladderSlug, threshold, salary_range) VALUES
 INSERT INTO band (ladderSlug, threshold, salary_range) VALUES
 ('frontend', 2, '4000 - 7000 pln'),
 ('frontend', 6, '6000 - 9000 pln'),
-('frontend', 10, '8000 - 11000 pln'),
-('frontend', 14, '10000 - 13000 pln'),
-('frontend', 18, '12000 - 15000 pln'),
-('frontend', 22, '14000 - 18000 pln'),
-('frontend', 26, '17000 - 21000 pln'),
-('frontend', 30, '20000 - 24000 pln'),
-('frontend', 34, '25000+ pln');
+('frontend', 11, '8000 - 11000 pln'),
+('frontend', 15, '10000 - 13000 pln'),
+('frontend', 23, '12000 - 15000 pln'),
+('frontend', 35, '14000 - 18000 pln'),
+('frontend', 50, '17000 - 21000 pln'),
+('frontend', 55, '20000 - 24000 pln'),
+('frontend', 60, '25000+ pln');
 
 -- Insert bucket data
 INSERT INTO bucket (bucketSlug, bucketName, description, bucketType) VALUES
@@ -95,6 +95,8 @@ INSERT INTO bucket (bucketSlug, bucketName, description, bucketType) VALUES
 ('code_testing', 'Code Testing', 'Code Testing', 'hard'),
 ('application_architecture', 'Application Architecture', 'Application Architecture', 'hard'),
 ('security', 'Security', 'Security', 'hard'),
+('runtime_knowledge', 'Runtime Knowledge', 'Runtime Knowledge', 'hard'),
+('cross_platform_frontend', 'Cross Platform', 'Cross platform', 'hard'),
 ('platform_cohesion', 'Platform Cohesion', 'Platform Cohesion', 'hard'),
 ('algorithmic_knowledge', 'Algorithmic Knowledge', 'Algorithmic Knowledge', 'hard'),
 ('backend_programming_language', 'Backend Programming Language', 'Backend programming language skills are primarily focused on the developer\''s role in the selected language.', 'hard'),
@@ -122,6 +124,20 @@ INSERT INTO band_bucket (bandID, bucketSlug) VALUES
 ((SELECT bandID FROM band WHERE ladderSlug = 'frontend' AND threshold = 6), 'frontend_frameworks'),
 ((SELECT bandID FROM band WHERE ladderSlug = 'frontend' AND threshold = 6), 'dynamic_data_and_systems_integration'),
 ((SELECT bandID FROM band WHERE ladderSlug = 'frontend' AND threshold = 6), 'cvs');
+((SELECT bandID FROM band WHERE ladderSlug = 'frontend' AND threshold = 11), 'application_scaffolding'),
+((SELECT bandID FROM band WHERE ladderSlug = 'frontend' AND threshold = 11), 'debugging'),
+((SELECT bandID FROM band WHERE ladderSlug = 'frontend' AND threshold = 11), 'code_testing'),
+((SELECT bandID FROM band WHERE ladderSlug = 'frontend' AND threshold = 15), 'platform_cohesion'),
+((SELECT bandID FROM band WHERE ladderSlug = 'frontend' AND threshold = 15), 'runtime_knowledge'),
+((SELECT bandID FROM band WHERE ladderSlug = 'frontend' AND threshold = 23), 'performance_optimization'),
+((SELECT bandID FROM band WHERE ladderSlug = 'frontend' AND threshold = 23), 'application_architecture'),
+((SELECT bandID FROM band WHERE ladderSlug = 'frontend' AND threshold = 23), 'cross_platform'),
+((SELECT bandID FROM band WHERE ladderSlug = 'frontend' AND threshold = 35), 'security'),
+((SELECT bandID FROM band WHERE ladderSlug = 'frontend' AND threshold = 35), 'algorithmic_knowledge'),
+((SELECT bandID FROM band WHERE ladderSlug = 'frontend' AND threshold = 35), 'releases_ci_cd'),
+((SELECT bandID FROM band WHERE ladderSlug = 'frontend' AND threshold = 50), 'releases_ci_cd'),
+((SELECT bandID FROM band WHERE ladderSlug = 'frontend' AND threshold = 55), 'releases_ci_cd'),
+((SELECT bandID FROM band WHERE ladderSlug = 'frontend' AND threshold = 60), 'releases_ci_cd');
 
 -- Insert advancement_level data for frameworks
 INSERT INTO advancement_level (bucketSlug, advancement_level, description) VALUES
