@@ -50,7 +50,7 @@ export const PeopleTable: FC<PeopleTableProps> = ({ people }) => {
                           width={200}
                           height={200}
                           alt="User image"
-                          src="/images/avatar_placeholder.jpeg"
+                          src="/cpf/images/avatar_placeholder.jpeg"
                           className="h-8 w-8 rounded-full object-cover"
                         />
                       </div>
