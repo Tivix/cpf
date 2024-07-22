@@ -82,29 +82,52 @@ INSERT INTO band (ladderSlug, threshold, salary_range) VALUES
 
 -- Insert bucket data
 INSERT INTO bucket (bucketSlug, bucketName, description, bucketType) VALUES
-('programming_language', 'Programming Language', 'Backend programming language skills are primarily focused on the developer\''s role in the selected language.', 'hard'),
-('frameworks', 'Frameworks', 'Backend programming language skills are primarily focused on the developer\''s role in the selected language.', 'hard'),
-('html', 'HTML & CSS', 'Frontend development skills focusing on HTML and CSS.', 'hard'),
-('javascript', 'JavaScript', 'Frontend development skills focusing on JavaScript.', 'hard');
+('browser_ui_language', 'Browser UI Language', 'Frontend development skills focusing on the developer\''s role in the selected language.', 'hard'),
+('frontend_programming_language', 'Frontend Programming Language', 'Frontend programming language skills are primarily focused on the developer\''s role in the selected language.', 'hard'),
+('frontend_frameworks', 'Frontend Frameworks', 'Frontend development skills focusing on the developer\''s role in the selected language.', 'hard'),
+('browser_knowledge', 'Browser Knowledge', 'Frontend development skills focusing on the developer\''s role in the selected language.', 'hard'),
+('application_scaffolding', 'Application Scaffolding and maintenance', 'Application scaffolding', 'hard'),
+('ui_ux_responsive_design', 'UI/UX & Responsive Design', 'UI/UX & Responsive Design', 'hard'),
+('cvs', 'CVS', 'CVS', 'hard'),
+('debugging', 'Debugging', 'Debugging', 'hard'),
+('performance_optimization', 'Performance Optimization', 'Performance Optimization', 'hard'),
+('dynamic_data_and_systems_integration', 'Dynamic Data & Systems Integration', 'Dynamic Data & Systems Integration', 'hard'),
+('code_testing', 'Code Testing', 'Code Testing', 'hard'),
+('application_architecture', 'Application Architecture', 'Application Architecture', 'hard'),
+('security', 'Security', 'Security', 'hard'),
+('platform_cohesion', 'Platform Cohesion', 'Platform Cohesion', 'hard'),
+('algorithmic_knowledge', 'Algorithmic Knowledge', 'Algorithmic Knowledge', 'hard'),
+('backend_programming_language', 'Backend Programming Language', 'Backend programming language skills are primarily focused on the developer\''s role in the selected language.', 'hard'),
+('relational_databases', 'Relational Databases', 'Relational Databases', 'hard'),
+('non_relational_databases', 'Non relational Databases', 'None relation databases', 'hard'),
+('event_streaming_async_programming', 'Event streaming/async programming', 'Event streming/async programming', 'hard'),
+('releases_ci_cd', 'Releases CI/CD', 'Releases CI/CD', 'hard'),
+('backend_frameworks', 'Backend Frameworks', 'Backend development skills focusing on the developer\''s role in the selected language.', 'hard'),
+
 
 -- Insert band_bucket data for backend
 INSERT INTO band_bucket (bandID, bucketSlug) VALUES
-((SELECT bandID FROM band WHERE ladderSlug = 'backend' AND threshold = 2), 'programming_language'),
-((SELECT bandID FROM band WHERE ladderSlug = 'backend' AND threshold = 2), 'frameworks'),
-((SELECT bandID FROM band WHERE ladderSlug = 'backend' AND threshold = 6), 'programming_language');
+((SELECT bandID FROM band WHERE ladderSlug = 'backend' AND threshold = 2), 'backend_programming_language'),
+((SELECT bandID FROM band WHERE ladderSlug = 'backend' AND threshold = 2), 'backend_frameworks'),
+((SELECT bandID FROM band WHERE ladderSlug = 'backend' AND threshold = 2), 'dynamic_data_and_systems_integration'),
+((SELECT bandID FROM band WHERE ladderSlug = 'backend' AND threshold = 6), 'relational_databases'),
+((SELECT bandID FROM band WHERE ladderSlug = 'backend' AND threshold = 6), 'debugging'),
+((SELECT bandID FROM band WHERE ladderSlug = 'backend' AND threshold = 6), 'cvs');
 
 
 -- Insert band_bucket data for frontend
 INSERT INTO band_bucket (bandID, bucketSlug) VALUES
-((SELECT bandID FROM band WHERE ladderSlug = 'frontend' AND threshold = 2), 'html'),
-((SELECT bandID FROM band WHERE ladderSlug = 'frontend' AND threshold = 2), 'javascript'),
-((SELECT bandID FROM band WHERE ladderSlug = 'frontend' AND threshold = 6), 'javascript');
+((SELECT bandID FROM band WHERE ladderSlug = 'frontend' AND threshold = 2), 'frontend_programming_language'),
+((SELECT bandID FROM band WHERE ladderSlug = 'frontend' AND threshold = 2), 'browser_ui_language'),
+((SELECT bandID FROM band WHERE ladderSlug = 'frontend' AND threshold = 6), 'frontend_frameworks'),
+((SELECT bandID FROM band WHERE ladderSlug = 'frontend' AND threshold = 6), 'dynamic_data_and_systems_integration'),
+((SELECT bandID FROM band WHERE ladderSlug = 'frontend' AND threshold = 6), 'cvs');
 
 -- Insert advancement_level data for frameworks
 INSERT INTO advancement_level (bucketSlug, advancement_level, description) VALUES
-('frameworks', 1, 'Lorem ipsum dolores'),
-('frameworks', 2, 'Lorem ipsum'),
-('frameworks', 3, 'Lorem');
+('frontend_programming_language', 1, 'Lorem ipsum dolores'),
+('frontend_programming_language', 2, 'Lorem ipsum'),
+('frontend_programming_language', 3, 'Lorem');
 
 -- Insert example_project data for frameworks
 INSERT INTO example_project (levelID, title, overview) VALUES
@@ -112,6 +135,6 @@ INSERT INTO example_project (levelID, title, overview) VALUES
 
 -- Insert atomic_skill data for frameworks
 INSERT INTO atomic_skill (levelID, name, category) VALUES
-((SELECT levelID FROM advancement_level WHERE bucketSlug = 'frameworks' AND advancement_level = 1), 'Routing and controllers', 'Common'),
-((SELECT levelID FROM advancement_level WHERE bucketSlug = 'frameworks' AND advancement_level = 2), 'Authentication and Authorization', 'Common'),
-((SELECT levelID FROM advancement_level WHERE bucketSlug = 'frameworks' AND advancement_level = 3), 'Security best practices', 'Common');
+((SELECT levelID FROM advancement_level WHERE bucketSlug = 'frontend_programming_language' AND advancement_level = 1), 'Routing and controllers', 'Common'),
+((SELECT levelID FROM advancement_level WHERE bucketSlug = 'frontend_programming_language' AND advancement_level = 2), 'Authentication and Authorization', 'Common'),
+((SELECT levelID FROM advancement_level WHERE bucketSlug = 'frontend_programming_language' AND advancement_level = 3), 'Security best practices', 'Common');
