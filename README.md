@@ -88,6 +88,18 @@ After you have done the above steps, you should be able to access the applicatio
 [localhost:8080/cpf](http://localhost:8080/cpf)
 
 
+### Seeding the database
+
+To seed your database with initial data once your project is up and running, follow these steps:
+
+Copy the contents of the seed.sql file located in the root directory of your project.
+
+Go to the Supabase admin panel.
+
+Navigate to the SQL Editor on the left side panel.
+
+Paste the contents of the seed.sql file and hit 'Run'.
+
 # Usage
 
 Instructions on how to use the project.
