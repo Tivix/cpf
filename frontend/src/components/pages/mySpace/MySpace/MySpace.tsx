@@ -1,7 +1,7 @@
 'use client';
 import { Typography } from '@app/components/common/Typography';
 import { MySpaceProps } from './MySpace.interface';
-import { Header } from '@app/components/pages/MySpace/modules/Header';
+import { Header } from './modules/Header';
 import { Tabs } from '@app/components/common/Tabs';
 import { useMySpace } from './MySpace.hooks';
 import { mySpaceTabs } from './contants';

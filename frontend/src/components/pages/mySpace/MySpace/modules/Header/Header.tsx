@@ -3,7 +3,7 @@ import { HeaderProps } from './Header.interface';
 import { Avatar } from '@app/components/common/Avatar';
 import { CheckIcon } from '@app/static/icons/CheckIcon';
 import { TargetIcon } from '@app/static/icons/TargetIcon';
-import { LevelCard } from '@app/components/pages/MySpace/modules/LevelCard';
+import { LevelCard } from '../LevelCard';
 
 export const Header: React.FC<HeaderProps> = ({ user, currentLevel, nextLevel }) => {
   const { firstName, lastName, photo, position } = user;

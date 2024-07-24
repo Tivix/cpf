@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { LadderBand } from '@app/types/library';
-import { LadderTabHooks } from '@app/components/pages/MySpace/modules/LadderTab/LadderTab.interface';
+import { LadderTabHooks } from './LadderTab.interface';
 import { useQueryParams } from '@app/hooks';
 import { DEFAULT_STEP } from '@app/components/modules/SideStepper';
 import { useSearchParams } from 'next/navigation';

@@ -1,4 +1,4 @@
-import { MySpace } from '@app/components/pages/MySpace';
+import { MySpace } from '@app/components/pages/mySpace/MySpace';
 import { getLadderDetails } from '@app/api/ladder';
 
 // TODO: get data from api
