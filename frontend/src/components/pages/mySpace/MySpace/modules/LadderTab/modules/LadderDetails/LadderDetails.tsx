@@ -1,11 +1,22 @@
 import { LadderDetailsProps } from './LadderDetails.interface';
-import { LadderBandBucket } from '@app/types/library';
+import { BucketType, LadderBandBucket } from '@app/types/library';
 import { Typography } from '@app/components/common/Typography';
 import { ThresholdCard } from '@app/components/modules/ThresholdCard';
 import { BucketCard } from '@app/components/modules/BucketCard';
 import { routes } from '@app/constants';
 
 export const LadderDetails = ({ ladder, ladderName, band }: LadderDetailsProps) => {
+  const softSkills: LadderBandBucket[] = [
+    {
+      bucketName: 'Soft skills',
+      bucketSlug: 'soft-skills',
+      description:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam aliquet, felis et tincidunt tempor, justo orci cursus ipsum, nec efficitur neque felis sit amet orci. Vivamus tempus, ex et ultrices rutrum, libero mi molestie mi, non tempus ex metus sed augue. Morbi euismod, nulla nec tempus consequat, quam mi pellentesque elit, non sagittis est nisl sed arcu.',
+      bucketType: BucketType.SOFT as unknown as typeof BucketType,
+      status: 'Completed',
+    },
+  ]; // TODO: remove when data are fetched from api
+
   return (
     <div className="flex flex-col gap-8 rounded-2xl bg-white px-20 py-12">
       <div className="flex justify-between">
@@ -38,18 +49,21 @@ export const LadderDetails = ({ ladder, ladderName, band }: LadderDetailsProps) 
             ))}
           </div>
         </div>
-        {ladder.softSkillBuckets.length > 0 && (
+        {/* TODO: replace with:
+            ladder.softSkillBuckets.length > 0
+          */}
+        {softSkills.length > 0 && (
           <div className="flex flex-col gap-4">
             <Typography variant="hint/caps-medium" className="text-navy-600">
               Soft skills
             </Typography>
             <div className="flex flex-col gap-6">
-              {ladder.softSkillBuckets.map((bucket: LadderBandBucket) => (
+              {softSkills.map((bucket: LadderBandBucket) => (
                 <BucketCard
                   bucket={bucket}
                   key={bucket.bucketSlug}
-                  withLevel
                   href={`${routes.mySpace.index}/${bucket.bucketSlug}`}
+                  withStatus
                 />
               ))}
             </div>

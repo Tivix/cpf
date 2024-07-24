@@ -11,6 +11,7 @@ export interface LadderBandBucket {
   bucketType: typeof BucketType;
   description: string;
   level?: number;
+  status?: string;
 }
 
 export interface Bucket {
@@ -19,6 +20,16 @@ export interface Bucket {
   bucketType: typeof BucketType;
   description: string;
   advancementLevels: AdvancementLevel[];
+}
+
+export interface SoftSkillBucket {
+  bucketName: string;
+  bucketSlug: string;
+  description: string;
+  status?: string;
+  categories: {
+    [categoryGroup: string]: AtomicSkill[];
+  };
 }
 
 export const BucketType = {
@@ -50,4 +61,9 @@ export const ProofStatus = {
   APPROVED: 'approved',
   PENDING: 'pending',
   REJECTED: 'rejected',
-} as const;
+};
+
+export const SoftSkillStatus = {
+  COMPLETED: 'completed',
+  PENDING: 'pending',
+};

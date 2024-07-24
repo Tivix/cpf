@@ -6,7 +6,7 @@ import { Button } from '@app/components/common/Button';
 import { ExpandableSection } from '@app/components/common/ExpandableSection';
 import { ExampleWayToPassLevelModal } from '@app/components/modules/ExampleWayToPassLevelModal';
 import { useAdvancementLevel } from './AdvancementLevel.hooks';
-import { getSkillIcon } from '@app/components/pages/MySpaceBucketDetails/utils';
+import { SkillStatusIcon } from '@app/components/modules/SkillStatusIcon';
 
 export const AdvancementLevel: React.FC<AdvancementLevelProps> = ({ showVerticalLine, data, open, onClick }) => {
   const { hideModal, openModal, modalOpen } = useAdvancementLevel();
@@ -39,11 +39,11 @@ export const AdvancementLevel: React.FC<AdvancementLevelProps> = ({ showVertical
             small
           >
             <AccordionList
-              items={skills.flatMap(({ name, description }) => ({
+              items={skills.map(({ name, description }) => ({
                 key: name,
                 title: name,
                 children: description ? <p>{description}</p> : undefined,
-                icon: getSkillIcon(),
+                icon: <SkillStatusIcon />,
               }))}
             />
           </AccordionCard>

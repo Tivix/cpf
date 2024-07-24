@@ -1,5 +1,5 @@
 import { getBucketDetails } from '@app/api/bucket';
-import { MySpaceBucketDetails } from '@app/components/pages/MySpaceBucketDetails';
+import { MySpaceBucketDetails } from '@app/components/pages/mySpace/MySpaceBucketDetails';
 
 export default async function MySpaceBucketDetailed({ params }: { params: { bucket: string } }) {
   const { bucket } = params;

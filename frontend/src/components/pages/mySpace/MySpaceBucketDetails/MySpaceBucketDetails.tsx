@@ -1,11 +1,11 @@
 'use client';
 
-import { MySpaceBucketDetailsProps } from '@app/components/pages/MySpaceBucketDetails/MySpaceBucketDetails.interface';
+import { MySpaceBucketDetailsProps } from './MySpaceBucketDetails.interface';
 import { routes } from '@app/constants';
 import { Breadcrumbs } from '@app/components/modules/Breadcrumbs';
 import { Typography } from '@app/components/common/Typography';
 import { AdvancementLevel } from './modules/AdvancementLevel';
-import { useMySpaceBucketDetails } from '@app/components/pages/MySpaceBucketDetails/MySpaceBucketDetails.hooks';
+import { useMySpaceBucketDetails } from './MySpaceBucketDetails.hooks';
 import { LevelDots } from '@app/components/modules/LevelDots';
 
 export const MySpaceBucketDetails: React.FC<MySpaceBucketDetailsProps> = ({ data }) => {
@@ -18,7 +18,7 @@ export const MySpaceBucketDetails: React.FC<MySpaceBucketDetailsProps> = ({ data
       <Breadcrumbs
         breadcrumbs={[
           { label: 'My space', href: routes.mySpace.index, current: false },
-          { label: data.bucketName, href: `${routes.library.index}/${bucketSlug}`, current: true },
+          { label: data.bucketName, href: `${routes.mySpace.index}/${bucketSlug}`, current: true },
         ]}
       />
       <section className="mx-28 flex flex-col gap-8 rounded-2xl bg-white px-20 py-12">
