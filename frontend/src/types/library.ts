@@ -43,4 +43,11 @@ export interface ExampleProject {
 export interface AtomicSkill {
   name: string;
   description?: string;
+  proofStatus?: typeof ProofStatus;
 }
+
+export const ProofStatus = {
+  APPROVED: 'approved',
+  PENDING: 'pending',
+  REJECTED: 'rejected',
+} as const;
