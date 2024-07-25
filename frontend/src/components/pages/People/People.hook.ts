@@ -38,8 +38,8 @@ export const usePeople = () => {
     if (fetchedPeople) {
       const tabs: Option[] = [
         { name: `${PeopleStatus.active} (${fetchedPeople.active})`, id: PeopleStatus.active },
-        { name: `${PeopleStatus.deactivated} (${fetchedPeople.deactivated})`, id: PeopleStatus.deactivated },
         { name: `${PeopleStatus.draft} (${fetchedPeople.draft})`, id: PeopleStatus.draft },
+        { name: `${PeopleStatus.deactivated} (${fetchedPeople.deactivated})`, id: PeopleStatus.deactivated },
       ];
       setTabsData(tabs);
     }
