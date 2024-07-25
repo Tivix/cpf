@@ -128,14 +128,15 @@ export const PeopleTable: FC<PeopleTableProps> = ({ people }) => {
                     ))}
                   </td>
                   <td className="text-gray-500 whitespace-nowrap px-10 py-5 text-sm">
-                    {person?.laddersDetails?.map(
-                      (details) =>
-                        details.lastActivityDate && (
-                          <Typography key={details.ladderName} variant="body-s/regular" className="text-navy-700">
+                    {person?.laddersDetails?.map((details) => (
+                      <div key={details.ladderName} className="flex h-8 w-8 items-center justify-center">
+                        {details.lastActivityDate && (
+                          <Typography variant="body-s/regular" className="text-navy-700">
                             {formatDate(details.lastActivityDate)}
                           </Typography>
-                        ),
-                    )}
+                        )}
+                      </div>
+                    ))}
                   </td>
                   <td className="relative whitespace-nowrap py-5 text-sm font-medium">
                     {/* TODO: Create new component Dropdown Menu */}
