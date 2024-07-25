@@ -129,7 +129,7 @@ export const PeopleTable: FC<PeopleTableProps> = ({ people }) => {
                   </td>
                   <td className="text-gray-500 whitespace-nowrap px-10 py-5 text-sm">
                     {person?.laddersDetails?.map((details) => (
-                      <div key={details.ladderName} className="flex h-8 w-8 items-center justify-center">
+                      <div key={details.ladderName} className="flex h-8 w-8 items-center">
                         {details.lastActivityDate && (
                           <Typography variant="body-s/regular" className="text-navy-700">
                             {formatDate(details.lastActivityDate)}
