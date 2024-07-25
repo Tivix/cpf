@@ -29,7 +29,8 @@ export interface LadderDetails {
   currentBand: number;
   activeGoal: boolean;
   goalProgress: number;
-  latestActivity: number;
+  pendingActions: number;
+  lastActivityDate?: string;
 }
 
 export interface PeopleDetails {
