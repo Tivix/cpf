@@ -1,5 +1,3 @@
-import Image from 'next/image';
-
 import { Typography } from '@app/components/common/Typography';
 import { Menu, MenuButton, MenuItem, MenuItems, Transition } from '@headlessui/react';
 import { FC, Fragment } from 'react';
@@ -8,6 +6,8 @@ import { CheckMarkIcon } from '@app/static/icons/CheckMarkIcon';
 import Link from 'next/link';
 import { employeeMenuOptions } from '../../People.utils';
 import { PeopleTableProps } from './PeopleTable.interface';
+import { Avatar } from '@app/components/common/Avatar';
+import { getInitials } from '@app/utils';
 
 export const PeopleTable: FC<PeopleTableProps> = ({ people }) => {
   return (
@@ -44,16 +44,12 @@ export const PeopleTable: FC<PeopleTableProps> = ({ people }) => {
               {people?.map((person) => (
                 <tr key={person.id}>
                   <td className="flex whitespace-nowrap py-5 pl-4 pr-3 text-sm sm:pl-0">
+                    <Avatar
+                      initials={getInitials(person.name)}
+                      variant="28"
+                      imageUrl="/images/avatar_placeholder.jpeg"
+                    />
                     <div className="flex items-center">
-                      <div className="h-8 w-8">
-                        <Image
-                          width={200}
-                          height={200}
-                          alt="User image"
-                          src="/images/avatar_placeholder.jpeg"
-                          className="h-8 w-8 rounded-full object-cover"
-                        />
-                      </div>
                       <div className="ml-4">
                         <Typography variant="body-s/medium">{person.name}</Typography>
                         <Typography variant="body-s/regular" className="text-navy-600">

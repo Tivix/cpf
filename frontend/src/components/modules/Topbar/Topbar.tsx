@@ -45,7 +45,7 @@ export const Topbar = () => {
             <MenuButton className="bg-gray-800 focus:ring-offset-gray-800 relative flex rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2">
               <span className="absolute -inset-1.5" />
               <span className="sr-only">Open user menu</span>
-              <Avatar firstName={user.firstName} lastName={user.lastName} variant="40" />
+              <Avatar initials={`${user.firstName[0]}${user.lastName[0]}`} variant="40" />
             </MenuButton>
           </div>
           <Transition
