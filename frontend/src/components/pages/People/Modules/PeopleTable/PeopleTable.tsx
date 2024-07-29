@@ -8,6 +8,7 @@ import { employeeMenuOptions } from '../../People.utils';
 import { PeopleTableProps } from './PeopleTable.interface';
 import { Avatar } from '@app/components/common/Avatar';
 import { getInitials } from '@app/utils';
+import { formatDate } from '@app/utils';
 
 export const PeopleTable: FC<PeopleTableProps> = ({ people }) => {
   return (
@@ -33,7 +34,10 @@ export const PeopleTable: FC<PeopleTableProps> = ({ people }) => {
                   Goal Progress
                 </th>
                 <th scope="col" className="w-[160px] px-3 py-5 text-center text-xs font-medium">
-                  Latest Activity
+                  Pending actions
+                </th>
+                <th scope="col" className="w-[160px] px-3 py-5 text-center text-xs font-medium">
+                  Last activity date
                 </th>
                 <th scope="col" className="relative px-4 py-3.5 sm:pr-0">
                   <span className="sr-only">Edit</span>
@@ -112,9 +116,20 @@ export const PeopleTable: FC<PeopleTableProps> = ({ people }) => {
                         {details.activeGoal && (
                           <div className="flex h-7 w-7 items-center justify-center rounded-full bg-blue-800">
                             <Typography variant="body-s/semibold" className="text-white">
-                              {details.latestActivity}
+                              {details.pendingActions}
                             </Typography>
                           </div>
+                        )}
+                      </div>
+                    ))}
+                  </td>
+                  <td className="text-gray-500 whitespace-nowrap px-10 py-5 text-sm">
+                    {person?.laddersDetails?.map((details) => (
+                      <div key={details.ladderName} className="flex h-8 w-8 items-center">
+                        {details.lastActivityDate && (
+                          <Typography variant="body-s/regular" className="text-navy-700">
+                            {formatDate(details.lastActivityDate)}
+                          </Typography>
                         )}
                       </div>
                     ))}

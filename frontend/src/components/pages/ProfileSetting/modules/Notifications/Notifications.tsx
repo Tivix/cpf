@@ -12,8 +12,8 @@ export const Notifications: React.FC = () => {
           <Typography variant="body-m/medium">Send me notifications via</Typography>
         </div>
         <div className="flex flex-row gap-8">
-          <NotificationCheckbox icon={<SlackIcon />} />
-          <NotificationCheckbox icon={<EnvelopeIcon />} />
+          <NotificationCheckbox icon={<SlackIcon />} checked={true} />
+          <NotificationCheckbox icon={<EnvelopeIcon />} checked={false} />
         </div>
       </div>
     </Card>
