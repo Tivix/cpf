@@ -13,8 +13,23 @@ import { Listbox } from '@app/components/common/Listbox';
 import { PeopleTable } from './Modules/PeopleTable';
 import { Tabs } from '@app/components/common/Tabs';
 
+import { createClient } from '@app/utils/supabase/client';
+
 export const People = () => {
   const { tab, handleChangeTab, tabsData, filteredPeople, form, handleClearBand } = usePeople();
+
+  const supabase = createClient();
+  async function getCountries() {
+    const { data: band_bucket, error } = await supabase.from('band_bucket').select('*');
+
+    if (error) {
+      console.log('error', error);
+    } else {
+      console.log('band_bucket', band_bucket);
+    }
+  }
+
+  getCountries();
 
   return (
     <FormProvider<PeopleTableForm> form={form}>
