@@ -7,4 +7,5 @@ export interface InputProps {
   name: string;
   options?: RegisterOptions<FieldValues, string>;
   leftIcon?: ReactNode;
+  className?: string;
 }
