@@ -11,7 +11,7 @@ export const Header: React.FC<HeaderProps> = ({ user, currentLevel, nextLevel })
   return (
     <div className="flex w-full justify-between rounded-3xl bg-navy-200 px-6 py-9">
       <div className="flex items-center gap-6">
-        <Avatar firstName={firstName} lastName={lastName} imageUrl={photo} variant="100" />
+        <Avatar initials={`${firstName[0]}${lastName[0]}`} imageUrl={photo} variant="100" />
         <div className="flex flex-col justify-center gap-1">
           <Typography variant="head-m/medium">
             {firstName} {lastName}
