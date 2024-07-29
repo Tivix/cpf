@@ -7,6 +7,7 @@ import { useCropImageModal } from './CropImageModal.hooks';
 import { Button } from '@app/components/common/Button';
 import { ZOOM_SLIDER_MULTIPLIER } from './constants';
 import { Typography } from '@app/components/common/Typography';
+import { Slider } from '@app/components/common/Slider';
 
 export const CropImageModal: React.FC<CropImageModalProps> = ({ imageSrc, open, onClose, onSave }) => {
   const { crop, zoom, handleCropChange, handleZoomChange, handleCropComplete, handleZoomInputChange, handleSave } =
@@ -40,14 +41,7 @@ export const CropImageModal: React.FC<CropImageModalProps> = ({ imageSrc, open, 
         </div>
         <div className="flex flex-row items-center gap-2 text-navy-600">
           <ImageIcon className="h-6 w-6" />
-          <input
-            type="range"
-            min="10"
-            max="100"
-            value={zoom * ZOOM_SLIDER_MULTIPLIER}
-            onChange={handleZoomInputChange}
-            className="range h-2 w-full"
-          />
+          <Slider min="10" max="100" value={zoom * ZOOM_SLIDER_MULTIPLIER} onChange={handleZoomInputChange} />
           <ImageIcon className="h-9 w-9" />
         </div>
         <div className="flex w-full flex-row justify-end gap-4">
