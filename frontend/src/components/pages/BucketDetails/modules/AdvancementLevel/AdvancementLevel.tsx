@@ -6,8 +6,9 @@ import { useAdvancementLevel } from './AdvancementLevel.hooks';
 import { Button } from '@app/components/common/Button';
 import { ExpandableSection } from '@app/components/common/ExpandableSection';
 import { ExampleWayToPassLevelModal } from '@app/components/modules/ExampleWayToPassLevelModal';
+import { FC } from 'react';
 
-export const AdvancementLevel: React.FC<AdvancementLevelProps> = ({ showVerticalLine, data, open, onClick }) => {
+export const AdvancementLevel: FC<AdvancementLevelProps> = ({ verticalLine, data, open, onClick }) => {
   const { hideModal, openModal, modalOpen } = useAdvancementLevel();
 
   const { advancementLevel, description, projects, categories } = data;
@@ -19,7 +20,7 @@ export const AdvancementLevel: React.FC<AdvancementLevelProps> = ({ showVertical
       open={open}
       onClick={onClick}
       description={description}
-      showVerticalLine={showVerticalLine}
+      verticalLine={verticalLine}
     >
       <>
         {projects.length > 0 && (

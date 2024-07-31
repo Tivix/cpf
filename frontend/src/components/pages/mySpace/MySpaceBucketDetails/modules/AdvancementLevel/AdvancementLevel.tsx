@@ -8,7 +8,7 @@ import { ExampleWayToPassLevelModal } from '@app/components/modules/ExampleWayTo
 import { useAdvancementLevel } from './AdvancementLevel.hooks';
 import { SkillStatusIcon } from '@app/components/modules/SkillStatusIcon';
 
-export const AdvancementLevel: React.FC<AdvancementLevelProps> = ({ showVerticalLine, data, open, onClick }) => {
+export const AdvancementLevel: React.FC<AdvancementLevelProps> = ({ verticalLine, data, open, onClick }) => {
   const { hideModal, openModal, modalOpen } = useAdvancementLevel();
   const { advancementLevel, description, projects, categories } = data;
   const shouldBeExpandedByDefault = Object.keys(data.categories).length === 1;
@@ -19,7 +19,7 @@ export const AdvancementLevel: React.FC<AdvancementLevelProps> = ({ showVertical
       open={open}
       onClick={onClick}
       description={description}
-      showVerticalLine={showVerticalLine}
+      verticalLine={verticalLine}
     >
       <>
         {projects.length > 0 && (

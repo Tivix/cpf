@@ -8,7 +8,7 @@ export const ExpandableSection: FC<PropsWithChildren<ExpandableSectionProps>> = 
   open,
   title,
   description,
-  showVerticalLine,
+  verticalLine,
   children,
 }) => {
   return (
@@ -20,7 +20,7 @@ export const ExpandableSection: FC<PropsWithChildren<ExpandableSectionProps>> = 
         >
           <ChevronRightIcon className={`h-3.5 w-3.5 text-white ${!open ? 'rotate-90' : '-rotate-90'}`} />
         </button>
-        {showVerticalLine && <div className="absolute left-3 top-12 h-[calc(100%-40px)] w-[1.5px] bg-blue-800" />}
+        {verticalLine && <div className="absolute left-3 top-12 h-[calc(100%-40px)] w-[1.5px] bg-blue-800" />}
       </div>
       <div className="mb-4 ml-4 flex w-full flex-col gap-4">
         <button
