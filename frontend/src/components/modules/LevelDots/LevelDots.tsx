@@ -1,7 +1,7 @@
 import { LevelDotsProps } from './LevelDots.interface';
 import { MAX_LEVEL, MIN_LEVEL } from './constants';
 
-export const LevelDots = ({ level }: LevelDotsProps) => {
+export const LevelDots: React.FC<LevelDotsProps> = ({ level }) => {
   const currentLevel = Math.min(Math.max(level ?? MIN_LEVEL, MIN_LEVEL), MAX_LEVEL);
 
   return (
