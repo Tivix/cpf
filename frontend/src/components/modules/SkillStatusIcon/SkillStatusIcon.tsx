@@ -8,19 +8,19 @@ import { CrossIcon } from '@app/static/icons/CrossIcon';
 
 export const SkillStatusIcon: FC<SkillStatusIconProps> = ({ status }) => {
   switch (status) {
-    case ProofStatus.APPROVED:
+    case ProofStatus.approved:
       return (
         <div className="flex h-5 w-5 items-center justify-center rounded-full bg-green-600 text-white">
           <CheckMarkIcon />
         </div>
       );
-    case ProofStatus.PENDING:
+    case ProofStatus.pending:
       return (
         <div className="flex h-5 w-5 items-center justify-center rounded-full bg-yellow-500 text-white">
           <ArrowRight />
         </div>
       );
-    case ProofStatus.REJECTED:
+    case ProofStatus.rejected:
       return (
         <div className="flex h-5 w-5 items-center justify-center rounded-full bg-red-600 text-white">
           <CrossIcon />

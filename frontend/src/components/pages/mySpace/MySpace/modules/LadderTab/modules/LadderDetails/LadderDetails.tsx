@@ -12,7 +12,7 @@ export const LadderDetails = ({ ladder, ladderName, band }: LadderDetailsProps) 
       bucketSlug: 'soft-skills',
       description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam aliquet, felis et tincidunt tempor, justo orci cursus ipsum, nec efficitur neque felis sit amet orci. Vivamus tempus, ex et ultrices rutrum, libero mi molestie mi, non tempus ex metus sed augue. Morbi euismod, nulla nec tempus consequat, quam mi pellentesque elit, non sagittis est nisl sed arcu.',
-      bucketType: BucketType.SOFT as unknown as typeof BucketType,
+      bucketType: BucketType.soft,
       status: 'Completed',
     },
   ]; // TODO: remove when data are fetched from api

@@ -16,19 +16,19 @@ const data: SoftSkillBucket = {
       {
         name: 'Fulfills undertaken obligations regarding tasks',
         description: loremIpsum,
-        proofStatus: ProofStatus.APPROVED as unknown as typeof ProofStatus,
+        proofStatus: ProofStatus.approved,
       },
       {
         name: 'He is responsive and communicates responsibly - without unnecessary delay.',
         description: loremIpsum,
-        proofStatus: ProofStatus.APPROVED as unknown as typeof ProofStatus,
+        proofStatus: ProofStatus.approved,
       },
     ],
     Quality: [
       {
         name: 'Fulfills undertaken obligations regarding tasks',
         description: loremIpsum,
-        proofStatus: ProofStatus.APPROVED as unknown as typeof ProofStatus,
+        proofStatus: ProofStatus.approved,
       },
     ],
   },
