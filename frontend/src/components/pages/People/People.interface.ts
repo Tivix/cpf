@@ -12,7 +12,7 @@ export interface PeopleTableForm {
 
 export const PeopleStatus = {
   active: 'active',
-  draft: 'draft',
+  drafts: 'drafts',
   deactivated: 'deactivated',
 } as const;
 
