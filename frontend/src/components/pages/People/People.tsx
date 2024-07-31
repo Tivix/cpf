@@ -12,6 +12,7 @@ import { Button } from '@app/components/common/Button';
 import { Listbox } from '@app/components/common/Listbox';
 import { PeopleTable } from './Modules/PeopleTable';
 import { Tabs } from '@app/components/common/Tabs';
+import { PlusIcon } from '@app/static/icons/PlusIcon';
 
 export const People = () => {
   const { tab, handleChangeTab, tabsData, filteredPeople, form, handleClearBand } = usePeople();
@@ -22,7 +23,10 @@ export const People = () => {
         <div className="flex items-center justify-between">
           <Breadcrumbs breadcrumbs={[{ label: 'People', href: '/people', current: true }]} />
           <Button>
-            <Link href={routes.people.addNew.personalDetails}>+ Employee</Link>
+            <Link href={routes.people.addNew.personalDetails} className="flex items-center text-sm">
+              <PlusIcon className="mr-2" />
+              <div>Employee</div>
+            </Link>
           </Button>
         </div>
 
