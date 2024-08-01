@@ -1,4 +1,4 @@
-import { Option } from '@app/types/common';
+import { ClassName, Option } from '@app/types/common';
 import { ReactNode } from 'react';
 
 export interface ComboboxProps {
@@ -6,5 +6,5 @@ export interface ComboboxProps {
   options: Option[];
   name: string;
   renderRightContent?: () => ReactNode;
-  className?: string;
+  className?: ClassName;
 }
