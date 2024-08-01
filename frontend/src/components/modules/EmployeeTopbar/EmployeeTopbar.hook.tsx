@@ -11,13 +11,15 @@ export const useEmployeeTopbar = () => {
   const [cancelModalOpen, setCancelModalOpen] = useState(false);
   const resetPeopleState = usePeopleStore((state) => state.reset);
 
-  const { isDirty } = form.formState;
+  const { isDirty, isValid } = form.formState;
 
   const handleBack = () => {
     router.push(routes.people.index);
     form.reset();
     resetPeopleState();
   };
+
+  const formValid = isDirty && isValid;
 
   const handleSave = () => {
     toast.promise(
@@ -41,5 +43,6 @@ export const useEmployeeTopbar = () => {
     isDirty,
     handleBack,
     handleSave,
+    formValid,
   };
 };

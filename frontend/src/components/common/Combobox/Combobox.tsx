@@ -31,11 +31,12 @@ export const Combobox: React.FC<ComboboxProps> = ({ label, options, name, render
     <Controller
       control={control}
       name={name}
-      render={({ field: { onChange, value } }) => (
+      render={({ field: { onChange, value, onBlur } }) => (
         <HeadlessCombobox
           as="div"
           immediate
           value={value}
+          onBlur={onBlur}
           onChange={(person) => {
             setQuery('');
             onChange(person);

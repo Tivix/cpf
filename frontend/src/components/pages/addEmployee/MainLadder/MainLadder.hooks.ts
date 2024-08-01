@@ -7,14 +7,13 @@ import { routes } from '@app/constants';
 export const useMainLadder = () => {
   const form = useFormContext<AddEmployeeForm>();
   const updateProgress = usePeopleStore((state) => state.updateProgress);
-
   const technologyFields = useFieldArray({
     name: addEmployeeFormNames.technology,
     control: form.control,
   });
-
   const [open, setOpen] = useState(true);
   const [formValid, setFormValid] = useState(false);
+  const [stepValid, setStepValid] = useState(false);
 
   const handleSubmit = form.handleSubmit((data) => console.log('data', data));
   const values = form.watch();
@@ -23,15 +22,17 @@ export const useMainLadder = () => {
 
   useEffect(() => {
     const technologySelected = firstTechnology && firstTechnology.name?.length > 0;
+    const stepValid = ladderSelected && technologySelected;
 
-    setFormValid(ladderSelected && technologySelected);
-  }, [values, ladderSelected, firstTechnology]);
+    setStepValid(stepValid);
+    setFormValid(stepValid && form.formState.isValid);
+  }, [values, ladderSelected, firstTechnology, form.formState]);
 
   // INFO: update progress in sidebar stepper
   useEffect(() => {
-    if (formValid) updateProgress({ [routes.people.addNew.mainLadder]: 'completed' });
+    if (stepValid) updateProgress({ [routes.people.addNew.mainLadder]: 'completed' });
     else updateProgress({ [routes.people.addNew.mainLadder]: 'inProgress' });
-  }, [formValid, updateProgress]);
+  }, [stepValid, updateProgress]);
 
-  return { firstTechnology, form, handleSubmit, technologyFields, open, setOpen, ladderSelected, formValid };
+  return { firstTechnology, handleSubmit, technologyFields, open, setOpen, ladderSelected, formValid };
 };
