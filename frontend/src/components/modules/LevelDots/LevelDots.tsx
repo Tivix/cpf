@@ -1,7 +1,8 @@
-import { AdvancementLevelProps } from './AdvancementLevel.interface';
+import { LevelDotsProps } from './LevelDots.interface';
 import { MAX_LEVEL, MIN_LEVEL } from './constants';
+import { FC } from 'react';
 
-export const AdvancementLevel = ({ level }: AdvancementLevelProps) => {
+export const LevelDots: FC<LevelDotsProps> = ({ level }) => {
   const currentLevel = Math.min(Math.max(level ?? MIN_LEVEL, MIN_LEVEL), MAX_LEVEL);
 
   return (

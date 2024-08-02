@@ -1,16 +1,15 @@
 'use client';
 import { AccordionCard } from '@app/components/common/AccordionCard';
 import { AccordionList } from '@app/components/common/AccordionList';
-import { AdvancementLevelProps } from './AdvancemetLevel.interface';
-import { useAdvancementLevel } from './AdvancementLevel.hooks';
+import { AdvancementLevelProps } from './AdvancementLevel.interface';
 import { Button } from '@app/components/common/Button';
 import { ExpandableSection } from '@app/components/common/ExpandableSection';
 import { ExampleWayToPassLevelModal } from '@app/components/modules/ExampleWayToPassLevelModal';
-import { FC } from 'react';
+import { useAdvancementLevel } from './AdvancementLevel.hooks';
+import { SkillStatusIcon } from '@app/components/modules/SkillStatusIcon';
 
-export const AdvancementLevel: FC<AdvancementLevelProps> = ({ verticalLine, data, open, onClick }) => {
+export const AdvancementLevel: React.FC<AdvancementLevelProps> = ({ verticalLine, data, open, onClick }) => {
   const { hideModal, openModal, modalOpen } = useAdvancementLevel();
-
   const { advancementLevel, description, projects, categories } = data;
   const shouldBeExpandedByDefault = Object.keys(data.categories).length === 1;
 
@@ -44,6 +43,7 @@ export const AdvancementLevel: FC<AdvancementLevelProps> = ({ verticalLine, data
                 key: name,
                 title: name,
                 children: description ? <p>{description}</p> : undefined,
+                icon: <SkillStatusIcon />,
               }))}
             />
           </AccordionCard>

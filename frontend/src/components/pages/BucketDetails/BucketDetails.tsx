@@ -36,7 +36,7 @@ export const BucketDetails: React.FC<BucketDetailsProps> = ({ data, ladderName, 
               <AdvancementLevel
                 key={level.advancementLevel}
                 data={level}
-                showVerticalLine={index < advancementLevels.length - 1}
+                verticalLine={index < advancementLevels.length - 1}
                 open={levelOpen === level.advancementLevel}
                 onClick={() => handleOpen(level.advancementLevel)}
               />

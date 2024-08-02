@@ -6,6 +6,7 @@ import { Avatar } from '@app/components/common/Avatar';
 import { UserIcon } from '@app/static/icons/UserIcon';
 import { LogoutIcon } from '@app/static/icons/LogoutIcon';
 import Link from 'next/link';
+import { routes } from '@app/constants';
 
 export const Topbar = () => {
   // TODO: get user from some context
@@ -16,7 +17,7 @@ export const Topbar = () => {
 
   const menuItems = [
     {
-      href: '/people/my-profile',
+      href: routes.people.myProfile,
       label: 'Profile settings',
       icon: <UserIcon />,
     },

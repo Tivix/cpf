@@ -2,10 +2,12 @@ import Link from 'next/link';
 import { BucketCardProps } from './BucketCard.interface';
 import { ChevronRightIcon } from '@app/static/icons/ChevronRightIcon';
 import { Typography } from '@app/components/common/Typography';
-import { AdvancementLevel } from '@app/components/modules/AdvancementLevel';
+import { LevelDots } from '@app/components/modules/LevelDots';
+import { StatusChip } from '@app/components/common/StatusChip';
 
-export const BucketCard = ({ bucket, withLevel, href }: BucketCardProps) => {
-  const { bucketName, description } = bucket;
+export const BucketCard = ({ bucket, withLevel, withStatus, href }: BucketCardProps) => {
+  const { bucketName, description, status } = bucket;
+  const level = 1; //TODO: replace with real value from api
 
   return (
     <Link
@@ -16,21 +18,22 @@ export const BucketCard = ({ bucket, withLevel, href }: BucketCardProps) => {
         <Typography variant="head-s/semibold" as="h2">
           {bucketName}
         </Typography>
-        <div className="flex flex-row gap-6">
+        <div className="flex flex-row items-center gap-6">
           {withLevel && (
             <div className="flex flex-row items-center gap-4">
               <Typography variant="body-m/medium" className="text-navy-600">
-                Level #
+                Level {level ?? '#'}
               </Typography>
-              <AdvancementLevel level={1} />
+              <LevelDots level={level} />
             </div>
           )}
+          {withStatus && <StatusChip variant="green">{status}</StatusChip>}
           <div className="flex h-8 w-8 items-center justify-center rounded-full bg-navy-50">
             <ChevronRightIcon className="text-navy-500" />
           </div>
         </div>
       </div>
-      <Typography variant="body-m/regular" className="text-navy-600">
+      <Typography variant="body-m/regular" className="truncate text-navy-600">
         {description}
       </Typography>
     </Link>
