@@ -33,17 +33,23 @@ export const People = () => {
         {tab && <Tabs current={tab} onTabChange={handleChangeTab} tabs={tabsData} />}
         <div className="flex flex-col gap-2 rounded-2xl bg-white p-6">
           <div className="w-2/5">
-            <div className="flex gap-3">
-              <Input name="search" placeholder="Search" leftIcon={<SearchIcon className="h-4 w-4" />} />
+            <div className="flex flex-wrap gap-3 lg:flex-nowrap">
+              <Input
+                name="search"
+                className="min-w-[304px]"
+                placeholder="Search"
+                leftIcon={<SearchIcon className="h-4 w-4" />}
+              />
               <Listbox
                 options={bands}
                 name={peopleTableFormName.band}
                 placeholder="Current band"
                 onClear={handleClearBand}
+                className="min-w-[160px]"
               />
             </div>
           </div>
-          <PeopleTable people={filteredPeople} />
+          <PeopleTable currentTab={tab} people={filteredPeople} />
         </div>
       </div>
     </FormProvider>

@@ -1,7 +1,9 @@
+import { ClassName } from '@app/types/common';
+
 export interface TypographyProps {
   variant?: TypographyVariants;
   as?: TextElement;
-  className?: string;
+  className?: ClassName;
 }
 
 export type TypographyVariants =

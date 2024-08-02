@@ -9,6 +9,7 @@ export const AccordionListItem = ({
   title,
   noContentTooltipText,
   children,
+  icon,
 }: PropsWithChildren<AccordionListItemProps>) => {
   const [isOpen, setOpen] = useState(false);
   const disableExpand = !children;
@@ -26,9 +27,12 @@ export const AccordionListItem = ({
         onClick={handleClick}
         disabled={disableExpand}
       >
-        <Typography variant="body-m/medium" className="text-left text-navy-600">
-          {title}
-        </Typography>
+        <div className="flex items-center gap-4">
+          {icon}
+          <Typography variant="body-m/medium" className="text-left text-navy-600">
+            {title}
+          </Typography>
+        </div>
         <Tooltip tooltipText={noContentTooltipText}>
           <div
             className={`flex min-h-10 min-w-10 items-center justify-center ${disableExpand ? 'text-navy-300' : 'text-navy-500'}`}
