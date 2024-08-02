@@ -15,3 +15,9 @@ export interface AddEmployeeForm {
   [addEmployeeFormNames.ladder]: Option;
   [addEmployeeFormNames.technology]: Option[];
 }
+
+export const addEmployeeFirstStepFields = [
+  addEmployeeFormNames.firstName,
+  addEmployeeFormNames.lastName,
+  addEmployeeFormNames.email,
+] as const;

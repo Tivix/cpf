@@ -3,8 +3,7 @@ import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { usePeopleStore } from '@app/store/people/store';
-import { AddEmployeeForm } from '../AddEmployeeFormProvider';
-import { addEmployeeFirstStepFields } from '../AddEmployeeFormProvider/AddEmployeeForm';
+import { addEmployeeFirstStepFields, AddEmployeeForm } from '../AddEmployeeFormProvider';
 
 export const usePersonalDetails = () => {
   const form = useFormContext<AddEmployeeForm>();
