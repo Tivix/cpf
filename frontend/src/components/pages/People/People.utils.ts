@@ -141,7 +141,7 @@ export const PEOPLE_DETAILS = {
           pendingActions: 2,
         },
       ],
-      status: PeopleStatus.draft,
+      status: PeopleStatus.drafts,
     },
     {
       id: 33,
@@ -156,7 +156,7 @@ export const PEOPLE_DETAILS = {
           pendingActions: 4,
         },
       ],
-      status: PeopleStatus.draft,
+      status: PeopleStatus.drafts,
     },
     {
       id: 433,
@@ -171,7 +171,7 @@ export const PEOPLE_DETAILS = {
           pendingActions: 2,
         },
       ],
-      status: PeopleStatus.draft,
+      status: PeopleStatus.drafts,
     },
     {
       id: 42243,
@@ -186,7 +186,7 @@ export const PEOPLE_DETAILS = {
           pendingActions: 2,
         },
       ],
-      status: PeopleStatus.draft,
+      status: PeopleStatus.drafts,
     },
   ],
   active: 11,

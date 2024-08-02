@@ -5,8 +5,8 @@ export interface Point {
   y: number;
 }
 
-export interface Option {
-  id: string;
+export interface Option<T extends string = string> {
+  id: T;
   name: string;
 }
 

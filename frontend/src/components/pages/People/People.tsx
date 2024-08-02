@@ -49,7 +49,7 @@ export const People = () => {
               />
             </div>
           </div>
-          <PeopleTable people={filteredPeople} />
+          <PeopleTable currentTab={tab} people={filteredPeople} />
         </div>
       </div>
     </FormProvider>
