@@ -7,7 +7,7 @@ import { Typography } from '@app/components/common/Typography';
 import { Button } from '@app/components/common/Button';
 
 export const EmployeeTopbar = () => {
-  const { cancelModalOpen, setCancelModalOpen, isDirty, handleBack, handleSave } = useEmployeeTopbar();
+  const { cancelModalOpen, setCancelModalOpen, isDirty, handleBack, handleSave, formValid } = useEmployeeTopbar();
 
   return (
     <>
@@ -19,6 +19,7 @@ export const EmployeeTopbar = () => {
         onCancel={isDirty ? () => setCancelModalOpen(true) : handleBack}
         onSave={handleSave}
         onActivate={() => {}}
+        activateDisabled={!formValid}
       />
       <Modal open={cancelModalOpen} onClose={() => setCancelModalOpen(false)} title="Save as draft?">
         <div className="flex flex-col gap-y-6">

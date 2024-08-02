@@ -11,8 +11,7 @@ import { Spacer, ladders, technologies } from './MainLadder.utils';
 import { addEmployeeFormNames } from '../AddEmployeeFormProvider';
 
 export const MainLadder = () => {
-  const { form, technologyFields, open, setOpen, ladderSelected, formValid, firstTechnology } = useMainLadder();
-  const values = form.watch();
+  const { technologyFields, open, setOpen, ladderSelected, formValid, firstTechnology } = useMainLadder();
 
   return (
     <div className="flex flex-col gap-y-10 rounded-[20px] border-navy-200 bg-white p-8">
@@ -38,11 +37,11 @@ export const MainLadder = () => {
               name={addEmployeeFormNames.ladder}
               renderRightContent={() => <Spacer />}
             />
-            {values?.[addEmployeeFormNames.technology].map((tech, i) => {
+            {technologyFields.fields.map((tech, i) => {
               return (
                 <Combobox
                   label="Technology"
-                  key={`${tech.id}-${i}`}
+                  key={tech.id}
                   options={technologies}
                   name={`${addEmployeeFormNames.technology}.${i}`}
                   renderRightContent={() =>
