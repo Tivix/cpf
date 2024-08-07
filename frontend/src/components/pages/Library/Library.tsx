@@ -11,9 +11,7 @@ export const Library: React.FC<LibraryProps> = ({ data }) => {
         Select a career path to view the details.
       </Typography>
       <div className="grid grid-cols-3 gap-6">
-        {data.map((ladder: LadderCardInterface) => (
-          <LadderCard key={ladder.ladderSlug} {...ladder} />
-        ))}
+        {data?.map((ladder: LadderCardInterface) => <LadderCard key={ladder.ladderSlug} {...ladder} />)}
       </div>
     </div>
   );

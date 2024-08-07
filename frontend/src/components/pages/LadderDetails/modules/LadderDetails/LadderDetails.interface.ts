@@ -1,7 +1,7 @@
-import { LadderBand } from '@app/types/library';
+import { BandWithBuckets } from '@app/types/library';
 
 export interface LadderDetailsProps {
-  ladder: LadderBand;
+  data: BandWithBuckets;
   ladderSlug: string;
   ladderName: string;
   band: number;

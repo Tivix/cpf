@@ -8,12 +8,15 @@ import { useAdvancementLevel } from './AdvancementLevel.hooks';
 import { Markdown } from '@app/components/common/Markdown';
 import { Typography } from '@app/components/common/Typography';
 import { Button } from '@app/components/common/Button';
+import { getAggregatedSkills } from '@app/components/pages/BucketDetails/modules/AdvancementLevel/utils';
 
 export const AdvancementLevel: React.FC<AdvancementLevelProps> = ({ showVerticalLine, data, open, onClick }) => {
   const { hideModal, openModal, modalOpen } = useAdvancementLevel();
 
-  const { advancementLevel, description, projects, categories } = data;
-  const shouldBeExpandedByDefault = Object.keys(data.categories).length === 1;
+  const { advancementLevel, description, projects, skills } = data;
+  const aggregatedSkills = getAggregatedSkills(skills);
+
+  const shouldBeExpandedByDefault = Object.keys(aggregatedSkills).length === 1;
 
   return (
     <div className="flex flex-row gap-2">
@@ -45,7 +48,7 @@ export const AdvancementLevel: React.FC<AdvancementLevelProps> = ({ showVertical
                 An example way to pass level
               </Button>
             )}
-            {Object.entries(categories).map(([category, skills]) => (
+            {Object.entries(aggregatedSkills).map(([category, skills]) => (
               <AccordionCard
                 key={category}
                 className="w-full"
