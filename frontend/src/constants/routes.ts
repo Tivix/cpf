@@ -1,4 +1,7 @@
 export const routes = {
+  auth: {
+    index: '/auth',
+  },
   documentation: {
     index: '/documentation',
   },

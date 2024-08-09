@@ -1,5 +1,4 @@
 import { MySpace } from '@app/components/pages/MySpace';
-import { getLadderDetails } from '@app/api/ladder';
 
 // TODO: get data from api
 const data = {
@@ -19,10 +18,7 @@ const data = {
 };
 
 export default async function MySpacePage() {
-  // TODO: get ladder details for current user
-  const ladderDetails = await getLadderDetails('backend');
-
-  return <MySpace data={{ ...data, ladder: ladderDetails }} />;
+  return <MySpace data={{ ...data, ladder: undefined }} />;
 }
 
 export const dynamic = 'force-dynamic';

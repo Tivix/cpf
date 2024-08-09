@@ -16,7 +16,7 @@ export interface MySpaceProps {
       band: number;
       threshold: number;
     };
-    ladder: {
+    ladder?: {
       ladderName: string;
       bands: Record<string, LadderBand>;
     };
