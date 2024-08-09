@@ -7,22 +7,24 @@ import { useLadderDetails } from './LadderDetails.hooks';
 import { LadderDetailsProps } from './LadderDetails.interface';
 import { LadderDetails } from './modules/LadderDetails';
 
-export const LadderDetailsPage: React.FC<LadderDetailsProps> = ({ data, ladderSlug }) => {
-  const { currentBand, handleLadderChange, tabsProps } = useLadderDetails(data?.bands);
+export const LadderDetailsPage: React.FC<LadderDetailsProps> = ({ bands, ladderSlug }) => {
+  const { currentBand, handleLadderChange, tabsProps } = useLadderDetails(bands);
 
-  if (!currentBand || !data || !data.bands[currentBand]) {
+  if (!currentBand || !bands || !bands[currentBand - 1]) {
     return null;
   }
+
+  const ladderName = bands[currentBand - 1].ladder.ladderName;
 
   return (
     <div>
       <Breadcrumbs
         breadcrumbs={[
           { label: 'CPF Library', href: routes.library.index, current: false },
-          { label: data.ladderName, href: `${routes.library.index}/${ladderSlug}`, current: true },
+          { label: ladderName, href: `${routes.library.index}/${ladderSlug}`, current: true },
         ]}
       />
-      {data && (
+      {bands && (
         <section className="grid grid-cols-10 py-16">
           <div className="col-span-2 mx-auto">
             <LadderTabs {...tabsProps} ladderOnClick={handleLadderChange} />
@@ -30,8 +32,8 @@ export const LadderDetailsPage: React.FC<LadderDetailsProps> = ({ data, ladderSl
           <div className="col-span-7">
             <LadderDetails
               band={currentBand}
-              ladder={data.bands[currentBand]}
-              ladderName={data.ladderName}
+              data={bands[currentBand - 1]}
+              ladderName={ladderName}
               ladderSlug={ladderSlug}
             />
           </div>

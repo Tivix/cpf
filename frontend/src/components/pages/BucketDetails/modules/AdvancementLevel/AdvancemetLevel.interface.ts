@@ -6,3 +6,12 @@ export interface AdvancementLevelProps {
   open: boolean;
   onClick: () => void;
 }
+
+export interface Skill {
+  name: string;
+  description?: string;
+}
+
+export interface SkillCategories {
+  [categoryName: string]: Skill[];
+}

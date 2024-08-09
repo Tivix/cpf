@@ -12,7 +12,7 @@ const isObject = function (o: unknown) {
   return o === Object(o) && !isArray(o) && typeof o !== 'function';
 };
 
-export const mapKeysToCamelCase = <T>(o: T): T => {
+export const mapKeysToCamelCase = <T>(o: unknown): T => {
   if (isObject(o)) {
     const n: { [key: string]: keyof T } = {};
 

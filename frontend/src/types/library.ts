@@ -5,10 +5,24 @@ export interface LadderBand {
   threshold: number;
 }
 
+export interface Band {
+  salaryRange: string;
+  threshold: number;
+  ladderSlug: string;
+  bandId: number;
+}
+
+export interface BandWithBuckets extends Band {
+  buckets: Bucket[];
+  ladder: {
+    ladderName: string;
+  };
+}
+
 export interface LadderBandBucket {
   bucketName: string;
   bucketSlug: string;
-  bucketType: typeof BucketType;
+  bucketType: keyof typeof BucketType;
   description: string;
   level?: number;
 }
@@ -16,23 +30,21 @@ export interface LadderBandBucket {
 export interface Bucket {
   bucketName: string;
   bucketSlug: string;
-  bucketType: typeof BucketType;
+  bucketType: keyof typeof BucketType;
   description: string;
   advancementLevels: AdvancementLevel[];
 }
 
 export const BucketType = {
-  HARD: 'hard',
-  SOFT: 'soft',
+  hard: 'hard',
+  soft: 'soft',
 } as const;
 
 export interface AdvancementLevel {
   advancementLevel: number;
   description: string;
   projects: ExampleProject[];
-  categories: {
-    [categoryGroup: string]: AtomicSkill[];
-  };
+  skills: AtomicSkill[];
 }
 
 export interface ExampleProject {
@@ -43,4 +55,6 @@ export interface ExampleProject {
 export interface AtomicSkill {
   name: string;
   description?: string;
+  category: string;
+  skillId: number;
 }

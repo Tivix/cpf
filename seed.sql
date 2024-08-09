@@ -52,64 +52,65 @@ comment on table public.user_roles is 'Application roles for each user.';
 
 -- Create ladder table
 CREATE TABLE ladder (
-    ladderSlug VARCHAR(50) PRIMARY KEY,
-    ladderName VARCHAR(50) NOT NULL
+    ladder_slug VARCHAR(50) PRIMARY KEY,
+    ladder_name VARCHAR(50) NOT NULL
 );
 
 -- Create band table
 CREATE TABLE band (
-    bandID SERIAL PRIMARY KEY,
-    ladderSlug VARCHAR(50) REFERENCES ladder(ladderSlug),
+    band_id SERIAL PRIMARY KEY,
+    ladder_slug VARCHAR(50) REFERENCES ladder(ladder_slug),
     threshold INT NOT NULL,
     salary_range VARCHAR(50) NOT NULL
 );
 
 -- Create bucket table
 CREATE TABLE bucket (
-    bucketSlug VARCHAR(50) PRIMARY KEY,
-    bucketName VARCHAR(100) NOT NULL,
+    bucket_slug VARCHAR(50) PRIMARY KEY,
+    bucket_name VARCHAR(100) NOT NULL,
     description TEXT NOT NULL,
-    bucketType VARCHAR(50) NOT NULL
+    bucket_type VARCHAR(50) NOT NULL
 );
 
 -- Create band_bucket table to link bands and buckets
 CREATE TABLE band_bucket (
-    bandID INT REFERENCES band(bandID),
-    bucketSlug VARCHAR(50) REFERENCES bucket(bucketSlug),
-    PRIMARY KEY (bandID, bucketSlug)
+    band_id INT REFERENCES band(band_id),
+    bucket_slug VARCHAR(50) REFERENCES bucket(bucket_slug),
+    PRIMARY KEY (band_id, bucket_slug)
 );
 
 -- Create advancement_level table
 CREATE TABLE advancement_level (
-    levelID SERIAL PRIMARY KEY,
-    bucketSlug VARCHAR(50) REFERENCES bucket(bucketSlug),
+    level_id SERIAL PRIMARY KEY,
+    bucket_slug VARCHAR(50) REFERENCES bucket(bucket_slug),
     advancement_level INT NOT NULL,
     description TEXT NOT NULL
 );
 
 -- Create example_project table
 CREATE TABLE example_project (
-    projectID SERIAL PRIMARY KEY,
-    levelID INT REFERENCES advancement_level(levelID),
+    project_id SERIAL PRIMARY KEY,
+    level_id INT REFERENCES advancement_level(level_id),
     title VARCHAR(200) NOT NULL,
     overview TEXT NOT NULL
 );
 
 -- Create atomic_skill table
 CREATE TABLE atomic_skill (
-    skillID SERIAL PRIMARY KEY,
-    levelID INT REFERENCES advancement_level(levelID),
+    skill_id SERIAL PRIMARY KEY,
+    level_id INT REFERENCES advancement_level(level_id),
     name VARCHAR(100) NOT NULL,
-    category VARCHAR(50) NOT NULL
+    category VARCHAR(50) NOT NULL,
+    description TEXT
 );
 
 -- Insert ladder data
-INSERT INTO ladder (ladderSlug, ladderName) VALUES
+INSERT INTO ladder (ladder_slug, ladder_name) VALUES
 ('backend', 'Backend Developer'),
 ('frontend', 'Frontend Developer');
 
 -- Insert band data for backend
-INSERT INTO band (ladderSlug, threshold, salary_range) VALUES
+INSERT INTO band (ladder_slug, threshold, salary_range) VALUES
 ('backend', 3, '4000 - 8000 pln'),
 ('backend', 7, '6000 - 10000 pln'),
 ('backend', 13, '8000 - 12000 pln'),
@@ -121,7 +122,7 @@ INSERT INTO band (ladderSlug, threshold, salary_range) VALUES
 ('backend', 65, '30000+ pln');
 
 -- Insert band data for frontend
-INSERT INTO band (ladderSlug, threshold, salary_range) VALUES
+INSERT INTO band (ladder_slug, threshold, salary_range) VALUES
 ('frontend', 2, '4000 - 7000 pln'),
 ('frontend', 6, '6000 - 9000 pln'),
 ('frontend', 11, '8000 - 11000 pln'),
@@ -133,7 +134,7 @@ INSERT INTO band (ladderSlug, threshold, salary_range) VALUES
 ('frontend', 60, '25000+ pln');
 
 -- Insert bucket data
-INSERT INTO bucket (bucketSlug, bucketName, description, bucketType) VALUES
+INSERT INTO bucket (bucket_slug, bucket_name, description, bucket_type) VALUES
 ('browser_ui_language', 'Browser UI Language', 'Frontend development skills focusing on the developer\''s role in the selected language.', 'hard'),
 ('frontend_programming_language', 'Frontend Programming Language', 'Frontend programming language skills are primarily focused on the developer\''s role in the selected language.', 'hard'),
 ('frontend_frameworks', 'Frontend Frameworks', 'Frontend development skills focusing on the developer\''s role in the selected language.', 'hard'),
@@ -157,55 +158,57 @@ INSERT INTO bucket (bucketSlug, bucketName, description, bucketType) VALUES
 ('event_streaming_async_programming', 'Event streaming/async programming', 'Event streming/async programming', 'hard'),
 ('releases_ci_cd', 'Releases CI/CD', 'Releases CI/CD', 'hard'),
 ('operations', 'Operations', 'Operations', 'hard'),
-('backend_frameworks', 'Backend Frameworks', 'Backend development skills focusing on the developer\''s role in the selected language.', 'hard');
+('backend_frameworks', 'Backend Frameworks', 'Backend development skills focusing on the developer\''s role in the selected language.', 'hard'),
+('time_management', 'Time Management', 'Lorem ipsum', 'soft');
 
 
 -- Insert band_bucket data for backend
-INSERT INTO band_bucket (bandID, bucketSlug) VALUES
-((SELECT bandID FROM band WHERE ladderSlug = 'backend' AND threshold = 3), 'backend_programming_language'),
-((SELECT bandID FROM band WHERE ladderSlug = 'backend' AND threshold = 3), 'backend_frameworks'),
-((SELECT bandID FROM band WHERE ladderSlug = 'backend' AND threshold = 3), 'dynamic_data_and_systems_integration'),
-((SELECT bandID FROM band WHERE ladderSlug = 'backend' AND threshold = 7), 'relational_databases'),
-((SELECT bandID FROM band WHERE ladderSlug = 'backend' AND threshold = 7), 'debugging'),
-((SELECT bandID FROM band WHERE ladderSlug = 'backend' AND threshold = 7), 'cvs'),
-((SELECT bandID FROM band WHERE ladderSlug = 'backend' AND threshold = 13), 'application_scaffolding'),
-((SELECT bandID FROM band WHERE ladderSlug = 'backend' AND threshold = 13), 'code_testing'),
-((SELECT bandID FROM band WHERE ladderSlug = 'backend' AND threshold = 20), 'platform_cohesion'),
-((SELECT bandID FROM band WHERE ladderSlug = 'backend' AND threshold = 20), 'releases_ci_cd'),
-((SELECT bandID FROM band WHERE ladderSlug = 'backend' AND threshold = 20), 'operations'),
-((SELECT bandID FROM band WHERE ladderSlug = 'backend' AND threshold = 28), 'algorithmic_knowledge'),
-((SELECT bandID FROM band WHERE ladderSlug = 'backend' AND threshold = 28), 'performance_optimization'),
-((SELECT bandID FROM band WHERE ladderSlug = 'backend' AND threshold = 28), 'event_streaming_async_programming'),
-((SELECT bandID FROM band WHERE ladderSlug = 'backend' AND threshold = 37), 'non_relational_databases'),
-((SELECT bandID FROM band WHERE ladderSlug = 'backend' AND threshold = 37), 'application_architecture'),
-((SELECT bandID FROM band WHERE ladderSlug = 'backend' AND threshold = 37), 'security');
+INSERT INTO band_bucket (band_id, bucket_slug) VALUES
+((SELECT band_id FROM band WHERE ladder_slug = 'backend' AND threshold = 3), 'backend_programming_language'),
+((SELECT band_id FROM band WHERE ladder_slug = 'backend' AND threshold = 3), 'backend_frameworks'),
+((SELECT band_id FROM band WHERE ladder_slug = 'backend' AND threshold = 3), 'dynamic_data_and_systems_integration'),
+((SELECT band_id FROM band WHERE ladder_slug = 'backend' AND threshold = 3), 'time_management'),
+((SELECT band_id FROM band WHERE ladder_slug = 'backend' AND threshold = 7), 'relational_databases'),
+((SELECT band_id FROM band WHERE ladder_slug = 'backend' AND threshold = 7), 'debugging'),
+((SELECT band_id FROM band WHERE ladder_slug = 'backend' AND threshold = 7), 'cvs'),
+((SELECT band_id FROM band WHERE ladder_slug = 'backend' AND threshold = 13), 'application_scaffolding'),
+((SELECT band_id FROM band WHERE ladder_slug = 'backend' AND threshold = 13), 'code_testing'),
+((SELECT band_id FROM band WHERE ladder_slug = 'backend' AND threshold = 20), 'platform_cohesion'),
+((SELECT band_id FROM band WHERE ladder_slug = 'backend' AND threshold = 20), 'releases_ci_cd'),
+((SELECT band_id FROM band WHERE ladder_slug = 'backend' AND threshold = 20), 'operations'),
+((SELECT band_id FROM band WHERE ladder_slug = 'backend' AND threshold = 28), 'algorithmic_knowledge'),
+((SELECT band_id FROM band WHERE ladder_slug = 'backend' AND threshold = 28), 'performance_optimization'),
+((SELECT band_id FROM band WHERE ladder_slug = 'backend' AND threshold = 28), 'event_streaming_async_programming'),
+((SELECT band_id FROM band WHERE ladder_slug = 'backend' AND threshold = 37), 'non_relational_databases'),
+((SELECT band_id FROM band WHERE ladder_slug = 'backend' AND threshold = 37), 'application_architecture'),
+((SELECT band_id FROM band WHERE ladder_slug = 'backend' AND threshold = 37), 'security');
 
 
 
 -- Insert band_bucket data for frontend
-INSERT INTO band_bucket (bandID, bucketSlug) VALUES
-((SELECT bandID FROM band WHERE ladderSlug = 'frontend' AND threshold = 2), 'frontend_programming_language'),
-((SELECT bandID FROM band WHERE ladderSlug = 'frontend' AND threshold = 2), 'browser_ui_language'),
-((SELECT bandID FROM band WHERE ladderSlug = 'frontend' AND threshold = 6), 'frontend_frameworks'),
-((SELECT bandID FROM band WHERE ladderSlug = 'frontend' AND threshold = 6), 'dynamic_data_and_systems_integration'),
-((SELECT bandID FROM band WHERE ladderSlug = 'frontend' AND threshold = 6), 'cvs'),
-((SELECT bandID FROM band WHERE ladderSlug = 'frontend' AND threshold = 11), 'application_scaffolding'),
-((SELECT bandID FROM band WHERE ladderSlug = 'frontend' AND threshold = 11), 'debugging'),
-((SELECT bandID FROM band WHERE ladderSlug = 'frontend' AND threshold = 11), 'code_testing'),
-((SELECT bandID FROM band WHERE ladderSlug = 'frontend' AND threshold = 15), 'platform_cohesion'),
-((SELECT bandID FROM band WHERE ladderSlug = 'frontend' AND threshold = 15), 'runtime_knowledge'),
-((SELECT bandID FROM band WHERE ladderSlug = 'frontend' AND threshold = 23), 'performance_optimization'),
-((SELECT bandID FROM band WHERE ladderSlug = 'frontend' AND threshold = 23), 'application_architecture'),
-((SELECT bandID FROM band WHERE ladderSlug = 'frontend' AND threshold = 23), 'cross_platform_frontend'),
-((SELECT bandID FROM band WHERE ladderSlug = 'frontend' AND threshold = 35), 'security'),
-((SELECT bandID FROM band WHERE ladderSlug = 'frontend' AND threshold = 35), 'algorithmic_knowledge'),
-((SELECT bandID FROM band WHERE ladderSlug = 'frontend' AND threshold = 35), 'releases_ci_cd'),
-((SELECT bandID FROM band WHERE ladderSlug = 'frontend' AND threshold = 50), 'releases_ci_cd'),
-((SELECT bandID FROM band WHERE ladderSlug = 'frontend' AND threshold = 55), 'releases_ci_cd'),
-((SELECT bandID FROM band WHERE ladderSlug = 'frontend' AND threshold = 60), 'releases_ci_cd');
+INSERT INTO band_bucket (band_id, bucket_slug) VALUES
+((SELECT band_id FROM band WHERE ladder_slug = 'frontend' AND threshold = 2), 'frontend_programming_language'),
+((SELECT band_id FROM band WHERE ladder_slug = 'frontend' AND threshold = 2), 'browser_ui_language'),
+((SELECT band_id FROM band WHERE ladder_slug = 'frontend' AND threshold = 6), 'frontend_frameworks'),
+((SELECT band_id FROM band WHERE ladder_slug = 'frontend' AND threshold = 6), 'dynamic_data_and_systems_integration'),
+((SELECT band_id FROM band WHERE ladder_slug = 'frontend' AND threshold = 6), 'cvs'),
+((SELECT band_id FROM band WHERE ladder_slug = 'frontend' AND threshold = 11), 'application_scaffolding'),
+((SELECT band_id FROM band WHERE ladder_slug = 'frontend' AND threshold = 11), 'debugging'),
+((SELECT band_id FROM band WHERE ladder_slug = 'frontend' AND threshold = 11), 'code_testing'),
+((SELECT band_id FROM band WHERE ladder_slug = 'frontend' AND threshold = 15), 'platform_cohesion'),
+((SELECT band_id FROM band WHERE ladder_slug = 'frontend' AND threshold = 15), 'runtime_knowledge'),
+((SELECT band_id FROM band WHERE ladder_slug = 'frontend' AND threshold = 23), 'performance_optimization'),
+((SELECT band_id FROM band WHERE ladder_slug = 'frontend' AND threshold = 23), 'application_architecture'),
+((SELECT band_id FROM band WHERE ladder_slug = 'frontend' AND threshold = 23), 'cross_platform_frontend'),
+((SELECT band_id FROM band WHERE ladder_slug = 'frontend' AND threshold = 35), 'security'),
+((SELECT band_id FROM band WHERE ladder_slug = 'frontend' AND threshold = 35), 'algorithmic_knowledge'),
+((SELECT band_id FROM band WHERE ladder_slug = 'frontend' AND threshold = 35), 'releases_ci_cd'),
+((SELECT band_id FROM band WHERE ladder_slug = 'frontend' AND threshold = 50), 'releases_ci_cd'),
+((SELECT band_id FROM band WHERE ladder_slug = 'frontend' AND threshold = 55), 'releases_ci_cd'),
+((SELECT band_id FROM band WHERE ladder_slug = 'frontend' AND threshold = 60), 'releases_ci_cd');
 
 -- Insert advancement_level
-INSERT INTO advancement_level (bucketSlug, advancement_level, description) VALUES
+INSERT INTO advancement_level (bucket_slug, advancement_level, description) VALUES
 ('browser_ui_language', 1, 'A developer at ADV1 demonstrates a foundational understanding of UI/UX development. They have a grasp of HTML semantics, CSS box model, and responsive design principles. They can create simple, accessible layouts, and are aware of basic typography and color theory. Their skills include using CSS Flexbox and Grid, implementing basic user interactions, and ensuring basic web accessibility. They are comfortable with browser developer tools and can work on small-scale projects with guidance.'),
 ('browser_ui_language', 2, 'A developer at ADV2 is self-sufficient and possesses a solid knowledge of UI/UX development. They are proficient in advanced CSS selectors, transitions, and animations. They use CSS preprocessors and understand the importance of responsive images and cross-browser compatibility. They have experience with design systems, CSS frameworks, and basic version control. This developer can contribute effectively to larger projects, demonstrating a good understanding of UI component libraries and responsive design techniques.'),
 ('browser_ui_language', 3, 'A developer with ADV3 has deep knowledge and mastery in UI/UX development. They are proficient in CSS custom properties, advanced responsive techniques, and CSS architecture methodologies. They excel in performance optimization, utilizing techniques like lazy loading and code splitting. This developer is well-versed in CSS-in-JS solutions, microinteractions, and advanced web accessibility. They have experience with Progressive Web App (PWA) development, and understand internationalization and localization strategies. With a deep understanding of these concepts, they can lead and mentor others, contributing to complex projects with a focus on creating exceptional user experiences.'),
@@ -277,49 +280,52 @@ INSERT INTO advancement_level (bucketSlug, advancement_level, description) VALUE
 ('operations', 3, 'Lorem'),
 ('backend_frameworks', 1, 'Lorem ipsum dolores'),
 ('backend_frameworks', 2, 'Lorem ipsum'),
-('backend_frameworks', 3, 'Lorem');
+('backend_frameworks', 3, 'Lorem'),
+('time_management', 1, 'Lorem ipsum dolores');
 
 -- Insert example_project data for frameworks
-INSERT INTO example_project (levelID, title, overview) VALUES
-((SELECT levelID FROM advancement_level WHERE bucketSlug = 'frontend_frameworks' AND advancement_level = 1), 'Project title: Building a Simple Library System', 'Lorem ipsum');
+INSERT INTO example_project (level_id, title, overview) VALUES
+((SELECT level_id FROM advancement_level WHERE bucket_slug = 'frontend_frameworks' AND advancement_level = 1), 'Project title: Building a Simple Library System', 'Lorem ipsum');
 
 -- Insert atomic_skill data for frameworks
-INSERT INTO atomic_skill (levelID, name, category) VALUES
-((SELECT levelID FROM advancement_level WHERE bucketSlug = 'browser_ui_language' AND advancement_level = 1), 'HTML Fundamentals', 'Common'),
-((SELECT levelID FROM advancement_level WHERE bucketSlug = 'browser_ui_language' AND advancement_level = 1), 'HTML attributes and their usage', 'Common'),
-((SELECT levelID FROM advancement_level WHERE bucketSlug = 'browser_ui_language' AND advancement_level = 1), 'CSS Box Model and layout properties', 'Common'),
-((SELECT levelID FROM advancement_level WHERE bucketSlug = 'browser_ui_language' AND advancement_level = 1), 'Building basic display and input elements using native components', 'Common'),
-((SELECT levelID FROM advancement_level WHERE bucketSlug = 'browser_ui_language' AND advancement_level = 1), 'Handling basic user inputs', 'Common'),
-((SELECT levelID FROM advancement_level WHERE bucketSlug = 'browser_ui_language' AND advancement_level = 1), 'Responsive design', 'Common'),
-((SELECT levelID FROM advancement_level WHERE bucketSlug = 'browser_ui_language' AND advancement_level = 1), 'Familiarity with framework-specific UI libraries (antd, material-ui)', 'Common'),
-((SELECT levelID FROM advancement_level WHERE bucketSlug = 'browser_ui_language' AND advancement_level = 1), 'Familiarity with CSS libraries (daisyui, tailwind, bootstrap)', 'Common'),
-((SELECT levelID FROM advancement_level WHERE bucketSlug = 'browser_ui_language' AND advancement_level = 2), 'Semantic HTML', 'Common'),
-((SELECT levelID FROM advancement_level WHERE bucketSlug = 'browser_ui_language' AND advancement_level = 2), 'a11y', 'Common'),
-((SELECT levelID FROM advancement_level WHERE bucketSlug = 'browser_ui_language' AND advancement_level = 2), 'Reading, validating, transforming and sending user inputs to data consumers', 'Common'),
-((SELECT levelID FROM advancement_level WHERE bucketSlug = 'browser_ui_language' AND advancement_level = 2), 'Fonts, typography and overall text management', 'Common'),
-((SELECT levelID FROM advancement_level WHERE bucketSlug = 'browser_ui_language' AND advancement_level = 2), 'Basic animation skills (e.g. css animations with keyframes)', 'Common'),
-((SELECT levelID FROM advancement_level WHERE bucketSlug = 'browser_ui_language' AND advancement_level = 2), 'Basic SEO knowledge', 'Common'),
-((SELECT levelID FROM advancement_level WHERE bucketSlug = 'browser_ui_language' AND advancement_level = 2), 'SVGs', 'Common'),
-((SELECT levelID FROM advancement_level WHERE bucketSlug = 'browser_ui_language' AND advancement_level = 2), 'Head and meta tags', 'Common'),
-((SELECT levelID FROM advancement_level WHERE bucketSlug = 'browser_ui_language' AND advancement_level = 2), 'Atributes for data validation (min-length, pattern etc)', 'Common'),
-((SELECT levelID FROM advancement_level WHERE bucketSlug = 'browser_ui_language' AND advancement_level = 2), 'Responsive typography', 'Common'),
-((SELECT levelID FROM advancement_level WHERE bucketSlug = 'browser_ui_language' AND advancement_level = 2), 'Cross-Browser compatibility', 'Common'),
-((SELECT levelID FROM advancement_level WHERE bucketSlug = 'browser_ui_language' AND advancement_level = 2), 'Using iframes', 'Common'),
-((SELECT levelID FROM advancement_level WHERE bucketSlug = 'browser_ui_language' AND advancement_level = 2), 'Theming and extending UI libraries', 'Common'),
-((SELECT levelID FROM advancement_level WHERE bucketSlug = 'browser_ui_language' AND advancement_level = 2), 'CSS in JS libraries knowledge (styled-components, emotion)', 'Common'),
-((SELECT levelID FROM advancement_level WHERE bucketSlug = 'browser_ui_language' AND advancement_level = 2), 'Ability to implement i18n and l10n in apps', 'Common'),
-((SELECT levelID FROM advancement_level WHERE bucketSlug = 'browser_ui_language' AND advancement_level = 2), 'Mobile-first design principles', 'Common'),
-((SELECT levelID FROM advancement_level WHERE bucketSlug = 'browser_ui_language' AND advancement_level = 2), 'Uderstanding of different pre-processors (LESS, SASS)', 'Common'),
-((SELECT levelID FROM advancement_level WHERE bucketSlug = 'browser_ui_language' AND advancement_level = 2), 'Using variables, mixins and nesting', 'Common'),
-((SELECT levelID FROM advancement_level WHERE bucketSlug = 'browser_ui_language' AND advancement_level = 3), 'OG Tags', 'Common'),
-((SELECT levelID FROM advancement_level WHERE bucketSlug = 'browser_ui_language' AND advancement_level = 3), 'CSS architecture (e.g. BEM, atomic etc)', 'Common'),
-((SELECT levelID FROM advancement_level WHERE bucketSlug = 'browser_ui_language' AND advancement_level = 3), 'Advanced CSS (animations, transitions, gradients, gsap, react spring)', 'Common'),
-((SELECT levelID FROM advancement_level WHERE bucketSlug = 'browser_ui_language' AND advancement_level = 3), 'Shadow DOM and encapsulation', 'Common'),
-((SELECT levelID FROM advancement_level WHERE bucketSlug = 'browser_ui_language' AND advancement_level = 3), 'Ability to implement complex design systems (with tools like Storybook)', 'Common'),
-((SELECT levelID FROM advancement_level WHERE bucketSlug = 'browser_ui_language' AND advancement_level = 3), 'Dynamic UI mastery (using skeletons, how to avoid spinner hell, jumping UIs etc)', 'Common'),
-((SELECT levelID FROM advancement_level WHERE bucketSlug = 'browser_ui_language' AND advancement_level = 3), 'Templating', 'Common'),
-((SELECT levelID FROM advancement_level WHERE bucketSlug = 'browser_ui_language' AND advancement_level = 3), 'Setting up automated a11y tools (pa11y, axe)', 'Common'),
-((SELECT levelID FROM advancement_level WHERE bucketSlug = 'browser_ui_language' AND advancement_level = 3), 'Deep knowledge of WCAG guidelines', 'Common'),
-((SELECT levelID FROM advancement_level WHERE bucketSlug = 'frontend_programming_language' AND advancement_level = 1), 'Routing and controllers', 'Common'),
-((SELECT levelID FROM advancement_level WHERE bucketSlug = 'frontend_programming_language' AND advancement_level = 2), 'Authentication and Authorization', 'Common'),
-((SELECT levelID FROM advancement_level WHERE bucketSlug = 'frontend_programming_language' AND advancement_level = 3), 'Security best practices', 'Common');
+INSERT INTO atomic_skill (level_id, name, category) VALUES
+((SELECT level_id FROM advancement_level WHERE bucket_slug = 'browser_ui_language' AND advancement_level = 1), 'HTML Fundamentals', 'Common'),
+((SELECT level_id FROM advancement_level WHERE bucket_slug = 'browser_ui_language' AND advancement_level = 1), 'HTML attributes and their usage', 'Common'),
+((SELECT level_id FROM advancement_level WHERE bucket_slug = 'browser_ui_language' AND advancement_level = 1), 'CSS Box Model and layout properties', 'Common'),
+((SELECT level_id FROM advancement_level WHERE bucket_slug = 'browser_ui_language' AND advancement_level = 1), 'Building basic display and input elements using native components', 'Common'),
+((SELECT level_id FROM advancement_level WHERE bucket_slug = 'browser_ui_language' AND advancement_level = 1), 'Handling basic user inputs', 'Common'),
+((SELECT level_id FROM advancement_level WHERE bucket_slug = 'browser_ui_language' AND advancement_level = 1), 'Responsive design', 'Common'),
+((SELECT level_id FROM advancement_level WHERE bucket_slug = 'browser_ui_language' AND advancement_level = 1), 'Familiarity with framework-specific UI libraries (antd, material-ui)', 'Common'),
+((SELECT level_id FROM advancement_level WHERE bucket_slug = 'browser_ui_language' AND advancement_level = 1), 'Familiarity with CSS libraries (daisyui, tailwind, bootstrap)', 'Common'),
+((SELECT level_id FROM advancement_level WHERE bucket_slug = 'browser_ui_language' AND advancement_level = 2), 'Semantic HTML', 'Common'),
+((SELECT level_id FROM advancement_level WHERE bucket_slug = 'browser_ui_language' AND advancement_level = 2), 'a11y', 'Common'),
+((SELECT level_id FROM advancement_level WHERE bucket_slug = 'browser_ui_language' AND advancement_level = 2), 'Reading, validating, transforming and sending user inputs to data consumers', 'Common'),
+((SELECT level_id FROM advancement_level WHERE bucket_slug = 'browser_ui_language' AND advancement_level = 2), 'Fonts, typography and overall text management', 'Common'),
+((SELECT level_id FROM advancement_level WHERE bucket_slug = 'browser_ui_language' AND advancement_level = 2), 'Basic animation skills (e.g. css animations with keyframes)', 'Common'),
+((SELECT level_id FROM advancement_level WHERE bucket_slug = 'browser_ui_language' AND advancement_level = 2), 'Basic SEO knowledge', 'Common'),
+((SELECT level_id FROM advancement_level WHERE bucket_slug = 'browser_ui_language' AND advancement_level = 2), 'SVGs', 'Common'),
+((SELECT level_id FROM advancement_level WHERE bucket_slug = 'browser_ui_language' AND advancement_level = 2), 'Head and meta tags', 'Common'),
+((SELECT level_id FROM advancement_level WHERE bucket_slug = 'browser_ui_language' AND advancement_level = 2), 'Atributes for data validation (min-length, pattern etc)', 'Common'),
+((SELECT level_id FROM advancement_level WHERE bucket_slug = 'browser_ui_language' AND advancement_level = 2), 'Responsive typography', 'Common'),
+((SELECT level_id FROM advancement_level WHERE bucket_slug = 'browser_ui_language' AND advancement_level = 2), 'Cross-Browser compatibility', 'Common'),
+((SELECT level_id FROM advancement_level WHERE bucket_slug = 'browser_ui_language' AND advancement_level = 2), 'Using iframes', 'Common'),
+((SELECT level_id FROM advancement_level WHERE bucket_slug = 'browser_ui_language' AND advancement_level = 2), 'Theming and extending UI libraries', 'Common'),
+((SELECT level_id FROM advancement_level WHERE bucket_slug = 'browser_ui_language' AND advancement_level = 2), 'CSS in JS libraries knowledge (styled-components, emotion)', 'Common'),
+((SELECT level_id FROM advancement_level WHERE bucket_slug = 'browser_ui_language' AND advancement_level = 2), 'Ability to implement i18n and l10n in apps', 'Common'),
+((SELECT level_id FROM advancement_level WHERE bucket_slug = 'browser_ui_language' AND advancement_level = 2), 'Mobile-first design principles', 'Common'),
+((SELECT level_id FROM advancement_level WHERE bucket_slug = 'browser_ui_language' AND advancement_level = 2), 'Uderstanding of different pre-processors (LESS, SASS)', 'Common'),
+((SELECT level_id FROM advancement_level WHERE bucket_slug = 'browser_ui_language' AND advancement_level = 2), 'Using variables, mixins and nesting', 'Common'),
+((SELECT level_id FROM advancement_level WHERE bucket_slug = 'browser_ui_language' AND advancement_level = 3), 'OG Tags', 'Common'),
+((SELECT level_id FROM advancement_level WHERE bucket_slug = 'browser_ui_language' AND advancement_level = 3), 'CSS architecture (e.g. BEM, atomic etc)', 'Common'),
+((SELECT level_id FROM advancement_level WHERE bucket_slug = 'browser_ui_language' AND advancement_level = 3), 'Advanced CSS (animations, transitions, gradients, gsap, react spring)', 'Common'),
+((SELECT level_id FROM advancement_level WHERE bucket_slug = 'browser_ui_language' AND advancement_level = 3), 'Shadow DOM and encapsulation', 'Common'),
+((SELECT level_id FROM advancement_level WHERE bucket_slug = 'browser_ui_language' AND advancement_level = 3), 'Ability to implement complex design systems (with tools like Storybook)', 'Common'),
+((SELECT level_id FROM advancement_level WHERE bucket_slug = 'browser_ui_language' AND advancement_level = 3), 'Dynamic UI mastery (using skeletons, how to avoid spinner hell, jumping UIs etc)', 'Common'),
+((SELECT level_id FROM advancement_level WHERE bucket_slug = 'browser_ui_language' AND advancement_level = 3), 'Templating', 'Common'),
+((SELECT level_id FROM advancement_level WHERE bucket_slug = 'browser_ui_language' AND advancement_level = 3), 'Setting up automated a11y tools (pa11y, axe)', 'Common'),
+((SELECT level_id FROM advancement_level WHERE bucket_slug = 'browser_ui_language' AND advancement_level = 3), 'Deep knowledge of WCAG guidelines', 'Common'),
+((SELECT level_id FROM advancement_level WHERE bucket_slug = 'frontend_programming_language' AND advancement_level = 1), 'Routing and controllers', 'Common'),
+((SELECT level_id FROM advancement_level WHERE bucket_slug = 'frontend_programming_language' AND advancement_level = 2), 'Authentication and Authorization', 'Common'),
+((SELECT level_id FROM advancement_level WHERE bucket_slug = 'frontend_programming_language' AND advancement_level = 3), 'Security best practices', 'Common'),
+((SELECT level_id FROM advancement_level WHERE bucket_slug = 'time_management' AND advancement_level = 1), 'Wykazuje osobiste zaangażowanie w realizację celów i rozwiązywanie problemów', 'Soft skill'),
+((SELECT level_id FROM advancement_level WHERE bucket_slug = 'time_management' AND advancement_level = 1), 'Postępuje zgodnie z obowiązującymi w firmie standardami jakości.', 'Soft skill');
