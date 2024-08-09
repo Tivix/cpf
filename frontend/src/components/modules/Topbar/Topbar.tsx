@@ -1,4 +1,3 @@
-'use client';
 import { Fragment } from 'react';
 import { Menu, MenuButton, MenuItem, MenuItems, Transition } from '@headlessui/react';
 import { NotificationIcon } from '@app/static/icons/NotificationIcon';
@@ -6,9 +5,7 @@ import { Avatar } from '@app/components/common/Avatar';
 import { UserIcon } from '@app/static/icons/UserIcon';
 import { LogoutIcon } from '@app/static/icons/LogoutIcon';
 import Link from 'next/link';
-import { createClient } from '@app/utils/supabase/client';
-import { useRouter } from 'next/navigation';
-import { routes } from '@app/constants';
+import { useTopbar } from './Topbar.hooks';
 
 // TODO: get user from some context
 const user = {
@@ -24,12 +21,7 @@ const menuItems = [
   },
 ];
 export const Topbar = async () => {
-  const router = useRouter();
-  const supabase = createClient();
-  const handleSignOut = async () => {
-    const { error } = await supabase.auth.signOut();
-    if (!error) router.push(routes.auth.index);
-  };
+  const { handleSignOut } = useTopbar();
 
   return (
     <div className="sticky top-0 z-40 mx-auto shrink-0 border-b border-navy-200 bg-white p-4">
@@ -74,15 +66,14 @@ export const Topbar = async () => {
                 </MenuItem>
               ))}
               <MenuItem key="Sign out">
-                <button
-                  onClick={handleSignOut}
-                  className="flex w-full items-center gap-3 px-4 py-2 text-sm text-navy-700 hover:bg-navy-100"
-                >
-                  <span>
-                    <LogoutIcon />
-                  </span>
-                  <span>Sign out</span>
-                </button>
+                <form action={handleSignOut}>
+                  <button className="flex w-full items-center gap-3 px-4 py-2 text-sm text-navy-700 hover:bg-navy-100">
+                    <span>
+                      <LogoutIcon />
+                    </span>
+                    <span>Sign out</span>
+                  </button>
+                </form>
               </MenuItem>
             </MenuItems>
           </Transition>
