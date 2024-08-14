@@ -53,7 +53,8 @@ comment on table public.user_roles is 'Application roles for each user.';
 -- Create ladder table
 CREATE TABLE ladder (
     ladder_slug VARCHAR(50) PRIMARY KEY,
-    ladder_name VARCHAR(50) NOT NULL
+    ladder_name VARCHAR(50) NOT NULL,
+    ladder_tech TEXT[]
 );
 
 -- Create band table
@@ -105,9 +106,17 @@ CREATE TABLE atomic_skill (
 );
 
 -- Insert ladder data
-INSERT INTO ladder (ladder_slug, ladder_name) VALUES
-('backend', 'Backend Developer'),
-('frontend', 'Frontend Developer');
+INSERT INTO ladder (ladder_slug, ladder_name, ladder_tech) VALUES
+('backend', 'Backend Developer', ARRAY[
+  'python',
+  'node.js',
+  '.NET'
+]),
+('frontend', 'Frontend Developer', ARRAY[
+  'react',
+  'react native'
+]),
+('design', 'Designer', NULL);
 
 -- Insert band data for backend
 INSERT INTO band (ladder_slug, threshold, salary_range) VALUES

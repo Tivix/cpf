@@ -21,7 +21,8 @@ export const mapKeysToCamelCase = <T>(o: unknown): T => {
     });
 
     return n as T;
-  } else if (isArray(o)) {
+  }
+  if (isArray(o)) {
     return (o as unknown as Array<unknown>).map((i) => mapKeysToCamelCase(i)) as T;
   }
 
