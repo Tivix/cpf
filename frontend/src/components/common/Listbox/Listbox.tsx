@@ -8,7 +8,7 @@ import { ChevronUpIcon } from '@app/static/icons/ChevronUpIcon';
 import { CloseIcon } from '@app/static/icons/CloseIcon';
 import { useListBox } from './Listbox.hooks';
 
-export const Listbox: FC<ListboxProps> = ({ name, options, placeholder, onClear }) => {
+export const Listbox: FC<ListboxProps> = ({ name, options, placeholder, onClear, className }) => {
   const { control } = useFormContext();
   const { handleClear } = useListBox(onClear);
 
@@ -24,10 +24,11 @@ export const Listbox: FC<ListboxProps> = ({ name, options, placeholder, onClear 
             <HeadlessListbox value={value} onChange={onChange}>
               <ListboxButton
                 className={generateClassNames(
-                  'text-black relative flex h-full w-full items-center rounded-lg border border-navy-200 px-4 text-left',
+                  'text-black relative flex h-12 w-full items-center rounded-lg border border-navy-200 px-4 text-left',
                   'focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-red-600',
                   { 'bg-blue-200': selected },
                   { 'text-navy-600': !value && placeholder },
+                  className,
                 )}
               >
                 {selected && (
@@ -42,7 +43,7 @@ export const Listbox: FC<ListboxProps> = ({ name, options, placeholder, onClear 
                       <CloseIcon />
                     </div>
                   ) : (
-                    <ChevronUpIcon className="rotate-180" />
+                    <ChevronUpIcon className="h-4 w-4 rotate-180" />
                   )}
                 </div>
               </ListboxButton>

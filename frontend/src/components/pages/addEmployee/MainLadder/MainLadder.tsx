@@ -13,10 +13,8 @@ import { FC } from 'react';
 import { MainLadderProps } from './MainLadder.interface';
 
 export const MainLadder: FC<MainLadderProps> = ({ data }) => {
-  const { form, ladders, technologies, technologyFields, open, setOpen, selectedLadder, formValid, firstTechnology } =
+  const { technologyFields, open, ladders, technologies, setOpen, selectedLadder, formValid, firstTechnology } =
     useMainLadder(data);
-
-  const values = form.watch();
 
   return (
     <div className="flex flex-col gap-y-10 rounded-[20px] border-navy-200 bg-white p-8">
@@ -45,11 +43,11 @@ export const MainLadder: FC<MainLadderProps> = ({ data }) => {
               />
             )}
             {technologies &&
-              values?.[addEmployeeFormNames.technology].map((tech, i) => {
+              technologyFields.fields.map((tech, i) => {
                 return (
                   <Combobox
                     label="Technology"
-                    key={`${tech.id}-${i}`}
+                    key={tech.id}
                     options={technologies}
                     name={`${addEmployeeFormNames.technology}.${i}`}
                     renderRightContent={() =>

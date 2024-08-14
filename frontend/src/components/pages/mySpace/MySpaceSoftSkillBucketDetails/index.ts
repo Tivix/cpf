@@ -1,0 +1,1 @@
+export { MySpaceSoftSkillBucketDetails } from './MySpaceSoftSkillBucketDetails';

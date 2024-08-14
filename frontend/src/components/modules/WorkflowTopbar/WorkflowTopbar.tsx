@@ -10,6 +10,7 @@ export const WorkflowTopbar: FC<WorkflowTopbarProps> = ({
   onCancel,
   onSave,
   onActivate,
+  activateDisabled,
 }) => {
   return (
     <div className="sticky top-0 flex h-16 items-center justify-between border-b border-b-navy-200 bg-white px-8">
@@ -21,7 +22,7 @@ export const WorkflowTopbar: FC<WorkflowTopbarProps> = ({
         <Button variant="border" styleType="natural" onClick={onSave}>
           {saveTitle}
         </Button>
-        <Button disabled variant="solid" onClick={onActivate}>
+        <Button disabled={activateDisabled} variant="solid" onClick={onActivate}>
           {activateTitle}
         </Button>
       </div>

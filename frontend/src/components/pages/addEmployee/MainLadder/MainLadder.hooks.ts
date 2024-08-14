@@ -19,9 +19,9 @@ export const useMainLadder = (data: MainLadderProps['data']) => {
     control: form.control,
   });
   const { replace } = technologyFields;
-
   const [open, setOpen] = useState(true);
   const [formValid, setFormValid] = useState(false);
+  const [stepValid, setStepValid] = useState(false);
   const [ladders, setLadders] = useState<Option[] | null>(null);
   const [technologies, setTechnologies] = useState<Option[] | null>(null);
 
@@ -42,15 +42,17 @@ export const useMainLadder = (data: MainLadderProps['data']) => {
 
   useEffect(() => {
     const technologySelected = firstTechnology && firstTechnology.name?.length > 0;
+    const stepValid = selectedLadder && technologySelected;
 
-    setFormValid(!!selectedLadder && technologySelected);
-  }, [values, selectedLadder, firstTechnology]);
+    setStepValid(!!stepValid);
+    setFormValid(!!stepValid && form.formState.isValid);
+  }, [values, selectedLadder, firstTechnology, form.formState]);
 
   // INFO: update progress in sidebar stepper
   useEffect(() => {
-    if (formValid) updateProgress({ [routes.people.addNew.mainLadder]: 'completed' });
+    if (stepValid) updateProgress({ [routes.people.addNew.mainLadder]: 'completed' });
     else updateProgress({ [routes.people.addNew.mainLadder]: 'inProgress' });
-  }, [formValid, updateProgress]);
+  }, [stepValid, updateProgress]);
 
   return {
     ladders,
