@@ -15,8 +15,8 @@ begin
     new.email,
     (new.raw_user_meta_data->>'first_name')::text,
     (new.raw_user_meta_data->>'last_name')::text,
-    case 
-      when new.raw_user_meta_data ? 'status' 
+    case
+      when new.raw_user_meta_data ? 'status'
       then (new.raw_user_meta_data->>'status')::public.profile_status
       else null
     end
@@ -31,23 +31,23 @@ begin
   values (
     new.id,
     (new.raw_user_meta_data->>'ladder_slug')::varchar,
-    case 
-      when new.raw_user_meta_data ? 'current_band' 
-      then (new.raw_user_meta_data->>'current_band')::int 
-      else null 
+    case
+      when new.raw_user_meta_data ? 'current_band'
+      then (new.raw_user_meta_data->>'current_band')::int
+      else null
     end,
-    case 
-      when new.raw_user_meta_data ? 'technologies' 
+    case
+      when new.raw_user_meta_data ? 'technologies'
       then string_to_array(
             replace(trim(both '[]' from (new.raw_user_meta_data->>'technologies')), '"', ''),
             ', '
           )
       else null
     end,
-    case 
-      when new.raw_user_meta_data ? 'is_main_ladder' 
-      then (new.raw_user_meta_data->>'is_main_ladder')::boolean 
-      else null 
+    case
+      when new.raw_user_meta_data ? 'is_main_ladder'
+      then (new.raw_user_meta_data->>'is_main_ladder')::boolean
+      else null
     end
   );
 
@@ -60,6 +60,55 @@ exception
 end;
 $$ language plpgsql;
 
+-- Function
+CREATE OR REPLACE FUNCTION get_employees_by_status(profile_status TEXT, current_user_id UUID DEFAULT NULL)
+RETURNS TABLE (
+  id uuid,
+  email text,
+  role app_role,
+  first_name text,
+  last_name text,
+  status profile_status,
+  ladder_slug varchar,
+  current_band int,
+  technologies text[],
+  is_main_ladder boolean,
+  ladder_name varchar,
+  ladder_tech text[]
+)
+security definer
+AS $$
+BEGIN
+  if current_user_id is not null then
+    raise exception 'get_employees_by_status() ERROR: current_user_id not implemented yet';
+  end if;
+
+  RETURN QUERY
+
+  SELECT
+    u.id,
+    p.email,
+    p.role,
+    p.first_name,
+    p.last_name,
+    p.status,
+    ul.ladder_slug,
+    ul.current_band,
+    ul.technologies,
+    ul.is_main_ladder,
+    l.ladder_name,
+    l.ladder_tech
+    FROM users u
+    JOIN profiles p ON u.id = p.id
+    JOIN user_ladder ul ON u.id = ul.user_id
+    JOIN ladder l ON ul.ladder_slug = l.ladder_slug;
+
+  exception
+    when others then
+      -- Raise an exception to rollback the transaction
+      raise exception 'Error occurred while fetching employees data: %', SQLERRM;
+END;
+$$ LANGUAGE plpgsql;
 
 -- Trigger on auth.users
 CREATE TRIGGER on_auth_user_created
@@ -74,7 +123,7 @@ CREATE TABLE public.profiles (
   email       text not null,
   first_name text,
   last_name text,
-  status      public.profile_status 
+  status      public.profile_status not null
 );
 comment on table public.profiles is 'Profile data for each user.';
 comment on column public.profiles.id is 'References the internal Supabase Auth user.';
