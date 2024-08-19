@@ -1,7 +1,7 @@
-import { LadderBand } from '@app/types/library';
+import { BandWithBuckets } from '@app/types/library';
 
 export interface LadderTabProps {
-  bands: Record<string, LadderBand>;
+  bands: BandWithBuckets[];
   currentLevel?: number;
 }
 

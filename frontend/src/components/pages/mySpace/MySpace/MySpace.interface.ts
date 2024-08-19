@@ -1,4 +1,4 @@
-import { LadderBand } from '@app/types/library';
+import { BandWithBuckets } from '@app/types/library';
 
 export interface MySpaceProps {
   data: {
@@ -18,7 +18,7 @@ export interface MySpaceProps {
     };
     ladder?: {
       ladderName: string;
-      bands: Record<string, LadderBand>;
+      bands: BandWithBuckets[];
     };
   };
 }
