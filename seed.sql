@@ -114,7 +114,7 @@ CREATE TABLE user_ladder (
     user_id uuid REFERENCES auth.users(id),
     ladder_slug VARCHAR(50) REFERENCES ladder(ladder_slug),
     current_band INT REFERENCES band(band_id),
-    technology TEXT
+    technologies TEXT[]
 );
 
 -- Insert ladder data

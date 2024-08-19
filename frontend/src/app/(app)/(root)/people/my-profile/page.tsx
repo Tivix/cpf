@@ -28,7 +28,7 @@ export default async function LibraryPage() {
     band(
       band_number
     ),
-    technology
+    technologies
   `,
     )
     .eq('user_id', user.id);

@@ -23,5 +23,5 @@ export interface UserLadder {
   band: {
     bandNumber: number;
   };
-  technology: string;
+  technologies: string[];
 }
