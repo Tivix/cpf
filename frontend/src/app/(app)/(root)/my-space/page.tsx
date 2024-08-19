@@ -1,4 +1,4 @@
-import { MySpace } from '@app/components/pages/MySpace';
+import { MySpace } from '@app/components/pages/mySpace/MySpace';
 
 // TODO: get data from api
 const data = {

@@ -18,10 +18,10 @@ export const usePeople = () => {
     },
   });
 
-  const [tab, setTab] = useState<Option | undefined>();
+  const [tab, setTab] = useState<Option<keyof typeof PeopleStatus> | undefined>();
   const [fetchedPeople, setFetchedPeople] = useState<PeopleDetails>();
   const [filteredPeople, setFilteredPeople] = useState<Employee[]>([]);
-  const [tabsData, setTabsData] = useState<Option[]>([]);
+  const [tabsData, setTabsData] = useState<Option<keyof typeof PeopleStatus>[]>([]);
   const { setParams } = useQueryParams();
   const values = form.watch();
 
@@ -36,10 +36,10 @@ export const usePeople = () => {
   // INFO: set all available tabs
   useEffect(() => {
     if (fetchedPeople) {
-      const tabs: Option[] = [
+      const tabs: Option<keyof typeof PeopleStatus>[] = [
         { name: `${PeopleStatus.active} (${fetchedPeople.active})`, id: PeopleStatus.active },
+        { name: `${PeopleStatus.drafts} (${fetchedPeople.draft})`, id: PeopleStatus.drafts },
         { name: `${PeopleStatus.deactivated} (${fetchedPeople.deactivated})`, id: PeopleStatus.deactivated },
-        { name: `${PeopleStatus.draft} (${fetchedPeople.draft})`, id: PeopleStatus.draft },
       ];
       setTabsData(tabs);
     }
@@ -60,7 +60,7 @@ export const usePeople = () => {
   // INFO: set people based on filters
   useEffect(() => {
     const filteredPeople = fetchedPeople?.results.filter(
-      (person) => person.status.toLocaleLowerCase() === tab?.id.toLocaleLowerCase(),
+      (person) => person?.status?.toLocaleLowerCase() === tab?.id.toLocaleLowerCase(),
     );
 
     if (filteredPeople) {

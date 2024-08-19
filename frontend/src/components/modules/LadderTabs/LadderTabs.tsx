@@ -1,15 +1,11 @@
-import { Fragment, useMemo, useCallback } from 'react';
+import { Fragment, useMemo, useCallback, FC } from 'react';
 import { VerticalLineIcon } from '@app/static/icons/VerticalLineIcon';
 import { generateBandGrouping } from './utils';
 import { LadderTabsProps, LadderInterface } from './LadderTabs.interface';
-import { generateClassNames } from '@app/utils';
-import { Button } from '@app/components/common/Button';
 import { Typography } from '@app/components/common/Typography';
-import { TargetIcon } from '@app/static/icons/TargetIcon';
-import { CheckIcon } from '@app/static/icons/CheckIcon';
-import { LockIcon } from '@app/static/icons/LockIcon';
+import { Step } from '@app/components/modules/LadderTabs/Step';
 
-export const LadderTabs: React.FC<LadderTabsProps> = ({ maximumLadders, activeLadder, ladderOnClick, currentBand }) => {
+export const LadderTabs: FC<LadderTabsProps> = ({ maximumLadders, activeLadder, ladderOnClick, currentBand }) => {
   const generateLadders = useCallback((maxLadders: number): LadderInterface => generateBandGrouping(maxLadders), []);
 
   const ladders: LadderInterface = useMemo(() => generateLadders(maximumLadders), [generateLadders, maximumLadders]);
@@ -23,30 +19,14 @@ export const LadderTabs: React.FC<LadderTabsProps> = ({ maximumLadders, activeLa
               {positionName}
             </Typography>
             {ladders[positionName].map((ladder: number, index: number) => (
-              <Fragment key={ladder.toString()}>
-                <Button
-                  onClick={() => ladderOnClick && ladderOnClick(ladder)}
-                  className={generateClassNames('flex w-full gap-1', {
-                    'border-transparent bg-blue-100 text-blue-900 hover:border-navy-300':
-                      currentBand !== undefined && currentBand >= ladder,
-                    'pointer-events-none border-blue-800 bg-blue-800 text-white': ladder === activeLadder,
-                  })}
-                  styleType="natural"
-                  variant="border"
-                >
-                  {ladder}
-                  {currentBand && (
-                    <>
-                      {ladder <= currentBand && <CheckIcon />}
-                      {ladder === currentBand + 1 && <TargetIcon />}
-                      {ladder > currentBand + 1 && <LockIcon />}
-                    </>
-                  )}
-                </Button>
-                {index !== ladders[positionName].length - 1 && (
-                  <VerticalLineIcon className="h-6 w-full text-navy-300" />
-                )}
-              </Fragment>
+              <Step
+                key={ladder.toString()}
+                ladder={ladder}
+                lastInGroup={index !== ladders[positionName].length - 1}
+                activeLadder={activeLadder}
+                ladderOnClick={ladderOnClick}
+                currentBand={currentBand}
+              />
             ))}
           </div>
           {index !== Object.keys(ladders).length - 1 && (

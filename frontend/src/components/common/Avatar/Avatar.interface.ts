@@ -1,7 +1,6 @@
 export interface AvatarProps {
   variant?: AvatarVariant;
-  firstName: string;
-  lastName: string;
+  initials: string;
   imageUrl?: string | undefined;
 }
 

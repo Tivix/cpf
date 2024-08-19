@@ -12,7 +12,7 @@ export interface PeopleTableForm {
 
 export const PeopleStatus = {
   active: 'active',
-  draft: 'draft',
+  drafts: 'drafts',
   deactivated: 'deactivated',
 } as const;
 
@@ -29,7 +29,8 @@ export interface LadderDetails {
   currentBand: number;
   activeGoal: boolean;
   goalProgress: number;
-  latestActivity: number;
+  pendingActions: number;
+  lastActivityDate?: string;
 }
 
 export interface PeopleDetails {

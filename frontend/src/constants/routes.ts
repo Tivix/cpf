@@ -10,6 +10,7 @@ export const routes = {
   },
   mySpace: {
     index: '/my-space',
+    softSkills: '/my-space/soft-skills',
   },
   people: {
     index: '/people?tab=active',

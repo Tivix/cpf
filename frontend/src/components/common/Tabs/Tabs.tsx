@@ -32,7 +32,7 @@ export const Tabs: FC<TabsProps> = ({ tabs, current, onTabChange, className }) =
                 onClick={() => onTabChange(tab)}
                 aria-current={tab.id === current.id ? 'page' : undefined}
                 className={generateClassNames(
-                  'cursor-pointer whitespace-nowrap border-b-2 px-1 py-4 text-sm font-medium transition duration-75 first-letter:uppercase',
+                  'cursor-pointer whitespace-nowrap border-b-2 px-1 py-4 text-base font-medium transition duration-75 first-letter:uppercase',
                   tab.id === current.id
                     ? 'border-blue-800 text-blue-800'
                     : 'border-transparent text-navy-500 hover:border-navy-300 hover:text-navy-700',

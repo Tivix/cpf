@@ -17,30 +17,9 @@ export const PersonalDetails = () => {
         Personal details
       </Typography>
       <div className="mb-6 grid w-full grid-cols-2 gap-x-8 gap-y-6 rounded-[20px] border border-navy-200 bg-white p-8">
-        <Input
-          name={addEmployeeFormNames.firstName}
-          label="First name"
-          options={{
-            minLength: { value: 2, message: 'First name must contain at least 2 characters' },
-            required: { value: true, message: 'First Name is required' },
-          }}
-        />
-        <Input
-          name={addEmployeeFormNames.lastName}
-          label="Last name"
-          options={{
-            minLength: { value: 2, message: 'Last name must contain at least 2 characters' },
-            required: { value: true, message: 'Last name is required' },
-          }}
-        />
-        <Input
-          name={addEmployeeFormNames.email}
-          label="Email"
-          options={{
-            pattern: { value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i, message: 'invalid email address' },
-            required: { value: true, message: 'Email is required' },
-          }}
-        />
+        <Input name={addEmployeeFormNames.firstName} label="First name" />
+        <Input name={addEmployeeFormNames.lastName} label="Last name" />
+        <Input name={addEmployeeFormNames.email} label="Email" />
       </div>
       <div className="flex justify-end">
         <Button
