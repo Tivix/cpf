@@ -36,7 +36,9 @@ execute function handle_new_user();
 CREATE TABLE public.profiles (
   id          uuid references auth.users not null primary key, -- UUID from auth.users
   email       text not null,
-  role        app_role not null
+  role        app_role not null,
+  first_name text,
+  last_name text
 );
 comment on table public.profiles is 'Profile data for each user.';
 comment on column public.profiles.id is 'References the internal Supabase Auth user.';
@@ -61,7 +63,8 @@ CREATE TABLE band (
     band_id SERIAL PRIMARY KEY,
     ladder_slug VARCHAR(50) REFERENCES ladder(ladder_slug),
     threshold INT NOT NULL,
-    salary_range VARCHAR(50) NOT NULL
+    salary_range VARCHAR(50) NOT NULL,
+    band_number INT NOT NULL
 );
 
 -- Create bucket table
@@ -104,34 +107,43 @@ CREATE TABLE atomic_skill (
     description TEXT
 );
 
+-- Create user_ladder table to link users and ladders
+CREATE TABLE user_ladder (
+    id SERIAL PRIMARY KEY,
+    user_id uuid REFERENCES auth.users(id),
+    ladder_slug VARCHAR(50) REFERENCES ladder(ladder_slug),
+    current_band INT REFERENCES band(band_id),
+    technology TEXT
+);
+
 -- Insert ladder data
 INSERT INTO ladder (ladder_slug, ladder_name) VALUES
 ('backend', 'Backend Developer'),
 ('frontend', 'Frontend Developer');
 
 -- Insert band data for backend
-INSERT INTO band (ladder_slug, threshold, salary_range) VALUES
-('backend', 3, '4000 - 8000 pln'),
-('backend', 7, '6000 - 10000 pln'),
-('backend', 13, '8000 - 12000 pln'),
-('backend', 20, '10000 - 14000 pln'),
-('backend', 28, '12000 - 16000 pln'),
-('backend', 37, '14000 - 20000 pln'),
-('backend', 48, '19000 - 24000 pln'),
-('backend', 60, '21000 - 26000 pln'),
-('backend', 65, '30000+ pln');
+INSERT INTO band (ladder_slug, threshold, salary_range, band_number) VALUES
+('backend', 3, '4000 - 8000 pln', 1),
+('backend', 7, '6000 - 10000 pln', 2),
+('backend', 13, '8000 - 12000 pln', 3),
+('backend', 20, '10000 - 14000 pln', 4),
+('backend', 28, '12000 - 16000 pln', 5),
+('backend', 37, '14000 - 20000 pln', 6),
+('backend', 48, '19000 - 24000 pln', 7),
+('backend', 60, '21000 - 26000 pln', 8),
+('backend', 65, '30000+ pln', 9);
 
 -- Insert band data for frontend
-INSERT INTO band (ladder_slug, threshold, salary_range) VALUES
-('frontend', 2, '4000 - 7000 pln'),
-('frontend', 6, '6000 - 9000 pln'),
-('frontend', 11, '8000 - 11000 pln'),
-('frontend', 15, '10000 - 13000 pln'),
-('frontend', 23, '12000 - 15000 pln'),
-('frontend', 35, '14000 - 18000 pln'),
-('frontend', 50, '17000 - 21000 pln'),
-('frontend', 55, '20000 - 24000 pln'),
-('frontend', 60, '25000+ pln');
+INSERT INTO band (ladder_slug, threshold, salary_range, band_number) VALUES
+('frontend', 2, '4000 - 7000 pln', 1),
+('frontend', 6, '6000 - 9000 pln', 2),
+('frontend', 11, '8000 - 11000 pln', 3),
+('frontend', 15, '10000 - 13000 pln', 4),
+('frontend', 23, '12000 - 15000 pln', 5),
+('frontend', 35, '14000 - 18000 pln', 6),
+('frontend', 50, '17000 - 21000 pln', 7),
+('frontend', 55, '20000 - 24000 pln', 8),
+('frontend', 60, '25000+ pln', 9);
 
 -- Insert bucket data
 INSERT INTO bucket (bucket_slug, bucket_name, description, bucket_type) VALUES
