@@ -60,8 +60,8 @@ exception
 end;
 $$ language plpgsql;
 
--- Function
-CREATE OR REPLACE FUNCTION get_employees_by_status(profile_status TEXT, current_user_id UUID DEFAULT NULL)
+-- Function returning a table of filtered employees
+CREATE OR REPLACE FUNCTION get_employees_by_status(_status employee_status DEFAULT NULL, current_user_id UUID DEFAULT NULL)
 RETURNS TABLE (
   id uuid,
   email text,
@@ -101,7 +101,8 @@ BEGIN
     FROM users u
     JOIN profiles p ON u.id = p.id
     JOIN user_ladder ul ON u.id = ul.user_id
-    JOIN ladder l ON ul.ladder_slug = l.ladder_slug;
+    JOIN ladder l ON ul.ladder_slug = l.ladder_slug
+    WHERE _status IS NULL or _status = p.status;
 
   exception
     when others then
