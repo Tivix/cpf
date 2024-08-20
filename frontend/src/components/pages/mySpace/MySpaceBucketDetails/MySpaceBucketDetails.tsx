@@ -41,7 +41,7 @@ export const MySpaceBucketDetails: React.FC<MySpaceBucketDetailsProps> = ({ data
           </div>
         </div>
         <div className="flex flex-col">
-          {advancementLevels.map((level, index) => (
+          {advancementLevels?.map((level, index) => (
             <AdvancementLevel
               key={level.advancementLevel}
               data={level}

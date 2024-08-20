@@ -13,9 +13,11 @@ export interface UserProfile {
   email: string;
   photo?: string;
   role: string;
+  position: string;
 }
 
 export interface UserLadder {
+  id: number;
   ladder: {
     ladderName: string;
     ladderSlug: string;
@@ -24,4 +26,5 @@ export interface UserLadder {
     bandNumber: number;
   };
   technologies: string[];
+  isMainLadder: boolean;
 }

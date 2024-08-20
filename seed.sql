@@ -114,7 +114,16 @@ CREATE TABLE user_ladder (
     user_id uuid REFERENCES auth.users(id),
     ladder_slug VARCHAR(50) REFERENCES ladder(ladder_slug),
     current_band INT REFERENCES band(band_id),
-    technologies TEXT[]
+    technologies TEXT[],
+    is_main_ladder BOOLEAN
+);
+
+-- Create scores table to store users' points for advancement levels
+CREATE TABLE scores (
+    id SERIAL PRIMARY KEY,
+    user_ladder_id INT REFERENCES user_ladder(id),
+    level_id INT REFERENCES advancement_level(level_id),
+    point BOOLEAN
 );
 
 -- Insert ladder data

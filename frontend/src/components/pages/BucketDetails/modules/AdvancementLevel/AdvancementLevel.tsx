@@ -4,10 +4,10 @@ import { AccordionList } from '@app/components/common/AccordionList';
 import { AdvancementLevelProps } from './AdvancemetLevel.interface';
 import { useAdvancementLevel } from './AdvancementLevel.hooks';
 import { Button } from '@app/components/common/Button';
-import { getAggregatedSkills } from '@app/components/pages/BucketDetails/modules/AdvancementLevel/utils';
 import { ExpandableSection } from '@app/components/common/ExpandableSection';
 import { ExampleWayToPassLevelModal } from '@app/components/modules/ExampleWayToPassLevelModal';
 import { FC } from 'react';
+import { getAggregatedSkills } from '@app/utils';
 
 export const AdvancementLevel: FC<AdvancementLevelProps> = ({ verticalLine, data, open, onClick }) => {
   const { hideModal, openModal, modalOpen } = useAdvancementLevel();
