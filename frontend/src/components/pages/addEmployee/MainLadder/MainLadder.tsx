@@ -13,8 +13,17 @@ import { FC } from 'react';
 import { MainLadderProps } from './MainLadder.interface';
 
 export const MainLadder: FC<MainLadderProps> = ({ data }) => {
-  const { technologyFields, open, ladders, technologies, setOpen, selectedLadder, formValid, firstTechnology } =
-    useMainLadder(data);
+  const {
+    technologyFields,
+    open,
+    ladders,
+    technologies,
+    setOpen,
+    selectedLadder,
+    formValid,
+    firstTechnology,
+    isSubmitting,
+  } = useMainLadder(data);
 
   return (
     <div className="flex flex-col gap-y-10 rounded-[20px] border-navy-200 bg-white p-8">
@@ -73,14 +82,16 @@ export const MainLadder: FC<MainLadderProps> = ({ data }) => {
                 variant="link"
                 className="w-fit"
                 onClick={() => technologyFields.append({ id: '', name: '' })}
-                disabled={(firstTechnology && !firstTechnology.name) || !technologies || !technologies?.length}
+                disabled={
+                  (firstTechnology && !firstTechnology.name) || !technologies || !technologies?.length || isSubmitting
+                }
               >
                 + Technology
               </Button>
             )}
           </div>
           <div className="self-end">
-            <Button styleType="primary" variant="solid" disabled={!formValid}>
+            <Button styleType="primary" variant="solid" disabled={!formValid || isSubmitting} type="submit">
               Confirm and continue
             </Button>
           </div>

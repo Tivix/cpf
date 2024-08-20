@@ -4,24 +4,11 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
 import { createClient } from '@app/utils/supabase/server';
+import { routes } from '@app/constants';
+import { AddEmployeeForm, addEmployeeFormNames } from '@app/components/pages/addEmployee/AddEmployeeFormProvider';
 
 export async function login(formData: FormData) {
   const supabase = createClient();
-
-  // const response = await fetch('http://proxy/auth/v1/token', {
-  //   method: 'POST',
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //   },
-  //   body: JSON.stringify({
-  //     email: formData.get('email'),
-  //     password: formData.get('password'),
-  //   }),
-  // })
-
-  // const foo = await response.json()
-
-  // console.log('data', foo)
 
   // type-casting here for convenience
   // in practice, you should validate your inputs
@@ -36,7 +23,7 @@ export async function login(formData: FormData) {
     redirect('/error');
   }
 
-  revalidatePath('/', 'layout');
+  revalidatePath('/');
   redirect('/');
 }
 
@@ -50,15 +37,29 @@ export async function signup(formData: FormData) {
     password: formData.get('password') as string,
   };
 
-  console.log('data', data);
-
   const { error } = await supabase.auth.signUp(data);
 
   if (error) {
-    console.log('err', error);
     redirect('/error');
   }
 
-  revalidatePath('/', 'layout');
+  revalidatePath('/');
   redirect('/');
+}
+
+export async function signupEmployee(formData: AddEmployeeForm) {
+  const supabase = createClient();
+
+  // type-casting here for convenience
+  // in practice, you should validate your inputs
+  const data = {
+    email: formData[addEmployeeFormNames.email],
+    password: 'password',
+  };
+
+  const { error } = await supabase.auth.signUp(data);
+  const message = error ? error?.message || 'Something went wrong, try again later' : null;
+
+  revalidatePath(routes.people.index);
+  return message;
 }

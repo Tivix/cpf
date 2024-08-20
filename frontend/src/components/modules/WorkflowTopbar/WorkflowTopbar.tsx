@@ -22,7 +22,7 @@ export const WorkflowTopbar: FC<WorkflowTopbarProps> = ({
         <Button variant="border" styleType="natural" onClick={onSave}>
           {saveTitle}
         </Button>
-        <Button disabled={activateDisabled} variant="solid" onClick={onActivate}>
+        <Button disabled={activateDisabled} variant="solid" onClick={onActivate} type="submit">
           {activateTitle}
         </Button>
       </div>

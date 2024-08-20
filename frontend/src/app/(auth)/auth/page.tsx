@@ -1,5 +1,5 @@
+import { login, signup } from '@app/actions/user';
 import { Button } from '@app/components/common/Button';
-import { login, signup } from './actions';
 
 export default function LoginPage() {
   return (

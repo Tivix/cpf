@@ -6,10 +6,15 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { FormProvider } from '@app/components/common/FormProvider';
 import { AddEmployeeForm, addEmployeeFormNames } from './AddEmployeeForm.interface';
 import { addEmployeeFormSchema } from './AddEmployeeForm.utils';
+import { signupEmployee } from '@app/actions/user';
+import toast from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
+import { routes } from '@app/constants';
 
 export const AddEmployeeFormProvider: FC<PropsWithChildren> = ({ children }) => {
+  const router = useRouter();
   const form = useForm<AddEmployeeForm>({
-    mode: 'onBlur',
+    mode: 'onChange',
     defaultValues: {
       [addEmployeeFormNames.firstName]: '',
       [addEmployeeFormNames.lastName]: '',
@@ -20,5 +25,20 @@ export const AddEmployeeFormProvider: FC<PropsWithChildren> = ({ children }) => 
     resolver: zodResolver(addEmployeeFormSchema),
   });
 
-  return <FormProvider<AddEmployeeForm> form={form}>{children}</FormProvider>;
+  const handleSubmit = async (data: AddEmployeeForm) => {
+    const error = await signupEmployee(data);
+
+    if (error) {
+      toast.error(error);
+      return;
+    }
+    toast.success('Employee created!');
+    router.push(routes.people.index);
+  };
+
+  return (
+    <FormProvider<AddEmployeeForm> onSubmit={handleSubmit} form={form}>
+      {children}
+    </FormProvider>
+  );
 };

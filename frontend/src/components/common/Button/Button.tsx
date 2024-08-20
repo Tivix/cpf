@@ -33,7 +33,7 @@ const disabledStyles = {
   solid: 'bg-navy-200',
   border: 'bg-transparent border-navy-200 border',
   borderless: 'px-2 border-none',
-  link: 'px-0 border-none',
+  link: 'h-auto px-0 border-none',
 };
 
 export const Button: FC<ButtonProps> = ({

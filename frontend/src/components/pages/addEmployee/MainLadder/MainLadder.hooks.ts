@@ -10,7 +10,7 @@ import { mapKeysToOptions } from '@app/utils';
 export const useMainLadder = (data: MainLadderProps['data']) => {
   const form = useFormContext<AddEmployeeForm>();
   const values = form.watch();
-  const handleSubmit = form.handleSubmit((data) => console.log('data', data));
+
   const updateProgress = usePeopleStore((state) => state.updateProgress);
   const selectedLadder = values?.[addEmployeeFormNames.ladder].id;
   const firstTechnology = values?.[addEmployeeFormNames.technology]?.[0];
@@ -33,12 +33,15 @@ export const useMainLadder = (data: MainLadderProps['data']) => {
   useEffect(() => {
     const ladderTechnologies = data[selectedLadder];
     setTechnologies(null);
-    replace([]);
     if (selectedLadder && ladderTechnologies) {
       const technologyOptions = mapKeysToOptions(ladderTechnologies);
       setTechnologies(technologyOptions);
     }
-  }, [selectedLadder, data, replace]);
+  }, [selectedLadder, data]);
+
+  useEffect(() => {
+    replace([]);
+  }, [replace, selectedLadder]);
 
   useEffect(() => {
     const technologySelected = firstTechnology && firstTechnology.name?.length > 0;
@@ -59,11 +62,11 @@ export const useMainLadder = (data: MainLadderProps['data']) => {
     technologies,
     firstTechnology,
     form,
-    handleSubmit,
     technologyFields,
     open,
     setOpen,
     selectedLadder,
     formValid,
+    isSubmitting: form.formState.isSubmitting,
   };
 };

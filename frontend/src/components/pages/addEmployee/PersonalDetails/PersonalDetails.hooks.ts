@@ -9,16 +9,16 @@ export const usePersonalDetails = () => {
   const form = useFormContext<AddEmployeeForm>();
   const [formValid, setFormValid] = useState(false);
   const updateProgress = usePeopleStore((state) => state.updateProgress);
-  const { errors, touchedFields } = form.formState;
+  const { errors, dirtyFields } = form.formState;
   const errorFields = Object.keys(errors);
 
   // INFO: Workaround to trigger use effect when touchedFields object changes - https://github.com/facebook/react/issues/14476
-  const touchedFieldStringified = JSON.stringify(touchedFields);
+  const dirtyFieldsStringified = JSON.stringify(dirtyFields);
   useEffect(() => {
-    const touched = addEmployeeFirstStepFields.every((field) => touchedFields[field]);
+    const touched = addEmployeeFirstStepFields.every((field) => dirtyFields[field]);
     const firstStepError = addEmployeeFirstStepFields.some((firstStepField) => errorFields.includes(firstStepField));
     setFormValid(touched && !firstStepError);
-  }, [touchedFields, touchedFieldStringified, errors, errorFields]);
+  }, [dirtyFields, dirtyFieldsStringified, errors, errorFields]);
 
   // INFO: update progress in sidebar stepper
   useEffect(() => {
