@@ -12,6 +12,7 @@ import { DeleteImageModal } from '../DeleteImageModal';
 
 export const PersonalDetails: React.FC<PersonalDetailsProps> = ({ data }) => {
   const { firstName, lastName, email, photo } = data;
+
   const {
     imageSrc,
     handleOpenDeleteModal,
@@ -32,7 +33,9 @@ export const PersonalDetails: React.FC<PersonalDetailsProps> = ({ data }) => {
             <Typography variant="body-m/medium" className="mb-2">
               Profile photo
             </Typography>
-            <Avatar initials={`${firstName[0]}${lastName[0]}`} imageUrl={photo} variant="72" />
+            {firstName && lastName && (
+              <Avatar initials={`${firstName?.[0]}${lastName?.[0]}`} imageUrl={photo} variant="72" />
+            )}
           </div>
           <div className="flex flex-row gap-4">
             <label className="flex h-11 w-11 items-center justify-center rounded-full border border-navy-300 bg-white text-navy-600 shadow-sm hover:bg-navy-100">

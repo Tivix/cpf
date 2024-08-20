@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import { FC, Fragment } from 'react';
 import { Menu, MenuButton, MenuItem, MenuItems, Transition } from '@headlessui/react';
 import { NotificationIcon } from '@app/static/icons/NotificationIcon';
 import { Avatar } from '@app/components/common/Avatar';
@@ -6,12 +6,7 @@ import { UserIcon } from '@app/static/icons/UserIcon';
 import { LogoutIcon } from '@app/static/icons/LogoutIcon';
 import Link from 'next/link';
 import { useTopbar } from './Topbar.hooks';
-
-// TODO: get user from some context
-const user = {
-  firstName: 'Jane',
-  lastName: 'Edge',
-};
+import { TopbarProps } from './Topbar.interface';
 
 const menuItems = [
   {
@@ -20,7 +15,10 @@ const menuItems = [
     icon: <UserIcon />,
   },
 ];
-export const Topbar = async () => {
+export const Topbar: FC<TopbarProps> = ({ userData }) => {
+  const firstName = userData?.firstName || '-';
+  const lastName = userData?.lastName || '-';
+
   const { handleSignOut } = useTopbar();
 
   return (
@@ -41,7 +39,7 @@ export const Topbar = async () => {
             <MenuButton className="bg-gray-800 focus:ring-offset-gray-800 relative flex rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2">
               <span className="absolute -inset-1.5" />
               <span className="sr-only">Open user menu</span>
-              <Avatar initials={`${user.firstName[0]}${user.lastName[0]}`} variant="40" />
+              <Avatar initials={`${firstName[0]}${lastName[0]}`} variant="40" />
             </MenuButton>
           </div>
           <Transition

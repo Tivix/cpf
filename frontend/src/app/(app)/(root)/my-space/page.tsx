@@ -53,7 +53,11 @@ export default async function MySpacePage() {
     .eq('user_id', user.id);
 
   const laddersData = mapKeysToCamelCase<UserLadder[]>(ladders);
-  const mainLadder = laddersData.length > 1 ? laddersData.find((ladder) => ladder.isMainLadder) : laddersData[0];
+
+  if (!laddersData) {
+    return <div>No ladders assigned to a user</div>;
+  }
+  const mainLadder = laddersData?.length > 1 ? laddersData.find((ladder) => ladder.isMainLadder) : laddersData[0];
 
   const { data: bands } = await supabase
     .from('band')
