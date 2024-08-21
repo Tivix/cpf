@@ -6,7 +6,9 @@ import { TargetIcon } from '@app/static/icons/TargetIcon';
 import { LevelCard } from '../LevelCard';
 
 export const Header: React.FC<HeaderProps> = ({ user, currentLevel, nextLevel }) => {
-  const { firstName, lastName, photo, position } = user;
+  const { photo, position } = user;
+  const firstName = user?.firstName || '-';
+  const lastName = user?.lastName || '-';
 
   return (
     <div className="flex w-full justify-between rounded-3xl bg-navy-200 px-6 py-9">

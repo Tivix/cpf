@@ -7,9 +7,15 @@ returns trigger
 security definer
 as $$
 begin
-  -- Attempt to insert into public.profiles table
-  insert into public.profiles (id, email, role)
-  values (new.id, new.email, 'employee'); -- Default role as 'employee'
+  -- Extract first_name and last_name from the raw_user_meta_data JSONB field
+  -- Use the ->> operator to extract text values from JSONB, or return NULL if the keys don't exist
+  insert into public.profiles (id, email, first_name, last_name)
+  values (
+    new.id,
+    new.email,
+    (new.raw_user_meta_data->>'first_name')::text,
+    (new.raw_user_meta_data->>'last_name')::text
+  );
 
   -- Attempt to insert into public.user_roles table with default role
   insert into public.user_roles (user_id, role)
@@ -36,7 +42,6 @@ execute function handle_new_user();
 CREATE TABLE public.profiles (
   id          uuid references auth.users not null primary key, -- UUID from auth.users
   email       text not null,
-  role        app_role not null,
   first_name text,
   last_name text
 );
