@@ -1,24 +1,17 @@
 import { BandWithBuckets } from '@app/types/library';
+import { UserLadder } from '@app/types/people';
 
 export interface MySpaceProps {
-  data: {
-    user: {
-      firstName: string;
-      lastName: string;
-      photo?: string;
-      position: string;
-    };
-    currentLevel: {
-      band: number;
-      score: number;
-    };
-    nextLevel: {
-      band: number;
-      threshold: number;
-    };
-    ladder?: {
-      ladderName: string;
-      bands: BandWithBuckets[];
-    };
+  user: {
+    firstName: string;
+    lastName: string;
+    photo?: string;
+    position: string;
+  };
+
+  ladder?: {
+    userLadder: UserLadder;
+    bands: BandWithBuckets[];
+    nextBand?: BandWithBuckets;
   };
 }

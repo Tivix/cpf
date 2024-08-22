@@ -7,8 +7,7 @@ import { useMySpace } from './MySpace.hooks';
 import { mySpaceTabs } from './contants';
 import { LadderTab } from './modules/LadderTab';
 
-export const MySpace: React.FC<MySpaceProps> = ({ data }) => {
-  const { user, currentLevel, nextLevel, ladder } = data;
+export const MySpace: React.FC<MySpaceProps> = ({ user, ladder }) => {
   const { currentTab, setCurrentTab } = useMySpace();
 
   return (
@@ -16,10 +15,14 @@ export const MySpace: React.FC<MySpaceProps> = ({ data }) => {
       <Typography variant="body-l/semibold" as="h1">
         My Space
       </Typography>
-      <Header user={user} currentLevel={currentLevel} nextLevel={nextLevel} />
+      <Header
+        user={user}
+        currentLevel={{ band: ladder?.userLadder?.band?.bandNumber, score: -Infinity }}
+        nextLevel={{ band: ladder?.nextBand?.bandNumber, threshold: ladder?.nextBand?.threshold }}
+      />
       <Tabs tabs={mySpaceTabs} current={currentTab} onTabChange={setCurrentTab} className="justify-center" />
       <div>
-        {currentTab.id === 'ladder' && ladder && <LadderTab bands={ladder.bands} currentLevel={currentLevel.band} />}
+        {currentTab.id === 'ladder' && ladder && <LadderTab bands={ladder.bands} ladder={ladder?.userLadder} />}
       </div>
     </div>
   );

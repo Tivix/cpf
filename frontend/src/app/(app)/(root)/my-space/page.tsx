@@ -5,23 +5,6 @@ import { mapKeysToCamelCase } from '@app/utils';
 import { User, UserLadder } from '@app/types/people';
 import { BandWithBuckets } from '@app/types/library';
 
-// TODO: get data from api
-const mockData = {
-  user: {
-    firstName: 'Jane',
-    lastName: 'Edge',
-    position: 'Front End Developer, Junior',
-  },
-  currentLevel: {
-    band: 2,
-    score: 10,
-  },
-  nextLevel: {
-    band: 3,
-    threshold: 11,
-  },
-};
-
 export default async function MySpacePage() {
   const supabase = createClient();
   const {
@@ -67,6 +50,7 @@ export default async function MySpacePage() {
       ladder_slug, 
       threshold, 
       salary_range, 
+      band_number,
       buckets:bucket(
         bucket_slug, 
         bucket_name, 
@@ -85,18 +69,18 @@ export default async function MySpacePage() {
       )
     `,
     )
-    .eq('ladder_slug', mainLadder?.ladder.ladderSlug);
+    .eq('ladder_slug', mainLadder?.ladder?.ladderSlug);
 
   const bandsData = mapKeysToCamelCase<BandWithBuckets[]>(bands);
+  const nextBand = mainLadder
+    ? bandsData.find(
+        (band) =>
+          band.ladderSlug === mainLadder?.ladder?.ladderSlug && band?.bandNumber === mainLadder?.band?.bandNumber + 1,
+      )
+    : undefined;
 
   return (
-    <MySpace
-      data={{
-        ...mockData,
-        user: userData,
-        ladder: mainLadder ? { ladderName: mainLadder?.ladder.ladderName, bands: bandsData } : undefined,
-      }}
-    />
+    <MySpace user={userData} ladder={mainLadder ? { userLadder: mainLadder, bands: bandsData, nextBand } : undefined} />
   );
 }
 

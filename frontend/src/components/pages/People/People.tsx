@@ -21,12 +21,10 @@ export const People = () => {
 
   const supabase = createClient();
   async function getCountries() {
-    const { data: band_bucket, error } = await supabase.from('band_bucket').select('*');
+    const { error } = await supabase.from('band_bucket').select('*');
 
     if (error) {
       console.log('error', error);
-    } else {
-      console.log('band_bucket', band_bucket);
     }
   }
 

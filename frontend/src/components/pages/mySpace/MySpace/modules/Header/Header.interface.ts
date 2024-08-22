@@ -5,12 +5,12 @@ export interface HeaderProps {
     photo?: string;
     position: string;
   };
-  currentLevel: {
-    band: number;
-    score: number;
+  currentLevel?: {
+    band?: number;
+    score?: number;
   };
-  nextLevel: {
-    band: number;
-    threshold: number;
+  nextLevel?: {
+    band?: number;
+    threshold?: number;
   };
 }

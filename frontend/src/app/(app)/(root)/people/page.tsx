@@ -1,7 +1,7 @@
 import { People } from '@app/components/pages/People';
 import { createClient } from '@app/utils/supabase/server';
 
-async function getCountries() {
+async function getPeople() {
   const supabase = createClient();
   const { data: band_bucket, error } = await supabase.from('band_bucket').select('*');
 
@@ -13,7 +13,7 @@ async function getCountries() {
 }
 
 export default async function PeoplePage() {
-  const data = await getCountries();
+  const data = await getPeople();
   console.log('data', data);
   return <People />;
 }

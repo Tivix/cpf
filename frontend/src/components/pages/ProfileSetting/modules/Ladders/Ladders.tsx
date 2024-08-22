@@ -8,10 +8,10 @@ export const Ladders: React.FC<LaddersProps> = ({ ladders }) => {
     <Card title="Ladders">
       {ladders && ladders.length > 0 ? (
         ladders.map(({ ladder, technologies, band }) => (
-          <div className="flex flex-col gap-6 rounded-xl border border-navy-200 p-6" key={ladder.ladderSlug}>
-            <LadderDataItem title="Ladder" value={ladder.ladderName} />
-            <LadderDataItem title="Technology" value={technologies.join(', ')} />
-            <LadderDataItem title="Band" value={band.bandNumber} />
+          <div className="flex flex-col gap-6 rounded-xl border border-navy-200 p-6" key={ladder?.ladderSlug}>
+            <LadderDataItem title="Ladder" value={ladder?.ladderName} />
+            <LadderDataItem title="Technology" value={technologies?.join(', ')} />
+            <LadderDataItem title="Band" value={band?.bandNumber} />
           </div>
         ))
       ) : (

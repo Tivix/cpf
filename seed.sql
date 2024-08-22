@@ -1,5 +1,6 @@
 -- Custom types
 CREATE TYPE public.app_role as enum ('admin', 'manager', 'employee');
+CREATE TYPE public.profile_status as enum ('active', 'draft', 'deactivated');
 
 -- Trigger function to handle new users
 CREATE OR REPLACE FUNCTION handle_new_user()
@@ -7,26 +8,55 @@ returns trigger
 security definer
 as $$
 begin
-  -- Extract first_name and last_name from the raw_user_meta_data JSONB field
-  -- Use the ->> operator to extract text values from JSONB, or return NULL if the keys don't exist
-  insert into public.profiles (id, email, first_name, last_name)
+  -- Insert into public.profiles table, extracting first_name, last_name, and status from the raw_user_meta_data JSONB field
+  insert into public.profiles (id, email, first_name, last_name, status)
   values (
     new.id,
     new.email,
     (new.raw_user_meta_data->>'first_name')::text,
-    (new.raw_user_meta_data->>'last_name')::text
+    (new.raw_user_meta_data->>'last_name')::text,
+    case 
+      when new.raw_user_meta_data ? 'status' 
+      then (new.raw_user_meta_data->>'status')::public.profile_status
+      else null
+    end
   );
 
-  -- Attempt to insert into public.user_roles table with default role
+  -- Insert into public.user_roles table with default role
   insert into public.user_roles (user_id, role)
   values (new.id, 'employee');
+
+  -- Insert into user_ladder table with nulls if values are not provided
+  insert into public.user_ladder (user_id, ladder_slug, current_band, technologies, is_main_ladder)
+  values (
+    new.id,
+    (new.raw_user_meta_data->>'ladder_slug')::varchar,
+    case 
+      when new.raw_user_meta_data ? 'current_band' 
+      then (new.raw_user_meta_data->>'current_band')::int 
+      else null 
+    end,
+    case 
+      when new.raw_user_meta_data ? 'technologies' 
+      then string_to_array(
+            replace(trim(both '[]' from (new.raw_user_meta_data->>'technologies')), '"', ''),
+            ', '
+          )
+      else null
+    end,
+    case 
+      when new.raw_user_meta_data ? 'is_main_ladder' 
+      then (new.raw_user_meta_data->>'is_main_ladder')::boolean 
+      else null 
+    end
+  );
 
   return new;
 
 exception
   when others then
     -- Raise an exception to rollback the transaction
-    raise exception 'Error occurred while inserting into profiles and user_roles: %', SQLERRM;
+    raise exception 'Error occurred while inserting into profiles, user_roles, and user_ladder: %', SQLERRM;
 end;
 $$ language plpgsql;
 
@@ -43,7 +73,8 @@ CREATE TABLE public.profiles (
   id          uuid references auth.users not null primary key, -- UUID from auth.users
   email       text not null,
   first_name text,
-  last_name text
+  last_name text,
+  status      public.profile_status 
 );
 comment on table public.profiles is 'Profile data for each user.';
 comment on column public.profiles.id is 'References the internal Supabase Auth user.';

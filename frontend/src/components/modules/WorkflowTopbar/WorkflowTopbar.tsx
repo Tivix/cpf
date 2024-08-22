@@ -11,6 +11,8 @@ export const WorkflowTopbar: FC<WorkflowTopbarProps> = ({
   onSave,
   onActivate,
   activateDisabled,
+  saveButtonValue,
+  activateButtonValue,
 }) => {
   return (
     <div className="sticky top-0 flex h-16 items-center justify-between border-b border-b-navy-200 bg-white px-8">
@@ -19,10 +21,16 @@ export const WorkflowTopbar: FC<WorkflowTopbarProps> = ({
         <Button variant="borderless" styleType="natural" onClick={onCancel}>
           {cancelTitle}
         </Button>
-        <Button variant="border" styleType="natural" onClick={onSave}>
+        <Button variant="border" styleType="natural" type="submit" value={saveButtonValue} onClick={onSave}>
           {saveTitle}
         </Button>
-        <Button disabled={activateDisabled} variant="solid" onClick={onActivate} type="submit">
+        <Button
+          disabled={activateDisabled}
+          variant="solid"
+          value={activateButtonValue}
+          onClick={onActivate}
+          type="submit"
+        >
           {activateTitle}
         </Button>
       </div>

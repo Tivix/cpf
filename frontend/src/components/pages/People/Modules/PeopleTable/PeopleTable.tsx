@@ -11,7 +11,6 @@ import { generateClassNames, getInitials } from '@app/utils';
 import { formatDate } from '@app/utils';
 import { PeopleStatus } from '../../People.interface';
 import { Button } from '@app/components/common/Button';
-import Image from 'next/image';
 
 export const PeopleTable: FC<PeopleTableProps> = ({ people, currentTab }) => {
   const draft = currentTab?.id === PeopleStatus.drafts;
@@ -84,19 +83,14 @@ export const PeopleTable: FC<PeopleTableProps> = ({ people, currentTab }) => {
               {people?.map((person) => (
                 <tr key={person.id}>
                   <td className="flex whitespace-nowrap py-5 pl-4 pr-3 text-sm sm:pl-0">
-                    <Avatar
-                      initials={getInitials(person.name)}
-                      variant="28"
-                      imageUrl="/images/avatar_placeholder.jpeg"
-                    />
                     <div className="flex items-center">
                       <div className="h-8 w-8">
-                        <Image
-                          width={200}
-                          height={200}
-                          alt="User image"
-                          src="/cpf/images/avatar_placeholder.jpeg"
-                          className="h-8 w-8 rounded-full object-cover"
+                        <Avatar
+                          initials={getInitials(person.name)}
+                          variant="28"
+                          width={100}
+                          height={100}
+                          imageUrl="/cpf/images/avatar_placeholder.jpeg"
                         />
                       </div>
                       <div className="ml-4">

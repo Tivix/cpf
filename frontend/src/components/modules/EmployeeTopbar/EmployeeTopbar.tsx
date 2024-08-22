@@ -16,6 +16,8 @@ export const EmployeeTopbar = () => {
         cancelTitle="Cancel"
         saveTitle="Save as draft"
         activateTitle="Activate Employee"
+        activateButtonValue="active"
+        saveButtonValue="draft"
         onCancel={isDirty ? () => setCancelModalOpen(true) : handleBack}
         onSave={() => {}}
         activateDisabled={!formValid}
@@ -29,7 +31,7 @@ export const EmployeeTopbar = () => {
             <Button variant="borderless" styleType="natural" onClick={handleBack}>
               Continue without saving
             </Button>
-            <Button variant="solid" styleType="primary" disabled={isSubmitting}>
+            <Button variant="solid" styleType="primary" type="submit" value="draft" disabled={isSubmitting}>
               Save as draft
             </Button>
           </div>

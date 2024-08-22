@@ -27,18 +27,19 @@ export const AddEmployeeFormProvider: FC<PropsWithChildren> = ({ children }) => 
     resolver: zodResolver(addEmployeeFormSchema),
   });
 
-  const handleSubmit = async (data: AddEmployeeForm) => {
-    const error = await createEmployee(data);
+  const handleSubmit = async (data: AddEmployeeForm, event?: React.FormEvent<HTMLFormElement>) => {
+    const submitter = (event?.nativeEvent as SubmitEvent).submitter as HTMLButtonElement;
+    const error = await createEmployee({ ...data, status: submitter?.value || 'draft' });
 
     if (error) {
       toast.error(error);
       return;
     }
 
+    router.push(routes.people.index);
+    toast.success('Employee created!');
     form.reset();
     resetPeopleState();
-    toast.success('Employee created!');
-    router.push(routes.people.index);
   };
 
   return (

@@ -48,20 +48,32 @@ export async function signup(formData: FormData) {
   redirect('/');
 }
 
-export async function createEmployee(formData: AddEmployeeForm) {
+export async function createEmployee(data: AddEmployeeForm & { status: string }) {
   const supabase = createSupabaseClient(process.env.NEXT_PUBLIC_SUPABASE_SERVER_URL!, process.env.SERVICE_ROLE_KEY!, {
     auth: {
       autoRefreshToken: false,
       persistSession: false,
     },
   });
+  const technologies =
+    data[addEmployeeFormNames.technology]?.length > 0
+      ? data[addEmployeeFormNames.technology].map((tech) => tech.name)
+      : null;
+
+  const userMeta = {
+    first_name: data[addEmployeeFormNames.firstName],
+    last_name: data[addEmployeeFormNames.lastName],
+    ladder_slug: data[addEmployeeFormNames.ladder].id,
+    technologies,
+  };
+
   const { error } = await supabase.auth.admin.createUser({
-    email: formData[addEmployeeFormNames.email],
+    email: data[addEmployeeFormNames.email],
     email_confirm: true,
     password: 'password',
     user_metadata: {
-      first_name: formData[addEmployeeFormNames.firstName],
-      last_name: formData[addEmployeeFormNames.lastName],
+      ...userMeta,
+      status: data.status,
     },
   });
 

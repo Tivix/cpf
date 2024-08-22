@@ -91,7 +91,13 @@ export const MainLadder: FC<MainLadderProps> = ({ data }) => {
             )}
           </div>
           <div className="self-end">
-            <Button styleType="primary" variant="solid" disabled={!formValid || isSubmitting} type="submit">
+            <Button
+              styleType="primary"
+              variant="solid"
+              disabled={!formValid || isSubmitting}
+              type="submit"
+              value="active"
+            >
               Confirm and continue
             </Button>
           </div>

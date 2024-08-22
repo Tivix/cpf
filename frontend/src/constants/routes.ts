@@ -13,7 +13,7 @@ export const routes = {
     softSkills: '/my-space/soft-skills',
   },
   people: {
-    index: '/people?tab=active',
+    index: '/people',
     myProfile: '/people/my-profile',
     addNew: {
       personalDetails: '/people/add-new/personal-details',

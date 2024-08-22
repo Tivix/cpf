@@ -53,6 +53,19 @@ export const usePeople = () => {
     }
   }, [tabParam, tabsData]);
 
+  const handleChangeTab = useCallback(
+    (newTab: Option) => {
+      setParams({ tab: newTab.id });
+    },
+    [setParams],
+  );
+
+  useEffect(() => {
+    if (!tab && tabsData.length > 0) {
+      handleChangeTab(tabsData[0]);
+    }
+  }, [handleChangeTab, tab, tabsData]);
+
   useEffect(() => {
     setParams({ band: values?.band?.id });
   }, [setParams, values.band]);
@@ -67,10 +80,6 @@ export const usePeople = () => {
       setFilteredPeople(filteredPeople);
     }
   }, [fetchedPeople, tab?.id]);
-
-  const handleChangeTab = (newTab: Option) => {
-    setParams({ tab: newTab.id });
-  };
 
   const handleClearBand = () => {
     form.setValue('band', null);

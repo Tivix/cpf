@@ -10,6 +10,7 @@ export interface Band {
   threshold: number;
   ladderSlug: string;
   bandId: number;
+  bandNumber: number;
 }
 
 export interface BandWithBuckets extends Band {
