@@ -1,5 +1,5 @@
 import { BandWithBuckets } from '@app/types/library';
-import { UserLadder } from '@app/types/people';
+import { UserLadder } from '@app/types/user';
 
 export interface MySpaceProps {
   user: {

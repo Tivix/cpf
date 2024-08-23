@@ -9,13 +9,13 @@ import { PeopleTableProps } from './PeopleTable.interface';
 import { Avatar } from '@app/components/common/Avatar';
 import { generateClassNames, getInitials } from '@app/utils';
 import { formatDate } from '@app/utils';
-import { PeopleStatus } from '../../People.interface';
 import { Button } from '@app/components/common/Button';
+import { userStatus } from '@app/types/user';
 
 export const PeopleTable: FC<PeopleTableProps> = ({ people, currentTab }) => {
-  const draft = currentTab?.id === PeopleStatus.drafts;
-  const deactivated = currentTab?.id === PeopleStatus.deactivated;
-  const active = currentTab?.id === PeopleStatus.active;
+  const draft = currentTab?.id === userStatus.draft;
+  const deactivated = currentTab?.id === userStatus.deactivated;
+  const active = currentTab?.id === userStatus.active;
 
   return (
     <div className="flow-root">

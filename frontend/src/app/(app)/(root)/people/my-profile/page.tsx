@@ -1,7 +1,7 @@
 import { ProfileSettings } from '@app/components/pages/ProfileSetting';
 import { createClient } from '@app/utils/supabase/server';
 import { mapKeysToCamelCase } from '@app/utils';
-import { User, UserLadder } from '@app/types/people';
+import { User, UserLadder } from '@app/types/user';
 import { redirect } from 'next/navigation';
 
 export default async function LibraryPage() {

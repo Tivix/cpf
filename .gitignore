@@ -26,6 +26,9 @@
 **/yarn-debug.log*
 **/yarn-error.log*
 
+# supabase
+**/supabase
+
 # local env files
 **/.env*.local
 

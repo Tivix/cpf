@@ -2,7 +2,7 @@ import { MySpace } from '@app/components/pages/mySpace/MySpace';
 import { createClient } from '@app/utils/supabase/server';
 import { redirect } from 'next/navigation';
 import { mapKeysToCamelCase } from '@app/utils';
-import { User, UserLadder } from '@app/types/people';
+import { User, UserLadder } from '@app/types/user';
 import { BandWithBuckets } from '@app/types/library';
 
 export default async function MySpacePage() {

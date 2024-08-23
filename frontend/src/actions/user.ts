@@ -7,6 +7,7 @@ import { createClient } from '@app/utils/supabase/server';
 import { createClient as createSupabaseClient } from '@supabase/supabase-js';
 import { routes } from '@app/constants';
 import { AddEmployeeForm, addEmployeeFormNames } from '@app/components/pages/addEmployee/AddEmployeeFormProvider';
+import { userStatus } from '@app/types/user';
 
 export async function login(formData: FormData) {
   const supabase = createClient();
@@ -48,7 +49,7 @@ export async function signup(formData: FormData) {
   redirect('/');
 }
 
-export async function createEmployee(data: AddEmployeeForm & { status: string }) {
+export async function createEmployee(data: AddEmployeeForm & { status: keyof typeof userStatus }) {
   const supabase = createSupabaseClient(process.env.NEXT_PUBLIC_SUPABASE_SERVER_URL!, process.env.SERVICE_ROLE_KEY!, {
     auth: {
       autoRefreshToken: false,

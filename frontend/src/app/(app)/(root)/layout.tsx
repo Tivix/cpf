@@ -1,6 +1,6 @@
 import { Sidebar } from '@app/components/modules/Sidebar';
 import { Topbar } from '@app/components/modules/Topbar';
-import { User } from '@app/types/people';
+import { User } from '@app/types/user';
 import { mapKeysToCamelCase } from '@app/utils';
 import { createClient } from '@app/utils/supabase/server';
 import { redirect } from 'next/navigation';

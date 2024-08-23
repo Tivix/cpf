@@ -2,9 +2,10 @@ import { useCallback, useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { PEOPLE_DETAILS } from './People.utils';
 import { useForm } from 'react-hook-form';
-import { Employee, PeopleDetails, PeopleStatus, PeopleTableForm, peopleTableFormName } from './People.interface';
+import { Employee, PeopleDetails, PeopleTableForm, peopleTableFormName } from './People.interface';
 import { useQueryParams } from '@app/hooks';
 import { Option } from '@app/types/common';
+import { userStatus } from '@app/types/user';
 
 export const usePeople = () => {
   const searchParams = useSearchParams();
@@ -18,10 +19,10 @@ export const usePeople = () => {
     },
   });
 
-  const [tab, setTab] = useState<Option<keyof typeof PeopleStatus> | undefined>();
+  const [tab, setTab] = useState<Option<keyof typeof userStatus> | undefined>();
   const [fetchedPeople, setFetchedPeople] = useState<PeopleDetails>();
   const [filteredPeople, setFilteredPeople] = useState<Employee[]>([]);
-  const [tabsData, setTabsData] = useState<Option<keyof typeof PeopleStatus>[]>([]);
+  const [tabsData, setTabsData] = useState<Option<keyof typeof userStatus>[]>([]);
   const { setParams } = useQueryParams();
   const values = form.watch();
 
@@ -36,10 +37,10 @@ export const usePeople = () => {
   // INFO: set all available tabs
   useEffect(() => {
     if (fetchedPeople) {
-      const tabs: Option<keyof typeof PeopleStatus>[] = [
-        { name: `${PeopleStatus.active} (${fetchedPeople.active})`, id: PeopleStatus.active },
-        { name: `${PeopleStatus.drafts} (${fetchedPeople.draft})`, id: PeopleStatus.drafts },
-        { name: `${PeopleStatus.deactivated} (${fetchedPeople.deactivated})`, id: PeopleStatus.deactivated },
+      const tabs: Option<keyof typeof userStatus>[] = [
+        { name: `${userStatus.active} (${fetchedPeople.active})`, id: userStatus.active },
+        { name: `${userStatus.draft} (${fetchedPeople.draft})`, id: userStatus.draft },
+        { name: `${userStatus.deactivated} (${fetchedPeople.deactivated})`, id: userStatus.deactivated },
       ];
       setTabsData(tabs);
     }

@@ -11,6 +11,7 @@ import { Spacer } from './MainLadder.utils';
 import { addEmployeeFormNames } from '../AddEmployeeFormProvider';
 import { FC } from 'react';
 import { MainLadderProps } from './MainLadder.interface';
+import { userStatus } from '@app/types/user';
 
 export const MainLadder: FC<MainLadderProps> = ({ data }) => {
   const {
@@ -96,7 +97,7 @@ export const MainLadder: FC<MainLadderProps> = ({ data }) => {
               variant="solid"
               disabled={!formValid || isSubmitting}
               type="submit"
-              value="active"
+              value={userStatus.active}
             >
               Confirm and continue
             </Button>

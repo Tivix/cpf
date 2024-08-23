@@ -28,3 +28,9 @@ export interface UserLadder {
   technologies: string[];
   isMainLadder: boolean;
 }
+
+export const userStatus = {
+  active: 'active',
+  draft: 'draft',
+  deactivated: 'deactivated',
+} as const;

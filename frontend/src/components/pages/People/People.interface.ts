@@ -1,4 +1,5 @@
 import { Option } from '@app/types/common';
+import { userStatus } from '@app/types/user';
 
 export const peopleTableFormName = {
   band: 'band',
@@ -10,18 +11,12 @@ export interface PeopleTableForm {
   [peopleTableFormName.search]: string;
 }
 
-export const PeopleStatus = {
-  active: 'active',
-  drafts: 'drafts',
-  deactivated: 'deactivated',
-} as const;
-
 export interface Employee {
   id: number;
   name: string;
   title: string;
   laddersDetails: LadderDetails[];
-  status: keyof typeof PeopleStatus;
+  status: keyof typeof userStatus;
 }
 
 export interface LadderDetails {

@@ -11,6 +11,7 @@ import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import { routes } from '@app/constants';
 import { usePeopleStore } from '@app/store/people';
+import { userStatus } from '@app/types/user';
 
 export const AddEmployeeFormProvider: FC<PropsWithChildren> = ({ children }) => {
   const router = useRouter();
@@ -29,7 +30,11 @@ export const AddEmployeeFormProvider: FC<PropsWithChildren> = ({ children }) => 
 
   const handleSubmit = async (data: AddEmployeeForm, event?: React.FormEvent<HTMLFormElement>) => {
     const submitter = (event?.nativeEvent as SubmitEvent).submitter as HTMLButtonElement;
-    const error = await createEmployee({ ...data, status: submitter?.value || 'draft' });
+    const status = submitter?.value as keyof typeof userStatus;
+    const error = await createEmployee({
+      ...data,
+      status: status || userStatus.draft,
+    });
 
     if (error) {
       toast.error(error);

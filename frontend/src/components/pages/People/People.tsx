@@ -35,10 +35,13 @@ export const People = () => {
       <div className="flex flex-col gap-6">
         <div className="flex items-center justify-between">
           <Breadcrumbs breadcrumbs={[{ label: 'People', href: '/people', current: true }]} />
-          <Button>
-            <Link href={routes.people.addNew.personalDetails} className="flex items-center text-sm">
+          <Button className="h-auto p-0">
+            <Link
+              href={routes.people.addNew.personalDetails}
+              className="flex h-11 w-[136px] flex-1 items-center justify-center text-sm"
+            >
               <PlusIcon className="mr-2" />
-              <div>Employee</div>
+              <div className="font-semibold">Employee</div>
             </Link>
           </Button>
         </div>

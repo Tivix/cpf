@@ -11,7 +11,7 @@ export const WorkflowTopbar: FC<WorkflowTopbarProps> = ({
   onSave,
   onActivate,
   activateDisabled,
-  saveButtonValue,
+  saveDisabled,
   activateButtonValue,
 }) => {
   return (
@@ -21,7 +21,7 @@ export const WorkflowTopbar: FC<WorkflowTopbarProps> = ({
         <Button variant="borderless" styleType="natural" onClick={onCancel}>
           {cancelTitle}
         </Button>
-        <Button variant="border" styleType="natural" type="submit" value={saveButtonValue} onClick={onSave}>
+        <Button variant="border" disabled={saveDisabled} styleType="natural" onClick={onSave}>
           {saveTitle}
         </Button>
         <Button
