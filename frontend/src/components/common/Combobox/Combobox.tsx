@@ -9,23 +9,22 @@ import {
   ComboboxOptions,
   Label,
 } from '@headlessui/react';
-import { useMemo, useState } from 'react';
 import { ComboboxProps } from './Combobox.interface';
 import { Option } from '@app/types/common';
 import { Controller, useFormContext } from 'react-hook-form';
 import { generateClassNames } from '@app/utils';
+import { useCombobox } from './Combobox.hooks';
 
-export const Combobox: React.FC<ComboboxProps> = ({ label, options, name, renderRightContent, className }) => {
-  const [query, setQuery] = useState('');
+export const Combobox: React.FC<ComboboxProps> = ({
+  label,
+  options,
+  name,
+  renderRightContent,
+  className,
+  selectedOptions,
+}) => {
   const { control } = useFormContext();
-
-  const filteredOptions = useMemo(
-    () =>
-      options
-        .sort((a, b) => a.name.toLocaleLowerCase().localeCompare(b.name.toLocaleLowerCase()))
-        .filter((option) => option.name.toLowerCase().includes(query.toLowerCase())),
-    [options, query],
-  );
+  const { setQuery, filteredOptions } = useCombobox(options, selectedOptions);
 
   return (
     <Controller

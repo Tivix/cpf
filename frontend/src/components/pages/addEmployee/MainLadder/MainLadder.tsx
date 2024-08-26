@@ -22,8 +22,8 @@ export const MainLadder: FC<MainLadderProps> = ({ data }) => {
     setOpen,
     selectedLadder,
     formValid,
-    firstTechnology,
     isSubmitting,
+    selectedTechnologies,
   } = useMainLadder(data);
 
   return (
@@ -59,6 +59,7 @@ export const MainLadder: FC<MainLadderProps> = ({ data }) => {
                     label="Technology"
                     key={tech.id}
                     options={technologies}
+                    selectedOptions={selectedTechnologies}
                     name={`${addEmployeeFormNames.technology}.${i}`}
                     renderRightContent={() =>
                       i !== 0 ? (
@@ -83,9 +84,7 @@ export const MainLadder: FC<MainLadderProps> = ({ data }) => {
                 variant="link"
                 className="w-fit"
                 onClick={() => technologyFields.append({ id: '', name: '' })}
-                disabled={
-                  (firstTechnology && !firstTechnology.name) || !technologies || !technologies?.length || isSubmitting
-                }
+                disabled={!technologies?.length || isSubmitting || selectedTechnologies.length === technologies.length}
               >
                 + Technology
               </Button>

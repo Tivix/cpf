@@ -15,7 +15,5 @@ export const addEmployeeFormSchema = z.object({
       id: z.string(),
     })
     .array()
-    .refine((techArray) => techArray.some((tech) => tech.id && tech.id.trim() !== ''), {
-      message: 'At least one technology must be selected',
-    }),
+    .optional(),
 });

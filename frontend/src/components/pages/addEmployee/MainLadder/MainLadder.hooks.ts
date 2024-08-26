@@ -8,19 +8,20 @@ import { Option } from '@app/types/common';
 import { mapKeysToOptions } from '@app/utils';
 
 export const useMainLadder = (data: MainLadderProps['data']) => {
-  const form = useFormContext<AddEmployeeForm>();
-  const values = form.watch();
+  const { watch, control, formState } = useFormContext<AddEmployeeForm>();
+  const values = watch();
+  const { isValid, isSubmitting } = formState;
 
   const updateProgress = usePeopleStore((state) => state.updateProgress);
   const selectedLadder = values?.[addEmployeeFormNames.ladder].id;
   const firstTechnology = values?.[addEmployeeFormNames.technology]?.[0];
+  const selectedTechnologies = values.technology;
   const technologyFields = useFieldArray({
     name: addEmployeeFormNames.technology,
-    control: form.control,
+    control: control,
   });
   const { replace } = technologyFields;
   const [open, setOpen] = useState(true);
-  const [formValid, setFormValid] = useState(false);
   const [stepValid, setStepValid] = useState(false);
   const [ladders, setLadders] = useState<Option[] | null>(null);
   const [technologies, setTechnologies] = useState<Option[] | null>(null);
@@ -48,8 +49,7 @@ export const useMainLadder = (data: MainLadderProps['data']) => {
     const stepValid = selectedLadder && technologySelected;
 
     setStepValid(!!stepValid);
-    setFormValid(!!stepValid && form.formState.isValid);
-  }, [values, selectedLadder, firstTechnology, form.formState]);
+  }, [values, selectedLadder, firstTechnology]);
 
   // INFO: update progress in sidebar stepper
   useEffect(() => {
@@ -60,13 +60,12 @@ export const useMainLadder = (data: MainLadderProps['data']) => {
   return {
     ladders,
     technologies,
-    firstTechnology,
-    form,
     technologyFields,
     open,
     setOpen,
     selectedLadder,
-    formValid,
-    isSubmitting: form.formState.isSubmitting,
+    formValid: isValid,
+    isSubmitting: isSubmitting,
+    selectedTechnologies,
   };
 };
