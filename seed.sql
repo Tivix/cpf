@@ -61,14 +61,14 @@ end;
 $$ language plpgsql;
 
 -- Function returning a table of filtered employees
-CREATE OR REPLACE FUNCTION get_employees_by_status(_status employee_status DEFAULT NULL, current_user_id UUID DEFAULT NULL)
+CREATE OR REPLACE FUNCTION get_employees_by_status(_status profile_status DEFAULT NULL, current_user_id UUID DEFAULT NULL)
 RETURNS TABLE (
   id uuid,
   email text,
-  role app_role,
   first_name text,
   last_name text,
   status profile_status,
+  role app_role,
   ladder_slug varchar,
   current_band int,
   technologies text[],
@@ -88,10 +88,10 @@ BEGIN
   SELECT
     u.id,
     p.email,
-    p.role,
     p.first_name,
     p.last_name,
     p.status,
+    ur.role,
     ul.ladder_slug,
     ul.current_band,
     ul.technologies,
@@ -100,8 +100,9 @@ BEGIN
     l.ladder_tech
     FROM users u
     JOIN profiles p ON u.id = p.id
-    JOIN user_ladder ul ON u.id = ul.user_id
-    JOIN ladder l ON ul.ladder_slug = l.ladder_slug
+    JOIN user_roles ur ON u.id = ur.user_id
+    FULL OUTER JOIN user_ladder ul ON u.id = ul.user_id
+    LEFT JOIN ladder l ON ul.ladder_slug = l.ladder_slug
     WHERE _status IS NULL or _status = p.status;
 
   exception
@@ -124,7 +125,7 @@ CREATE TABLE public.profiles (
   email       text not null,
   first_name text,
   last_name text,
-  status      public.profile_status not null
+  status      public.profile_status
 );
 comment on table public.profiles is 'Profile data for each user.';
 comment on column public.profiles.id is 'References the internal Supabase Auth user.';
