@@ -38,10 +38,15 @@ export const EmployeeTopbar = () => {
             Do you want to save this employee as draft?
           </Typography>
           <div className="flex justify-end gap-x-6">
-            <Button variant="borderless" styleType="natural" disabled={!emailValid} onClick={handleBack}>
+            <Button variant="borderless" styleType="natural" onClick={handleBack}>
               Continue without saving
             </Button>
-            <Button variant="solid" styleType="primary" onClick={handleSaveAsDraft} disabled={isSubmitting}>
+            <Button
+              variant="solid"
+              styleType="primary"
+              onClick={handleSaveAsDraft}
+              disabled={isSubmitting || !emailValid}
+            >
               Save as draft
             </Button>
           </div>
