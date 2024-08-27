@@ -98,7 +98,7 @@ BEGIN
     ul.is_main_ladder,
     l.ladder_name,
     l.ladder_tech
-    FROM users u
+    FROM auth.users u
     JOIN profiles p ON u.id = p.id
     JOIN user_roles ur ON u.id = ur.user_id
     FULL OUTER JOIN user_ladder ul ON u.id = ul.user_id

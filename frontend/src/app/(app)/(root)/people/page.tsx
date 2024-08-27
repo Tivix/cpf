@@ -1,19 +1,21 @@
 import { People } from '@app/components/pages/People';
 import { createClient } from '@app/utils/supabase/server';
+import { userStatus } from '@app/types/user';
 
-async function getPeople() {
-  const supabase = createClient();
-  const { data: band_bucket, error } = await supabase.from('band_bucket').select('*');
+async function getPeople(status?: keyof typeof userStatus) {
+  if (status) {
+    const supabase = createClient();
+    const { data, error } = await supabase.rpc('get_employees_by_status', { _status: status });
 
-  if (error) {
-    console.log('error', error);
-  } else {
-    console.log('band_bucket', band_bucket);
+    if (error) {
+      console.log('error', error);
+    } else {
+      return data;
+    }
   }
 }
 
-export default async function PeoplePage() {
-  const data = await getPeople();
-  console.log('data', data);
-  return <People />;
+export default async function PeoplePage({ searchParams }: { searchParams: { tab: keyof typeof userStatus } }) {
+  const data = await getPeople(searchParams.tab);
+  return <People data={data} />;
 }

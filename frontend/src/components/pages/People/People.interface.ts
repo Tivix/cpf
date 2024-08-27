@@ -12,11 +12,18 @@ export interface PeopleTableForm {
 }
 
 export interface Employee {
-  id: number;
-  name: string;
-  title: string;
-  laddersDetails: LadderDetails[];
+  id: string;
+  email: string;
+  first_name: string;
+  last_name: string;
   status: keyof typeof userStatus;
+  role: string;
+  ladder_slug: string;
+  current_band: string | null;
+  technologies: string[];
+  is_main_ladder: boolean | null;
+  ladder_name: string;
+  ladder_tech: string[];
 }
 
 export interface LadderDetails {
@@ -36,4 +43,8 @@ export interface PeopleDetails {
   active: number;
   draft: number;
   deactivated: number;
+}
+
+export interface PeopleProps {
+  data?: Employee[];
 }

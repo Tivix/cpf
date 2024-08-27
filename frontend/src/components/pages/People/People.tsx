@@ -6,7 +6,7 @@ import { FormProvider } from '@app/components/common/FormProvider';
 import { Input } from '@app/components/common/Input';
 import { SearchIcon } from '@app/static/icons/SearchIcon';
 import { bands } from './People.utils';
-import { PeopleTableForm, peopleTableFormName } from './People.interface';
+import { PeopleProps, PeopleTableForm, peopleTableFormName } from './People.interface';
 import { routes } from '@app/constants';
 import { Button } from '@app/components/common/Button';
 import { Listbox } from '@app/components/common/Listbox';
@@ -14,21 +14,10 @@ import { PeopleTable } from './Modules/PeopleTable';
 import { Tabs } from '@app/components/common/Tabs';
 import { PlusIcon } from '@app/static/icons/PlusIcon';
 
-import { createClient } from '@app/utils/supabase/client';
+import { FC } from 'react';
 
-export const People = () => {
-  const { tab, handleChangeTab, tabsData, filteredPeople, form, handleClearBand } = usePeople();
-
-  const supabase = createClient();
-  async function getCountries() {
-    const { error } = await supabase.from('band_bucket').select('*');
-
-    if (error) {
-      console.log('error', error);
-    }
-  }
-
-  getCountries();
+export const People: FC<PeopleProps> = ({ data }) => {
+  const { tab, setTab, tabs, form, handleClearBand } = usePeople();
 
   return (
     <FormProvider<PeopleTableForm> form={form}>
@@ -46,27 +35,33 @@ export const People = () => {
           </Button>
         </div>
 
-        {tab && <Tabs current={tab} onTabChange={handleChangeTab} tabs={tabsData} />}
-        <div className="flex flex-col gap-2 rounded-2xl bg-white p-6">
-          <div className="w-2/5">
-            <div className="flex flex-wrap gap-3 lg:flex-nowrap">
-              <Input
-                name="search"
-                className="min-w-[304px]"
-                placeholder="Search"
-                leftIcon={<SearchIcon className="h-4 w-4" />}
-              />
-              <Listbox
-                options={bands}
-                name={peopleTableFormName.band}
-                placeholder="Current band"
-                onClear={handleClearBand}
-                className="min-w-[160px]"
-              />
+        <Tabs current={tab} onTabChange={setTab} tabs={tabs} />
+        {Array.isArray(data) && data.length > 0 ? (
+          <>
+            <div className="flex flex-col gap-2 rounded-2xl bg-white p-6">
+              <div className="w-2/5">
+                <div className="flex flex-wrap gap-3 lg:flex-nowrap">
+                  <Input
+                    name="search"
+                    className="min-w-[304px]"
+                    placeholder="Search"
+                    leftIcon={<SearchIcon className="h-4 w-4" />}
+                  />
+                  <Listbox
+                    options={bands}
+                    name={peopleTableFormName.band}
+                    placeholder="Current band"
+                    onClear={handleClearBand}
+                    className="min-w-[160px]"
+                  />
+                </div>
+              </div>
+              <PeopleTable currentTab={tab} people={data} />
             </div>
-          </div>
-          <PeopleTable currentTab={tab} people={filteredPeople} />
-        </div>
+          </>
+        ) : (
+          <div>No data available</div>
+        )}
       </div>
     </FormProvider>
   );
