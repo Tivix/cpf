@@ -42,7 +42,7 @@ export const Combobox: React.FC<ComboboxProps> = ({
           }}
           className={generateClassNames('flex flex-1 flex-col gap-y-2', className)}
         >
-          {label && <Label className="font-semibold text-navy-900">{label}</Label>}
+          {label && <Label className="text-navy-900">{label}</Label>}
           <div className="flex flex-1 items-center">
             <div className="relative w-full">
               <ComboboxInput
