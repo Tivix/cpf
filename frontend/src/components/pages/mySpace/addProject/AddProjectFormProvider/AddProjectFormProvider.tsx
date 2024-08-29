@@ -10,6 +10,7 @@ import { useRouter } from 'next/navigation';
 import { routes } from '@app/constants';
 import { usePeopleStore } from '@app/store/people';
 import { AddProjectForm, addProjectFormNames } from './AddProjectFormProvider.interface';
+import { addProjectFormSchema } from './AddProjectFormProvider.utils';
 
 export const AddProjectFormProvider: FC<PropsWithChildren> = ({ children }) => {
   const router = useRouter();
@@ -19,10 +20,14 @@ export const AddProjectFormProvider: FC<PropsWithChildren> = ({ children }) => {
     defaultValues: {
       [addProjectFormNames.title]: '',
       [addProjectFormNames.type]: {},
-      [addProjectFormNames.details]: '',
+      [addProjectFormNames.clarification]: '',
+      [addProjectFormNames.details]: {},
     },
-    // resolver: zodResolver(addEmployeeFormSchema),
+    resolver: zodResolver(addProjectFormSchema),
   });
+
+  const vals = form.watch();
+  console.log('vals', vals);
 
   const handleSubmit = async (data: AddProjectForm) => {
     console.log('data', data);

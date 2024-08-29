@@ -2,9 +2,11 @@ import { useEffect, useRef } from 'react';
 import { EDITOR_JS_TOOLS } from './editor.config';
 import EditorJS from '@editorjs/editorjs';
 import { EditorProps, holder } from './Editor.interface';
+import { useFormContext } from 'react-hook-form';
 
-export const useEditor = (data: EditorProps['data'], onChange: EditorProps['onChange']) => {
+export const useEditor = (data: EditorProps['data'], name: EditorProps['name']) => {
   const editorRef = useRef<EditorJS | null>(null);
+  const form = useFormContext();
 
   useEffect(() => {
     if (!editorRef.current) {
@@ -14,7 +16,7 @@ export const useEditor = (data: EditorProps['data'], onChange: EditorProps['onCh
         data: data,
         async onChange(api) {
           const data = await api.saver.save();
-          onChange(data);
+          form.setValue(name, data);
         },
       });
     }

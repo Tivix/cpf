@@ -22,8 +22,7 @@ export const usePersonalDetails = () => {
 
   // INFO: update progress in sidebar stepper
   useEffect(() => {
-    if (formValid) updateProgress({ [routes.people.addNew.personalDetails]: 'completed' });
-    else updateProgress({ [routes.people.addNew.personalDetails]: 'inProgress' });
+    if (formValid) updateProgress({ [routes.people.addNew.personalDetails]: formValid ? 'completed' : 'inProgress' });
   }, [formValid, updateProgress]);
 
   return { formValid };

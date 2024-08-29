@@ -3,7 +3,7 @@ import { OutputData } from '@editorjs/editorjs';
 
 export interface EditorProps {
   data?: OutputData;
-  onChange: (data: OutputData) => void;
+  name: string;
   label?: string;
   className?: ClassName;
 }
