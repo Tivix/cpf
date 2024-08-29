@@ -1,6 +1,31 @@
 -- Custom types
 CREATE TYPE public.app_role as enum ('admin', 'manager', 'employee');
 
+CREATE OR REPLACE FUNCTION get_user_profile_with_ladder(p_user_id uuid)
+RETURNS TABLE(
+         email TEXT,
+         role app_role,
+         first_name TEXT,
+         last_name TEXT,
+         ladder_slug VARCHAR,
+         current_band INT,
+         technologies TEXT[]
+) AS $$
+BEGIN
+    RETURN QUERY
+    SELECT
+        p.*,
+        ul.ladder_slug,
+        ul.current_band,
+        ul.technologies
+    FROM profile p
+    INNER JOIN
+        user_ladder ul on p.user_id = ul.user_id
+    WHERE
+        p.user_id = p_user_id and ul.is_main_ladder = TRUE;
+END;
+$$ LANGUAGE plsql;
+
 -- Trigger function to handle new users
 CREATE OR REPLACE FUNCTION handle_new_user()
 returns trigger
