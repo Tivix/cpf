@@ -8,9 +8,7 @@ import { useMySpaceStore } from '@app/store/mySpace';
 export const useProjectDetails = () => {
   const form = useFormContext<AddProjectForm>();
   const updateProgress = useMySpaceStore((state) => state.updateProgress);
-  const { isValid, errors } = form.formState;
-  console.log('isValid', isValid);
-  console.log('errors', errors);
+  const { isValid } = form.formState;
 
   const values = form.watch();
   const otherProjectType = values[addProjectFormNames.type].id === 'other';

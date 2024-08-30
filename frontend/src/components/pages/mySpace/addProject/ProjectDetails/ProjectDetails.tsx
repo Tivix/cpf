@@ -26,7 +26,7 @@ export const ProjectDetails = () => {
           <Input name={addProjectFormNames.clarification} label="Please clarify" className="w-1/2" />
         )}
         <div className="w-full">
-          <Editor name={addProjectFormNames.details} className="h-96" label="Project details" />
+          <Editor name={addProjectFormNames.details} className="h-64" label="Project details" />
         </div>
         <div className="flex justify-end">
           <Button

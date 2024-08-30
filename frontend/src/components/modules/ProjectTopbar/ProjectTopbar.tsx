@@ -2,12 +2,14 @@
 
 import { Modal } from '@app/components/common/Modal';
 import { WorkflowTopbar } from '../WorkflowTopbar';
-import { useEmployeeTopbar } from './ProjectTopbar.hook';
+import { useProjectTopbar } from './ProjectTopbar.hook';
 import { Typography } from '@app/components/common/Typography';
 import { Button } from '@app/components/common/Button';
-import { userStatus } from '@app/types/user';
 
 export const ProjectTopbar = () => {
+  const { cancelModalOpen, setCancelModalOpen, handleBack, handleSaveAsDraft, isDirty, isSubmitting, formValid } =
+    useProjectTopbar();
+
   return (
     <>
       <WorkflowTopbar
@@ -15,17 +17,12 @@ export const ProjectTopbar = () => {
         cancelTitle="Cancel"
         saveTitle="Save as draft"
         activateTitle="Submit to manager"
-        activateButtonValue={userStatus.active}
-        onCancel={() => {}}
-        onSave={() => {}}
-        saveDisabled={false}
-        activateDisabled={false}
-        // onCancel={isDirty ? () => setCancelModalOpen(true) : handleBack}
-        // onSave={handleSaveAsDraft}
-        // saveDisabled={!emailValid}
-        // activateDisabled={!formValid}
+        onCancel={isDirty ? () => setCancelModalOpen(true) : handleBack}
+        onSave={handleSaveAsDraft}
+        saveDisabled={!formValid}
+        activateDisabled={!formValid}
       />
-      {/* <Modal open={cancelModalOpen} onClose={() => setCancelModalOpen(false)} title="Save as draft?">
+      <Modal open={cancelModalOpen} onClose={() => setCancelModalOpen(false)} title="Save as draft?">
         <div className="flex flex-col gap-y-6">
           <Typography variant="body-m/regular" className="text-navy-600">
             Do you want to save this project as draft?
@@ -39,7 +36,7 @@ export const ProjectTopbar = () => {
             </Button>
           </div>
         </div>
-      </Modal> */}
+      </Modal>
     </>
   );
 };

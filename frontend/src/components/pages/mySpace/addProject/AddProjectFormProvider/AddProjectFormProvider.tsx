@@ -26,9 +26,6 @@ export const AddProjectFormProvider: FC<PropsWithChildren> = ({ children }) => {
     resolver: zodResolver(addProjectFormSchema),
   });
 
-  const vals = form.watch();
-  console.log('vals', vals);
-
   const handleSubmit = async (data: AddProjectForm) => {
     console.log('data', data);
 
