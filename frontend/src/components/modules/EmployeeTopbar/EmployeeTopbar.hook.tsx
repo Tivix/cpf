@@ -1,5 +1,8 @@
 import { createEmployee } from '@app/actions/user';
-import { AddEmployeeForm, addEmployeeFormNames } from '@app/components/pages/addEmployee/AddEmployeeFormProvider';
+import {
+  AddEmployeeForm,
+  addEmployeeFormNames,
+} from '@app/components/pages/People/addEmployee/AddEmployeeFormProvider';
 import { routes } from '@app/constants';
 import { usePeopleStore } from '@app/store/people';
 import { userStatus } from '@app/types/user';

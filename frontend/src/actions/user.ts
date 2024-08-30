@@ -6,7 +6,10 @@ import { redirect } from 'next/navigation';
 import { createClient } from '@app/utils/supabase/server';
 import { createClient as createSupabaseClient } from '@supabase/supabase-js';
 import { routes } from '@app/constants';
-import { AddEmployeeForm, addEmployeeFormNames } from '@app/components/pages/addEmployee/AddEmployeeFormProvider';
+import {
+  AddEmployeeForm,
+  addEmployeeFormNames,
+} from '@app/components/pages/People/addEmployee/AddEmployeeFormProvider';
 import { userStatus } from '@app/types/user';
 
 export async function login(formData: FormData) {

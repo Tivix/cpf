@@ -1,4 +1,4 @@
-import { MainLadder as MainLadderPage } from '@app/components/pages/addEmployee/MainLadder';
+import { MainLadder as MainLadderPage } from '@app/components/pages/People/addEmployee/MainLadder';
 import { createClient } from '@app/utils/supabase/server';
 
 const getLadders = async () => {

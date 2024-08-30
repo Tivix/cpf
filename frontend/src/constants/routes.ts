@@ -11,6 +11,10 @@ export const routes = {
   mySpace: {
     index: '/my-space',
     softSkills: '/my-space/soft-skills',
+    addNew: {
+      projectDetails: '/my-space/add-new/project-details',
+      scope: '/my-space/add-new/project-scope',
+    },
   },
   people: {
     index: '/people',

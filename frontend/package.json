@@ -15,6 +15,11 @@
     "test": "echo \"tests\""
   },
   "dependencies": {
+    "@editorjs/checklist": "^1.6.0",
+    "@editorjs/editorjs": "^2.30.5",
+    "@editorjs/header": "^2.8.7",
+    "@editorjs/list": "^1.10.0",
+    "@editorjs/paragraph": "^2.11.6",
     "@headlessui/react": "^2.0.4",
     "@hookform/error-message": "^2.0.1",
     "@hookform/resolvers": "^3.9.0",
