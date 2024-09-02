@@ -14,17 +14,20 @@ RETURNS TABLE(
 BEGIN
     RETURN QUERY
     SELECT
-        p.*,
+        p.email,
+        p.role,
+        p.first_name,
+        p.last_name,
         ul.ladder_slug,
         ul.current_band,
         ul.technologies
-    FROM profile p
+    FROM profiles p
     INNER JOIN
-        user_ladder ul on p.user_id = ul.user_id
+        user_ladder ul on p.id = ul.user_id
     WHERE
-        p.user_id = p_user_id and ul.is_main_ladder = TRUE;
+        p.id = p_user_id and ul.is_main_ladder = TRUE;
 END;
-$$ LANGUAGE plsql;
+$$ LANGUAGE plpgsql;
 
 -- Trigger function to handle new users
 CREATE OR REPLACE FUNCTION handle_new_user()
