@@ -5,9 +5,10 @@ export interface Point {
   y: number;
 }
 
-export interface Option<T extends string = string> {
-  id: T;
+export interface Option {
+  id: string | number;
   name: string;
+  available?: boolean;
 }
 
 export type ClassName = HTMLProps<HTMLElement>['className'];

@@ -6,6 +6,7 @@ export const addProjectFormNames = {
   type: 'type',
   details: 'details',
   clarification: 'clarification',
+  bucket: 'bucket',
 } as const;
 
 export interface AddProjectForm {
@@ -13,4 +14,5 @@ export interface AddProjectForm {
   [addProjectFormNames.type]: Option;
   [addProjectFormNames.clarification]: string;
   [addProjectFormNames.details]: OutputData;
+  [addProjectFormNames.bucket]: Option;
 }
