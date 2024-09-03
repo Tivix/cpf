@@ -491,6 +491,14 @@ services:
       # Use named volume to persist pgsodium decryption key between restarts
       - db-config:/etc/postgresql-custom
 
+  dbmate:
+    image: amacneil/dbmate:2.16.0
+    volumes:
+      - .:/db/
+    environment:
+      DBMATE_MIGRATIONS_TABLE: _analytics.schema_migrations
+      DATABASE_URL: postgres://supabase_admin:${SUPABASE_POSTGRES_PASSWORD}@db:${SUPABASE_POSTGRES_PORT}/${SUPABASE_POSTGRES_DB}?sslmode=disable
+
   # vector:
   #   container_name: supabase-vector
   #   image: timberio/vector:0.28.1-alpine
