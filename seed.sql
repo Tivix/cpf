@@ -112,6 +112,29 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+
+CREATE OR REPLACE FUNCTION get_all_bands_for_ladder(p_ladder_slug varchar)
+
+  RETURNS TABLE(
+    band_id INT,
+    threshold INT,
+    salary_range VARCHAR(50),
+    band_number INT
+       )
+AS $$ BEGIN
+  RETURN QUERY
+  SELECT
+    b.band_id,
+    b.threshold,
+    b.salary_range,
+    b.band_number
+  FROM public.band b WHERE ladder_slug = p_ladder_slug;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION get_all_bands_for_user(p_user_id uuid)
+
+
 -- Trigger on auth.users
 CREATE TRIGGER on_auth_user_created
 after insert on auth.users
