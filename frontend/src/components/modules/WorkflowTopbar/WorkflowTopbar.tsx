@@ -15,7 +15,7 @@ export const WorkflowTopbar: FC<WorkflowTopbarProps> = ({
   activateButtonValue,
 }) => {
   return (
-    <div className="sticky top-0 flex h-16 items-center justify-between border-b border-b-navy-200 bg-white px-8">
+    <div className="sticky top-0 z-10 flex h-16 items-center justify-between border-b border-b-navy-200 bg-white px-8">
       <div className="text-l font-semibold text-navy-900">{title}</div>
       <div className="flex gap-x-4">
         <Button variant="borderless" styleType="natural" onClick={onCancel}>

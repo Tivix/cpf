@@ -5,24 +5,11 @@ import { Typography } from '@app/components/common/Typography';
 import { addProjectFormNames } from '../AddProjectFormProvider/AddProjectFormProvider.interface';
 import { FC } from 'react';
 import { ProjectScopeProps } from './ProjectScope.interface';
-import { Option } from '@app/types/common';
+import { useProjectScope } from './ProjectScope.hooks';
+import { AdvancementLevel } from '@app/components/pages/BucketDetails/modules/AdvancementLevel';
 
 export const ProjectScope: FC<ProjectScopeProps> = ({ bands }) => {
-  //   INFO: when user completed buckets will be available from api, disable completed options
-
-  const availableBuckets = bands.flatMap((band) => {
-    const bandLevel: Option = {
-      name: `Band ${band.bandNumber}`.toUpperCase(),
-      id: band.bandNumber,
-      available: false,
-    };
-    const bandBuckets = band.buckets.map((bucket) => ({
-      name: bucket.bucketName,
-      id: bucket.bucketSlug,
-      available: true,
-    }));
-    return [bandLevel, ...bandBuckets];
-  });
+  const { availableBuckets, advancementLevels, handleOpenLevel, levelOpen, handleSelectAll } = useProjectScope(bands);
 
   return (
     <>
@@ -37,6 +24,19 @@ export const ProjectScope: FC<ProjectScopeProps> = ({ bands }) => {
           options={availableBuckets}
           name={addProjectFormNames.bucket}
         />
+        <div className="flex flex-col">
+          {advancementLevels?.map((level, index) => (
+            <AdvancementLevel
+              key={level.advancementLevel}
+              data={level}
+              verticalLine={index < advancementLevels.length - 1}
+              open={levelOpen === level.advancementLevel}
+              onClick={() => handleOpenLevel(level.advancementLevel)}
+              checkboxName={`${addProjectFormNames.skills}.${level.advancementLevel}`}
+              handleSelectAll={handleSelectAll}
+            />
+          ))}
+        </div>
       </div>
     </>
   );

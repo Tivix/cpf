@@ -22,6 +22,8 @@ export const AddProjectFormProvider: FC<PropsWithChildren> = ({ children }) => {
       [addProjectFormNames.type]: {},
       [addProjectFormNames.clarification]: '',
       [addProjectFormNames.details]: {},
+      [addProjectFormNames.bucket]: {},
+      [addProjectFormNames.skills]: {},
     },
     resolver: zodResolver(addProjectFormSchema),
   });

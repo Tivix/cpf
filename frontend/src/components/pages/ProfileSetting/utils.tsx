@@ -2,11 +2,11 @@ import { ReactNode } from 'react';
 import { Typography } from '@app/components/common/Typography';
 import { Checkbox } from '@app/components/common/Checkbox';
 
-export const NotificationCheckbox: React.FC<{ icon: ReactNode; checked: boolean }> = ({ icon, checked }) => (
+export const NotificationCheckbox: React.FC<{ icon: ReactNode; checked: boolean }> = ({ icon }) => (
   <div className="flex flex-col items-center justify-between">
     <div className="mb-6 text-navy-500">{icon}</div>
     <div className="flex h-6 items-center">
-      <Checkbox checked={checked} />
+      <Checkbox name="notifications" />
     </div>
   </div>
 );

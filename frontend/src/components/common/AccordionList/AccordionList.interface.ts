@@ -1,8 +1,9 @@
 import { ReactNode } from 'react';
 
 export interface AccordionListProps {
+  checkboxName?: string;
   items: {
-    key: string;
+    key: string | number;
     title: string;
     children?: ReactNode;
     icon?: ReactNode;

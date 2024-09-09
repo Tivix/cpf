@@ -3,6 +3,8 @@ import { ChevronRightIcon } from '@app/static/icons/ChevronRightIcon';
 import { generateClassNames } from '@app/utils';
 import { AccordionCardProps } from './AccordionCard.interface';
 import { Typography } from '@app/components/common/Typography';
+import { Checkbox } from '../Checkbox';
+import { addProjectFormNames } from '@app/components/pages/mySpace/addProject/AddProjectFormProvider/AddProjectFormProvider.interface';
 
 export const AccordionCard = ({
   title,
@@ -10,6 +12,8 @@ export const AccordionCard = ({
   expandedByDefault,
   className,
   small,
+  checkboxName,
+  handleSelectAll,
 }: PropsWithChildren<AccordionCardProps>) => {
   const [isOpen, setOpen] = useState(false);
 
@@ -32,7 +36,21 @@ export const AccordionCard = ({
         )}
         onClick={() => setOpen(!isOpen)}
       >
-        <Typography variant={small ? 'body-m/semibold' : 'head-s/semibold'}>{title}</Typography>
+        <div className="flex flex-col items-start gap-y-8">
+          <Typography variant={small ? 'body-m/semibold' : 'head-s/semibold'}>{title}</Typography>
+          {checkboxName && handleSelectAll && (
+            <div className="flex gap-x-4">
+              <Checkbox
+                handleChange={(_, selected) => handleSelectAll(checkboxName, selected)}
+                name={`${checkboxName}.all` as typeof addProjectFormNames.skills}
+                id="all"
+              />
+              <Typography variant="body-m/semibold" className="text-navy-700">
+                Select all
+              </Typography>
+            </div>
+          )}
+        </div>
         {children ? (
           <div className="flex h-8 w-8 items-center justify-center rounded-full bg-navy-50 group-hover:bg-white">
             <ChevronRightIcon
@@ -42,7 +60,11 @@ export const AccordionCard = ({
         ) : undefined}
       </button>
       {children ? (
-        <div className={generateClassNames('rounded-b-2xl border border-t-0 border-navy-200 p-6', { hidden: !isOpen })}>
+        <div
+          className={generateClassNames('rounded-b-2xl border border-t-0 border-navy-200 px-8 py-4', {
+            hidden: !isOpen,
+          })}
+        >
           {children}
         </div>
       ) : undefined}

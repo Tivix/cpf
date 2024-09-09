@@ -11,7 +11,7 @@ export const useProjectDetails = () => {
   const { isValid } = form.formState;
 
   const values = form.watch();
-  const otherProjectType = values[addProjectFormNames.type].id === 'other';
+  const otherProjectType = values[addProjectFormNames.type]?.id === 'other';
 
   // INFO: update progress in sidebar stepper
   useEffect(() => {

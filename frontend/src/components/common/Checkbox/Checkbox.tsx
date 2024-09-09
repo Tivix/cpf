@@ -1,6 +1,8 @@
 import { FC } from 'react';
-import { Checkbox as HeadlessCheckbox, CheckboxProps } from '@headlessui/react';
+import { Checkbox as HeadlessCheckbox } from '@headlessui/react';
 import { generateClassNames } from '@app/utils';
+import { useController, useFormContext } from 'react-hook-form';
+import { CheckboxProps } from './Checkbox.interface';
 
 const styles: { [checked: string]: { [disabled: string]: string } } = {
   true: {
@@ -14,15 +16,32 @@ const styles: { [checked: string]: { [disabled: string]: string } } = {
 };
 
 export const Checkbox: FC<CheckboxProps> = (props) => {
-  const { disabled, checked } = props;
-  const currentStyles = styles[(checked ?? false).toString()][(disabled ?? false).toString()];
+  const { name, id, disabled, handleChange, checked = false } = props;
+  const form = useFormContext();
+  const { field } = useController({ name, control: form.control });
+  const selected = field?.value?.selected;
+
+  const currentStyles = styles[(selected ?? false).toString()][(disabled ?? false).toString()];
 
   return (
     <HeadlessCheckbox
-      className={generateClassNames('flex h-6 w-6 items-center justify-center rounded', currentStyles)}
-      {...props}
+      className={generateClassNames('flex h-6 w-6 cursor-pointer items-center justify-center rounded', currentStyles)}
+      {...field}
+      onChange={(selected) => {
+        if (handleChange) {
+          handleChange(name, selected);
+        }
+
+        field.onChange({
+          id: id,
+          selected: selected,
+        });
+      }}
+      checked={selected ?? checked}
+      onClick={(e) => e.stopPropagation()}
+      value={selected ?? checked}
     >
-      {checked && (
+      {selected && (
         <svg width="16" height="11" viewBox="0 0 16 11" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
             fillRule="evenodd"

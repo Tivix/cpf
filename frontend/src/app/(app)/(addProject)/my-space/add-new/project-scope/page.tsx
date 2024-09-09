@@ -35,6 +35,7 @@ export default async function Score() {
   }
 
   const mainLadder = laddersData?.length > 1 ? laddersData.find((ladder) => ladder.isMainLadder) : laddersData[0];
+
   const { data: bands } = await supabase
     .from('band')
     .select(
@@ -50,10 +51,20 @@ export default async function Score() {
       description, 
       bucket_type,
       advancement_levels:advancement_level(
+        advancement_level,
+        description,
+        bucket_slug,
         skills:atomic_skill(
           skill_id,
           name,
-          description
+          description,
+          category
+        ),
+        projects:example_project(
+          project_id,
+          level_id,
+          title,
+          overview
         )
       )
     ), 

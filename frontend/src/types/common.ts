@@ -11,4 +11,9 @@ export interface Option {
   available?: boolean;
 }
 
+export interface CheckboxOption {
+  id: string | number;
+  selected: boolean;
+}
+
 export type ClassName = HTMLProps<HTMLElement>['className'];
