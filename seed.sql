@@ -128,11 +128,34 @@ AS $$ BEGIN
     b.threshold,
     b.salary_range,
     b.band_number
-  FROM public.band b WHERE ladder_slug = p_ladder_slug;
+  FROM public.band b;
 END;
 $$ LANGUAGE plpgsql;
 
 CREATE OR REPLACE FUNCTION get_all_bands_for_user(p_user_id uuid)
+
+  RETURNS TABLE(
+    band_id INT,
+    threshold INT,
+    salary_range VARCHAR(50),
+    band_number INT
+       )
+AS $$ BEGIN
+  RETURN QUERY
+  SELECT
+    b.band_id,
+    b.threshold,
+    b.salary_range,
+    b.band_number
+  FROM public.band b
+  INNER JOIN user_ladder ul on b.ladder_slug = ul.ladder_slug
+  INNER JOIN auth.users u on ul.user_id = u.id
+  WHERE ul.is_main_ladder = TRUE AND ul.user_id = p_user_id;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION get_all_bands_for_user(p_user_id uuid)
+
 
 
 -- Trigger on auth.users
