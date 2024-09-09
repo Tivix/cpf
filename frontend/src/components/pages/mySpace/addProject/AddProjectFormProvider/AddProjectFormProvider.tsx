@@ -23,6 +23,7 @@ export const AddProjectFormProvider: FC<PropsWithChildren> = ({ children }) => {
       [addProjectFormNames.clarification]: '',
       [addProjectFormNames.details]: {},
       [addProjectFormNames.bucket]: {},
+      // INFO: might consider switching it into `useFieldArray`
       [addProjectFormNames.skills]: {},
     },
     resolver: zodResolver(addProjectFormSchema),
