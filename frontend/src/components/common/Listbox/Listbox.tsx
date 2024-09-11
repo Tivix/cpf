@@ -7,6 +7,7 @@ import { generateClassNames } from '@app/utils';
 import { ChevronUpIcon } from '@app/static/icons/ChevronUpIcon';
 import { CloseIcon } from '@app/static/icons/CloseIcon';
 import { useListBox } from './Listbox.hooks';
+import { Button } from '../Button';
 
 export const Listbox: FC<ListboxProps> = ({ name, options, placeholder, onClear, className }) => {
   const { control } = useFormContext();
@@ -22,31 +23,41 @@ export const Listbox: FC<ListboxProps> = ({ name, options, placeholder, onClear,
         return (
           <div className="w-full">
             <HeadlessListbox value={value} onChange={onChange}>
-              <ListboxButton
-                className={generateClassNames(
-                  'text-black relative flex h-12 w-full items-center rounded-lg border border-navy-200 px-4 text-left',
-                  'focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-red-600',
-                  { 'bg-blue-200': selected },
-                  { 'text-navy-600': !value && placeholder },
-                  className,
-                )}
-              >
-                {selected && (
-                  <div className="pr-2">
-                    <ChevronUpIcon className="px rotate-180" />
-                  </div>
-                )}
-                <div className="flex flex-1 items-center justify-between">
-                  {!value && placeholder ? placeholder : value?.name}
-                  {selected ? (
-                    <div onClick={handleClear}>
-                      <CloseIcon />
-                    </div>
-                  ) : (
-                    <ChevronUpIcon className="h-4 w-4 rotate-180" />
+              <div className="flex h-full items-center">
+                <ListboxButton
+                  className={generateClassNames(
+                    'text-black relative flex h-12 w-full items-center rounded-xl border border-navy-200 px-3 text-left transition duration-150',
+                    'hover:bg-navy-100 focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-red-600',
+                    {
+                      'rounded-e-none rounded-s-xl border-y-0 border-l-0 border-r-white bg-blue-200 hover:bg-blue-300':
+                        selected,
+                    },
+                    { 'text-navy-600': !value && placeholder },
+                    className,
                   )}
-                </div>
-              </ListboxButton>
+                >
+                  <div className="flex flex-1 items-center justify-between overflow-hidden">
+                    <div className="overflow-hidden text-ellipsis whitespace-nowrap">
+                      {!value && placeholder ? placeholder : value?.name}
+                    </div>
+                    <div className="flex items-center">
+                      <ChevronUpIcon className="rotate-180" />
+                    </div>
+                  </div>
+                </ListboxButton>
+                {selected && (
+                  <Button
+                    onClick={handleClear}
+                    styleType="natural"
+                    variant="link"
+                    className={generateClassNames('flex h-full items-center rounded-none px-3 hover:bg-blue-300', {
+                      'rounded-e-xl border border-none border-navy-200 bg-blue-200': selected,
+                    })}
+                  >
+                    <CloseIcon />
+                  </Button>
+                )}
+              </div>
               <ListboxOptions
                 anchor="bottom"
                 className={generateClassNames(
@@ -58,7 +69,7 @@ export const Listbox: FC<ListboxProps> = ({ name, options, placeholder, onClear,
                   <ListboxOption
                     key={option.id}
                     value={option}
-                    className="group flex cursor-pointer select-none items-center gap-2 rounded-lg px-3 py-1.5 data-[focus]:bg-navy-100"
+                    className="group flex cursor-pointer select-none items-center gap-2 rounded-xl px-3 py-1.5 data-[focus]:bg-navy-100"
                   >
                     <div className="text-black text-sm/6">{option.name}</div>
                   </ListboxOption>
