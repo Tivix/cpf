@@ -24,14 +24,14 @@ export const ExpandableSection: FC<PropsWithChildren<ExpandableSectionProps>> = 
       </div>
       <div className="mb-4 ml-4 flex w-full flex-col gap-4">
         <button
-          className={`flex w-full cursor-pointer flex-col gap-4 rounded-lg ${!open && 'hover:bg-navy-50'}`}
+          className={`flex w-full cursor-pointer flex-col gap-4 rounded-lg p-4 ${!open && 'hover:bg-navy-50'}`}
           onClick={onClick}
         >
           <Typography as="h3" variant="body-l/semibold">
             {title}
           </Typography>
           {description && (
-            <Typography variant="body-m/regular" className="text-navy-600">
+            <Typography variant="body-m/regular" className="text-left text-navy-600">
               {description}
             </Typography>
           )}

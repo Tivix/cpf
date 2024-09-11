@@ -22,9 +22,10 @@ export const Combobox: React.FC<ComboboxProps> = ({
   renderRightContent,
   className,
   selectedOptions,
+  sort = true,
 }) => {
   const { control } = useFormContext();
-  const { setQuery, filteredOptions } = useCombobox(options, selectedOptions);
+  const { setQuery, filteredOptions } = useCombobox(options, selectedOptions, sort);
 
   return (
     <Controller
@@ -61,6 +62,7 @@ export const Combobox: React.FC<ComboboxProps> = ({
                     <ComboboxOption
                       key={option.id}
                       value={option}
+                      disabled={option.available === false}
                       className="relative cursor-default select-none py-2 pl-3 pr-9 text-navy-900 data-[focus]:cursor-pointer data-[focus]:bg-navy-200 data-[focus]:font-medium"
                     >
                       <span className="block truncate">{option.name}</span>

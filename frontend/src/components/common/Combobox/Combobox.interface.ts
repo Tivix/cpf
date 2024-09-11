@@ -8,4 +8,5 @@ export interface ComboboxProps {
   name: string;
   renderRightContent?: () => ReactNode;
   className?: ClassName;
+  sort?: boolean;
 }
