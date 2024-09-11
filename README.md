@@ -100,13 +100,31 @@ After you have done the above steps, you should be able to access the applicatio
 
 To seed your database with initial data once your project is up and running, follow these steps:
 
-Copy the contents of the seed.sql file located in the root directory of your project.
+```
+docker compose run --rm dbmate up
+```
 
-Go to the Supabase admin panel.
+### Migrations
 
-Navigate to the SQL Editor on the left side panel.
+For database migrations we use [dbmate](https://github.com/amacneil/dbmate/tree/main)
 
-Paste the contents of the seed.sql file and hit 'Run'.
+To create new migration:
+
+```
+docker compose run --rm dbmate new {migration_name}
+```
+
+Apply migrations:
+
+```
+docker compose run --rm dbmate up
+```
+
+Rollback the latest migration:
+
+```
+docker compose run --rm dbmate new {migration_name}
+```
 
 # Supabase
 
