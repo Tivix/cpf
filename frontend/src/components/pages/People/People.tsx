@@ -34,7 +34,6 @@ export const People: FC<PeopleProps> = ({ data }) => {
             </Link>
           </Button>
         </div>
-
         <Tabs current={tab} onTabChange={setTab} tabs={tabs} />
         {Array.isArray(data) && data.length > 0 ? (
           <>

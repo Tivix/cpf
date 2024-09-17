@@ -11,7 +11,7 @@ export const Input: FC<InputProps> = memo(
     const error = getFieldState(name).error;
 
     return (
-      <div className="flex w-full flex-col gap-y-3">
+      <div className={generateClassNames('flex w-full flex-col gap-y-3', className)}>
         {label && (
           <label className="text-navy-900" htmlFor={`input-${name}`}>
             {label}
