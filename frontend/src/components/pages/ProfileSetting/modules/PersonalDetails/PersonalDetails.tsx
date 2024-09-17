@@ -11,7 +11,10 @@ import { CropImageModal } from '../CropImageModal';
 import { DeleteImageModal } from '../DeleteImageModal';
 
 export const PersonalDetails: React.FC<PersonalDetailsProps> = ({ data }) => {
-  const { firstName, lastName, email, photo } = data;
+  const { email, photo } = data;
+  const firstName = data?.firstName || '-';
+  const lastName = data?.lastName || '-';
+
   const {
     imageSrc,
     handleOpenDeleteModal,

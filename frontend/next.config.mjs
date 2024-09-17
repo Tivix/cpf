@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  basePath: '/cpf',
   output: 'standalone',
   // TODO: remove once we get the final logo
   images: {

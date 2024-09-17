@@ -1,23 +1,46 @@
 import { ProfileSettings } from '@app/components/pages/ProfileSetting';
-
-// TODO: get data from api
-const data = {
-  firstName: 'Jane',
-  lastName: 'Edge',
-  email: 'example@gmail.com',
-  ladders: [
-    {
-      ladderName: 'Front end',
-      technology: 'React',
-      band: 2,
-    },
-  ],
-  notifications: {
-    slack: false,
-    email: false,
-  },
-};
+import { createClient } from '@app/utils/supabase/server';
+import { mapKeysToCamelCase } from '@app/utils';
+import { User, UserLadder } from '@app/types/user';
+import { redirect } from 'next/navigation';
 
 export default async function LibraryPage() {
-  return <ProfileSettings data={data} />;
+  const supabase = createClient();
+  const {
+    data: { user },
+    error,
+  } = await supabase.auth.getUser();
+  if (error || !user) {
+    redirect('/auth');
+  }
+  const { data } = await supabase.from('profiles').select().eq('id', user.id).maybeSingle();
+
+  const userData = mapKeysToCamelCase<User>(data);
+
+  const { data: ladders } = await supabase
+    .from('user_ladder')
+    .select(
+      `
+    ladder(
+      ladder_name,
+      ladder_slug
+    ),
+    band(
+      band_number
+    ),
+    technologies
+  `,
+    )
+    .eq('user_id', user.id);
+
+  const laddersData = mapKeysToCamelCase<UserLadder[]>(ladders);
+
+  return (
+    <ProfileSettings
+      data={{
+        ...userData,
+        ladders: laddersData,
+      }}
+    />
+  );
 }

@@ -14,7 +14,6 @@ uvicorn = "^0.25.0"
 gunicorn = "^21.2.0"
 psycopg2 = "^2.9.9"
 psycopg = "^3.1.16"
-fusionauth-client = "1.49.1"
 
 [tool.poetry.group.dev]
 optional = true

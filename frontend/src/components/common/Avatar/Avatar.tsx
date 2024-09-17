@@ -13,7 +13,7 @@ const variants: {
   '320': 'w-80 h-80 text-5xl',
 };
 
-export const Avatar: React.FC<AvatarProps> = ({ initials, imageUrl, variant = '40' }) => {
+export const Avatar: React.FC<AvatarProps> = ({ initials, imageUrl, variant = '40', width, height }) => {
   const avatarClass = generateClassNames(
     'rounded-full bg-blue-700 flex justify-center items-center object-cover',
     variants[variant],
@@ -23,9 +23,9 @@ export const Avatar: React.FC<AvatarProps> = ({ initials, imageUrl, variant = '4
     <div className={avatarClass}>
       {imageUrl ? (
         <Image
-          width={variant}
-          height={variant}
-          className="inline-block h-full w-full rounded-full"
+          width={width || variant}
+          height={height || variant}
+          className="inline-block h-full w-full rounded-full object-cover"
           src={imageUrl}
           alt="User avatar"
         />

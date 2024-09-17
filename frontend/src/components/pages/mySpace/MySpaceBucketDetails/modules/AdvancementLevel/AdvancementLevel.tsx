@@ -1,4 +1,5 @@
 'use client';
+
 import { AccordionCard } from '@app/components/common/AccordionCard';
 import { AccordionList } from '@app/components/common/AccordionList';
 import { AdvancementLevelProps } from './AdvancementLevel.interface';
@@ -7,11 +8,13 @@ import { ExpandableSection } from '@app/components/common/ExpandableSection';
 import { ExampleWayToPassLevelModal } from '@app/components/modules/ExampleWayToPassLevelModal';
 import { useAdvancementLevel } from './AdvancementLevel.hooks';
 import { SkillStatusIcon } from '@app/components/modules/SkillStatusIcon';
+import { getAggregatedSkills } from '@app/utils';
 
 export const AdvancementLevel: React.FC<AdvancementLevelProps> = ({ verticalLine, data, open, onClick }) => {
   const { hideModal, openModal, modalOpen } = useAdvancementLevel();
-  const { advancementLevel, description, projects, categories } = data;
-  const shouldBeExpandedByDefault = Object.keys(data.categories).length === 1;
+  const { advancementLevel, description, projects, skills } = data;
+  const aggregatedSkills = getAggregatedSkills(skills);
+  const shouldBeExpandedByDefault = Object.keys(aggregatedSkills).length === 1;
 
   return (
     <ExpandableSection
@@ -30,7 +33,7 @@ export const AdvancementLevel: React.FC<AdvancementLevelProps> = ({ verticalLine
             <ExampleWayToPassLevelModal open={modalOpen} onClose={hideModal} projects={projects} />
           </>
         )}
-        {Object.entries(categories).map(([category, skills]) => (
+        {Object.entries(aggregatedSkills).map(([category, skills]) => (
           <AccordionCard
             key={category}
             className="w-full"

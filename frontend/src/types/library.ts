@@ -5,6 +5,21 @@ export interface LadderBand {
   threshold: number;
 }
 
+export interface Band {
+  salaryRange: string;
+  threshold: number;
+  ladderSlug: string;
+  bandId: number;
+  bandNumber: number;
+}
+
+export interface BandWithBuckets extends Band {
+  buckets: Bucket[];
+  ladder: {
+    ladderName: string;
+  };
+}
+
 export interface LadderBandBucket {
   bucketName: string;
   bucketSlug: string;
@@ -41,9 +56,7 @@ export interface AdvancementLevel {
   advancementLevel: number;
   description: string;
   projects: ExampleProject[];
-  categories: {
-    [categoryGroup: string]: AtomicSkill[];
-  };
+  skills: AtomicSkill[];
 }
 
 export interface ExampleProject {
@@ -54,6 +67,8 @@ export interface ExampleProject {
 export interface AtomicSkill {
   name: string;
   description?: string;
+  category: string;
+  skillId: number;
   proofStatus?: keyof typeof ProofStatus;
 }
 

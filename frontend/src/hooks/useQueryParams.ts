@@ -2,7 +2,7 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useCallback } from 'react';
 
 interface IQueryParams {
-  [key: string]: string | undefined | null;
+  [key: string]: string | undefined | null | number;
 }
 
 export const useQueryParams = () => {
@@ -20,7 +20,7 @@ export const useQueryParams = () => {
         if (value === undefined || value === null) {
           currentParams.delete(key);
         } else {
-          currentParams.set(key, value);
+          currentParams.set(key, String(value));
         }
       });
 

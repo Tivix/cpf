@@ -1,6 +1,6 @@
 import { EmployeeSideStepper } from '@app/components/modules/EmployeeSideStepper';
 import { EmployeeTopbar } from '@app/components/modules/EmployeeTopbar';
-import { AddEmployeeFormProvider } from '@app/components/pages/addEmployee/AddEmployeeFormProvider';
+import { AddEmployeeFormProvider } from '@app/components/pages/People/addEmployee/AddEmployeeFormProvider';
 
 export default function PeopleLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (

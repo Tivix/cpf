@@ -7,15 +7,14 @@ import Link from 'next/link';
 import { employeeMenuOptions } from '../../People.utils';
 import { PeopleTableProps } from './PeopleTable.interface';
 import { Avatar } from '@app/components/common/Avatar';
-import { generateClassNames, getInitials } from '@app/utils';
-import { formatDate } from '@app/utils';
-import { PeopleStatus } from '../../People.interface';
+import { capitalize, generateClassNames, getInitials } from '@app/utils';
 import { Button } from '@app/components/common/Button';
+import { userStatus } from '@app/types/user';
 
 export const PeopleTable: FC<PeopleTableProps> = ({ people, currentTab }) => {
-  const draft = currentTab?.id === PeopleStatus.drafts;
-  const deactivated = currentTab?.id === PeopleStatus.deactivated;
-  const active = currentTab?.id === PeopleStatus.active;
+  const draft = currentTab?.id === userStatus.draft;
+  const deactivated = currentTab?.id === userStatus.deactivated;
+  const active = currentTab?.id === userStatus.active;
 
   return (
     <div className="flow-root">
@@ -26,9 +25,7 @@ export const PeopleTable: FC<PeopleTableProps> = ({ people, currentTab }) => {
               <tr>
                 <th
                   scope="col"
-                  className={generateClassNames('py-3.5 pl-4 pr-3 text-xs font-medium sm:pl-4', {
-                    'w-[400px]': deactivated,
-                  })}
+                  className={generateClassNames('w-[424px] py-3.5 pl-4 pr-3 text-xs font-medium sm:pl-4')}
                 >
                   Employee
                 </th>
@@ -58,14 +55,11 @@ export const PeopleTable: FC<PeopleTableProps> = ({ people, currentTab }) => {
                     <th scope="col" className="w-[160px] px-3 py-5 text-right text-xs font-medium">
                       Active Goal
                     </th>
-                    <th scope="col" className="w-[248px] px-3 py-5 text-center text-xs font-medium">
+                    <th scope="col" className="w-[248px] px-9 py-5 text-left text-xs font-medium">
                       Goal Progress
                     </th>
                     <th scope="col" className="w-[160px] px-3 py-5 text-center text-xs font-medium">
-                      Pending actions
-                    </th>
-                    <th scope="col" className="w-[160px] px-3 py-5 text-center text-xs font-medium">
-                      Last activity date
+                      Latest activity
                     </th>
                   </>
                 )}
@@ -81,53 +75,53 @@ export const PeopleTable: FC<PeopleTableProps> = ({ people, currentTab }) => {
             </thead>
             <tbody className="divide-y divide-navy-200 bg-white">
               {people?.map((person) => (
-                <tr key={person.id}>
+                <tr key={person.id} className="h-16">
                   <td className="flex whitespace-nowrap py-5 pl-4 pr-3 text-sm sm:pl-0">
-                    <Avatar
-                      initials={getInitials(person.name)}
-                      variant="28"
-                      imageUrl="/images/avatar_placeholder.jpeg"
-                    />
                     <div className="flex items-center">
+                      <div className="h-8 w-8">
+                        <Avatar
+                          initials={getInitials(person.first_name)}
+                          variant="28"
+                          width={100}
+                          height={100}
+                          imageUrl="/cpf/images/avatar_placeholder.jpeg"
+                        />
+                      </div>
                       <div className="ml-4">
-                        <Typography variant="body-s/medium">{person.name}</Typography>
+                        <Typography variant="body-s/medium">{person.first_name}</Typography>
                         <Typography variant="body-s/regular" className="text-navy-600">
-                          {person.title}
+                          {person.ladder_name}
                         </Typography>
                       </div>
                     </div>
                   </td>
                   <td className="text-gray-500 whitespace-nowrap px-3 py-5 text-sm">
                     <div className="flex flex-col gap-y-4">
-                      {person?.laddersDetails?.map((ladder) => (
-                        <Typography key={ladder.ladderName} variant="body-s/regular" className="text-navy-700">
-                          {ladder.ladderName}
-                        </Typography>
-                      ))}
+                      <Typography variant="body-s/regular" className="text-navy-700">
+                        {capitalize(person?.ladder_slug) || ''}
+                      </Typography>
                     </div>
                   </td>
                   <td className="text-gray-500 whitespace-nowrap px-3 py-5 text-sm">
                     <div className="flex flex-col items-end gap-y-4">
-                      {person?.laddersDetails?.map((ladder) => (
-                        <Typography key={ladder.ladderName} variant="body-s/regular" className="text-navy-700">
-                          {ladder?.currentBand}
-                        </Typography>
-                      ))}
+                      <Typography variant="body-s/regular" className="text-navy-700">
+                        {/* TODO: add current band */}
+                        {0}
+                      </Typography>
                     </div>
                   </td>
                   {active && (
                     <td className="text-gray-500 whitespace-nowrap px-3 py-5 text-sm">
                       <div className="flex flex-col items-end gap-y-4">
-                        {person?.laddersDetails?.map((ladder) => (
-                          <div key={ladder.ladderName} className="mr-2 h-4 w-4 text-navy-700">
-                            {ladder?.activeGoal && <CheckMarkIcon className="text-green-600" width={20} height={20} />}
-                          </div>
-                        ))}
+                        <div className="mr-2 h-4 w-4 text-navy-700">
+                          {/* TODO: add active goal */}
+                          <CheckMarkIcon className="text-green-600" width={20} height={20} />
+                        </div>
                       </div>
                     </td>
                   )}
                   {draft && (
-                    <td className="text-gray-500 whitespace-nowrap py-5 pl-14 pr-10 text-sm">
+                    <td className="text-gray-500 whitespace-nowrap pl-14 pr-10 text-sm">
                       <div className="flex">
                         <Button variant="border" styleType="natural" className="mr-4">
                           Resume
@@ -142,51 +136,32 @@ export const PeopleTable: FC<PeopleTableProps> = ({ people, currentTab }) => {
                     <>
                       <td className="text-gray-500 whitespace-nowrap px-10 py-5 text-sm">
                         <div className="flex flex-col gap-y-4">
-                          {person?.laddersDetails?.map((ladder) => (
-                            <div key={ladder.ladderName} className="flex h-4 items-center text-navy-700">
-                              {ladder.activeGoal && (
-                                <>
-                                  <div className="mr-3 w-full rounded-full bg-navy-300">
-                                    <div
-                                      className="h-2 rounded-full bg-blue-800"
-                                      style={{ width: `${ladder.goalProgress}%` }}
-                                    />
-                                  </div>
-                                  <Typography variant="body-s/medium" className="text-navy-600">
-                                    {ladder.goalProgress}%
-                                  </Typography>
-                                </>
-                              )}
+                          <div className="flex h-4 items-center text-navy-700">
+                            {/* TODO: add if active goal && */}
+                            <div className="mr-3 w-full rounded-full bg-navy-300">
+                              <div
+                                className="h-2 rounded-full bg-blue-800"
+                                //  TODO: add goal progress
+                                style={{ width: `${50}%` }}
+                              />
                             </div>
-                          ))}
+                            <Typography variant="body-s/medium" className="text-navy-600">
+                              {/* TODO: add goal progress */}
+                              {50}%
+                            </Typography>
+                          </div>
                         </div>
                       </td>
-                      <td className="text-gray-500 flex flex-col items-center whitespace-nowrap px-3 py-8 text-sm">
-                        {person?.laddersDetails?.map((details) => (
-                          <div
-                            key={details.ladderName}
-                            className="flex h-8 w-8 items-center justify-center text-navy-700"
-                          >
-                            {details.activeGoal && (
-                              <div className="flex h-7 w-7 items-center justify-center rounded-full bg-blue-800">
-                                <Typography variant="body-s/semibold" className="text-white">
-                                  {details.pendingActions}
-                                </Typography>
-                              </div>
-                            )}
+                      <td className="text-gray-500 px-3 text-sm">
+                        <div className="flex h-8 w-full items-center justify-center text-navy-700">
+                          {/* TODO: add if active goal && */}
+                          <div className="b-2 flex h-7 w-7 items-center justify-center rounded-full bg-blue-800">
+                            <Typography variant="body-s/semibold" className="text-white">
+                              {/* TODO: add pending actions */}
+                              {3}
+                            </Typography>
                           </div>
-                        ))}
-                      </td>
-                      <td className="text-gray-500 whitespace-nowrap px-10 py-5 text-sm">
-                        {person?.laddersDetails?.map((details) => (
-                          <div key={details.ladderName} className="flex h-8 w-8 items-center">
-                            {details.lastActivityDate && (
-                              <Typography variant="body-s/regular" className="text-navy-700">
-                                {formatDate(details.lastActivityDate)}
-                              </Typography>
-                            )}
-                          </div>
-                        ))}
+                        </div>
                       </td>
                     </>
                   )}

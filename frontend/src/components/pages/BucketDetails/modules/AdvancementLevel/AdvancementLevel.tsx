@@ -7,12 +7,22 @@ import { Button } from '@app/components/common/Button';
 import { ExpandableSection } from '@app/components/common/ExpandableSection';
 import { ExampleWayToPassLevelModal } from '@app/components/modules/ExampleWayToPassLevelModal';
 import { FC } from 'react';
+import { getAggregatedSkills } from '@app/utils';
 
-export const AdvancementLevel: FC<AdvancementLevelProps> = ({ verticalLine, data, open, onClick }) => {
+export const AdvancementLevel: FC<AdvancementLevelProps> = ({
+  verticalLine,
+  data,
+  open,
+  onClick,
+  checkboxName,
+  handleSelectAll,
+}) => {
   const { hideModal, openModal, modalOpen } = useAdvancementLevel();
 
-  const { advancementLevel, description, projects, categories } = data;
-  const shouldBeExpandedByDefault = Object.keys(data.categories).length === 1;
+  const { advancementLevel, description, projects, skills } = data;
+  const aggregatedSkills = getAggregatedSkills(skills);
+
+  const shouldBeExpandedByDefault = Object.keys(aggregatedSkills).length === 1;
 
   return (
     <ExpandableSection
@@ -24,30 +34,31 @@ export const AdvancementLevel: FC<AdvancementLevelProps> = ({ verticalLine, data
     >
       <>
         {projects.length > 0 && (
-          <>
-            <Button variant="link" onClick={openModal} className="w-fit text-sm">
-              An example way to pass level
-            </Button>
-            <ExampleWayToPassLevelModal open={modalOpen} onClose={hideModal} projects={projects} />
-          </>
+          <Button variant="link" onClick={openModal} className="w-fit text-sm">
+            An example way to pass level
+          </Button>
         )}
-        {Object.entries(categories).map(([category, skills]) => (
+        {Object.entries(aggregatedSkills).map(([category, skills]) => (
           <AccordionCard
             key={category}
             className="w-full"
-            title={category}
+            title={category || 'Category'}
             expandedByDefault={shouldBeExpandedByDefault}
             small
+            checkboxName={checkboxName}
+            handleSelectAll={(name: string, selected: boolean) => handleSelectAll?.(name, selected, skills)}
           >
             <AccordionList
-              items={skills.map(({ name, description }) => ({
-                key: name,
+              checkboxName={checkboxName}
+              items={skills.map(({ name, description, skillId }) => ({
+                key: skillId,
                 title: name,
                 children: description ? <p>{description}</p> : undefined,
               }))}
             />
           </AccordionCard>
         ))}
+        <ExampleWayToPassLevelModal open={modalOpen} onClose={hideModal} projects={projects} />
       </>
     </ExpandableSection>
   );

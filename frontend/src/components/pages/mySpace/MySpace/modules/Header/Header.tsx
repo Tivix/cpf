@@ -6,7 +6,9 @@ import { TargetIcon } from '@app/static/icons/TargetIcon';
 import { LevelCard } from '../LevelCard';
 
 export const Header: React.FC<HeaderProps> = ({ user, currentLevel, nextLevel }) => {
-  const { firstName, lastName, photo, position } = user;
+  const { photo, position } = user;
+  const firstName = user?.firstName || '-';
+  const lastName = user?.lastName || '-';
 
   return (
     <div className="flex w-full justify-between rounded-3xl bg-navy-200 px-6 py-9">
@@ -22,21 +24,27 @@ export const Header: React.FC<HeaderProps> = ({ user, currentLevel, nextLevel })
         </div>
       </div>
       <div className="flex items-center">
-        <LevelCard
-          title="Current Level"
-          band={currentLevel.band}
-          score={currentLevel.score}
-          icon={<CheckIcon className="h-6 w-6" />}
-          scoreLabel="Score"
-        />
-        <hr className="w-14 border-navy-300" />
-        <LevelCard
-          title="Next Level"
-          band={nextLevel.band}
-          score={nextLevel.threshold}
-          icon={<TargetIcon className="h-6 w-6" />}
-          scoreLabel="Threshold"
-        />
+        {currentLevel?.band && currentLevel?.score && (
+          <LevelCard
+            title="Current Level"
+            band={currentLevel.band}
+            score={currentLevel.score}
+            icon={<CheckIcon className="h-6 w-6" />}
+            scoreLabel="Score"
+          />
+        )}
+        {nextLevel?.band && nextLevel?.threshold && (
+          <>
+            <hr className="w-14 border-navy-300" />
+            <LevelCard
+              title="Next Level"
+              band={nextLevel.band}
+              score={nextLevel.threshold}
+              icon={<TargetIcon className="h-6 w-6" />}
+              scoreLabel="Threshold"
+            />
+          </>
+        )}
       </div>
     </div>
   );

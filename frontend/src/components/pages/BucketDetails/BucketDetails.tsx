@@ -7,8 +7,13 @@ import { useBucketDetails } from './BucketDetails.hooks';
 import { routes } from '@app/constants';
 
 export const BucketDetails: React.FC<BucketDetailsProps> = ({ data, ladderName, ladderSlug, bucketSlug }) => {
-  const { bucketName, description, advancementLevels } = data;
   const { levelOpen, handleOpen } = useBucketDetails();
+
+  if (!data) {
+    return null;
+  }
+
+  const { bucketName, description, advancementLevels } = data;
 
   return (
     <div>

@@ -5,6 +5,8 @@ export interface WorkflowTopbarProps {
   saveTitle: string;
   onCancel: () => void;
   onSave: () => void;
-  onActivate: () => void;
+  onActivate?: () => void;
   activateDisabled?: boolean;
+  saveDisabled?: boolean;
+  activateButtonValue?: string;
 }

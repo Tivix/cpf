@@ -1,15 +1,17 @@
 import { useCallback, useEffect, useState } from 'react';
-import { useSearchParams } from 'next/navigation';
-import { PEOPLE_DETAILS } from './People.utils';
 import { useForm } from 'react-hook-form';
-import { Employee, PeopleDetails, PeopleStatus, PeopleTableForm, peopleTableFormName } from './People.interface';
+import { PeopleTableForm, peopleTableFormName } from './People.interface';
 import { useQueryParams } from '@app/hooks';
 import { Option } from '@app/types/common';
+import { userStatus } from '@app/types/user';
+
+const tabs = [
+  { name: userStatus.active, id: userStatus.active },
+  { name: userStatus.draft, id: userStatus.draft },
+  { name: userStatus.deactivated, id: userStatus.deactivated },
+];
 
 export const usePeople = () => {
-  const searchParams = useSearchParams();
-  const tabParam = searchParams.get('tab');
-
   const form = useForm<PeopleTableForm>({
     mode: 'onChange',
     defaultValues: {
@@ -18,59 +20,23 @@ export const usePeople = () => {
     },
   });
 
-  const [tab, setTab] = useState<Option<keyof typeof PeopleStatus> | undefined>();
-  const [fetchedPeople, setFetchedPeople] = useState<PeopleDetails>();
-  const [filteredPeople, setFilteredPeople] = useState<Employee[]>([]);
-  const [tabsData, setTabsData] = useState<Option<keyof typeof PeopleStatus>[]>([]);
+  const [tab, setTab] = useState<Option>(tabs[0]);
   const { setParams } = useQueryParams();
   const values = form.watch();
 
-  const fetchPeople = useCallback(async () => {
-    setFetchedPeople(PEOPLE_DETAILS);
-  }, []);
+  const handleChangeTab = useCallback(() => {
+    setParams({ tab: tab.id });
+  }, [setParams, tab]);
 
   useEffect(() => {
-    fetchPeople();
-  }, [fetchPeople]);
+    handleChangeTab();
+  }, [handleChangeTab, tab]);
 
-  // INFO: set all available tabs
   useEffect(() => {
-    if (fetchedPeople) {
-      const tabs: Option<keyof typeof PeopleStatus>[] = [
-        { name: `${PeopleStatus.active} (${fetchedPeople.active})`, id: PeopleStatus.active },
-        { name: `${PeopleStatus.drafts} (${fetchedPeople.draft})`, id: PeopleStatus.drafts },
-        { name: `${PeopleStatus.deactivated} (${fetchedPeople.deactivated})`, id: PeopleStatus.deactivated },
-      ];
-      setTabsData(tabs);
+    if (values?.band?.id) {
+      setParams({ band: values?.band?.id });
     }
-  }, [fetchedPeople]);
-
-  // INFO: set current tab based on url param
-  useEffect(() => {
-    if (tabParam) {
-      const currentTab = tabsData.find((tab) => tab.id === tabParam);
-      setTab(currentTab);
-    }
-  }, [tabParam, tabsData]);
-
-  useEffect(() => {
-    setParams({ band: values?.band?.id });
   }, [setParams, values.band]);
-
-  // INFO: set people based on filters
-  useEffect(() => {
-    const filteredPeople = fetchedPeople?.results.filter(
-      (person) => person?.status?.toLocaleLowerCase() === tab?.id.toLocaleLowerCase(),
-    );
-
-    if (filteredPeople) {
-      setFilteredPeople(filteredPeople);
-    }
-  }, [fetchedPeople, tab?.id]);
-
-  const handleChangeTab = (newTab: Option) => {
-    setParams({ tab: newTab.id });
-  };
 
   const handleClearBand = () => {
     form.setValue('band', null);
@@ -78,9 +44,8 @@ export const usePeople = () => {
 
   return {
     tab,
-    handleChangeTab,
-    tabsData,
-    filteredPeople,
+    setTab,
+    tabs,
     form,
     handleClearBand,
   };

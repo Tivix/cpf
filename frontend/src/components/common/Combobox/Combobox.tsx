@@ -9,23 +9,23 @@ import {
   ComboboxOptions,
   Label,
 } from '@headlessui/react';
-import { useMemo, useState } from 'react';
 import { ComboboxProps } from './Combobox.interface';
 import { Option } from '@app/types/common';
 import { Controller, useFormContext } from 'react-hook-form';
 import { generateClassNames } from '@app/utils';
+import { useCombobox } from './Combobox.hooks';
 
-export const Combobox: React.FC<ComboboxProps> = ({ label, options, name, renderRightContent, className }) => {
-  const [query, setQuery] = useState('');
+export const Combobox: React.FC<ComboboxProps> = ({
+  label,
+  options,
+  name,
+  renderRightContent,
+  className,
+  selectedOptions,
+  sort = true,
+}) => {
   const { control } = useFormContext();
-
-  const filteredOptions = useMemo(
-    () =>
-      options
-        .sort((a, b) => a.name.toLocaleLowerCase().localeCompare(b.name.toLocaleLowerCase()))
-        .filter((option) => option.name.toLowerCase().includes(query.toLowerCase())),
-    [options, query],
-  );
+  const { setQuery, filteredOptions } = useCombobox(options, selectedOptions, sort);
 
   return (
     <Controller
@@ -43,7 +43,7 @@ export const Combobox: React.FC<ComboboxProps> = ({ label, options, name, render
           }}
           className={generateClassNames('flex flex-1 flex-col gap-y-2', className)}
         >
-          {label && <Label className="font-semibold text-navy-900">{label}</Label>}
+          {label && <Label className="text-navy-900">{label}</Label>}
           <div className="flex flex-1 items-center">
             <div className="relative w-full">
               <ComboboxInput
@@ -62,6 +62,7 @@ export const Combobox: React.FC<ComboboxProps> = ({ label, options, name, render
                     <ComboboxOption
                       key={option.id}
                       value={option}
+                      disabled={option.available === false}
                       className="relative cursor-default select-none py-2 pl-3 pr-9 text-navy-900 data-[focus]:cursor-pointer data-[focus]:bg-navy-200 data-[focus]:font-medium"
                     >
                       <span className="block truncate">{option.name}</span>

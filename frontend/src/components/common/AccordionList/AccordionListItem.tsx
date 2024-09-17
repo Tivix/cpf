@@ -19,7 +19,7 @@ export const AccordionListItem = ({
   };
 
   return (
-    <div className="border-b border-b-navy-200 px-2 py-4">
+    <div className="w-full border-b border-b-navy-200 p-4">
       <button
         className={generateClassNames('flex w-full items-center justify-between', {
           'cursor-pointer': children,
@@ -29,7 +29,7 @@ export const AccordionListItem = ({
       >
         <div className="flex items-center gap-4">
           {icon}
-          <Typography variant="body-m/medium" className="text-left text-navy-600">
+          <Typography variant="body-m/medium" className="text-left text-navy-700">
             {title}
           </Typography>
         </div>

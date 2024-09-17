@@ -18,7 +18,6 @@ export const SideStepper = <T extends string>({ steps }: SideStepperProps<T>) =>
               <Button
                 className="flex items-center justify-start gap-x-3"
                 variant="link"
-                disabled={state === 'notStarted'}
                 onClick={() => router.push(href)}
               >
                 {stepComponentsMap[state]}

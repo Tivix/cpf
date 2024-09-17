@@ -1,32 +1,25 @@
-'use client';
-import { Fragment } from 'react';
+import { FC, Fragment } from 'react';
 import { Menu, MenuButton, MenuItem, MenuItems, Transition } from '@headlessui/react';
 import { NotificationIcon } from '@app/static/icons/NotificationIcon';
 import { Avatar } from '@app/components/common/Avatar';
 import { UserIcon } from '@app/static/icons/UserIcon';
 import { LogoutIcon } from '@app/static/icons/LogoutIcon';
 import Link from 'next/link';
-import { routes } from '@app/constants';
+import { useTopbar } from './Topbar.hooks';
+import { TopbarProps } from './Topbar.interface';
 
-export const Topbar = () => {
-  // TODO: get user from some context
-  const user = {
-    firstName: 'Jane',
-    lastName: 'Edge',
-  };
+const menuItems = [
+  {
+    href: '/people/my-profile',
+    label: 'Profile settings',
+    icon: <UserIcon />,
+  },
+];
+export const Topbar: FC<TopbarProps> = ({ userData }) => {
+  const firstName = userData?.firstName || '-';
+  const lastName = userData?.lastName || '-';
 
-  const menuItems = [
-    {
-      href: routes.people.myProfile,
-      label: 'Profile settings',
-      icon: <UserIcon />,
-    },
-    {
-      href: '#',
-      label: 'Sign out',
-      icon: <LogoutIcon />,
-    },
-  ];
+  const { handleSignOut } = useTopbar();
 
   return (
     <div className="sticky top-0 z-40 mx-auto shrink-0 border-b border-navy-200 bg-white p-4">
@@ -46,7 +39,7 @@ export const Topbar = () => {
             <MenuButton className="bg-gray-800 focus:ring-offset-gray-800 relative flex rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2">
               <span className="absolute -inset-1.5" />
               <span className="sr-only">Open user menu</span>
-              <Avatar initials={`${user.firstName[0]}${user.lastName[0]}`} variant="40" />
+              <Avatar initials={`${firstName[0]}${lastName[0]}`} variant="40" />
             </MenuButton>
           </div>
           <Transition
@@ -70,6 +63,16 @@ export const Topbar = () => {
                   </Link>
                 </MenuItem>
               ))}
+              <MenuItem key="Sign out">
+                <form action={handleSignOut}>
+                  <button className="flex w-full items-center gap-3 px-4 py-2 text-sm text-navy-700 hover:bg-navy-100">
+                    <span>
+                      <LogoutIcon />
+                    </span>
+                    <span>Sign out</span>
+                  </button>
+                </form>
+              </MenuItem>
             </MenuItems>
           </Transition>
         </Menu>

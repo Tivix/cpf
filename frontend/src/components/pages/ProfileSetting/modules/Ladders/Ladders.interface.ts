@@ -1,7 +1,5 @@
+import { UserLadder } from '@app/types/user';
+
 export interface LaddersProps {
-  ladders: {
-    ladderName: string;
-    technology: string;
-    band: string | number;
-  }[];
+  ladders: UserLadder[] | null;
 }

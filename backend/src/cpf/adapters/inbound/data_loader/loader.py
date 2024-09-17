@@ -53,4 +53,4 @@ def start_data_upload() -> None:
     # Create admin account
     user_service = get_user_management_service()
     # TODO Create new service method for admin account creation when role management system will be ready
-    user_service.create_new_user(email="cpf@kellton.com", first_name="Cpf", last_name="Admin")
+    # user_service.create_new_user(email="cpf@kellton.com", first_name="Cpf", last_name="Admin")

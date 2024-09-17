@@ -5,9 +5,19 @@ import { WorkflowTopbar } from '../WorkflowTopbar';
 import { useEmployeeTopbar } from './EmployeeTopbar.hook';
 import { Typography } from '@app/components/common/Typography';
 import { Button } from '@app/components/common/Button';
+import { userStatus } from '@app/types/user';
 
 export const EmployeeTopbar = () => {
-  const { cancelModalOpen, setCancelModalOpen, isDirty, handleBack, handleSave, formValid } = useEmployeeTopbar();
+  const {
+    cancelModalOpen,
+    setCancelModalOpen,
+    isDirty,
+    handleBack,
+    formValid,
+    isSubmitting,
+    handleSaveAsDraft,
+    emailValid,
+  } = useEmployeeTopbar();
 
   return (
     <>
@@ -16,9 +26,10 @@ export const EmployeeTopbar = () => {
         cancelTitle="Cancel"
         saveTitle="Save as draft"
         activateTitle="Activate Employee"
+        activateButtonValue={userStatus.active}
         onCancel={isDirty ? () => setCancelModalOpen(true) : handleBack}
-        onSave={handleSave}
-        onActivate={() => {}}
+        onSave={handleSaveAsDraft}
+        saveDisabled={!emailValid}
         activateDisabled={!formValid}
       />
       <Modal open={cancelModalOpen} onClose={() => setCancelModalOpen(false)} title="Save as draft?">
@@ -30,8 +41,12 @@ export const EmployeeTopbar = () => {
             <Button variant="borderless" styleType="natural" onClick={handleBack}>
               Continue without saving
             </Button>
-            {/* TODO: disable when saving is in progress */}
-            <Button variant="solid" styleType="primary" onClick={handleSave}>
+            <Button
+              variant="solid"
+              styleType="primary"
+              onClick={handleSaveAsDraft}
+              disabled={isSubmitting || !emailValid}
+            >
               Save as draft
             </Button>
           </div>
