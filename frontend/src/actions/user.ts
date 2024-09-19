@@ -52,14 +52,13 @@ export async function signup(formData: FormData) {
     email_confirm: true,
     password: data['password'],
     user_metadata: {
-    first_name: 'First Name',
-    last_name: 'Last Name'
+      first_name: 'First Name',
+      last_name: 'Last Name'
     },
   });
   if (error) {
     redirect('/error');
   }
-
 
   revalidatePath('/');
   redirect('/');
