@@ -319,10 +319,7 @@ INSERT INTO band_bucket (band_id, bucket_slug) VALUES
 ((SELECT band_id FROM band WHERE ladder_slug = 'frontend' AND threshold = 23), 'cross_platform_frontend'),
 ((SELECT band_id FROM band WHERE ladder_slug = 'frontend' AND threshold = 35), 'security'),
 ((SELECT band_id FROM band WHERE ladder_slug = 'frontend' AND threshold = 35), 'algorithmic_knowledge'),
-((SELECT band_id FROM band WHERE ladder_slug = 'frontend' AND threshold = 35), 'releases_ci_cd'),
-((SELECT band_id FROM band WHERE ladder_slug = 'frontend' AND threshold = 50), 'releases_ci_cd2'),
-((SELECT band_id FROM band WHERE ladder_slug = 'frontend' AND threshold = 55), 'releases_ci_cd3'),
-((SELECT band_id FROM band WHERE ladder_slug = 'frontend' AND threshold = 60), 'releases_ci_cd4');
+((SELECT band_id FROM band WHERE ladder_slug = 'frontend' AND threshold = 35), 'releases_ci_cd');
 
 -- Insert advancement_level
 INSERT INTO advancement_level (bucket_slug, advancement_level, description) VALUES
