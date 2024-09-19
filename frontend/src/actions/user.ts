@@ -33,7 +33,12 @@ export async function login(formData: FormData) {
 }
 
 export async function signup(formData: FormData) {
-  const supabase = createClient();
+  const supabase = createSupabaseClient(process.env.NEXT_PUBLIC_SUPABASE_SERVER_URL!, process.env.SERVICE_ROLE_KEY!, {
+    auth: {
+      autoRefreshToken: false,
+      persistSession: false,
+    },
+  });
 
   // type-casting here for convenience
   // in practice, you should validate your inputs
@@ -42,8 +47,15 @@ export async function signup(formData: FormData) {
     password: formData.get('password') as string,
   };
 
-  const { error } = await supabase.auth.signUp(data);
-
+  const { error } = await supabase.auth.admin.createUser({
+    email: data['email'],
+    email_confirm: true,
+    password: data['password'],
+    user_metadata: {
+      first_name: 'First Name',
+      last_name: 'Last Name',
+    },
+  });
   if (error) {
     redirect('/error');
   }

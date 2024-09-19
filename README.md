@@ -115,7 +115,7 @@ Paste the contents of the seed.sql file and hit 'Run'.
 Users can be added to the app through various methods:
 
 1. **Supabase Panel**: Go to `localhost:8080` to create a user directly in the Supabase dashboard - authentication tab.
-2. **Directly from a Browser**: Go to `localhost:8080/cpf/auth` to create a user via a authentication flow.
+2. **Directly from a Browser**: Go to `localhost:8080/cpf/auth` to create a user via a authentication flow. Going forward we will probably get rid of this feature and focus on single sign on.
 3. **Add Employee flow**: Employees can be added through the dashboard at `localhost:8080/cpf/people/add-new`. The default password is `password`.
 
 ### Automated Backend Processes
