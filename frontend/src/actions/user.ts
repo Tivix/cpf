@@ -53,7 +53,7 @@ export async function signup(formData: FormData) {
     password: data['password'],
     user_metadata: {
       first_name: 'First Name',
-      last_name: 'Last Name'
+      last_name: 'Last Name',
     },
   });
   if (error) {
