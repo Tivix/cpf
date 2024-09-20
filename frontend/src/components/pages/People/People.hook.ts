@@ -39,7 +39,7 @@ export const usePeople = () => {
 
   useEffect(() => {
     handleParamsChange();
-  }, [handleParamsChange, values?.search, tab, values?.search]);
+  }, [handleParamsChange, values?.search, tab]);
 
   useEffect(() => {
     if (values?.band?.id) {
