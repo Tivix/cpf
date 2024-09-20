@@ -8,7 +8,7 @@ export const peopleTableFormName = {
 
 export interface PeopleTableForm {
   [peopleTableFormName.band]: Option | null;
-  [peopleTableFormName.search]: string;
+  [peopleTableFormName.search]: string | null;
 }
 
 export interface Employee {
@@ -43,8 +43,4 @@ export interface PeopleDetails {
   active: number;
   draft: number;
   deactivated: number;
-}
-
-export interface PeopleProps {
-  data?: Employee[];
 }
