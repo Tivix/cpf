@@ -16,6 +16,7 @@ export const usePeople = () => {
   const { setParams } = useQueryParams();
   const searchParams = useSearchParams();
   const searchNameParam = searchParams.get('search');
+  const searchTabParam = searchParams.get('tab');
 
   const form = useForm<PeopleTableForm>({
     mode: 'onChange',
@@ -25,7 +26,7 @@ export const usePeople = () => {
     },
   });
 
-  const [tab, setTab] = useState<Option>(tabs[0]);
+  const [tab, setTab] = useState<Option>(tabs.find((tab) => tab.name === searchTabParam) || tabs[0]);
   const values = form.watch();
 
   const handleParamsChange = useCallback(() => {
