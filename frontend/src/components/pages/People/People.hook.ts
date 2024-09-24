@@ -58,12 +58,15 @@ export const usePeople = () => {
     form.setValue('band', null);
   };
 
+  const onFormSubmit = () => null;
+
   return {
     tab,
     setTab,
     tabs,
     form,
     handleClearBand,
+    onFormSubmit,
     values,
   };
 };

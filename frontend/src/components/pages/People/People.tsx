@@ -1,4 +1,5 @@
 'use client';
+import { useMemo } from 'react';
 import { Breadcrumbs } from '@app/components/modules/Breadcrumbs';
 import { usePeople } from './People.hook';
 import Link from 'next/link';
@@ -15,12 +16,20 @@ import { Tabs } from '@app/components/common/Tabs';
 import { PlusIcon } from '@app/static/icons/PlusIcon';
 
 export const People = () => {
-  const { tab, setTab, tabs, form, handleClearBand, values } = usePeople();
+  const { tab, setTab, tabs, form, handleClearBand, values, onFormSubmit } = usePeople();
 
   const { data: peopleData } = useGetPeopleList(tab.name, values?.search || '');
 
+  const peopleTable = useMemo(() => {
+    if (peopleData?.length) {
+      return <PeopleTable currentTab={tab} people={peopleData} />;
+    } else {
+      return <div className="pt-8">No data available</div>;
+    }
+  }, [tab, peopleData]);
+
   return (
-    <FormProvider<PeopleTableForm> onSubmit={() => null} form={form}>
+    <FormProvider<PeopleTableForm> onSubmit={onFormSubmit} form={form}>
       <div className="flex flex-col gap-6">
         <div className="flex items-center justify-between">
           <Breadcrumbs breadcrumbs={[{ label: 'People', href: '/people', current: true }]} />
@@ -54,11 +63,7 @@ export const People = () => {
                 />
               </div>
             </div>
-            {Array.isArray(peopleData) && peopleData.length > 0 ? (
-              <PeopleTable currentTab={tab} people={peopleData} />
-            ) : (
-              <div className="pt-8">No data available</div>
-            )}
+            {peopleTable}
           </div>
         </>
       </div>
