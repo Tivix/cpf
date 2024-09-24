@@ -61,7 +61,7 @@ end;
 $$ language plpgsql;
 
 -- Function returning a table of filtered employees
-CREATE OR REPLACE FUNCTION get_employees_by_status(_status profile_status DEFAULT NULL, current_user_id UUID DEFAULT NULL)
+CREATE OR REPLACE FUNCTION get_employees(_status profile_status DEFAULT NULL, _searchName text DEFAULT NULL,  current_user_id UUID DEFAULT NULL)
 RETURNS TABLE (
   id uuid,
   email text,
@@ -80,7 +80,7 @@ security definer
 AS $$
 BEGIN
   if current_user_id is not null then
-    raise exception 'get_employees_by_status() ERROR: current_user_id not implemented yet';
+    raise exception 'get_employees() ERROR: current_user_id not implemented yet';
   end if;
 
   RETURN QUERY
@@ -103,7 +103,9 @@ BEGIN
     JOIN user_roles ur ON u.id = ur.user_id
     FULL OUTER JOIN user_ladder ul ON u.id = ul.user_id
     LEFT JOIN ladder l ON ul.ladder_slug = l.ladder_slug
-    WHERE _status IS NULL or _status = p.status;
+     WHERE (_status IS NULL OR _status = p.status)
+    AND (_searchName IS NULL OR p.first_name ILIKE '%' || _searchName || '%' OR p.last_name ILIKE '%' || _searchName || '%');
+
 
   exception
     when others then

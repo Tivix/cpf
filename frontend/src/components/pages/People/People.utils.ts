@@ -1,3 +1,8 @@
+import { createClient } from '@app/utils/supabase/client';
+import { PostgrestError } from '@supabase/supabase-js';
+import { useCallback, useEffect, useState } from 'react';
+import { Employee } from './People.interface';
+
 export const bands = [
   { name: 'Band 1', id: '1' },
   { name: 'Band 2', id: '2' },
@@ -16,3 +21,36 @@ export const employeeMenuOptions = [
     label: 'Profile settings',
   },
 ];
+
+export const useGetPeopleList = (status: string, searchName: string) => {
+  const [data, setData] = useState<Employee[] | null>(null);
+  const [error, setError] = useState<PostgrestError | null>(null);
+  const [loading, setLoading] = useState(false);
+
+  const supabase = createClient();
+
+  const fetchPeopleList = useCallback(async () => {
+    if (status && searchName?.length !== 1) {
+      setLoading(true);
+      const { data, error } = await supabase.rpc('get_employees', {
+        _status: status,
+        _searchname: searchName,
+      });
+
+      if (error) {
+        console.log('error', error);
+        setError(error);
+      } else {
+        setData(data);
+      }
+
+      setLoading(false);
+    }
+  }, [status, searchName, supabase]);
+
+  useEffect(() => {
+    fetchPeopleList();
+  }, [fetchPeopleList]);
+
+  return { data, error, loading, refetch: fetchPeopleList };
+};

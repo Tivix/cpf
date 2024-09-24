@@ -4,6 +4,7 @@ import { PeopleTableForm, peopleTableFormName } from './People.interface';
 import { useQueryParams } from '@app/hooks';
 import { Option } from '@app/types/common';
 import { userStatus } from '@app/types/user';
+import { useSearchParams } from 'next/navigation';
 
 const tabs = [
   { name: userStatus.active, id: userStatus.active },
@@ -12,25 +13,40 @@ const tabs = [
 ];
 
 export const usePeople = () => {
+  const { setParams } = useQueryParams();
+  const searchParams = useSearchParams();
+  const searchNameParam = searchParams.get('search');
+  const searchTabParam = searchParams.get('tab');
+
   const form = useForm<PeopleTableForm>({
     mode: 'onChange',
     defaultValues: {
       [peopleTableFormName.band]: null,
-      [peopleTableFormName.search]: '',
+      [peopleTableFormName.search]: searchNameParam || null,
     },
   });
 
-  const [tab, setTab] = useState<Option>(tabs[0]);
-  const { setParams } = useQueryParams();
+  const [tab, setTab] = useState<Option>(tabs.find((tab) => tab.name === searchTabParam) || tabs[0]);
   const values = form.watch();
 
-  const handleChangeTab = useCallback(() => {
-    setParams({ tab: tab.id });
-  }, [setParams, tab]);
+  const handleParamsChange = useCallback(() => {
+    const params = {
+      tab: tab.id,
+      search: values?.search || null,
+    };
+
+    setParams(params);
+  }, [setParams, tab, values?.search]);
 
   useEffect(() => {
-    handleChangeTab();
-  }, [handleChangeTab, tab]);
+    handleParamsChange();
+  }, [handleParamsChange, values?.search, tab]);
+
+  useEffect(() => {
+    if (values?.band?.id) {
+      setParams({ band: values?.band?.id });
+    }
+  }, [setParams, values.band]);
 
   useEffect(() => {
     if (values?.band?.id) {
@@ -42,11 +58,15 @@ export const usePeople = () => {
     form.setValue('band', null);
   };
 
+  const onFormSubmit = () => null;
+
   return {
     tab,
     setTab,
     tabs,
     form,
     handleClearBand,
+    onFormSubmit,
+    values,
   };
 };
