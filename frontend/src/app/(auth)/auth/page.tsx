@@ -9,6 +9,7 @@ export default function LoginPage() {
           <div className="flex flex-col gap-x-2">
             <label htmlFor="email">Email:</label>
             <input
+              data-testid="input-email"
               className="w-full overflow-hidden rounded-lg border border-navy-200 px-2 py-1"
               id="email"
               name="email"
@@ -19,6 +20,7 @@ export default function LoginPage() {
           <div className="flex flex-col gap-x-2">
             <label htmlFor="password">Password:</label>
             <input
+              data-testid="input-password"
               className="w-full overflow-hidden rounded-lg border border-navy-200 px-2 py-1"
               id="password"
               name="password"
@@ -28,10 +30,10 @@ export default function LoginPage() {
           </div>
         </div>
         <div className="flex flex-col justify-between gap-y-2">
-          <Button type="submit" formAction={login}>
+          <Button type="submit" formAction={login} data-testid="button-log-in">
             Log in
           </Button>
-          <Button type="submit" formAction={signup}>
+          <Button type="submit" formAction={signup} data-testid="button-sign-up">
             Sign up
           </Button>
         </div>

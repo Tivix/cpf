@@ -1,0 +1,40 @@
+{
+  "name": "playwright",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "check-types": "tsc --noemit",
+    "eslint": "eslint '**/*.{ts, json}' --max-warnings=0",
+    "lint": "yarn eslint && yarn check-types",
+    "prepare": "cd .. && husky playwright/.husky",
+    "prettier": "prettier --check \"**/*.{js,cjs,ts,json,md,yml}\"",
+    "prettify": "prettier --write \"**/*.{js,cjs,ts,json,md,yml}\"",
+    "test": "playwright test --trace on",
+    "test:debug": "playwright test --ui",
+    "show:report": "playwright show-report"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^9.0.3",
+    "@playwright/test": "^1.47.1",
+    "lodash": "^4.17.21",
+    "playwright": "^1.47.1",
+    "typescript": "^5.6.2"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.17.9",
+    "@types/node": "^22.5.5",
+    "@typescript-eslint/eslint-plugin": "^8.7.0",
+    "@typescript-eslint/parser": "^8.7.0",
+    "eslint": "^9.11.1",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-playwright": "^1.6.2",
+    "husky": "^9.1.6",
+    "lint-staged": "^15.2.10",
+    "prettier": "^3.3.3"
+  },
+  "lint-staged": {
+    "**/*": "prettier --write --ignore-unknown"
+  }
+}
