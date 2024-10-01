@@ -24,11 +24,7 @@ export const People = () => {
 
   const peopleTable = useMemo(() => {
     if (peopleData?.results?.length) {
-      return (
-        <>
-          <PeopleTable currentTab={tab} people={peopleData.results} />
-        </>
-      );
+      return <PeopleTable currentTab={tab} people={peopleData.results} />;
     } else {
       return <div className="pt-8">No data available</div>;
     }
