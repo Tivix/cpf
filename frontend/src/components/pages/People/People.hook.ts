@@ -14,7 +14,7 @@ const tabs = [
 ];
 
 export const usePeople = () => {
-  const [paginationParams, setPaginationParams] = useState<PaginationParams>({ offset: 0, limit: 1 });
+  const [paginationParams, setPaginationParams] = useState<PaginationParams>({ offset: 0, limit: rowsPresets[0].id });
 
   const { setParams } = useQueryParams();
   const searchParams = useSearchParams();
@@ -79,6 +79,7 @@ export const usePeople = () => {
       offset: Number(values?.rows?.id) * (values?.page - 1 || 0),
       limit: Number(values?.rows?.id),
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [values?.page]);
 
   const onFormSubmit = () => null;

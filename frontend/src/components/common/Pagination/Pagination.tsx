@@ -5,10 +5,9 @@ import { ChevronRightIcon } from '@app/static/icons/ChevronRightIcon';
 import { PaginationProps } from './Pagination.interface';
 
 export const rowsPresets = [
-  { id: 1, name: '1' },
-  { id: 2, name: '2' },
-  { id: 3, name: '3' },
   { id: 10, name: '10' },
+  { id: 50, name: '50' },
+  { id: 100, name: '100' },
 ];
 
 const ChevronButton = ({
