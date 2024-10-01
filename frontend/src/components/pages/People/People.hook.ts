@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { PeopleTableForm, peopleTableFormName } from './People.interface';
+import { PaginationParams, PeopleTableForm, peopleTableFormName } from './People.interface';
 import { useQueryParams } from '@app/hooks';
 import { Option } from '@app/types/common';
 import { userStatus } from '@app/types/user';
 import { useSearchParams } from 'next/navigation';
+import { rowsPresets } from '@app/components/common/Pagination/Pagination';
 
 const tabs = [
   { name: userStatus.active, id: userStatus.active },
@@ -13,6 +14,8 @@ const tabs = [
 ];
 
 export const usePeople = () => {
+  const [paginationParams, setPaginationParams] = useState<PaginationParams>({ offset: 0, limit: 1 });
+
   const { setParams } = useQueryParams();
   const searchParams = useSearchParams();
   const searchNameParam = searchParams.get('search');
@@ -23,6 +26,8 @@ export const usePeople = () => {
     defaultValues: {
       [peopleTableFormName.band]: null,
       [peopleTableFormName.search]: searchNameParam || null,
+      [peopleTableFormName.rows]: rowsPresets[0] || null,
+      [peopleTableFormName.page]: 1 || null,
     },
   });
 
@@ -54,11 +59,31 @@ export const usePeople = () => {
     }
   }, [setParams, values.band]);
 
+  useEffect(() => {
+    form.setValue('page', 1);
+  }, [form, values.rows]);
+
   const handleClearBand = () => {
     form.setValue('band', null);
   };
 
+  useEffect(() => {
+    setPaginationParams({
+      offset: 0,
+      limit: Number(values?.rows?.id),
+    });
+  }, [values?.rows]);
+
+  useEffect(() => {
+    setPaginationParams({
+      offset: Number(values?.rows?.id) * (values?.page - 1 || 0),
+      limit: Number(values?.rows?.id),
+    });
+  }, [values?.page]);
+
   const onFormSubmit = () => null;
+
+  const onPageChangeHandler = (page: number) => form.setValue('page', page);
 
   return {
     tab,
@@ -68,5 +93,7 @@ export const usePeople = () => {
     handleClearBand,
     onFormSubmit,
     values,
+    paginationParams,
+    onPageChangeHandler,
   };
 };

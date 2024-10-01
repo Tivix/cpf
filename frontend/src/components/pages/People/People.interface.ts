@@ -4,11 +4,25 @@ import { userStatus } from '@app/types/user';
 export const peopleTableFormName = {
   band: 'band',
   search: 'search',
+  rows: 'rows',
+  page: 'page',
 } as const;
 
 export interface PeopleTableForm {
   [peopleTableFormName.band]: Option | null;
   [peopleTableFormName.search]: string | null;
+  [peopleTableFormName.rows]: Option | null;
+  [peopleTableFormName.page]: number;
+}
+
+export interface PaginationParams {
+  limit: number;
+  offset: number;
+}
+
+export interface IEmployeeRequestResult {
+  results: Employee[];
+  count: number;
 }
 
 export interface Employee {
