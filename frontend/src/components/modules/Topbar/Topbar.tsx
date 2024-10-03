@@ -36,7 +36,10 @@ export const Topbar: FC<TopbarProps> = ({ userData }) => {
         {/* Profile dropdown */}
         <Menu as="div" className="relative ml-3">
           <div>
-            <MenuButton className="bg-gray-800 focus:ring-offset-gray-800 relative flex rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2" data-testid="button-user-menu">
+            <MenuButton
+              className="bg-gray-800 focus:ring-offset-gray-800 relative flex rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2"
+              data-testid="button-user-menu"
+            >
               <span className="absolute -inset-1.5" />
               <span className="sr-only">Open user menu</span>
               <Avatar initials={`${firstName[0]}${lastName[0]}`} variant="40" />
@@ -51,7 +54,10 @@ export const Topbar: FC<TopbarProps> = ({ userData }) => {
             leaveFrom="transform opacity-100 scale-100"
             leaveTo="transform opacity-0 scale-95"
           >
-            <MenuItems data-testid="user-menu-items" className="ring-black absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-opacity-5 focus:outline-none">
+            <MenuItems
+              className="ring-black absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-opacity-5 focus:outline-none"
+              data-testid="user-menu-items"
+            >
               {menuItems.map(({ href, label, icon }) => (
                 <MenuItem key={label}>
                   <Link
