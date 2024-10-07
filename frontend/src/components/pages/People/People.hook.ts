@@ -5,7 +5,7 @@ import { useQueryParams } from '@app/hooks';
 import { Option } from '@app/types/common';
 import { userStatus } from '@app/types/user';
 import { useSearchParams } from 'next/navigation';
-import { rowsPresets } from '@app/components/common/Pagination/Pagination';
+import { rowsPresets } from '@app/components/common/Pagination/Pagination.utils';
 
 const tabs = [
   { name: userStatus.active, id: userStatus.active },

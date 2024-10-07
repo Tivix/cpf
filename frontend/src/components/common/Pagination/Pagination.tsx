@@ -3,12 +3,7 @@ import { Listbox } from '../Listbox';
 import { Typography } from '../Typography';
 import { ChevronRightIcon } from '@app/static/icons/ChevronRightIcon';
 import { PaginationProps } from './Pagination.interface';
-
-export const rowsPresets = [
-  { id: 10, name: '10' },
-  { id: 50, name: '50' },
-  { id: 100, name: '100' },
-];
+import { rowsPresets } from './Pagination.utils';
 
 const ChevronButton = ({
   onClick,
