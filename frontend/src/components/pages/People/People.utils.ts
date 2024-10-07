@@ -1,7 +1,7 @@
 import { createClient } from '@app/utils/supabase/client';
 import { PostgrestError } from '@supabase/supabase-js';
 import { useCallback, useEffect, useState } from 'react';
-import { Employee } from './People.interface';
+import { IEmployeeRequestResult, PaginationParams } from './People.interface';
 
 export const bands = [
   { name: 'Band 1', id: '1' },
@@ -22,8 +22,8 @@ export const employeeMenuOptions = [
   },
 ];
 
-export const useGetPeopleList = (status: string, searchName: string) => {
-  const [data, setData] = useState<Employee[] | null>(null);
+export const useGetPeopleList = (status: string, searchName: string, paginationParams: PaginationParams) => {
+  const [data, setData] = useState<IEmployeeRequestResult | null>(null);
   const [error, setError] = useState<PostgrestError | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -35,6 +35,8 @@ export const useGetPeopleList = (status: string, searchName: string) => {
       const { data, error } = await supabase.rpc('get_employees', {
         _status: status,
         _searchname: searchName,
+        _limit: paginationParams.limit,
+        _offset: paginationParams.offset,
       });
 
       if (error) {
@@ -46,7 +48,7 @@ export const useGetPeopleList = (status: string, searchName: string) => {
 
       setLoading(false);
     }
-  }, [status, searchName, supabase]);
+  }, [status, searchName, supabase, paginationParams]);
 
   useEffect(() => {
     fetchPeopleList();

@@ -14,19 +14,33 @@ import { Listbox } from '@app/components/common/Listbox';
 import { PeopleTable } from './Modules/PeopleTable';
 import { Tabs } from '@app/components/common/Tabs';
 import { PlusIcon } from '@app/static/icons/PlusIcon';
+import { Pagination } from '@app/components/common/Pagination';
 
 export const People = () => {
-  const { tab, setTab, tabs, form, handleClearBand, values, onFormSubmit } = usePeople();
+  const { tab, setTab, tabs, form, handleClearBand, values, onFormSubmit, paginationParams, onPageChangeHandler } =
+    usePeople();
 
-  const { data: peopleData } = useGetPeopleList(tab.name, values?.search || '');
+  const { data: peopleData } = useGetPeopleList(tab.name, values?.search || '', paginationParams);
 
   const peopleTable = useMemo(() => {
-    if (peopleData?.length) {
-      return <PeopleTable currentTab={tab} people={peopleData} />;
+    if (peopleData?.results?.length) {
+      return <PeopleTable currentTab={tab} people={peopleData.results} />;
     } else {
       return <div className="pt-8">No data available</div>;
     }
   }, [tab, peopleData]);
+
+  const pagination = useMemo(() => {
+    return (
+      <div className="mt-8">
+        <Pagination
+          onPageChange={onPageChangeHandler}
+          currentPage={values?.page}
+          pagesAmount={Math.ceil((peopleData?.count || 0) / Number(values?.rows?.id) || 0)}
+        />
+      </div>
+    );
+  }, [peopleData, values, onPageChangeHandler]);
 
   return (
     <FormProvider<PeopleTableForm> onSubmit={onFormSubmit} form={form}>
@@ -64,6 +78,7 @@ export const People = () => {
               </div>
             </div>
             {peopleTable}
+            {pagination}
           </div>
         </>
       </div>

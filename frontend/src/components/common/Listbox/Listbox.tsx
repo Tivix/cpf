@@ -9,7 +9,14 @@ import { CloseIcon } from '@app/static/icons/CloseIcon';
 import { useListBox } from './Listbox.hooks';
 import { Button } from '../Button';
 
-export const Listbox: FC<ListboxProps> = ({ name, options, placeholder, onClear, className }) => {
+export const Listbox: FC<ListboxProps> = ({
+  name,
+  options,
+  placeholder,
+  onClear,
+  className,
+  showClearButton = true,
+}) => {
   const { control } = useFormContext();
   const { handleClear } = useListBox(onClear);
 
@@ -45,7 +52,7 @@ export const Listbox: FC<ListboxProps> = ({ name, options, placeholder, onClear,
                     </div>
                   </div>
                 </ListboxButton>
-                {selected && (
+                {selected && showClearButton && (
                   <Button
                     onClick={handleClear}
                     styleType="natural"

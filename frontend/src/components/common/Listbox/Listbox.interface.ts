@@ -6,4 +6,5 @@ export interface ListboxProps {
   placeholder?: string;
   onClear?: () => void;
   className?: ClassName;
+  showClearButton?: boolean;
 }

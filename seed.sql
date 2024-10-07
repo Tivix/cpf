@@ -60,57 +60,73 @@ exception
 end;
 $$ language plpgsql;
 
--- Function returning a table of filtered employees
-CREATE OR REPLACE FUNCTION get_employees(_status profile_status DEFAULT NULL, _searchName text DEFAULT NULL,  current_user_id UUID DEFAULT NULL)
-RETURNS TABLE (
-  id uuid,
-  email text,
-  first_name text,
-  last_name text,
-  status profile_status,
-  role app_role,
-  ladder_slug varchar,
-  current_band int,
-  technologies text[],
-  is_main_ladder boolean,
-  ladder_name varchar,
-  ladder_tech text[]
+-- Function returning a table of filtered employees with pagination
+CREATE OR REPLACE FUNCTION get_employees(
+  _status profile_status DEFAULT NULL, 
+  _searchName text DEFAULT NULL,  
+  current_user_id UUID DEFAULT NULL, 
+  _limit int DEFAULT 10, 
+  _offset int DEFAULT 0
 )
+RETURNS JSON
 security definer
 AS $$
+DECLARE
+  total_count int;
+  results JSON;
 BEGIN
   if current_user_id is not null then
     raise exception 'get_employees() ERROR: current_user_id not implemented yet';
   end if;
 
-  RETURN QUERY
+  -- Get total count of items without pagination
+  SELECT COUNT(*)
+  INTO total_count
+  FROM auth.users u
+  JOIN profiles p ON u.id = p.id
+  JOIN user_roles ur ON u.id = ur.user_id
+  FULL OUTER JOIN user_ladder ul ON u.id = ul.user_id
+  LEFT JOIN ladder l ON ul.ladder_slug = l.ladder_slug
+  WHERE (_status IS NULL OR _status = p.status)
+  AND (_searchName IS NULL OR p.first_name ILIKE '%' || _searchName || '%' OR p.last_name ILIKE '%' || _searchName || '%');
 
-  SELECT
-    u.id,
-    p.email,
-    p.first_name,
-    p.last_name,
-    p.status,
-    ur.role,
-    ul.ladder_slug,
-    ul.current_band,
-    ul.technologies,
-    ul.is_main_ladder,
-    l.ladder_name,
-    l.ladder_tech
+  -- Get paginated results
+  SELECT json_agg(result)
+  INTO results
+  FROM (
+    SELECT
+      u.id,
+      p.email,
+      p.first_name,
+      p.last_name,
+      p.status,
+      ur.role,
+      ul.ladder_slug,
+      ul.current_band,
+      ul.technologies,
+      ul.is_main_ladder,
+      l.ladder_name,
+      l.ladder_tech
     FROM auth.users u
     JOIN profiles p ON u.id = p.id
     JOIN user_roles ur ON u.id = ur.user_id
     FULL OUTER JOIN user_ladder ul ON u.id = ul.user_id
     LEFT JOIN ladder l ON ul.ladder_slug = l.ladder_slug
-     WHERE (_status IS NULL OR _status = p.status)
-    AND (_searchName IS NULL OR p.first_name ILIKE '%' || _searchName || '%' OR p.last_name ILIKE '%' || _searchName || '%');
+    WHERE (_status IS NULL OR _status = p.status)
+    AND (_searchName IS NULL OR p.first_name ILIKE '%' || _searchName || '%' OR p.last_name ILIKE '%' || _searchName || '%')
+    LIMIT _limit OFFSET _offset
+  ) AS result;
 
+  -- Return total count and results as JSON
+  RETURN json_build_object(
+    'count', total_count,
+    'results', results
+  );
 
-  exception
-    when others then
-      -- Raise an exception to rollback the transaction
-      raise exception 'Error occurred while fetching employees data: %', SQLERRM;
+EXCEPTION
+  WHEN others THEN
+    -- Raise an exception to rollback the transaction
+    RAISE exception 'Error occurred while fetching employees data: %', SQLERRM;
 END;
 $$ LANGUAGE plpgsql;
 
